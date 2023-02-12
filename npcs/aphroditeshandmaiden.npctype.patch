@@ -1,0 +1,7 @@
+[
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings",
+    "value" : {"stats": {"forceRole": {"baseValue": 2}}}
+  }
+]

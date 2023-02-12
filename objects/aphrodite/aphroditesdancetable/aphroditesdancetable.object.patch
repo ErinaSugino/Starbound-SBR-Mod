@@ -1,0 +1,36 @@
+[
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-arm-back"
+  },
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-arm-front"
+  },
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-body"
+  },
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-hair"
+  },
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-head"
+  },
+  {
+    "op" : "remove",
+    "path" : "/animationCustom/animatedParts/parts/actor1-head-inner"
+  },
+  {
+    "op" : "add",
+    "path" : "/actorConfig/aphroditeGogo/forceRole",
+    "value" : 2
+  },
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig/noMusic",
+    "value" : true
+  }
+]
