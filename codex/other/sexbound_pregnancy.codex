@@ -1,0 +1,116 @@
+{
+  "id"           : "sexbound_pregnancy",
+  "title"        : "Sexbound - Parental Guide",
+  "description"  : "Congratulations on becoming a mother!",
+  "icon"         : "sexboundcover1.png",
+  "itemConfig"   : { "rarity" : "common", "price" : 25 },
+  "contentPages" : [
+"                  ^cyan;CONGRATULATIONS!^reset;
+            You just became a mother!
+
+First of all, let us thank you for bringing love and family into this wretched, broken, war-filled universe! Finding the right partner under this circumstances is a mighty feat and yet here you are having done it*!
+
+(* The author does not take responsibility for any non-censentual impregnations happend to the readers.)
+",
+
+"This guide will help you understand everything you need to know about your future child growing inside of you and all the responsibilities you now have to shoulder!
+
+Now, we know that becoming a parent for the first time can be scary, plunging deeply into the great unknown. *nudge nudge* But don't worry, we got you covered!
+",
+
+"                      ^cyan;PREPARATION^reset;
+                Be ready, be happy!
+
+Growing a baby takes time. Usually around 6-9 days - calculated based on good ol' Earth's day length time, as are all our future timing values, so it might differ based on whereever you are right now!
+
+That is both plenty of time to prepare, yet might also seem way too short from some. Don't worry, with these simple tips and steps you will be ready in no time!
+",
+
+"^orange;1.^reset; Choose a proper home
+Once it's time to give birth, you don't want to find yourself stranded in the middle of the jungle. While you might be able to use your sheer willpower to postpone the inevitable birth of your child for a bit, better be safe than sorry!
+
+Furthermore, considering you will be founding a family now, you should rather spend the remaining time preparing your future home shouldn't you already have one.
+",
+
+"While family members tend to have quite the resilience compared to your average mercenary thug, creating a safe environment should be your priority.
+
+Considering your baby has to come from your special someone, moving in with them is always the easy option - though we understand some of you out there might face *special* circumstances.
+",
+
+"^orange;2.^reset; Plan ahead
+Successfully giving birth to a healthy baby boy or baby girl is just the beginning - the *real* family life starts right after! While the duration of your pregnancy might be the most important part to consider, what comes after is no less relevant.
+
+What do *you* want to do with *your* life from here on out?
+",
+
+"Many of our readers travel among the stars, looking for treasures and adventures for a living so settling down and retiring might not be an option - money and food for your family have to come from somewhere.
+But maybe consider taking your family along? Many children look up to their parents and want to become just like them, wanting to join them on their journey. And maybe you can convince your partner to come along too?
+",
+
+"^orange;3.^reset; Take it easy
+Finally, it's time to take it easy. When you have done all you need, prepared a home and a plan for the future, all that's left to do is taking it easy and waiting for your bundle of joy to come out of you!
+
+No need to stress yourself any more, the time close to and during labor will be one hell of a ride anyway! Just enjoy the calm and make sure nothing happens to you or your family, present and future!
+",
+
+"                          ^cyan;HAZARDS^reset;
+            Big no-no for little Bobo!
+
+Now, keeping your health and more importantly the one of your growing baby in mind as priority #1 should be a given - though sadly we always hear about tragic incidents where *some* parents just think they know better, or not care at all.
+This universe is more dangerous than you think, especially to babies, so here are a couple of things to keep in mind to ensure a stress and incident free pregnancy!
+",
+
+"^orange;1.^reset; Stay alive
+Yes, we have to include this for a reason. Many things are really dangerous to an unborn child, and the mother straight up dying is the most severe one.
+
+Many of you will probably be Space Adventurers, running around unknown planets with dangerous flora, fauna, hazardous conditions and unfriendly locals being after your juicy booty, one way or another.
+",
+
+"And while in this day and age most of you will be equipped with cloning technology on your ships in order to cheat death, we have to remind you of the following fact:
+
+In compliance with the Reproduction Ethniticy Act III, cloning devices do NOT reproduce unborn entities within the recreated body. Meaning, when you die and \"respawn\", your baby will still be gone.
+",
+
+"^orange;2.^reset; Keep your urges in check
+Sex is great. We can all agree on that, and your baby is the proof of that. Though while mindlessly fucking all your worries away might be the galaxy-wide biggest freetime pastime, there are times when you should restrain yourself. For example when you are pregnant.
+Due to obvious ethnical restrictions we were never allowed to empirically prove this, though it is common believe that mindlessly having rough, unprotected sex while pregnant is a bad choice.
+",
+
+"So while having a *hot* night with the local Novakid might be the most exotic experience of your journey, just consider that filling your womb with steamin hot Novakid cum might be unhealthy for whatever is growing inside there right now. Unless, of course, you yourself are a Novakid too.
+",
+
+"^orange;3.^reset; A healthy diet
+It is a vastly known fact that keeping your own body in pristine condition is key to give birth to a healthy baby. So all you nutrient paste loving space junkies out there should seriously start to consider expanding your food variety.
+
+This universe is filled with tasty food and tastier recipes to try out. We're sure you came across a fair share on your journeys so far. 
+",
+
+"Just make sure what you eat is fresh and that the tasty looking fruit you collected on that random planet is actually edible.
+
+Furthermore - obviously you should abstain from drinking and smoking while being pregnant. You have been warned, we do not take responsibility for any harm *you* did to your baby by sheer negligence.
+",
+
+"                  ^cyan;THE FINAL WAY OUT^reset;
+      Sometimes it's better to say no.
+
+All this time we talked about how to prepare for a happy future with your healthy child. But we also do understand, that sometimes the happiest future is just one without said child. So for completionist's sake, let's talk about the alternative.
+",
+
+"If you really consider not going through with your pregnancy and conciving your child, we are geniunely sad to hear about your decision but we understand that sometimes it is necessary.
+
+Youthful mistakes happen all the time, and the sad truth is that just as it is filled with war and crime this universe is also filled with rape and unwanted pregnancies as a result of it.
+",
+
+"So in case you really, really want to abort your pregnancy you can always take an officially licensed and clinically tested abortion pill, available at your nearest sex-themed vending machine.
+
+Yet despite all that, we'd like to urge you to reconsider your choice - as even an unexpected child can lead to a happy, family oriented future!
+",
+
+"                    ^cyan;FINAL WORDS^reset;
+
+With these steps and options in mind, you should now be settled for a smooth ride all the way to parenthood and beyond, so that you can face your upcoming challenges with confidence!
+
+We'd like to extend our thanks to you, the reader, for trusting in our services and wish you the best of luck for whatever lies ahead of you!
+"
+  ]
+}

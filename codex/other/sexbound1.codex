@@ -1,0 +1,58 @@
+{
+  "id"           : "sexbound1",
+  "title"        : "Sexbound - FAQ",
+  "description"  : "Frequently Asked Questions about Sexbound.",
+  "icon"         : "sexboundcover1.png",
+  "itemConfig"   : { "rarity" : "common", "price" : 25 },
+  "contentPages" : [
+"
+^orange;Q:^reset; What is Sexbound?
+
+^orange;A:^reset; Sexbound provides custom artwork, AI, animations, items, objects, particles, sfx, scripts, and API scripting interface that can be used by modders to create custom sex interactions in Starbound.
+",
+
+"
+^orange;Q:^reset; What vanilla species are supported?
+
+^orange;A:^reset; All playable vanilla species are supported by default.
+",
+
+"
+^orange;Q:^reset; What custom species are supported?
+
+^orange;A:^reset; Custom species are not supported by default. 
+
+^green;You must download and install a separate add-on mod that enables each one. If you are unable to locate an add-on mod for your character's species then you should make a request for the SxB Community to create a support mod.^reset;
+",
+
+"
+^orange;Q:^reset; How do I have sex?
+
+^orange;A:^reset; 1) You can use a SxB Loungeable Add-on to upgrade an object such as a bed. NPCs and player can use upgraded objects for having sex with each other.
+
+^orange;A:^reset; 2) You can download and install add-on mods which provide different methods to initiate sex with other entities. 
+",
+
+"
+^orange;Q:^reset; How can I obtain a Sexbound Loungeable Add-on item?
+
+^orange;A:^reset; You can find them randomly as common treasure drops, or you can purchase one of them from the Infinity Express at the Outpost.
+",
+
+"
+^orange;Q:^reset; Why can't I have sex with certain NPCs?
+
+^orange;A:^reset; You can have sex with most of the NPCs, but some NPCs are not compatible with Sexbound for a variety of different reasons.
+
+i.e. Some NPCs in-game aren't really NPCs or they have not been patched by Sexbound.
+",
+
+"
+^orange;Q:^reset; How can I obtain support when I am experiencing an issue?
+
+^orange;A:^reset; You can get support from other players in the Loverslab Support Forum:
+
+^blue;https://www.loverslab.com/topic/111871-mod-starbound-sexbound/^reset;
+"
+  ]
+}

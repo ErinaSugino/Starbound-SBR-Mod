@@ -1,0 +1,13 @@
+{
+  "itemName" : "sexbound_jarfairy",
+  "price" : 2500,
+  "rarity" : "Legendary",
+  "category" : "craftingMaterial",
+  "inventoryIcon" : "sexbound_jarfairy.png",
+  "description" : "A horny li'l fairy! You should keep it in a jar!",
+  "shortdescription" : "Horny li'l fairy",
+  "itemTags" : [ "reagent" ],
+  "learnBlueprintsOnPickup" : [
+    "sexbound_fairyinajar"
+  ]
+}

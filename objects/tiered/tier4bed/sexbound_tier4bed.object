@@ -1,0 +1,128 @@
+{
+  "objectName"         : "sexbound_tier4bed",
+  "description"        : "A comfortable durasteel bed. Looks pretty sleek.",
+  "shortdescription"   : "[SxB] Durasteel Bed",
+  "category"           : "furniture",
+  "colonyTags"         : [ "misc", "tier4" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 360,
+  "printable"          : false,
+  "race"               : "generic",
+  "rarity"             : "Rare",
+  "apexDescription"    : "A nice, comfy bed.",
+  "avianDescription"   : "This is very comfortable place to rest my feathers.",
+  "floranDescription"  : "Floran ressst in great bed.",
+  "glitchDescription"  : "Happy. I will sleep well in this bed.",
+  "humanDescription"   : "A great bed. Should easily be able to get some rest here.",
+  "hylotlDescription"  : "Decent build quality. It'll do.",
+  "novakidDescription" : "Looks like a pretty darn decent bed!",
+
+  "inventoryIcon" : "sexbound_tier4bedicon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "tier4bed.png:<color>",
+      "imagePosition"  : [-24, 0],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces"         : [
+        [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-3, 0],                                   [2, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : [ "/scripts/sexbound/threeactors.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ],
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : ["missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing", "facesitting_in_bed", "butterfly", "fellatio", "reverse_cowgirl_in_bed"]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "props" : {
+          "states" : {
+            "position4" : {
+              "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+              "frameProperties" : { "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"] }
+            },
+
+            "position4_1" : {
+              "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+              "frameProperties" : { "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"] }
+            }
+          }
+        }
+      },
+    
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "offset" : [ 0, 1.5 ],
+            "zLevel" : -1,
+            "image"  : "/objects/tiered/tier4bed/tier4bed.png:<color>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "position2" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+
+              "position3" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+              
+              "position4" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0, 1.625], [0, 1.75], [0, 2], [0, 1.75]]
+                }
+              },
+
+              "position4_1" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0, 1.625], [0, 1.75], [0, 2], [0, 1.75]]
+                }
+              }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [ 0, -0.250 ]
+          },
+          
+          "partStates" : {
+            "actors" : {
+              "idle" : {"properties" : {"offset" : [-0.5, -1.625]}},
+              "position1" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position5" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position6" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-reset"  : {"properties" : {"offset" : [0, -1.625]}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

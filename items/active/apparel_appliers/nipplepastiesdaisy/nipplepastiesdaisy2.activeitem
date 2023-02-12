@@ -1,0 +1,20 @@
+{
+  "itemName"         : "nipplepastiesdaisy2",
+  "category"         : "tradeGoods",
+  "description"      : "Worn on your left nipple.",
+  "inventoryIcon"    : "nipplepastiesdaisyicon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 50,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "/scripts/sexbound/applyapparel.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Pasties Daisy (L)",
+  "twoHanded"        : false,
+  "applyConfig"    : {
+    "target"   : 2,
+    "itemName" : "nipplepastiesdaisy",
+    "wornType" : "nipple"
+  }
+}

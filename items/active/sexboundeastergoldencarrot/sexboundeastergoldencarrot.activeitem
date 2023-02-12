@@ -1,0 +1,15 @@
+{
+  "itemName"         : "sexboundeastergoldencarrot",
+  "category"         : "tradeGoods",
+  "description"      : "Use this item to summon the Easter Bunny.",
+  "inventoryIcon"    : "sexboundeastergoldencarrot.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 1,
+  "price"            : 5000,
+  "rarity"           : "Legendary",
+  "scripts"          : [ "/items/active/sexboundeastergoldencarrot/sexboundeastergoldencarrot.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Golden Carrot",
+  "twoHanded"        : false
+}

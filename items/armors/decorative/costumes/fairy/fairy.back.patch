@@ -1,0 +1,9 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "image" : "/artwork/humanoid/<role>/default/wearable/fairy/back.png"
+    }
+  }
+]

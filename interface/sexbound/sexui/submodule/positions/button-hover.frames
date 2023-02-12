@@ -1,0 +1,17 @@
+{
+  "frameGrid" : {
+    "size"       : [ 200, 200 ],
+    "dimensions" : [ 8,     1 ],
+    "names"      : [ [ "button.1", "button.2", "button.3", "button.4", "button.5", "button.6", "button.7", "button.8" ] ]
+  },
+  "aliases" : {
+    "position.1" : "button.1",
+    "position.2" : "button.2",
+    "position.3" : "button.3",
+    "position.4" : "button.4",
+    "position.5" : "button.5",
+    "position.6" : "button.6",
+    "position.7" : "button.7",
+    "position.8" : "button.8"
+  }
+}

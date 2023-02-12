@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_changegenderfutanari",
+  "animationConfig" : "sexbound_changegenderfutanari.animation",
+  "defaultDuration" : 3,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_changegenderfutanari.lua" ],
+  "scriptDelta"     : 1
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "addStatus" : [ "equipped_camo" ],
+      "image" : [
+        "/artwork/humanoid/<role>/default/wearable/camo/unisex/head.png",
+        "/artwork/humanoid/<role>/default/wearable/camo/unisex/head_variant.png"
+      ],
+      "imageFrameName" : "<frameName>",
+      "mask" : "/artwork/humanoid/<role>/default/wearable/camo/unisex/head_mask.png"
+    }
+  }
+]

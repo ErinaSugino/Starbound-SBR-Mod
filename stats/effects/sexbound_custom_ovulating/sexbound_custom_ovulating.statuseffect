@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_custom_ovulating",
+  "defaultDuration" : 840,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/ovulating.png",
+  "label"           : "Unsafe day",
+  "scripts"         : [ "sexbound_custom_ovulating.lua" ]
+}

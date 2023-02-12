@@ -1,0 +1,168 @@
+[
+  {
+    "op"      : "test",
+    "path"    : "/scripts",
+    "inverse" : true
+  },
+
+  {
+    "op"   : "remove",
+    "path" : "/orientations/0/spaceScan"
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/materialSpaces",
+    "value" : [
+      [ [ 0,  1 ], "metamaterial:sexboundaddonbase" ]
+    ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/spaces",
+    "value" : [
+      [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+      [-3, 0],                                   [2, 0]
+    ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/scripts",
+    "value" : [ "/scripts/objectaddons.lua", "/scripts/sexbound/loungeable.lua" ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/sexboundConfig",
+    "value" : {
+      "animationPartsCentered" : true,
+      "actor"         : { "mirrorArtwork" : true },
+      "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ],
+      "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+      "position"      : {
+        "sex" : [ "missionary_on_table", "doggy_on_table", "cowgirl_on_table", "standing_on_table", "facesitting_on_table", "butterfly_on_table", "fellatio_on_table", "reverse_cowgirl_on_table" ]
+      }
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/addonConfig",
+    "value" : {
+      "usesAddons" : [
+        {
+          "name"      : "sexboundLoungeableAddon",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon1",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon2",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 3
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon3",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : false,
+            "maxActors" : 4
+          }
+        }
+      ]
+    }
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animation",
+    "value" : "/artwork/humanoid/twoactors-centered.animation"
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animationCustom",
+    "value" : {
+      "animatedParts" : {
+        "stateTypes" : {
+          "props" : {
+            "states" : {
+              "position4" : {
+                "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+                "frameProperties" : { "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"] }
+              },
+              
+              "position4_1" : {
+                "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+                "frameProperties" : { "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"] }
+              }
+            }
+          }
+        },
+      
+        "parts" : {
+          "table" : {
+            "properties" : {
+              "offset" : [ 0, 1 ],
+              "zLevel" : -1,
+              "image"  : "/objects/glitch/medievaltable/medievaltable.png:<color>"
+            },
+            
+            "partStates" : {
+              "props" : {
+                "position2" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1], [0.125, 1], [0.25, 1], [0.375, 1], [0.25, 1]]
+                  }
+                },
+
+                "position3" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1], [0.125, 1], [0.25, 1], [0.375, 1], [0.25, 1]]
+                  }
+                },
+
+                "position4" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1], [0, 1.125], [0, 1.25], [0, 1.5], [0, 1.25]]
+                  }
+                },
+
+                "position4_1" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1], [0, 1.125], [0, 1.25], [0, 1.5], [0, 1.25]]
+                  }
+                }
+              }
+            }
+          },
+          
+          "actors" : {
+            "properties" : {
+              "anchorPart" : "table",
+              "offset"     : [ 0, 1 ]
+            }
+          }
+        }
+      }
+    }
+  }
+]

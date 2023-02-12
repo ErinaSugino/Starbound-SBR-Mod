@@ -1,0 +1,187 @@
+[
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/apex/apexmoanmale01.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale02.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale03.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale04.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale05.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale06.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale07.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale08.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale09.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale10.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanmale11.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/apex/apexmoanfemale01.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale02.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale03.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale04.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale05.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale06.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale07.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale08.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale09.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale10.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale11.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale12.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale13.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale14.ogg",
+      "/sfx/sexbound/moans/apex/apexmoanfemale15.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/apex/apexorgasmmale01.ogg",
+      "/sfx/sexbound/orgasms/apex/apexorgasmmale02.ogg",
+      "/sfx/sexbound/orgasms/apex/apexorgasmmale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/apex/apexorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/apex/apexorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/apex/apexorgasmfemale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbShowNipples",
+    "value": false
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbShowNipples",
+    "value": true
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/0/d35eae",
+    "value": "ffc5c5"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/1/d35eae",
+    "value": "f0b6b9"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/2/d35eae",
+    "value": "ecc6ff"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/3/d35eae",
+    "value": "c8a5e0"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/4/d35eae",
+    "value": "d6accb"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/5/d35eae",
+    "value": "ebb1d2"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/6/d35eae",
+    "value": "e9988b"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/7/d35eae",
+    "value": "c6acdf"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/8/d35eae",
+    "value": "ffd7ea"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/9/d35eae",
+    "value": "ffa5d6"
+  },
+
+  {
+    "op": "add",
+    "path": "/sxbSpeciesType",
+    "value": "human"
+  }
+]

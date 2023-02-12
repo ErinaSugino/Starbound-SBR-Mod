@@ -1,0 +1,46 @@
+{
+  "itemName" : "nipplepastiescross",
+  "category" : "nipples",
+
+  "maleFrames" : {
+    "image" : "nipplepastiescross.png"
+  },
+
+  "femaleFrames" : {
+    "image" : "nipplepastiescross.png"
+  },
+
+  "colorOptions" : [
+    // DEFAULT
+    { "000000" : "000000" },
+    // WHITE
+    { "000000" : "f6f6f6" },
+    // GREY
+    { "000000" : "b5b5b5" },
+    // WHITE
+    { "000000" : "e6e6e6" },
+    // RED
+    { "000000" : "f4988c" },
+    // ORANGE
+    { "000000" : "ffd495" },
+    // YELLOW
+    { "000000" : "ffffa7" },
+    // GREEN
+    { "000000" : "b2e89d" },
+    // BLUE
+    { "000000" : "96cbe7" },
+    // PURPLE
+    { "000000" : "d29ce7" },
+    // PINK
+    { "000000" : "eab3db" },
+    // BROWN
+    { "000000" : "ccae7c" }
+  ],
+
+  "sexboundConfig" : {
+    "addStatus"  : [ "equipped_nipplepasties" ],
+    "image"      : "/items/armors/sexbound/nipples/nipplepastiescross.png",
+    "startAngle" : 45,
+    "startScale" : 0.6
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "objectName"       : "sexbound_main_node",
+  "category"         : "furniture",
+  "colonyTags"       : [ "misc" ],
+  "description"      : "A main node used by Sexbound.",
+  "interactive"      : true,
+  "itemTags"         : [ "sex", "sexbound" ],
+  "mouthPosition"    : [ 0, 0 ],
+  "objectType"       : "loungeable",
+  "price"            : 1,
+  "printable"        : false,
+  "race"             : "generic",
+  "rarity"           : "Common",
+  "shortdescription" : "[SxB] Main (Node)",
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ -4, 20 ],
+  "sitStatusEffects" : [ "sexbound_sex" ],
+  "smashable"        : true,
+
+  "inventoryIcon" : "sexbound_node.png",
+  "orientations" : [
+    {
+      "direction"         : "left",
+      "animationCycle"    : 1.0,
+      "animationPosition" : [ 4, 0 ],
+      "image"             : "sexbound_node.png:default.1",
+      "frames"            : 1,
+      "imagePosition"     : [ -4, 0 ],
+      "metaBoundBox"      : [ 0, 0, 1, 1 ],
+      "renderLayer"       : "Player-1",
+      "spaceScan"         : 0.1,
+      "anchors"           : [ "bottom" ]
+    },
+    {
+      "direction"         : "right",
+      "animationCycle"    : 1.0,
+      "animationPosition" : [ -4, 0 ],
+      "image"             : "sexbound_node.png:default.1",
+      "frames"            : 1,
+      "imagePosition"     : [ 4, 0 ],
+      "metaBoundBox"      : [ 0, 0, 1, 1 ],
+      "renderLayer"       : "Player-1",
+      "spaceScan"         : 0.1,
+      "anchors"           : [ "bottom" ]
+    }
+  ],
+
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  "scripts"   : [ "sexbound_main_node.lua" ],
+  
+  "sexboundConfig" : {
+    "animationPartsCentered": false,
+    "position" : {
+      "sex" : [ "standing", "doggy", "missionary", "cowgirl", "facesitting", "butterfly", "fellatio", "reverse_cowgirl" ]
+    }
+  }
+}

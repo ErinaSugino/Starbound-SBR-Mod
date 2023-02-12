@@ -1,0 +1,85 @@
+{
+  "objectName"       : "sexbound_gnomeinajar",
+  "colonyTags"       : [ "kinky" ],
+  "interactive"      : true,
+  "objectType"       : "loungeable",
+  "rarity"           : "Legendary",
+  "category"         : "furniture",
+  "price"            : 2500,
+  "description"      : "A gnome in a jar. It's got no where to run now!",
+  "shortdescription" : "G.I.A.J. (???)",
+  "shortdescriptionPrefix" : "G.I.A.J.",
+  "race"             : "generic",
+  "itemTags"         : [ "sexbound", "sex" ],
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ 0, 20 ],
+  "sitStatusEffects" : [
+    {
+      "stat"   : "breathProtection",
+      "amount" : 1.0
+    },
+    "dontstarve",
+    "sexbound_sex"
+  ],
+
+  "retainObjectParametersInItem" : true,
+
+  "inventoryIcon" : "jargnomeicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "jargnome.png:default",
+
+      "imagePosition" : [-6, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    }
+  ],
+
+  "scripts"        : [ "/scripts/sexbound/become_node.lua", "/objects/sexbound/jars/inserthuman.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "standing_mini", "missionary_mini", "doggy_mini", "cowgirl_mini", "facesitting_mini", "butterfly_mini", "fellatio_mini", "reverse_cowgirl_mini" ]
+    },
+    "idlePosition"  : "idle_mini"
+  },
+
+  "actorHeadwear" : "gnomecaphead",
+
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "jar" : {
+          "properties" : {
+            "offset" : [ 0, 1 ],
+            "zLevel" : 9999,
+            "image"  : "/objects/sexbound/jars/jarempty.png:default"
+          }
+        },
+
+        "jar-bg" : {
+          "properties" : {
+            "anchorPart" : "jar",
+            "zLevel" : -9999,
+            "image"  : "/objects/sexbound/jars/gnomeinajar/jarhabitat.png:default"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "offset" : [ 0, 1 ]
+          }
+        }
+      }
+    }
+  }
+}

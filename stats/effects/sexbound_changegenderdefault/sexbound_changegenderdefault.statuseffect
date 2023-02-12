@@ -1,0 +1,7 @@
+{
+  "name"            : "sexbound_changegenderdefault",
+  "defaultDuration" : 1,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_changegenderdefault.lua" ],
+  "scriptDelta"     : 1
+}

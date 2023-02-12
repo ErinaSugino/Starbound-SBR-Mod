@@ -1,0 +1,15 @@
+{
+  "itemName"         : "sexboundcustomizer",
+  "category"         : "tradeGoods",
+  "description"      : "Use this item open the Sexbound Customizer window.",
+  "inventoryIcon"    : "sexboundcustomizer.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 1,
+  "price"            : 1,
+  "rarity"           : "Legendary",
+  "scripts"          : [ "/items/active/sexboundcustomizer/sexboundcustomizer.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Customizer",
+  "twoHanded"        : false
+}

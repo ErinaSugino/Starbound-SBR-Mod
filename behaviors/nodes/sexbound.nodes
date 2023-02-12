@@ -1,0 +1,178 @@
+{
+  "announceBirth": {
+    "type": "action",
+    "name": "announceBirth",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "checkPregnancy": {
+    "type": "action",
+    "name": "checkPregnancy",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "babyIndex": { "type": "number", "key": null }
+    }
+  },
+
+  "failedTransformation": {
+    "type": "action",
+    "name": "failedTransformation",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "findNearbyOpenSpace": {
+    "type": "action",
+    "name": "findNearbyOpenSpace",
+    "title": "",
+    "properties": {
+      "rectSize": { "type": "vec2", "value": [10, 10] }
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "position": { "type": "position", "key": null }
+    }
+  },
+
+  "giveBirth": {
+    "type": "action",
+    "name": "giveBirth",
+    "title": "",
+    "properties": {
+      "babyIndex": { "type": "number", "value": null }
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "hasOwnerUuid": {
+    "type": "action",
+    "name": "hasOwnerUuid",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "entityId": { "type": "string", "key": null }
+    }
+  },
+
+  "hasRespawner": {
+    "type": "action",
+    "name": "hasRespawner",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "entityId": { "type": "string", "key": null }
+    }
+  },
+
+  "isHavingSex": {
+    "type": "action",
+    "name": "isHavingSex",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "lockRespawner": {
+    "type": "action",
+    "name": "lockRespawner",
+    "title": "",
+    "properties": {
+      "respawnerId": { "type": "string", "value": null }
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "placeSexNode": {
+    "type": "action",
+    "name": "placeSexNode",
+    "title": "",
+    "properties": {
+      "position": { "type": "position", "value": null }
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "loungeId": { "type": "string", "key": null }
+    }
+  },
+
+  "remoteSetup": {
+    "type": "action",
+    "name": "remoteSetup",
+    "title": "remoteSetup",
+    "properties": {
+      "entity": { "type": "entity", "value": null }
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "safeGetResource": {
+    "type": "action",
+    "name": "safeGetResource",
+    "title": "safeGetResource",
+    "properties": {
+      "resource": { "type": "string", "value": "health" }
+    },
+    "category": "status",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "resource": { "type": "number", "key": null }
+    }
+  },
+
+  "safeResourcePercentage": {
+    "type": "action",
+    "name": "safeResourcePercentage",
+    "title": "safeResourcePercentage",
+    "properties": {
+      "percentage": { "type": "number", "value": 1 },
+      "resource": { "type": "string", "value": "health" }
+    },
+    "category": "status",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "smashSexNode": {
+    "type": "action",
+    "name": "smashSexNode",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+
+  "unloadSexActor": {
+    "type": "action",
+    "name": "unloadSexActor",
+    "title": "",
+    "properties": {},
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  }
+}

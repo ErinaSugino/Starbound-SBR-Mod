@@ -1,0 +1,20 @@
+{
+  "itemName"         : "nipplepastiesheart2",
+  "category"         : "tradeGoods",
+  "description"      : "Worn on your left nipple.",
+  "inventoryIcon"    : "nipplepastieshearticon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 50,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "/scripts/sexbound/applyApparel.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Pasties Heart (L)",
+  "twoHanded"        : false,
+  "applyConfig"    : {
+    "target"   : 2,
+    "itemName" : "nipplepastiesheart",
+    "wornType" : "nipple"
+  }
+}

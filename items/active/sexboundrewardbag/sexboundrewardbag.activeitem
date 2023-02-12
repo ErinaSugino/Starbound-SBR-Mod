@@ -1,0 +1,18 @@
+{
+  "animation"        : "sexboundrewardbag.animation",
+  "animationCustom"  : {},
+  "fireTime"         : 2.0,
+  "fireOffset"       : [1.0, 0.0],
+  "itemName"         : "sexboundrewardbag",
+  "inventoryIcon"    : "sexboundrewardbagicon.png",
+  "category"         : "mysteriousReward",
+  "description"      : "Use this to open it and reveal its contents. How exciting!",
+  "level"            : 1,
+  "maxStack"         : 1,
+  "price"            : 0,
+  "rarity"           : "Legendary",
+  "scripts"          : [ "sexboundrewardbag.lua" ],
+  "shortdescription" : "[SxB] Reward Bag",
+  "twoHanded"        : true,
+  "treasure"         : { "pool" : "sexboundItem", "level" : 1 }
+}

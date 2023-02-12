@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_sex",
+  "defaultDuration" : 999,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/sex.png",
+  "label"           : "Having Sex",
+  "scripts"         : [ "sexbound_sex.lua" ]
+}

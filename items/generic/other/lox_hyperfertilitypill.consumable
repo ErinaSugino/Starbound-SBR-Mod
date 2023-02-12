@@ -1,0 +1,14 @@
+{
+  "itemName" : "lox_hyperfertilitypill",
+  "price" : 2500,
+  "rarity" : "Legendary",
+  "category" : "medicine",
+  "inventoryIcon" : "lox_hyperfertilitypill.png",
+  "description" : "The perfect pill for all your family founding needs! Turn that womb into a breeding factory!",
+  "shortdescription" : "Fertility Pill (Strong)",
+  "effects" : [ 
+    [ "sexbound_custom_hyper_fertility" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

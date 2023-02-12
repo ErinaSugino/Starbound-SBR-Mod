@@ -1,0 +1,26 @@
+[
+  {
+    "op": "add",
+    "path": "/climax",
+    "value": {
+      "mass": 0.2,
+      "gravityMultiplier": 0.15,
+      "bounceFactor": 0.0,
+      "stopOnFirstBounce": true,
+      "maxMovementPerStep": 0.4,
+
+      "collisionPoly": [
+        [-0.25, -0.25],
+        [0.25, -0.25],
+        [0.25, 0.25],
+        [-0.25, 0.25]
+      ],
+      "ignorePlatformCollision": true,
+
+      "airFriction": 0.0,
+      "liquidFriction": 50.0,
+      "groundFriction": 20.0,
+      "maximumCorrection": 0.75
+    }
+  }
+]

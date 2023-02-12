@@ -1,0 +1,9 @@
+{
+  "itemName"         : "liquidejaculant",
+  "category"         : "liquid",
+  "description"      : "A measure of ejaculant.",
+  "inventoryIcon"    : "ejaculanticon.png",
+  "liquid"           : "ejaculant",
+  "rarity"           : "Uncommon",
+  "shortdescription" : "Ejaculant"
+}

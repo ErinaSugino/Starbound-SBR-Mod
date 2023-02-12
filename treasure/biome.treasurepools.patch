@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/miniVillageTreasure/0/1/pool/-",
+    "value": { "weight": 0.003, "pool": "sexbound_jargnome" }
+  }
+]

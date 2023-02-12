@@ -1,0 +1,5 @@
+{
+  "name"            : "sexbound_mind_control",
+  "defaultDuration" : 1,
+  "scripts"         : [ "sexbound_mind_control.lua" ]
+}

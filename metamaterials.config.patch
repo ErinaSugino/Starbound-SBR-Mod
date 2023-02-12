@@ -1,0 +1,11 @@
+[
+  {
+    "op": "add",
+    "path": "/-",
+    "value": {
+      "name": "sexboundaddonbase",
+      "materialId": 65069,
+      "collisionKind": "none"
+    }
+  }
+]

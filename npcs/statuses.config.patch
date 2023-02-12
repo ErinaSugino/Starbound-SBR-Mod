@@ -1,0 +1,13 @@
+[
+  {"op": "add", "path": "/statuses/aroused", "value": [
+    "In heat",
+    "Feeling hot and bothered",
+    "Craving sex"
+  ]},
+  
+  {"op": "add", "path": "/statuses/pregnant", "value": [
+    "Practicing being a parent",
+    "Hoping for a happy future",
+    "Usual morning sickness"
+  ]}
+]

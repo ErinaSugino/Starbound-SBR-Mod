@@ -1,0 +1,90 @@
+[
+  {
+    "op"      : "test",
+    "path"    : "/scripts",
+    "inverse" : true
+  },
+
+  {
+    "op"   : "remove",
+    "path" : "/orientations/0/spaceScan"
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactive",
+    "value" : true
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/itemTags",
+    "value" : [ "sexbound", "sex" ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/animationPosition",
+    "value" : [ 4, 0 ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/spaces",
+    "value" : [
+      [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+      [-2, 0],                          [2, 0]
+    ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/scripts",
+    "value" : [ "/scripts/sexbound/threeactors.lua" ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/sexboundConfig",
+    "value" : {
+      "animationPartsCentered" : true,
+      "actor"         : { "mirrorArtwork" : true },
+      "nodePositions" : [ [-1, 0], [0,  0], [1,   0] ],
+      "sitPositions"  : [ [8, 20], [0, 20], [-8, 20] ],
+      "position"      : {
+        "sex" : [ "missionary_on_table", "doggy_on_table", "cowgirl_on_table", "standing_on_table", "facesitting_to_table", "butterfly_on_table", "fellatio_on_table", "reverse_cowgirl_on_table" ]
+      }
+    }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/animation",
+    "value" : "/artwork/humanoid/twoactors-centered.animation"
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animationCustom",
+    "value" : {
+      "animatedParts" : {      
+        "parts" : {
+          "table" : {
+            "properties" : {
+              "offset" : [ 0, 1 ],
+              "zLevel" : -1,
+              "image"  : "/objects/biome/toxicplains/toxictable/toxictable.png:<color>"
+            }
+          },
+          
+          "actors" : {
+            "properties" : {
+              "anchorPart" : "table",
+              "offset"     : [ 0, 1 ]
+            }
+          }
+        }
+      }
+    }
+  }
+]

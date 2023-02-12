@@ -1,0 +1,32 @@
+{
+  "name": "sexbound-pregnant",
+  "description": "",
+  "scripts": ["/scripts/actions/sexbound.lua"],
+  "parameters": {},
+  "root": {
+    "title": "sequence",
+    "type": "composite",
+    "name": "sequence",
+    "parameters": {},
+    "children": [
+      {
+        "title": "checkPregnancy",
+        "type": "action",
+        "name": "checkPregnancy",
+        "parameters": {},
+        "output": {
+          "babyIndex": "babyIndex"
+        }
+      },
+      {
+        "title": "giveBirth",
+        "type": "action",
+        "name": "giveBirth",
+        "parameters": {
+          "babyIndex": { "key": "babyIndex" }
+        },
+        "output": {}
+      }
+    ]
+  }
+}

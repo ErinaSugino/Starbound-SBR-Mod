@@ -1,0 +1,15 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "image" : [
+        "/artwork/humanoid/<role>/default/wearable/hotholiday/unisex/head.png",
+        "/artwork/humanoid/<role>/default/wearable/hotholiday/unisex/head_variant.png"
+      ],
+      "imageFrameName" : "<frameName>",
+      "mask" : "/artwork/humanoid/<role>/default/wearable/hotholiday/unisex/head_mask.png",
+      "addStatus" : [ "equipped_santahat" ]
+    }
+  }
+]

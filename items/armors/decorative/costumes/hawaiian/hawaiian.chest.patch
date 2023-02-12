@@ -1,0 +1,17 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "images" : {
+        "body"         : [
+          "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/chest.png",
+          "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/chest_variant.png"
+        ],
+        "bodyPregnant" : "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/chest_pregnant.png",
+        "backSleeve"   : "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/bsleeve.png",
+        "frontSleeve"  : "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/fsleeve.png"
+      }
+    }
+  }
+]

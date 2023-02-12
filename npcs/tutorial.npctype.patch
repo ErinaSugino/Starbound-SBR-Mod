@@ -1,0 +1,8 @@
+[
+  { "op": "test", "path": "/damageTeamType", "value" : "assistant" },
+  {
+    "op" : "replace",
+    "path" : "/damageTeamType",
+    "value" : "friendly"
+  }
+]

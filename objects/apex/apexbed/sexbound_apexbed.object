@@ -1,0 +1,143 @@
+{
+  "objectName"         : "sexbound_apexbed",
+  "description"        : "A cheaply-manufactured bed, but it'll do.",
+  "shortdescription"   : "[SxB] Standard Issue Bed",
+  
+  "category"           : "furniture",
+  "colonyTags"         : [ "apex", "apexvillage" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 250,
+  "race"               : "apex",
+  "rarity"             : "Uncommon",
+  "apexDescription"    : "A simple bed for having sex. It gets the job done!",
+  "avianDescription"   : "A simple bed for having sex. It gets the job done!",
+  "floranDescription"  : "A simple bed for having sex. It gets the job done!",
+  "glitchDescription"  : "A simple bed for having sex. It gets the job done!",
+  "humanDescription"   : "A simple bed for having sex. It gets the job done!",
+  "hylotlDescription"  : "A simple bed for having sex. It gets the job done!",
+  "novakidDescription" : "A simple bed for having sex. It gets the job done!",
+  
+  "inventoryIcon" : "sexbound_apexbedicon.png",
+  "orientations" : [
+    {
+      "dualImage"      : "apexbed.png:<color>",
+      "imagePosition"  : [ -24, 0 ], 
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "anchors"        : [ "bottom" ],
+      "spaces"         : [
+        [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-3, 0],                                   [2, 0]
+      ]
+    }
+  ],
+  
+  "scripts"        : [ "/scripts/sexbound/threeactors.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [ -2,  0 ], [ -1,  0 ], [ 0,  0 ], [  1,  0 ] ],
+    "sitPositions"  : [ [ 16, 20 ], [  8, 20 ], [ 0, 20 ], [ -8, 20 ] ],
+    "position"      : {
+      "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "facesitting_in_bed", "standing", "butterfly", "fellatio", "reverse_cowgirl_in_bed" ]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "props" : {
+          "states" : {
+            "position4" : {
+              "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+              "frameProperties" : { "immediateSound" : [ "", "", "", "/sfx/sexbound/thud.ogg" ] }
+            }
+          }
+        }
+      },
+    
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "offset" : [ 0, 1.5 ],
+            "zLevel" : -1,
+            "image"  : "/objects/apex/apexbed/apexbed.png:<color>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "position2" : {
+                "frameProperties" : {
+                  "offset" : [ [0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5] ]
+                }
+              },
+
+              "position3" : {
+                "frameProperties" : {
+                  "offset" : [ [0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5] ]
+                }
+              },
+
+              "position4" : {
+                "frameProperties" : {
+                  "offset" : [ [0, 1.5], [0, 1.625], [0, 1.75], [0, 2], [0, 1.75] ]
+                }
+              }
+            }
+          }
+        },
+        
+        "bed-overlay" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "zLevel"     : 99,
+            "image"      : "/objects/apex/apexbed/apexbed-overlay.png:<color>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "idle"             : { "properties" : { "zLevel" : 0 } },
+              "position1"        : { "properties" : { "zLevel" : 0 } },
+              "position1-climax" : { "properties" : { "zLevel" : 0 } },
+              "position1-reset"  : { "properties" : { "zLevel" : 0 } },
+              "position5"        : { "properties" : { "zLevel" : 0 } },
+              "position5-climax" : { "properties" : { "zLevel" : 0 } },
+              "position5-reset"  : { "properties" : { "zLevel" : 0 } },
+              "position6"        : { "properties" : { "zLevel" : 0 } },
+              "position6-climax" : { "properties" : { "zLevel" : 0 } },
+              "position6-reset"  : { "properties" : { "zLevel" : 0 } }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [ 0, -0.125 ]
+          },
+          
+          "partStates" : {
+            "actors" : {
+              "idle"             : { "properties" : { "offset" : [ -0.5, -1.625 ] } },
+              "position1"        : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position1-climax" : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position1-reset"  : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+							"position2"        : { "properties" : { "offset" : [ -0.5, -0.125 ] } },
+							"position2-climax" : { "properties" : { "offset" : [ -0.5, -0.125 ] } },
+							"position2-reset"  : { "properties" : { "offset" : [ -0.5, -0.125 ] } },
+              "position5"        : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position5-climax" : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position5-reset"  : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position6"        : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position6-climax" : { "properties" : { "offset" : [ 0,    -1.625 ] } },
+              "position6-reset"  : { "properties" : { "offset" : [ 0,    -1.625 ] } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

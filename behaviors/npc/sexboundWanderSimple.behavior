@@ -1,0 +1,30 @@
+{
+  "name": "sexboundWanderSimple",
+  "description": null,
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Sexbound",
+        "type": "module",
+        "name": "sexbound",
+        "parameters": {}
+      },
+      {
+        "title": "wanderSimple",
+        "type": "module",
+        "name": "wanderSimple",
+        "parameters": {
+          "wanderTime": { "value": [0.5, 2] },
+          "wanderWaitTime": { "value": [2, 10] },
+          "alwaysRun": { "value": false }
+        }
+      }
+    ]
+  }
+}

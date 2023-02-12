@@ -1,0 +1,137 @@
+{
+  "name": "sexbound-setup",
+  "description": "",
+  "scripts": [
+    "/scripts/actions/notification.lua",
+    "/scripts/actions/world.lua",
+    "/scripts/actions/sexbound.lua",
+    "/scripts/actions/movement.lua"
+  ],
+  "parameters": {},
+  "root": {
+    "title": "Sit",
+    "type": "composite",
+    "name": "sequence",
+    "parameters": {},
+    "children": [
+      {
+        "title": "receivedNotification",
+        "type": "action",
+        "name": "receivedNotification",
+        "parameters": {
+          "type": { "value": "sexbound.setup" }
+        },
+        "output": {
+          "target": "sexnode"
+        }
+      },
+      {
+        "title": "entityExists",
+        "type": "action",
+        "name": "entityExists",
+        "parameters": {
+          "entity": { "key": "sexnode" }
+        }
+      },
+      {
+        "title": null,
+        "type": "decorator",
+        "name": "inverter",
+        "parameters": {},
+        "child": {
+          "title": "",
+          "type": "action",
+          "name": "loungableOccupied",
+          "parameters": {
+            "entity": { "key": "sexnode" }
+          }
+        }
+      },
+      {
+        "title": "entityPosition",
+        "type": "action",
+        "name": "entityPosition",
+        "parameters": {
+          "entity": { "key": "sexnode" }
+        },
+        "output": {
+          "position": "sexnodePosition"
+        }
+      },
+      {
+        "title": "succeeder",
+        "type": "decorator",
+        "name": "succeeder",
+        "parameters": {},
+        "child": {
+          "title": "sequence",
+          "type": "composite",
+          "name": "sequence",
+          "parameters": {},
+          "children": [
+            {
+              "title": null,
+              "type": "decorator",
+              "name": "inverter",
+              "parameters": {},
+              "child": {
+                "title": "isHavingSex",
+                "type": "action",
+                "name": "isHavingSex",
+                "parameters": {}
+              }
+            },
+            {
+              "title": "remoteSetup",
+              "type": "action",
+              "name": "remoteSetup",
+              "parameters": {
+                "entity": { "key": "sexnode" }
+              }
+            },
+            {
+              "title": "setPosition",
+              "type": "action",
+              "name": "setPosition",
+              "parameters": {
+                "footPosition": { "value": true },
+                "position": { "key": "sexnodePosition" }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "title": "",
+        "type": "composite",
+        "name": "parallel",
+        "parameters": {
+          "fail": { "value": 1 },
+          "success": { "value": -1 }
+        },
+        "children": [
+          {
+            "title": "entityExists",
+            "type": "action",
+            "name": "entityExists",
+            "parameters": {
+              "entity": { "key": "sexnode" }
+            }
+          },
+          {
+            "title": "isHavingSex",
+            "type": "action",
+            "name": "isHavingSex",
+            "parameters": {}
+          },
+          {
+            "title": "runner",
+            "type": "action",
+            "name": "runner",
+            "parameters": {}
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "objectName"         : "sexbound_wheelbarrow",
+  "description"        : "A wheelbarrow for transporting goods.",
+  "shortdescription"   : "[SxB] Wheelbarrow",
+  "category"           : "decorative",
+  "colonyTags"         : [ "misc" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 320,
+  "race"               : "glitch",
+  "rarity"             : "Rare",
+  "apexDescription"    : "A large wheelbarrow. It looks as if it could carry a large number of objects.",
+  "avianDescription"   : "A large wooden cart on wheels. I wonder what it's used for.",
+  "floranDescription"  : "Floran would like to go for ride!",
+  "glitchDescription"  : "Disinterested. Wheelbarrows can be used to transport goods.",
+  "humanDescription"   : "A very large wheelbarrow. You could take a nap in here.",
+  "hylotlDescription"  : "A very large cart. Wouldn't four wheels be better?",
+  "novakidDescription" : "Some kinda large wheelbarrow, good for haulin' gear.",
+
+  "inventoryIcon" : "sexbound_wheelbarrowicon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "wheelbarrow-custom.png:<color>",
+      "imagePosition"  : [-32, 0],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces"         : [
+        [-4, 2], [-3, 2], [-2, 2],                  [1, 2], [2, 2], [3, 2],
+        [-4, 1], [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1], [3, 1],
+        [-4, 0], [-3, 0],                                   [2, 0], [3, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : ["/scripts/sexbound/threeactors.lua"],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ],
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position" : {
+      "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing_in_bed", "facesitting_in_bed", "butterfly_in_bed", "fellatio_in_bed", "reverse_cowgirl_in_bed"]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "wheelbarrow" : {
+          "properties" : {
+            "offset" : [ 0, 1.5 ],
+            "zLevel" : -1,
+            "image"  : "/objects/glitch/wheelbarrow/wheelbarrow-custom.png:<color>.<frame>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "position1" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+              
+              "position2" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+              
+              "position3" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+              
+              "position6" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+
+              "position4_1" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              }
+            }
+          }
+        },
+        
+        "wheelbarrow-overlay" : {
+          "properties" : {
+            "anchorPart" : "wheelbarrow",
+            "zLevel"     : 99,
+            "image"      : "/objects/glitch/wheelbarrow/wheelbarrow-overlay.png:<color>.<frame>"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "wheelbarrow",
+            "offset"     : [ 0.5, -0.125 ]
+          }
+        }
+      }
+    }
+  }
+}

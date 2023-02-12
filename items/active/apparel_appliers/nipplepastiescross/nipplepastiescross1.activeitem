@@ -1,0 +1,20 @@
+{
+  "itemName"         : "nipplepastiescross1",
+  "category"         : "tradeGoods",
+  "description"      : "Worn on your right nipple.",
+  "inventoryIcon"    : "nipplepastiescrossicon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 50,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "/scripts/sexbound/applyapparel.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Pasties Cross (R)",
+  "twoHanded"        : false,
+  "applyConfig"      : {
+    "target"   : 1,
+    "itemName" : "nipplepastiescross",
+    "wornType" : "nipple"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "objectName" : "lox_condomdispenser",
+  "shortdescription" : "[ATC] Condom Dispenser",
+  "description" : "A condom dispenser that gives out condoms.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 550,
+	"lightColor" : [153, 0, 255],
+  "printable" : false,
+
+  "apexDescription"    : "It's full of condoms.",
+  "avianDescription"   : "It's full of condoms.",
+  "floranDescription"  : "It's full of condoms.",
+  "glitchDescription"  : "It's full of condoms.",
+  "humanDescription"   : "It's full of condoms.",
+  "hylotlDescription"  : "It's full of condoms.",
+  "novakidDescription" : "It's full of condoms.",
+  "nekiDescriptione"   : "Machine full of things for fucks but no babies. Why?",
+  
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+		{
+			"imageLayers" : [{"image" : "lox_condomdispenser.png:<color>.<frame>"}, {"image" : "lox_condomdispenserlit.png:<color>.<frame>", "fullbright" : true}],
+			"imagePosition" : [-8, -8],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+			"anchors" : ["background"],
+			"spaceScan" : 0.1
+		}
+  ],
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Alluring Toys Co. Condoms",
+        "subtitle" : "Wrap it before you stick it."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  1 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  2 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  3 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  4 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  5 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  6 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  7 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  8 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" :  9 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" : 10 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" : 11 } }},
+			{"item" : { "name" : "lox_condom", "parameters" : { "colorIndex" : 12 } }}
+    ]
+  }
+}

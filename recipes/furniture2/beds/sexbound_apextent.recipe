@@ -1,0 +1,8 @@
+{
+  "input": [
+    { "item": "apextent", "count": 1 },
+    { "item": "sexbux", "count": 200 }
+  ],
+  "output": { "item": "sexbound_apextent", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

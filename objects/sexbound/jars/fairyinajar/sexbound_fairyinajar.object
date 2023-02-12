@@ -1,0 +1,128 @@
+{
+  "objectName"       : "sexbound_fairyinajar",
+  "colonyTags"       : [ "kinky", "light" ],
+  "interactive"      : true,
+  "objectType"       : "loungeable",
+  "rarity"           : "Legendary",
+  "category"         : "furniture",
+  "price"            : 2500,
+  "description"      : "A fairy in a jar. It's got no where to run now!",
+  "shortdescription" : "F.I.A.J. (???)",
+  "shortdescriptionPrefix" : "F.I.A.J.",
+  "race"             : "generic",
+  "itemTags"         : [ "sexbound", "sex" ],
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ 0, 20 ],
+  "sitStatusEffects" : [
+    {
+      "stat"   : "breathProtection",
+      "amount" : 1.0
+    },
+    "dontstarve",
+    "regeneration1",
+    "sexbound_sex"
+  ],
+
+  "retainObjectParametersInItem" : true,
+
+  "inventoryIcon" : "jarfairyicon.png",
+  "orientations" : [
+    {
+      "dualImage"      : "jarfairy.png:default",
+      "imagePosition"  : [-6, 0],
+      "frames"         : 1,
+      "animationCycle" : 1,
+      "spaceScan"      : 0.1,
+      "anchors"        : [ "bottom" ],
+      "collision"      : "platform"
+    }
+  ],
+
+  "scripts"        : [ "/scripts/sexbound/become_node.lua", "/objects/sexbound/jars/inserthuman.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "standing_mini", "missionary_mini", "doggy_mini", "cowgirl_mini", "facesitting_mini", "butterfly_mini", "fellatio_mini", "reverse_cowgirl_mini" ]
+    },
+    "idlePosition"  : "idle_mini"
+  },
+
+  "actorBackwear" : "fairyback",
+
+  "actorSxbMoanPitch"   : [ 1.5, 1.5 ],
+  "actorSxbOrgasmPitch" : [ 1.5, 1.5 ],
+
+  /* Require the sexbound futanari plugin to be enabled in the /sexbound.config file. Default is 5% chance. */
+  "actorChanceToSpawnWithGenderAsFutanari" : 0.05,
+
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" :{
+        "props" : {
+          "states" : { "idle" : { "cycle" : 1, "frames" : 5 } }
+        }
+      },
+
+      "parts" : {
+        "jar" : {
+          "properties" : {
+            "fullbright" : true,
+            "offset"     : [ 0, 1 ],
+            "zLevel"     : 9999,
+            "image"      : "/objects/sexbound/jars/jarempty.png:default"
+          }
+        },
+
+        "jar-bg" : {
+          "properties" : {
+            "anchorPart" : "jar",
+            "fullbright" : true,
+            "zLevel" : -9999,
+            "image"  : "/objects/sexbound/jars/fairyinajar/jarhabitat.png:default"
+          }
+        },
+
+        "hover" : {
+          "properties" : { 
+            "anchorPart" : "root"
+          },
+          "partStates" : {
+            "props" : {
+              "idle" : {
+                "frameProperties" : {
+                  "offset" : [ [ 0, 0.125 ], [0, 0.25 ], [ 0, 0.375 ], [ 0, 0.375 ], [ 0, 0.25 ] ]
+                }
+              }
+            }
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "offset" : [ 0, 1 ],
+            "anchorPart" : "hover"
+          }
+        }
+      }
+    },
+
+    "lights" : {
+      "glow" : {
+        "anchorPart" : "actors",
+        "active" : true,
+        "color" : [ 200, 200, 200 ],
+        "pointLight" : true,
+        "flickerPeriod" : 1,
+        "flickerMinIntensity" : 0.95,
+        "flickerMaxIntensity" : 1.0,
+        "flickerPeriodVariance" : 0.0,
+        "flickerIntensityVariance" : 0.0
+      }
+    }
+  }
+}

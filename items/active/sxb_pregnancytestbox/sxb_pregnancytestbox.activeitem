@@ -1,0 +1,22 @@
+{
+  "itemName" : "sxb_pregnancytestbox",
+  "price" : 1500,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Uncommon",
+  "category" : "tradeGoods",
+  "description" : "A handy box full of pregnancy tests.",
+  "shortdescription" : "Box of Pregnancy Tests",
+  "twoHanded" : false,
+  
+  "itemTags" : [ "sexbound" ],
+
+  "inventoryIcon" : "pregnancytestbox_modern.png",
+  
+  "scripts" : ["/items/active/sxb_pregnancytestbox/pregnancytestbox.lua"],
+  
+  "scriptDelta" : 3,
+  
+  "durability" : 10,
+  "durabilityPerUse": 1
+}

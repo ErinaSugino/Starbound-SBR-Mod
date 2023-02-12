@@ -1,0 +1,10 @@
+{
+  "itemName" : "sexbound_emptyjar",
+  "price" : 1000,
+  "rarity" : "Rare",
+  "category" : "craftingMaterial",
+  "inventoryIcon" : "sexbound_emptyjar.png",
+  "description" : "Perfect for storing horny li'l creatures.",
+  "shortdescription" : "[SxB] Empty Jar",
+  "itemTags" : [ "reagent" ]
+}

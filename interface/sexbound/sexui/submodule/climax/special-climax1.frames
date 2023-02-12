@@ -1,0 +1,7 @@
+{
+  "frameGrid" : {
+    "size"       : [ 40, 21 ],
+    "dimensions" : [ 2,   1 ],
+    "names"      : [ [ "button.1", "button.2" ] ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_custom_fertility",
+  "defaultDuration" : 600,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/fertile.png",
+  "label"           : "Very Fertile",
+  "scripts"         : [ "sexbound_custom_fertility.lua" ]
+}

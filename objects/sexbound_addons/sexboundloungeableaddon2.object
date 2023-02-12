@@ -1,0 +1,34 @@
+{
+  "objectName"       : "sexboundloungeableaddon2",
+  "category"         : "furniture",
+  "colonyTags"       : [ "misc" ],
+  "description"      : "A tier-2 addon that can be used to upgrade certain objects to be sex-enabled. Supports upto 3 actors.",
+  "interactive"      : true,
+  "price"            : 300,
+  "printable"        : false,
+  "race"             : "generic",
+  "rarity"           : "Rare",
+  "shortdescription" : "[SxB] Loungeable Addon T2",
+
+  "inventoryIcon" : "sexboundloungeableaddon.png:tier2",
+  "orientations" : [
+    {
+      "animationCycle"    : 1.0,
+      "animationPosition" : [ 0, 0 ],
+      "direction"         : "right",
+      "frames"            : 1,
+      "image"             : "sexboundloungeableaddonpreview.png:tier2",
+      "imagePosition"     : [ -24, 0 ],
+      "spaces"            : [ [ 0, 2 ] ],
+      "fgAnchors"         : [ [ 0, 1 ] ],
+      "anchorAny"         : true,
+      "anchorMaterial"    : "metamaterial:sexboundaddonbase"
+    }
+  ],
+  
+  "scripts"        : [ "/scripts/objectaddons.lua", "sexboundloungeableaddon.lua" ],
+  "scriptDelta"    : 1,
+  "addonConfig"    : { "isAddons" : [{ "name" : "sexboundLoungeableAddon2" }] },
+  "animation"      : "sexboundloungeableaddon.animation",
+  "animationParts" : { "hearts": "sexboundloungeableaddon.png:tier2" }
+}

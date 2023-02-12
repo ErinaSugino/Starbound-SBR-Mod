@@ -1,0 +1,9 @@
+{
+  "name"            : "sexbound_stun",
+  "blockingStat"    : "specialStatusImmunity",
+  "defaultDuration" : 300,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/timefreeze.png",
+  "label"           : "SxB Stunned",
+  "scripts"         : [ "sexbound_stun.lua" ]
+}
