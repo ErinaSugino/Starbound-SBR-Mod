@@ -1,0 +1,12 @@
+[
+  {
+    "op" : "add",
+    "path" : "/animatedParts/stateTypes/actors/states/idle_toy",
+    "value" : {"frames":1,"cycle":1,"mode":"loop"}
+  },
+  {
+    "op" : "add",
+    "path" : "/animatedParts/stateTypes/props/states/idle_toy",
+    "value" : {"frames":1,"cycle":1,"mode":"loop"}
+  }
+]

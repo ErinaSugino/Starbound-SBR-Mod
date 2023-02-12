@@ -1,0 +1,16 @@
+[
+  {
+    "op" : "add",
+    "path" : "/butterfly_tentacleplant",
+    "value" : {
+      "configFile" : "/positions/butterfly_tentacleplant.config"
+    }
+  },
+  {
+    "op" : "add",
+    "path" : "/fellatio_tentacleplant",
+    "value" : {
+      "configFile" : "/positions/fellatio_tentacleplant.config"
+    }
+  }
+]

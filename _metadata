@@ -1,0 +1,11 @@
+{
+	"name": "lustbound_sbr_patch",
+	"version": "1.3.0 x 1.0",
+	"author": "Erina Sugino",
+	"description": "Temporary patch to make Lustbound 1.3.0 fully compatible with Sexbound Reborn 1.0",
+	"friendlyName": "Lustbound x Sexbound Reborn Patch",
+	"priority": 200,
+	"link": "",
+	"includes": [],
+        "requires": ["lustbound_base", "lox_sexbound"]
+}
