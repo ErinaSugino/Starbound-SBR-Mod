@@ -193,7 +193,7 @@ end
 -- @return listB
 Sexbound.Util.listToUpper = function(l)
     local r = {}
-    for k,v in pairs(l) do r[string.upper(k)] = v end
+    if type(l) == "table" then for k,v in pairs(l) do r[string.upper(k)] = v end end
     return r
 end
 
