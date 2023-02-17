@@ -1,0 +1,9 @@
+# Default behaviour
+* text eol=lf
+
+# Exclude images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
