@@ -251,7 +251,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     if babyName and babyName ~= "" then params.identity.name = babyName end
     util.mergeTable(params, babyConfig.birthParams or {})
     
-    -- Apply genetic color directives
+    [[-- Apply genetic color directives
     local bodyDirectives, emoteDirectives, hairDirectives = "", "", ""
     if babyConfig.bodyColor then
         local bodyColorDirectives = "?replace"
@@ -276,7 +276,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     
     if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
     if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
-    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end
+    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end]]
     
     -- Ensure gender-safe hair assignment
     local speciesConfig

@@ -570,7 +570,7 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     local baby = factory:make(otherActor)
     baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(otherActor)
     
-    local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
+    [[local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
     local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = otherActor:getGenes()
     local bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage
     if baby.birthEntityGroup ~= "humanoid" then return baby end -- no need to waste time on colors for monsters
@@ -678,7 +678,7 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     
     baby.bodyColor = babyBodyColor
     baby.undyColor = babyUndyColor
-    baby.hairColor = babyHairColor
+    baby.hairColor = babyHairColor]]
     
     return baby
 end
