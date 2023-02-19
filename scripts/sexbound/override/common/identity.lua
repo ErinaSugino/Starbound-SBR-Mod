@@ -54,7 +54,7 @@ function Sexbound.Common.Identity:addCustomProperties(identity)
     identity.motherUuid = status.statusProperty("motherUuid", nil)
     identity.fatherUuid = status.statusProperty("fatherUuid", nil)
     
-    [[-- Cache species genetic templates
+    --[[-- Cache species genetic templates
     identity.genetics = {}
     identity.genetics.bodyColorPool = speciesConfig.bodyColor
     identity.genetics.bodyColorPoolAverage = {}

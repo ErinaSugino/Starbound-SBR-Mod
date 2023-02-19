@@ -75,7 +75,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
         end
     end)
     
-    [[-- Fetch current color palette "genes" of entity
+    --[[-- Fetch current color palette "genes" of entity
     local directives = identity.bodyDirectives..identity.hairDirectives
     local presets = {Sexbound.Util.listToUpper(identity.genetics.bodyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.undyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.hairColorPool[1])}
     

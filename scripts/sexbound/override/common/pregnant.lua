@@ -251,7 +251,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     if babyName and babyName ~= "" then params.identity.name = babyName end
     util.mergeTable(params, babyConfig.birthParams or {})
     
-    [[-- Apply genetic color directives
+    --[[-- Apply genetic color directives
     local bodyDirectives, emoteDirectives, hairDirectives = "", "", ""
     if babyConfig.bodyColor then
         local bodyColorDirectives = "?replace"

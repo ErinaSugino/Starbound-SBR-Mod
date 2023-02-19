@@ -19,7 +19,7 @@ end
 function Sexbound.NPC.Identity:build()
     local identity = self:addCustomProperties(npc.humanoidIdentity())
     
-    [[-- Fetch current color palette "genes" of entity
+    --[[-- Fetch current color palette "genes" of entity
     local directives = identity.bodyDirectives..identity.hairDirectives
     local presets = {Sexbound.Util.listToUpper(identity.genetics.bodyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.undyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.hairColorPool[1])}
     
