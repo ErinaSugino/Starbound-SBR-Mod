@@ -86,6 +86,7 @@ function SexUI.POV:render()
     self.canvas:clear()
     self.controls:clear()
     local called = false
+    local faultyModules = {}
     
     for i,mod in ipairs(self.modules) do
         if not called then 
@@ -96,10 +97,16 @@ function SexUI.POV:render()
             end)
         end
         
+        if not stat then sb.logError("POV module "..self.layerIDs[i].."'s render method errored!") sb.logError(res) table.insert(faultyModules, i) end
         if stat and res then called = true end -- Only render the first available module
         
         if self.layersEnabled[self.layerIDs[i]] then self.controls:drawImage("/interface/sexbound/sexui/submodule/pov/button.png", {0, (0 + 15*(i-1))}, 1.0, self._config.color, false)
         else self.controls:drawImage("/interface/sexbound/sexui/submodule/pov/button_off.png", {0, (0 + 15*(i-1))}, 1.0, {255,255,255,255}, false) end
+    end
+    for i,m in ipairs(faultyModules) do
+        -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        table.remove(self.layerIDs, m)
+        table.remove(self.modules, m)
     end
     
     self:renderButtons(self.controls)
@@ -108,16 +115,30 @@ end
 --- Updates this instance
 -- @param dt
 function SexUI.POV:update(dt)
+    local faultyModules = {}
     for _,mod in ipairs(self.modules) do
-        pcall(function() mod:update(dt) end)
+        stat,res = pcall(function() mod:update(dt) end)
+        if not stat then sb.logError("POV module "..self.layerIDs[i].."'s update method errored!") sb.logError(res) table.insert(faultyModules, i) end
+    end
+    for i,m in ipairs(faultyModules) do
+        -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        table.remove(self.layerIDs, m)
+        table.remove(self.modules, m)
     end
 end
 
 --- Sends new sync update data to modules
 -- @param a table of actors
 function SexUI.POV:triggerUpdate(actors)
+    local faultyModules = {}
     for _,mod in ipairs(self.modules) do
-        pcall(function() mod:triggerUpdate(actors) end)
+        stat,res = pcall(function() mod:triggerUpdate(actors) end)
+        if not stat then sb.logError("POV module "..self.layerIDs[i].."'s triggerUpdate method errored!") sb.logError(res) table.insert(faultyModules, i) end
+    end
+    for i,m in ipairs(faultyModules) do
+        -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        table.remove(self.layerIDs, m)
+        table.remove(self.modules, m)
     end
 end
 

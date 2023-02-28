@@ -1014,11 +1014,16 @@ function Sexbound:handleSyncUI(args)
             showNippleswear = actor:getApparel():getIsVisible("nippleswear"),
             frameName       = actor:getFrameName(actor:getAnimationState()),
             gender          = actor:getGender(),
-            entityType      = actor:getEntityGroup(),
-            genitalType     = actor:getGenitalType(),
-            species         = actor:getSpecies(),
             subGender       = actor:getSubGender(),
-            isPregnant      = actor:isVisiblyPregnant()
+            entityType      = actor:getEntityGroup(),
+            genitalType     = actor:getGenitalTypes(),
+            species         = actor:getSpecies(),
+            status          = {
+                isPregnant  = actor:isVisiblyPregnant(),
+                isClimaxing = actor._isClimaxing or false,
+                isPreClimaxing = actor._isPreClimaxing or false,
+                isScriptedClimaxing = actor._isScriptedClimaxing or false
+            }
         })
 
         if actor:getPlugins("climax") then
