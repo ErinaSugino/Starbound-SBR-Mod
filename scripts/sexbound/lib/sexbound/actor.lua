@@ -919,7 +919,7 @@ end
 
 function Sexbound.Actor:buildGenitalType()
     local gender = self:getSubGender() or self:getGender()
-    sb.logInfo("OLD Building genital type for "..self:getName().." - is "..tostring(gender).." - THIS SHOULD NOT FIRE")
+    self:getLog():warn("OLD Building genital type for "..self:getName().." - is "..tostring(gender).." - THIS SHOULD NOT FIRE")
     local targetGenders = self:getParent():getConfig().sex.whichGendersCanProduceSperm or {"male", "futanari"}
     for _,g in pairs(targetGenders) do
         if g == gender then return "male" end

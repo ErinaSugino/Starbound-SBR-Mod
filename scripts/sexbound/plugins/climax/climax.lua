@@ -49,7 +49,7 @@ function Sexbound.Actor.Climax:new(parent, config)
     -- Load scripted climax scenarios
     table.insert(_self._scenarios, Sexbound.ScriptedClimax.Scenario1:new(_self))
     
-    sb.logInfo("Inited Climax Plugin for actor ".._self._parent:getName())
+    self:getLog():info("Inited Climax Plugin for actor ".._self._parent:getName())
 
     return _self
 end
@@ -206,7 +206,7 @@ function Sexbound.Actor.Climax:beginClimax()
 
     self:setTimer("shoot", 0)
 
-    self:refreshCooldown()
+    self:refreshCooldown(true)
 
     actor:getStatus():addStatus("climaxing")
 
@@ -319,8 +319,9 @@ function Sexbound.Actor.Climax:refreshClimaxThreshold()
 end
 
 ---Refreshes the cooldown time for this module.
-function Sexbound.Actor.Climax:refreshCooldown()
-    self._cooldown = util.randomInRange(self._config.shotCooldown)
+function Sexbound.Actor.Climax:refreshCooldown(first)
+    if first then self._cooldown = util.randomInRange({0.1,1})
+    else self._cooldown = util.randomInRange(self._config.shotCooldown) end
     return self._cooldown
 end
 
@@ -422,7 +423,7 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
         ["1"] = {
             action = "liquid",
             liquid = projectileLiquid,
-            quantity = 1
+            quantity = 0.2
         }
     }
 
