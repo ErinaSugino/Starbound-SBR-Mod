@@ -47,17 +47,17 @@ end
 
 function Sexbound.Player.Transform:tryCreateNode(spawnOptions)
     local position = self:findNearbyOpenSpace()
-    sb.logInfo("Looking for valid spawn position")
+    if self._parent:canLog("debug") then sb.logInfo("Looking for valid spawn position") end
     if position == false then
         return nil
     end
-    sb.logInfo("Found valid position, attempting to place actual node")
+    if self._parent:canLog("debug") then sb.logInfo("Found valid position, attempting to place actual node") end
     -- Place Sexnode and store Unique ID
     local uniqueId = self:placeSexNode(position, {
         randomStartPosition = true,
         noEffect = spawnOptions.noEffect or false
     })
-    sb.logInfo("Placed node with UUID "..tostring(uniqueId))
+    if self._parent:canLog("debug") then sb.logInfo("Placed node with UUID "..tostring(uniqueId)) end
     if uniqueId ~= nil then
         world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {
             uniqueId = uniqueId

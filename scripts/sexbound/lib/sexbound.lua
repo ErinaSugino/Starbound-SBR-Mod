@@ -654,8 +654,8 @@ function Sexbound:helper_reassignAllRoles()
     
     local targetPerm = curPerms[self._currentOrderId]
     local newOrder = {}
-    sb.logInfo("Rearraging - current permutation: "..self._currentOrderId.." - "..Sexbound.Util.dump(targetPerm))
-    for _,a in ipairs(targetPerm) do table.insert(newOrder, self._actors[a]) sb.logInfo("Adding actor #"..a) end
+    self:getLog():debug("Rearraging - current permutation: "..self._currentOrderId.." - "..Sexbound.Util.dump(targetPerm))
+    for _,a in ipairs(targetPerm) do table.insert(newOrder, self._actors[a]) self:getLog():debug("Adding actor #"..a) end
     self._actorsOrdered = newOrder
 end
 

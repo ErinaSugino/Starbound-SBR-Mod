@@ -93,7 +93,7 @@ function Sexbound.ScriptedClimax.Scenario1:triggerClimaxState()
         animator.setAnimationState("props", stateName, true)
         animator.setAnimationState("actors", stateName, true)
     end) then
-        self:getLog():error("The animator could not enter the animation state : " .. stateName)
+        self._parent:getLog():error("The animator could not enter the animation state : " .. stateName)
     end
 
     top:resetAllActors("climaxState")

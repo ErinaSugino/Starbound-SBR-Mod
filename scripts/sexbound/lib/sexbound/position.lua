@@ -13,8 +13,9 @@ end
 
 ---Returns a reference to a new instance of this class.
 -- @param positionConfig
-function Sexbound.Position:new(positionConfig)
+function Sexbound.Position:new(parent, positionConfig)
     local _self = setmetatable({
+        _parent = parent,
         _config = positionConfig,
         _availableRoleIndex = {"1234"},
         _availableRoles = {["1234"]={1,2,3,4}}
@@ -163,9 +164,9 @@ function Sexbound.Position:setAvailableRoles(indices, roles)
     if type(roles) ~= "table" then return end
     self._availableRoleIndex = indices
     self._availableRoles = roles
-    sb.logInfo("New position composition list for "..self._config.name..": Length "..#self._availableRoleIndex)
-    sb.logInfo(Sexbound.Util.dump(self._availableRoleIndex))
-    sb.logInfo(Sexbound.Util.dump(self._availableRoles))
+    self._parent:getLog():debug("New position composition list for "..self._config.name..": Length "..#self._availableRoleIndex)
+    self._parent:getLog():debug(Sexbound.Util.dump(self._availableRoleIndex))
+    self._parent:getLog():debug(Sexbound.Util.dump(self._availableRoles))
 end
 
 --- Returns the amount of available actor compositions for this position

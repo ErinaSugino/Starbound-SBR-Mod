@@ -74,7 +74,6 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanRequiredVe
 end
 
 function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanOrEqualToRequiredVersion(major, minor, patch, old)
-    sb.logInfo("Trying to compare "..tostring(major)..">="..tostring(self._major)..", "..tostring(minor)..">="..tostring(self._minor)..","..tostring(patch)..">="..tostring(self._patch)..", "..tostring(old).."<="..tostring(self._isOld))
     if self._isOld ~= old then return not self._isOld end -- Greater => new > old => not is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch >= patch then
         -- Patch only matters with old versions

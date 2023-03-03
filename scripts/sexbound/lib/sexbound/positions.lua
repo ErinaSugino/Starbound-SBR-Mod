@@ -94,7 +94,7 @@ function Sexbound.Positions:loadIdle(sexboundConfig)
         end)
 
     if type(_config) == "table" then
-        self._idlePosition = Sexbound.Position:new(_config)
+        self._idlePosition = Sexbound.Position:new(self, _config)
     end
 end
 
@@ -123,7 +123,7 @@ function Sexbound.Positions:loadPositions(sexboundConfig)
         end)
 
         if type(_config) == "table" then
-            local newPosition = Sexbound.Position:new(_config)
+            local newPosition = Sexbound.Position:new(self, _config)
             table.insert(self._positions, newPosition)
 
             self._positionCount = self._positionCount + 1
@@ -149,12 +149,12 @@ function Sexbound.Positions:updateActorRoles(actorList, actorCount)
         local posTraits = pos:getConfig().requireTraits or {}
         local allActorsFulfilCriteria = true
         for _,index in ipairs(allIndices) do
-            sb.logInfo("Checking position composition "..index)
+            self:getLog():debug("Checking position composition "..index)
             allActorsFulfilCriteria = true
             local curPerm = allPerms[index]
             for i=1,actorCount do
                 local curAct = curPerm[i]
-                sb.logInfo("Checking actor traits for actor "..curAct..": "..actorList[curAct]:getName())
+                self:getLog():debug("Checking actor traits for actor "..curAct..": "..actorList[curAct]:getName())
                 if actorList[curAct]:getForceRole() > 0 then
                     -- Forced role ignores trait checks
                     self:getLog():debug("Actor "..i.." has a forced role")
@@ -391,17 +391,4 @@ function Sexbound.Positions:util_perm(a,n,m)
 
         end
     end
-end
-
-function Sexbound.Positions:dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. self:dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
 end

@@ -288,7 +288,7 @@ function Sexbound.Player.Pregnant:giveBirthNamed(args)
     local babyId = args.id
     local babyName = args.name
     
-    sb.logInfo("Attempted to give birth to "..tostring(babyId)..": "..tostring(babyName))
+    if self._parent:canLog("debug") then sb.logInfo("Attempted to give birth to "..tostring(babyId)..": "..tostring(babyName)) end
     self:giveBirth(storage.sexbound.pregnant[babyId])
     table.remove(storage.sexbound.pregnant, babyId)
     self:refreshStatusEffects()

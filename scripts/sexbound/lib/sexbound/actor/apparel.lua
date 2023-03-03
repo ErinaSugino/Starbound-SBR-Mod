@@ -42,7 +42,6 @@ function Sexbound.Actor.Apparel:update(dt)
 end
 
 function Sexbound.Actor.Apparel:sync()
-    sb.logInfo("Syncing apparel")
     util.each(self._item, function(index, item)
         item:setConfig(self:getParent():getConfig()[item._name])
     end)

@@ -21,7 +21,7 @@ function Sexbound.UI:loadConfig()
   local _,_config = xpcall(function()
     return root.assetJson("/interface/sexbound/sexui.config")
   end, function(error)
-      self:getLog():error("Unable to load config file for the Sexbound UI!")
+      self._parent:getLog():error("Unable to load config file for the Sexbound UI!")
   end)
   return _config or {}
 end
@@ -35,7 +35,7 @@ function Sexbound.UI:refresh()
     local name = position:getFriendlyName()
     local buttonImage = button.iconImage
     local uiIndex = ((index - 1) % 8) + 1
-    sb.logInfo("Preparing position #"..tostring(index).." - UI Index: "..tostring(uiIndex))
+    self._parent:getLog():debug("Preparing position #"..tostring(index).." - UI Index: "..tostring(uiIndex))
     --self._config.config.positions.buttons[index].name = name
     --self._config.config.positions.buttons[index].image = buttonImage
     --self._config.config.positions.buttons[index].imageOffset = button.iconOffsets[index]

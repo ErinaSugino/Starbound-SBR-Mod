@@ -21,7 +21,7 @@ function Sexbound.Common.Arousal:init(parent)
     if not self._config.regenRates.havingSex then self._config.regenRates.havingSex = self._defaultConfig.regenRates.havingSex end
     self._maxAmount = status.stat("maxArousal") or 100
     self._regenRate = self._config.regenRates.default
-    sb.logInfo("Entity #"..entity.id().."'s current arousal gain is "..tostring(self._regenRate))
+    if self._parent:canLog("debug") then sb.logInfo("Entity #"..entity.id().."'s current arousal gain is "..tostring(self._regenRate)) end
     self:initMessageHandlers()
 end
 
@@ -119,7 +119,7 @@ end
 -- @param name e.g. default, havingSex
 function Sexbound.Common.Arousal:setRegenRate(name)
     self._regenRate = self._config.regenRates[name]
-    sb.logInfo("Entity #"..entity.id().."'s current arousal regen is "..tostring(self._regenRate))
+    if self._parent:canLog("debug") then sb.logInfo("Entity #"..entity.id().."'s current arousal regen is "..tostring(self._regenRate)) end
 end
 
 -- [Helper] Initializes message handlers

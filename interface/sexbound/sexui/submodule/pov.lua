@@ -66,9 +66,6 @@ function SexUI.POV:loadModules(config)
                 buttons[buttonConfig.key] = CustomButton.new(buttonConfig)
                 self.buttonOffset = self.buttonOffset + 15
                 sb.logInfo("Loaded module "..name)
-                local butnum = 0
-                for _,b in pairs(self._parent._buttons["pov"]) do butnum = butnum + 1 end
-                sb.logInfo("Buttons: "..butnum)
             end
         end
     end

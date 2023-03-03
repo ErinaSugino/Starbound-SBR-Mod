@@ -109,9 +109,11 @@ function Sexbound.Player.new()
     self._hasInited = true
     self:updateTraitEffects()
     
-    sb.logInfo("Player #"..entity.id().." has innate status list:")
-    sb.logInfo(self:dump(self._status:getStatusList()))
-    sb.logInfo(self:dump(storage.sexbound.identity.sxbNaturalStatus))
+    if self:canLog("debug") then
+        sb.logInfo("Player #"..entity.id().." has innate status list:")
+        sb.logInfo(self:dump(self._status:getStatusList()))
+        sb.logInfo(self:dump(storage.sexbound.identity.sxbNaturalStatus))
+    end
     
     -- Setup event listeners to notify player about changes to the sterilization status
     self._status:addEventListener("add", function(data) self:notifySterilizationChange(data) end)
@@ -196,7 +198,7 @@ function Sexbound.Player:showCustomizerUI(args)
         _loadedConfig.config.sterilized = self._status:hasStatus("sterilized")
         player.interact("ScriptPane", _loadedConfig, player.id())
     end, function(err)
-        sb.logError("Unable to load config Sexbound Settings.")
+        sb.logError("Unable to load Sexbound Customizer UI config.")
         sb.logError(err)
     end)
 end
@@ -253,7 +255,6 @@ function Sexbound.Player:handleRetrieveStorage(args)
 end
 
 function Sexbound.Player:notifySterilizationChange(data)
-    sb.logInfo("Event listener fired - "..self:dump(data))
     if data.name ~= "sterilized" then return end
     
     local notifications = self:getNotifications() or {}
@@ -277,12 +278,8 @@ function Sexbound.Player:notifySterilizationChange(data)
 end
 
 function Sexbound.Player:handleSyncStorage(newData)
-    sb.logInfo("Player storage synced - before: "..self:dump(storage.sexbound.pregnant or {}))
     newData = self:fixPregnancyData(newData)
     storage = util.mergeTable(storage, newData or {})
-    -- storage = newData or storage
-    --sb.logInfo("Player applying newData: "..self:dump(newData.sexbound.pregnant or {}))
-    sb.logInfo("Player storage synced - after: "..self:dump(storage.sexbound.pregnant or {}))
 end
 
 function Sexbound.Player:handleSyncSettings(newSettings)
@@ -361,7 +358,6 @@ function Sexbound.Player:initMessageHandlers()
     --- Simply try to forward fertility status updates to sexbound actor
     message.setHandler("Sexbound:Pregnant:AddStatus", function(_, _, args)
         local statusName = args
-        sb.logInfo("Received pregnancy status update "..tostring(statusName))
         if self._controllerId then world.sendEntityMessage(self._controllerId, "Sexbound:Pregnant:AddStatus", {id = entity.id(), effect = statusName}) end
         
         if statusName == "sexbound_custom_hyper_fertility" then
@@ -369,11 +365,9 @@ function Sexbound.Player:initMessageHandlers()
             if status.statusProperty("sexbound_custom_ovulating", false) then
                 -- effect currently active - refresh instead of messing up the cycle timer
                 status.addEphemeralEffect("sexbound_custom_ovulating")
-                sb.logInfo("Refreshing status effect")
             else
                 storage.sexbound = storage.sexbound or {}
                 storage.sexbound.ovulationCycle = 10
-                sb.logInfo("Speeding up ovulation cycle")
             end
         end
     end)
@@ -406,11 +400,6 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Debug:Shrink", function(_, _, args)
         status.addEphemeralEffect("sexbound_test")
     end)
-    message.setHandler("Sexbound:Debug:ChangeGender", function(_, _, args)
-        if star and star.player then
-            star.player.setGender(args)
-        else sb.logError("Modded table for player identity manipulation does not exist!") end
-    end)
 end
 
 function Sexbound.Player:mergeStorage(newData)
@@ -432,7 +421,7 @@ function Sexbound.Player:setup(controllerId, params)
             world.sendEntityMessage(player.id(), "Sexbound:Quest:HaveSex")
         end)
 
-        sb.logInfo("Player "..entity.id().." generated actor data for controller "..tostring(self._controllerId))
+        if self:canLog("debug") then sb.logInfo("Player "..entity.id().." generated actor data for controller "..tostring(self._controllerId)) end
 
         return true
     end
@@ -444,7 +433,7 @@ end
 
 function Sexbound.Player:getActorData()
     local gender = player.gender()
-    sb.logInfo("Generating player actor "..player.id())
+    if self:canLog("debug") then sb.logInfo("Generating player actor "..player.id()) end
 
     storage.sexbound.climax = self:getClimax():getCurrentValue()
 

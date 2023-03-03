@@ -158,7 +158,7 @@ function Sexbound.Actor.Subgender:initialCheck()
     for _,s in ipairs(statusList) do
         local subgenders = self:getDefinedGender(s)
         if subgenders then
-            sb.logInfo("Got initial status with subgender: "..tostring(s))
+            self:getLog():debug("Got initial status with subgender: "..tostring(s))
             if type(subgenders) ~= "table" then subgenders = {subgenders} end
             for _,subgender in ipairs(subgenders) do
                 if self:passesGenderRestriction(subgender, gender) then self:replaceSxbSubGender(subgender)

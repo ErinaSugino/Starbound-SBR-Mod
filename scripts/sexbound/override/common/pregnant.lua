@@ -38,7 +38,7 @@ function Sexbound.Common.Pregnant:loadPluginConfig()
         xpcall(function()
             loadedConfig = util.mergeTable(loadedConfig, root.assetJson(_config))
         end, function(errorMessage)
-            self._log:error(errorMessage)
+            sb.logError(errorMessage)
         end)
     end
 
@@ -189,25 +189,20 @@ function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
 end
 
 function Sexbound.Common.Pregnant:refreshStatusEffects()
-    --if self:getIsPregnant() then
     if self:getIsVisiblyPregnant() then
-        sb.logInfo("On refresh - is deemed visibly pregnant")
         self:addStatusEffects()
         return
     end
 
-    sb.logInfo("On refresh - is deemed NOT visibly pregnant")
     self:removeStatusEffects()
 end
 
 function Sexbound.Common.Pregnant:addStatusEffects()
     status.addEphemeralEffect("sexbound_pregnant", math.huge)
-    sb.logInfo("Adding pregnancy effect on entity ".. (player or entity).id())
 end
 
 function Sexbound.Common.Pregnant:removeStatusEffects()
     status.removeEphemeralEffect("sexbound_pregnant")
-    sb.logInfo("Removing pregnancy effect on entity ".. (player or entity).id())
 end
 
 function Sexbound.Common.Pregnant:updateWorldTime()
@@ -343,7 +338,7 @@ function Sexbound.Common.Pregnant:getConfig()
 end
 
 function Sexbound.Common.Pregnant:getData(index)
-    if storage.sexbound.pregnant then sb.logInfo(self:dump(storage.sexbound.pregnant)) end
+    if self._parent:canLog("debug") then sb.logInfo("Entity pregnancy data for #"..entity.id()..": "..self:dump(storage.sexbound.pregnant or {})) end
     if index and storage.sexbound.pregnant then
         return storage.sexbound.pregnant[index]
     end
@@ -351,7 +346,7 @@ function Sexbound.Common.Pregnant:getData(index)
 end
 
 function Sexbound.Common.Pregnant:getDataAndConfig(index)
-    if storage.sexbound.pregnant then sb.logInfo(self:dump(storage.sexbound.pregnant)) end
+    if self._parent:canLog("debug") then sb.logInfo("Entity pregnancy data for #"..entity.id()..": "..self:dump(storage.sexbound.pregnant or {})) end
     local pregnancies = nil
     local config = self:getConfig()
     if index and storage.sexbound.pregnant then

@@ -28,12 +28,12 @@ function Sexbound.Common.SubGender:init()
     local gender = self:getParent():getGender()
     self._currentGender = self._previousSxbGender or gender
     if not self:passesGenderRestriction(self._currentGender, gender) then
-        sb.logWarn("Entity #"..entity.id().."'s base sub-gender "..tostring(self._currentGender).." doesn't meet gender requirements, discarding!")
+        if self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s base sub-gender "..tostring(self._currentGender).." doesn't meet gender requirements, discarding!") end
         self._currentGender, self._previousSxbGender = gender, nil
         self:getParent():buildBodyTraits(self._currentGender)
     end
     
-    sb.logInfo("Current gender for #"..entity.id().." is "..tostring(self._currentGender))
+    if self._parent:canLog("debug") then sb.logInfo("Current gender for #"..entity.id().." is "..tostring(self._currentGender)) end
 end
 
 function Sexbound.Common.SubGender:uninit()
@@ -59,7 +59,7 @@ function Sexbound.Common.SubGender:loadPluginConfig()
         xpcall(function()
             loadedConfig = util.mergeTable(loadedConfig, root.assetJson(_config))
         end, function(errorMessage)
-            self._log:error(errorMessage)
+            sb.logError(errorMessage)
         end)
     end
 
@@ -81,7 +81,7 @@ end
 function Sexbound.Common.SubGender:handleSxbSubGenderChange(args)
     local sxbSubGenderName = args
     if self:passesGenderRestriction(sxbSubGenderName, self:getParent():getGender()) then self:setSxbSubGender(sxbSubGenderName)
-    else sb.logWarn("Entity #"..entity.id().."'s request to persistently change sub-gender to "..tostring(sxbSubGenderName).." doesn't fulfill gender requirement, ignoring!") end
+    elseif self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s request to persistently change sub-gender to "..tostring(sxbSubGenderName).." doesn't fulfill gender requirement, ignoring!") end
     return self:getSxbSubGender()
 end
 
@@ -101,7 +101,7 @@ function Sexbound.Common.SubGender:setSxbSubGender(sxbSubGenderName)
     
     if #self._genderOrder < 1 then self:getParent():buildBodyTraits(sxbSubGenderName) end
     self._previousSxbGender = sxbSubGenderName
-    sb.logInfo("Persistently changed entity sub-gender of #"..entity.id().." to "..tostring(sxbSubGenderName))
+    if self._parent:canLog("debug") then sb.logInfo("Persistently changed entity sub-gender of #"..entity.id().." to "..tostring(sxbSubGenderName)) end
 end
 
 function Sexbound.Common.SubGender:updateSxbSubGenderMultiplier(sxbSubGenderName)
@@ -125,8 +125,7 @@ function Sexbound.Common.SubGender:handleAddStatus(statusName)
     for _,subgender in ipairs(subgenders) do
         if subgender and self:passesGenderRestriction(subgender, gender) then
             self:replaceSxbSubGender(subgender)
-        else
-            sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't change to "..tostring(statusName).." by status due to gender requirements!")
+        elseif self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't change to "..tostring(statusName).." by status due to gender requirements!") end
         end
     end
 end
@@ -139,8 +138,7 @@ function Sexbound.Common.SubGender:handleRemoveStatus(statusName)
     for _,subgender in ipairs(subgenders) do
         if subgender and self:passesGenderRestriction(subgender, gender) then
             self:removeSxbSubGender(subgender)
-        else
-            sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't attempt to revoke "..tostring(statusName).." by status due to gender requirements!")
+        elseif self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't attempt to revoke "..tostring(statusName).." by status due to gender requirements!") end
         end
     end
 end

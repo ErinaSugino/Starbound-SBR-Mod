@@ -49,7 +49,7 @@ function Sexbound.Actor.Climax:new(parent, config)
     -- Load scripted climax scenarios
     table.insert(_self._scenarios, Sexbound.ScriptedClimax.Scenario1:new(_self))
     
-    sb.logInfo("Inited Climax Plugin for actor ".._self._parent:getName())
+    self:getLog():info("Inited Climax Plugin for actor ".._self._parent:getName())
 
     return _self
 end

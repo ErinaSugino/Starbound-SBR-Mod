@@ -107,7 +107,7 @@ end
 
 function Sexbound.Common:buildBodyTraits(gender)
     gender = gender or self:getGender()
-    sb.logInfo("Building body traits for entity "..entity.id()..": "..tostring(gender))
+    if self:canLog("debug") then sb.logInfo("Building body traits for entity "..entity.id()..": "..tostring(gender)) end
     local fallback = {canOvulate=false,canProduceSperm=true,hasPenis=true,hasVagina=false}
     
     self._bodyTraits = self._config.allGenders[gender]
@@ -121,7 +121,7 @@ function Sexbound.Common:updateTraitEffects()
         storage.sexbound.pregnant = {} -- If we cannot ovulate anymore, remove current pregnancies
         storage.sexbound.ovulationCycle = 0 -- If we cannot ovulate anymore, remove and reset ovulation cycle
         status.removeEphemeralEffect("sexbound_custom_ovulating")
-        sb.logInfo("Entity "..entity.id().." cannot ovulate (anymore), removing pregnancies and ovulation cycle logic")
+        if self:canLog("debug") then sb.logInfo("Entity "..entity.id().." cannot ovulate (anymore), removing pregnancies and ovulation cycle logic") end
     end
 end
 
@@ -185,6 +185,7 @@ function Sexbound.Common:loadConfig()
         return root.assetJson(self._configFilePath)
     end, function(err)
         sb.logError("Failed to load Sexbound configuration: " .. self._configFilePath)
+        return {}
     end)
 
     return _config
@@ -199,6 +200,7 @@ function Sexbound.Common:loadNotifications()
         return root.assetJson(_filePath)
     end, function(err)
         sb.logError("Failed to load notifications configuration: " .. _filePath)
+        return {}
     end)
 
     return _notifications
@@ -263,6 +265,12 @@ end
 function Sexbound.Common:getSubGender()
     if self._subGender then return self._subGender._currentGender
     else return storage.sexbound.identity.sxbSubGender end
+end
+
+function Sexbound.Common:canLog(level)
+    local logLevels = self._config or {}
+    logLevels = logLevels.log or {}
+    return not not logLevels[level]
 end
 
 function Sexbound.Common:dump(o)

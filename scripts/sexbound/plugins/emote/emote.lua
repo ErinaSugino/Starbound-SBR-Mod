@@ -119,9 +119,9 @@ function Sexbound.Actor.Emote:changeAnimationState(stateName)
 end
 
 function Sexbound.Actor.Emote:helper_show(emoteName)
-    sb.logInfo("Triggering emotion "..emoteName.." on actor "..self:getParent():getName())
+    self:getLog():info("Triggering emotion "..emoteName.." on actor "..self:getParent():getName())
     if not self._isActive then
-        sb.logInfo("Aborting because not active")
+        self:getLog():debug("Aborting because not active")
         return
     end
 
@@ -133,7 +133,7 @@ function Sexbound.Actor.Emote:helper_show(emoteName)
 
     -- Can other emotes interrupt talking?
     if myStatus:hasStatus("talking") and self._config.talkingIsPriority then
-        sb.logInfo("Aborting because talking")
+        self:getLog():debug("Aborting because talking")
         return
     end
 

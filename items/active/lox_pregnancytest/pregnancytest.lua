@@ -228,7 +228,6 @@ function PregnancyTest:queueRadioMessageForThisEntity(messageId, text)
 end
 
 function PregnancyTest:validatePregnanciesIsTable(pregnancies)
-  sb.logInfo("Pregnancy condition - is table: "..tostring(type(pregnancies) == "table"))
   return type(pregnancies) == "table"
 end
 
@@ -239,7 +238,6 @@ function PregnancyTest:thisEntityHasAtLeastOnePregnancy(pregnancies)
     if b.delay <= 0 then activePregnancies = activePregnancies + 1 end
   end
   
-  sb.logInfo("Pregnancy condition - is pregnant: "..tostring(activePregnancies > 0))
   return activePregnancies > 0
 end
 

@@ -721,16 +721,12 @@ end
 function Sexbound.Actor.Pregnant:storeBaby(baby)
     local _storage = self:getParent():getStorage()
     local _storageData = _storage:getData()
-    sb.logInfo(" Storing baby data - actor storage before: "..Sexbound.Util.dump(_storageData.sexbound.pregnant))
     table.insert(_storageData.sexbound.pregnant, baby)
-    sb.logInfo(" Storing baby data - actor storage after: "..Sexbound.Util.dump(_storageData.sexbound.pregnant))
 
     self:getParent():getStorage():sync(function(storageData)
         storageData.sexbound = storageData.sexbound or {}
         storageData.sexbound.pregnant = storageData.sexbound.pregnant or {}
-        sb.logInfo(" Storing baby data - entity storage before: "..Sexbound.Util.dump(storageData.sexbound.pregnant))
         table.insert(storageData.sexbound.pregnant, baby)
-        sb.logInfo(" Storing baby data - entity storage after: "..Sexbound.Util.dump(storageData.sexbound.pregnant))
         return storageData
     end)
 end
