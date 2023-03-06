@@ -1,0 +1,38 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "obstructed" : {
+        "default" : "none",
+        "states"  : { "none" : {} }
+      }
+    }
+  },
+  
+  "particleEmitters" : {
+    "obstructed" : {
+      "burstCount"   : 1,
+      "emissionRate" : 5,
+      "particles"    : [
+        {
+          "particle" : {
+            "type" : "text",
+            "size" : 0.5,
+            "text" : "^shadow;Obstructed!",
+            "color" : [255, 255, 255, 255],
+            "light" : [0, 0, 0],
+            "initialVelocity" : [0, 1],
+            "finalVelocity" : [0, 2],
+            "approach" : [1, 1],
+            "position" : [0, 0],
+            "timeToLive" : 1.5,
+            "layer" : "front",
+            "destructionAction" : "fade",
+            "destructionTime" : 0.5,
+            "flippable" : false
+          }
+        }
+      ]
+    }
+  },
+  "sounds" : { "obstructed" : [] }
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "op" : "add",
+    "path" : "/scriptConfig/apparelConfig",
+    "value" : {
+      "nippleswear" : [
+        {
+          "item_name" : "nipplestandardring"
+        },
+        {
+          "item_name" : "nipplestandardring"
+        }
+      ]
+    }
+  }
+]

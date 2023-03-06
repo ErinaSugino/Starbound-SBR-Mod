@@ -1,0 +1,8 @@
+{
+  "input": [
+    { "item": "prisonmattress", "count": 1 },
+    { "item": "sexbux", "count": 200 }
+  ],
+  "output": { "item": "sexbound_prisonmattress", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

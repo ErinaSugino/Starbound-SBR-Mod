@@ -1,0 +1,7 @@
+[
+  {
+    "op"    : "replace",
+    "path"  : "/scriptConfig/behavior",
+    "value" : "sexboundcrewmember"
+  }
+]

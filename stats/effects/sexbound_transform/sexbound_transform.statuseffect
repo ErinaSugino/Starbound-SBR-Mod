@@ -1,0 +1,7 @@
+{
+  "name"            : "sexbound_transform",
+  "animationConfig" : "sexbound_transform.animation",
+  "defaultDuration" : 1,
+  "effectConfig"    : { "soundEffects" : [ "/sfx/sexbound/success.ogg" ] },
+  "scripts"         : [ "sexbound_transform.lua" ]
+}

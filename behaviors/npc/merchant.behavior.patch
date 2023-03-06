@@ -1,0 +1,14 @@
+[
+  { "op": "test", "path": "/root/children/2/name", "value" : "parallel" },
+  { "op": "test", "path": "/root/children/2/children/1/name", "value" : "dynamic" },
+  {
+    "op": "add",
+    "path": "/root/children/2/children/1/children/0",
+    "value": {
+      "title": "Sexbound",
+      "type": "module",
+      "name": "sexbound",
+      "parameters": {}
+    }
+  }
+]

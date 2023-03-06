@@ -1,0 +1,82 @@
+[
+  {
+    "op" : "add",
+    "path" : "/scripts/-",
+    "value" : "/scripts/sexbound/override/npc.lua"
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/scriptConfig/apparelConfig",
+    "value" : {}
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/scriptConfig/climaxConfig",
+    "value" : {
+      "regenRates" : {
+        "default"   : [-0.5, -2.0],
+        "havingSex" : [0.5,   2.0]
+      }
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/primaryScriptSources/-",
+    "value" : "/scripts/sexbound/override/stats/npc_primary.lua"
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/stats/maxArousal",
+    "value" : {
+      "baseValue" : 100.0
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/stats/maxClimax",
+    "value" : {
+      "baseValue" : 100.0
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/stats/arousalThreshold",
+    "value" : {
+      "baseValue" : 0.5
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/stats/climaxThreshold",
+    "value" : {
+      "baseValue" : 0.5
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/resources/arousal",
+    "value" : {
+      "maxStat" : "maxArousal",
+      "deltaValue" : 0.0,
+      "initialPercentage" : 0.0
+    }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/resources/climax",
+    "value" : {
+      "maxStat" : "maxClimax",
+      "deltaValue" : 0.0,
+      "initialPercentage" : 0.0
+    }
+  }
+]

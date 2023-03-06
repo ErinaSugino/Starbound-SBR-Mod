@@ -1,0 +1,15 @@
+{
+  "itemName"           : "sexbux",
+  "currency"           : "sexbux",
+  "description"        : "Sexbux is a Sexbound currency.",
+  "inventoryIcon"      : "sexbux.png",
+  "pickupSoundsSmall"  : [ "/sfx/objects/coinstack_small1.ogg", "/sfx/objects/coinstack_small2.ogg", "/sfx/objects/coinstack_small3.ogg" ],
+  "pickupSoundsMedium" : [ "/sfx/objects/coinstack_medium1.ogg", "/sfx/objects/coinstack_medium2.ogg" ],
+  "pickupSoundsLarge"  : [ "/sfx/objects/coinstack_large.ogg" ],
+  "rarity"             : "Common",
+  "shortdescription"   : "Sexbux",
+  "smallStackLimit"    : 999,
+  "mediumStackLimit"   : 4999,
+  "maxStack"           : 16777216,
+  "value"              : 1
+}

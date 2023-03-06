@@ -1,0 +1,45 @@
+{
+  "itemName" : "clitstandardring",
+  "category" : "groin",
+
+  "maleFrames" : {
+    "image" : "clitstandardring.png"
+  },
+
+  "femaleFrames" : {
+    "image" : "clitstandardring.png"
+  },
+
+  "colorOptions" : [
+    // DEFAULT
+    { "b6b6b6" : "b6b6b6" },
+    // WHITE
+    { "b6b6b6" : "f6f6f6" },
+    // GREY
+    { "b6b6b6" : "b5b5b5" },
+    // WHITE
+    { "b6b6b6" : "e6e6e6" },
+    // RED
+    { "b6b6b6" : "f4988c" },
+    // ORANGE
+    { "b6b6b6" : "ffd495" },
+    // YELLOW
+    { "b6b6b6" : "ffffa7" },
+    // GREEN
+    { "b6b6b6" : "b2e89d" },
+    // BLUE
+    { "b6b6b6" : "96cbe7" },
+    // PURPLE
+    { "b6b6b6" : "d29ce7" },
+    // PINK
+    { "b6b6b6" : "eab3db" },
+    // BROWN
+    { "b6b6b6" : "ccae7c" }
+  ],
+
+  "sexboundConfig" : {
+    "addStatus"  : [ "equipped_clitring" ],
+    "startScale" : 0.5,
+    "image"      : "/items/armors/sexbound/groin/clitstandardring.png"
+  }
+}

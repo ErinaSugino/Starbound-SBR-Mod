@@ -1,0 +1,17 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "addStatus" : [ "equipped_peacekeeper" ],
+      "image" : [ 
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/pants.png",
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/pants_variant.png"
+      ],
+      "imagePregnant" : [
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/pants_pregnant.png",
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/pants_pregnant_variant.png"
+      ]
+    }
+  }
+]

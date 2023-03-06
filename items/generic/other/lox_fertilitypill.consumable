@@ -1,0 +1,14 @@
+{
+  "itemName" : "lox_fertilitypill",
+  "price" : 1000,
+  "rarity" : "Rare",
+  "category" : "medicine",
+  "inventoryIcon" : "lox_fertilitypill.png",
+  "description" : "Take one to greatly boost your chance of both getting and making other's pregnant (if applicable) for the duration.",
+  "shortdescription" : "Fertility Pill",
+  "effects" : [ 
+    [ "sexbound_custom_fertility" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

@@ -1,0 +1,20 @@
+{
+  "itemName"         : "clitstandardring1",
+  "category"         : "tradeGoods",
+  "description"      : "Worn on your clit.",
+  "inventoryIcon"    : "clitstandardringicon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 50,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "/scripts/sexbound/applyapparel.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Clit Ring",
+  "twoHanded"        : false,
+  "applyConfig"      : {
+    "target"   : 1,
+    "itemName" : "clitstandardring",
+    "wornType" : "groin"
+  }
+}

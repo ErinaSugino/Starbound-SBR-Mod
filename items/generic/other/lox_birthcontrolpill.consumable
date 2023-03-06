@@ -1,0 +1,14 @@
+{
+  "itemName" : "lox_birthcontrolpill",
+  "price" : 10,
+  "rarity" : "Common",
+  "category" : "medicine",
+  "inventoryIcon" : "lox_birthcontrolpill.png",
+  "description" : "Take one to avoid becoming pregnant for the duration.",
+  "shortdescription" : "Birth Control Pill",
+  "effects" : [ 
+    [ "sexbound_birthcontrol" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

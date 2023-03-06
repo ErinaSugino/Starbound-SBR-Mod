@@ -1,0 +1,22 @@
+{
+  "metadata" : {
+    "name"      : "sexbound_sandbox",
+    "species"   : "generic",
+    "rules"     : [],
+    "anchor"    : [ "sexbound_sandbox" ],
+    "gravity"   : 80,
+    "maxRadius" : 1000000,
+    "maxParts"  : 100,
+    "protected" : true
+  },
+  
+  "parts" : [
+    {
+      "name"  : "sexbound_sandbox",
+      "def"   : [ "tmx", "sexbound_sandbox.json" ],
+      "rules" : [
+        [ "maxSpawnCount", [ 1 ] ]
+      ]
+    }
+  ]
+}

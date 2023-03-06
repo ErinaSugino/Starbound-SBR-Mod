@@ -1,0 +1,189 @@
+{
+  "objectName": "sexbound_test_doubledoggy",
+  "colonyTags": ["misc"],
+  "printable": false,
+  "rarity": "Common",
+  "description": "A Sexbound test object.",
+  "shortdescription": "[SxB] Test - Double Doggy",
+  "race": "generic",
+  "category": "furniture",
+  "price": 1,
+
+  "interactive": true,
+
+  "zlevel": 1,
+
+  "inventoryIcon": "sexbound_test_icon.png",
+  "orientations": [
+    {
+      "dualImage": "sexbound_test.png:default.1",
+
+      "imagePosition": [-16, 0],
+      "animationPosition": [0, 0],
+
+      "frames": 1,
+      "animationCycle": 1.0,
+
+      "spaces": [
+        [-2, 1],
+        [-1, 1],
+        [0, 1],
+        [1, 1],
+        [-2, 0],
+        [1, 0]
+      ],
+
+      "anchors": ["bottom"]
+    }
+  ],
+
+  "scripts": ["sexbound_test.lua"],
+
+  "sexboundConfig": {
+    "actors": [
+      {
+        "entityId": -99999,
+        "entityType": "npc",
+        "identity": {
+          "facialHairType": "7",
+          "hairType": "10",
+          "gender": "female",
+          "hairGroup": "hair",
+          "species": "apex",
+          "facialMaskGroup": "",
+          "name": "Test Subject",
+          "facialHairDirectives": "?replace;a85636=525269;e0975c=6f6d85;6f2919=3e4352",
+          "hairDirectives": "?replace;a85636=525269;e0975c=6f6d85;6f2919=3e4352",
+          "facialHairFolder": "beardfemale",
+          "hairFolder": "hairfemale",
+          "facialHairGroup": "beardfemale",
+          "bodyDirectives": "?replace;a85636=525269;e0975c=6f6d85;6f2919=3e4352?replace;d9c189=e5b078;735e3a=a66c46;a38d59=bb8c5e;f7e7b2=f0d6b9",
+          "facialMaskDirectives": "",
+          "emoteDirectives": "?replace;a85636=525269;e0975c=6f6d85;6f2919=3e4352?replace;d9c189=e5b078;735e3a=a66c46;a38d59=bb8c5e;f7e7b2=f0d6b9",
+          "facialMaskFolder": "",
+          "facialMaskType": ""
+        }
+      }
+    ],
+
+    "animationPartsCentered": true,
+
+    "nodePositions": [
+      [-1, 0],
+      [0, 0]
+    ],
+
+    "sitPositions": [
+      [8, 36],
+      [0, 36]
+    ],
+
+    "position": {
+      "sex": ["double_doggy"]
+    }
+  },
+
+  "animation": "/artwork/humanoid/twoactors-centered.animation",
+
+  "animationCustom": {
+    "animatedParts": {
+      "parts": {
+        "test-table": {
+          "properties": {
+            "offset": [0, 1],
+            "zLevel": -1,
+            "image": "/objects/sexbound_test/sexbound_test.png:default.1"
+          }
+        },
+
+        "dildo": {
+          "properties": {
+            "anchorPart": "test-table",
+            "offset": [0, 2],
+            "zLevel": -1,
+            "image": "/objects/sexbound_test/sexbound_test_dildo.png"
+          }
+        },
+
+        "actors": {
+          "properties": {
+            "anchorPart": "test-table",
+            "offset": [-0.5, 1]
+          }
+        },
+
+        "actor1": {
+          "properties": {
+            "offset": [-1.325, 0]
+          }
+        },
+
+        "actor2": {
+          "properties": {
+            "offset": [1.325, 0]
+          }
+        },
+
+        "actor1-head": {
+          "partStates": {
+            "actors": {
+              "position2": {
+                "frameProperties": {
+                  "offset": [
+                    [0.625, -1.5],
+                    [0.75, -1.5],
+                    [0.875, -1.375],
+                    [1, -1.375],
+                    [0.875, -1.5]
+                  ]
+                }
+              },
+
+              "position2-climax": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              },
+
+              "position2-reset": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              }
+            }
+          }
+        },
+
+        "actor2-head": {
+          "partStates": {
+            "actors": {
+              "position2": {
+                "frameProperties": {
+                  "offset": [
+                    [0.625, -1.5],
+                    [0.75, -1.5],
+                    [0.875, -1.375],
+                    [1, -1.375],
+                    [0.875, -1.5]
+                  ]
+                }
+              },
+
+              "position2-climax": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              },
+
+              "position2-reset": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "input": [
+    { "item": "glass", "count": 10 },
+    { "item": "tungstenbar", "count": 5 },
+    { "item": "oxygentank", "count": 1 },
+    { "item": "sexbux", "count": 200 }
+  ],
+  "output": { "item": "sexbound_airtightdome", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

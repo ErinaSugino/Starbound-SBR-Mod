@@ -1,0 +1,35 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "transform" : {
+        "default" : "none",
+        "states"  : { "none" : {} }
+      }
+    }
+  },
+  "particleEmitters" : {
+    "transform" : {
+      "burstCount"   : 1,
+      "emissionRate" : 5,
+      "particles"    : [
+        {
+          "particle" : {
+            "type" : "animated",
+            "animation" : "/animations/emotes/happy.animation",
+            "position" : [0, 1],
+            "initialVelocity" : [0, 1],
+            "finalVelocity" : [0, 4],
+            "approach" : [0, 1],
+            "destructionAction" : "shrink",
+            "destructionTime" : 0.85,
+            "fade" : 1,
+            "size" : 1,
+            "layer" : "front",
+            "timeToLive" : 0.45
+          }
+        }
+      ]
+    }
+  },
+  "sounds" : { "transform" : [] }
+}

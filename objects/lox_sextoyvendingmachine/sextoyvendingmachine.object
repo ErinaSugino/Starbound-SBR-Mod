@@ -1,0 +1,96 @@
+{
+  "objectName" : "lox_sextoyvendingmachine",
+  "shortdescription" : "[ATC] Vending Machine",
+  "description" : "A vending machine that sells sex toys.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 550,
+  "lightColor" : [153, 0, 255],
+  "printable" : false,
+
+  "apexDescription"    : "This vending machine is fully stocked with kinky sex goods.",
+  "avianDescription"   : "This vending machine is fully stocked with kinky sex goods.",
+  "floranDescription"  : "This vending machine is fully stocked with kinky sex goods.",
+  "glitchDescription"  : "This vending machine is fully stocked with kinky sex goods.",
+  "humanDescription"   : "This vending machine is fully stocked with kinky sex goods.",
+  "hylotlDescription"  : "This vending machine is fully stocked with kinky sex goods.",
+  "novakidDescription" : "This vending machine is fully stocked with kinky sex goods.",
+  "nekiDescription"    : "Handy machine for Neki fucks needs.",
+  
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [{"image" : "lox_sextoyvendingmachineleft.png:<color>.<frame>"}, {"image" : "lox_sextoyvendingmachinelitleft.png:<color>.<frame>", "fullbright" : true}],
+      "direction" : "left",
+
+      "imagePosition" : [-17, 0],
+
+      "anchors" : [ "bottom" ],
+      
+      "spaceScan" : 0.05,
+      
+      "collision" : "platform"
+    },
+    {
+      "imageLayers" : [{"image" : "lox_sextoyvendingmachineright.png:<color>.<frame>"}, {"image" : "lox_sextoyvendingmachinelitright.png:<color>.<frame>", "fullbright" : true}],
+      "direction" : "right",
+      
+      "imagePosition" : [-17, 0],
+
+      "anchors" : [ "bottom" ],
+      
+      "spaceScan" : 0.05,
+      
+      "collision" : "platform"
+    }
+  ],
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Alluring Toys Co. Vendor",
+        "subtitle" : "Adult toys vending machine"
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+      {"item" : {"name" : "sexboundloungeableaddon1"}},
+      {"item" : {"name" : "sexboundloungeableaddon2"}},
+      {"item" : {"name" : "socialdistancinghead"}},
+      {"item" : {"name" : "lox_abortionpill"}},
+      {"item" : {"name" : "lox_fertilitypill"}},
+      {"item" : {"name" : "lox_hyperfertilitypill"}},
+      {"item" : {"name" : "lox_condom"}},
+      {"item" : {"name" : "lox_foxanaltail"}},
+      {"item" : {"name" : "lox_gagball"}},
+      {"item" : {"name" : "lox_analjewel"}},
+      {"item" : {"name" : "lox_horsestrapon"}},
+      {"item" : {"name" : "lox_horsestrapon_strapless"}},
+      {"item" : {"name" : "lox_horseanaltail"}},
+      {"item" : {"name" : "lox_pregnancytest"}},
+      {"item" : {"name" : "sxb_pregnancytestbox"}},
+      {"item" : {"name" : "lox_standardstrapon"}},
+      {"item" : {"name" : "lox_standardstrapon_strapless"}},
+      {"item" : {"name" : "anticockring1"}},
+      {"item" : {"name" : "clitstandardring1"}},
+      {"item" : {"name" : "nipplepastiesdaisy1"}},
+      {"item" : {"name" : "nipplepastiesdaisy2"}},
+      {"item" : {"name" : "nipplepastiesheart1"}},
+      {"item" : {"name" : "nipplepastiesheart2"}},
+      {"item" : {"name" : "nipplepastiescross1"}},
+      {"item" : {"name" : "nipplepastiescross2"}},
+      {"item" : {"name" : "nipplestandardring1"}},
+      {"item" : {"name" : "nipplestandardring2"}},
+      {"item" : {"name" : "removegroinwear"}},
+      {"item" : {"name" : "removenippleswear"}}
+    ]
+  }
+}

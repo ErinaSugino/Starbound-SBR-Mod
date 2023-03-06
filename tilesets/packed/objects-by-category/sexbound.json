@@ -1,0 +1,49 @@
+{
+  "margin": 0,
+  "name": "objects-by-category/sexbound",
+  "properties": {},
+  "spacing": 0,
+  "tilecount": 3,
+  "tileheight": 40,
+  "tileproperties": {
+    "0": {
+      "//description": "A tier-1 addon that can be used to sex-enable specific vanilla furniture objects for upto 2 actors.",
+      "//name": "sexboundloungeableaddon1",
+      "//shortdescription": "[SxB] Loungeable Addon T1",
+      "imagePositionX": "-20",
+      "imagePositionY": "0",
+      "object": "sexboundloungeableaddon1",
+      "tilesetDirection": "right"
+    },
+    "1": {
+      "//description": "A tier-2 addon that can be used to sex-enable specific vanilla furniture objects for upto 3 actors.",
+      "//name": "sexboundloungeableaddon2",
+      "//shortdescription": "[SxB] Loungeable Addon T2",
+      "imagePositionX": "-20",
+      "imagePositionY": "0",
+      "object": "sexboundloungeableaddon2",
+      "tilesetDirection": "right"
+    },
+    "2": {
+      "//description": "A tier-3 addon that can be used to sex-enable specific vanilla furniture objects for upto 4 actors.",
+      "//name": "sexboundloungeableaddon3",
+      "//shortdescription": "[SxB] Loungeable Addon T3",
+      "imagePositionX": "-20",
+      "imagePositionY": "0",
+      "object": "sexboundloungeableaddon3",
+      "tilesetDirection": "right"
+    }
+  },
+  "tiles": {
+    "0": {
+      "image": "../../../../../../tiled/packed/objects/sexboundloungeableaddonpreview1.png"
+    },
+    "1": {
+      "image": "../../../../../../tiled/packed/objects/sexboundloungeableaddonpreview2.png"
+    },
+    "2": {
+      "image": "../../../../../../tiled/packed/objects/sexboundloungeableaddonpreview3.png"
+    }
+  },
+  "tilewidth": 48
+}

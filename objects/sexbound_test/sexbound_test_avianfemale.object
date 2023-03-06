@@ -1,0 +1,108 @@
+{
+  "objectName" : "sexbound_test_avianfemale",
+  "colonyTags" : ["misc"],
+  "printable" : false,
+  "rarity" : "Common",
+  "description" : "A Sexbound test object.",
+  "shortdescription" : "[SxB] Test - Avian (F)",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 1,
+  
+  "interactive" : true,
+  
+  "zlevel" : 1,
+  
+  "inventoryIcon" : "sexbound_test_icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sexbound_test.png:default.1",
+
+      "imagePosition" : [-16, 0],
+      "animationPosition" : [0, 0],
+      
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaces" : [
+        [-2, 1], [-1, 1], [0, 1], [1, 1],
+        [-2, 0],                  [1, 0]
+      ],
+      
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["sexbound_test.lua"],
+  
+  "sexboundConfig" : {
+    "actors" : [
+      {
+        "entityId" : -99999,
+        "entityType" : "npc",
+        "identity" : {
+          "name" : "Test Subject",
+          "species" : "avian",
+          "gender" : "female",
+          "facialHairFolder" : "fluff",
+          "facialHairGroup" : "fluff",
+          "facialHairType" : "3",
+          "facialMaskFolder" : "beaks",
+          "facialMaskGroup" : "beaks",
+          "facialMaskType" : "9",
+          "hairFolder" : "hair",
+          "hairGroup" : "hair",
+          "hairType" : "10",
+          "bodyDirectives" : "?replace;735e3a=977841;dc1f00=d7e8e8;6f2919=596809;ffca8a=add068;be1b00=8fa7a3;951500=5d6d69;a38d59=c1a24e;e0975c=85ac1b;d9c189=eacf60;a85636=6e8210;f32200=f6fbfb",
+          "emoteDirectives" : "?replace;735e3a=977841;dc1f00=d7e8e8;6f2919=596809;ffca8a=add068;be1b00=8fa7a3;951500=5d6d69;a38d59=c1a24e;e0975c=85ac1b;d9c189=eacf60;a85636=6e8210;f32200=f6fbfb",
+          "hairDirectives" : "?replace=d9c189=50422f?replace=a38d59=36261e?replace=735e3a=170f0d",
+          "facialHairDirectives" : "?replace;735e3a=977841;dc1f00=d7e8e8;6f2919=596809;ffca8a=add068;be1b00=8fa7a3;951500=5d6d69;a38d59=c1a24e;e0975c=85ac1b;d9c189=eacf60;a85636=6e8210;f32200=f6fbfb",
+          "facialMaskDirectives" : "?replace;735e3a=977841;dc1f00=d7e8e8;6f2919=596809;ffca8a=add068;be1b00=8fa7a3;951500=5d6d69;a38d59=c1a24e;e0975c=85ac1b;d9c189=eacf60;a85636=6e8210;f32200=f6fbfb"
+        }
+      }
+    ],
+
+    "animationPartsCentered" : true,
+    
+    "nodePositions" : [[-1, 0], [0, 0]],
+    
+    "sitPositions"  : [[8, 36], [0, 36]],
+    
+    "position" : {
+      "sex" : [
+        "standing", 
+        "doggy", 
+        "missionary",
+        "cowgirl",
+        "facesitting",
+        "butterfly",
+        "fellatio",
+        "reverse_cowgirl"
+      ]
+    }
+  },
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "animationCustom" : {
+    "animatedParts" : {    
+      "parts" : {
+        "test-table" : {
+          "properties" : {
+            "centered" : false,
+            "offset" : [-2, 0],
+            "zLevel" : -1,
+            "image" : "/objects/sexbound_test/sexbound_test.png:default.1"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "test-table",
+            "offset" : [2, 1.875]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "objectName"         : "sexbound_airtightdome",
+  "description"        : "An airtight dome for having sex safely where you couldn't normally breath.",
+  "shortdescription"   : "[SxB] Airtight Dome",
+  "category"           : "furniture",
+  "colonyTags"         : [ "misc" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 2500,
+  "race"               : "apex",
+  "rarity"             : "Rare",
+  "statusEffects"      : [
+    {
+      "stat"   : "breathProtection",
+      "amount" : 1.0
+    }
+  ],
+
+  "inventoryIcon" : "airtightdomeicon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "airtightdome.png:<color>",
+      "imagePosition"  : [-32, 0],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces"         : [
+                          [-2, 4], [-1, 4], [0, 4], [1, 4],
+                 [-3, 3], [-2, 3], [-1, 3], [0, 3], [1, 3], [2, 3],
+                 [-3, 2], [-2, 2], [-1, 2], [0, 2], [1, 2], [2, 2],
+                 [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-4, 0], [-3, 0],                                   [2, 0], [3, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : ["/scripts/sexbound/threeactors.lua"],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing_in_bed", "facesitting_in_bed", "butterfly_in_bed", "fellatio_in_bed", "reverse_cowgirl_in_bed" ]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "offset" : [0, 2.5],
+            "zLevel" : 999,
+            "image"  : "/objects/sexbound/airtightdome/airtightdome.png:<color>"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [0, -1.75]
+          }
+        }
+      }
+    }
+  }
+}

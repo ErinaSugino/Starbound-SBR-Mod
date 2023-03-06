@@ -1,0 +1,12 @@
+{
+  "input": [
+    { "item": "sexbound_emptyjar", "count": 1 },
+    { "item": "sexbound_jargnome", "count": 1 },
+    { "item": "sexbux", "count": 300 }
+  ],
+  "output": {
+    "item": "sexbound_gnomeinajar",
+    "count": 1
+  },
+  "groups": ["plain", "objects", "all"]
+}

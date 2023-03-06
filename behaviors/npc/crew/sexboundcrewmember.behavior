@@ -1,0 +1,29 @@
+{
+  "name": "sexboundcrewmember",
+  "description": null,
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Sexbound",
+        "type": "module",
+        "name": "sexbound",
+        "parameters": {}
+      },
+      {
+        "title": "crewmember",
+        "type": "module",
+        "name": "crewmember",
+        "parameters": {
+          "inspectCooldown": { "value": [60, 180] },
+          "inspectObjects": { "value": true }
+        }
+      }
+    ]
+  }
+}

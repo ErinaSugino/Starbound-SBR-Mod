@@ -1,0 +1,22 @@
+{
+  "kind" : "climaxcowgirlmale2",
+  "definition" : {
+    "type" : "ember",
+    "fullbright" : true,
+    "position" : [0,0],
+    "size" : 1.25,
+    "color" : [255, 255, 255, 213],
+    "fade" : 0.7,
+    "initialVelocity" : [-3, 0.5],
+    "finalVelocity" : [-0.25, -7.5],
+    "approach" : [0, 6],
+    "timeToLive" : 3,
+    "layer" : "front",
+    "collidesForeground" : true,
+    "variance" : {
+      "size" : 0.5,
+      "initialVelocity" : [1.5, 0.5],
+      "finalVelocity" : [0.25, 2.5]
+    }
+  }
+}

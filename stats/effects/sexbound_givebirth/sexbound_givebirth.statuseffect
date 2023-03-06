@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_givebirth",
+  "defaultDuration" : 1,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_givebirth.lua" ]
+}

@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_birthcontrol",
+  "defaultDuration" : 600,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/sex.png",
+  "label"           : "SxB Birth Control (Active)",
+  "scripts"         : [ "sexbound_birthcontrol.lua" ]
+}

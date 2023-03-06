@@ -1,0 +1,15 @@
+{
+  "itemName"         : "removegroinwear",
+  "category"         : "tradeGoods",
+  "description"      : "Removes all worn groin items.",
+  "inventoryIcon"    : "removegroinwearicon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 25,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "removegroinwear.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Remove Groinwear",
+  "twoHanded"        : false
+}

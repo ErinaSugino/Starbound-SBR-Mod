@@ -1,0 +1,32 @@
+{
+  "itemName" : "lox_pregnancytest",
+  "price" : 250,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Uncommon",
+  "category" : "tradeGoods",
+  "description" : "Use this item to instantly check your current pregnancy status.",
+  "shortdescription" : "Pregnancy Test",
+  "twoHanded" : false,
+  
+  "itemTags" : [ "sexbound" ],
+
+  "inventoryIcon" : "pregnancytest.png",
+
+  "animation" : "/items/active/lox_pregnancytest/pregnancytest.animation",
+  
+  "scripts" : ["/items/active/lox_pregnancytest/pregnancytest.lua"],
+  
+  "scriptDelta" : 3,
+  
+  "cooldownTime" : 10,
+  
+  "radioMessages" : {
+    "birthTodayBasedOnOSTime"    : "You will give birth today in <hours> hours & <minutes> minutes in real-life time.",
+    "birthLaterBasedOnOSTime"    : "You will give birth in <days> real-life day(s).",
+    "birthTodayBasedOnWorldTime" : "You will give birth at around <time> in-game world time.",
+    "birthLaterBasedOnWorldTime" : "You will give birth in <days> in-game world day(s).",
+    "notPregnant" : "You're not pregnant!",
+    "birthDetail" : "It will be <detail>!"
+  }
+}

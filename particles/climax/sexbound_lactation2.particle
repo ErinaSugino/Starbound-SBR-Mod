@@ -1,0 +1,23 @@
+{
+  "kind" : "sexbound_lactation2",
+  "definition" : {
+    "type" : "ember",
+    "fullbright" : true,
+    "position" : [0,0],
+    "size" : 0.5,
+    "color" : [255, 255, 255, 235],
+    "fade" : 0.7,
+    "initialVelocity" : [1, -1.5],
+    "finalVelocity"   : [3, -2.0],
+    "approach" : [0, 1],
+    "timeToLive" : 0.3,
+    "layer" : "front",
+    "collidesForeground" : true,
+    "variance" : {
+      "size" : 0.1,
+      "initialVelocity" : [0.25,  0.25],
+      "finalVelocity"   : [0.25,  0.25],
+      "timeToLive" : 0.25
+    }
+  }
+}

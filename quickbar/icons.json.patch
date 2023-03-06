@@ -1,0 +1,11 @@
+[
+  {
+    "op": "add",
+    "path": "/items/locuturus:sexbound",
+    "value": {
+      "label": "Sexbound",
+      "icon": "/interface/sexbound/icon.png",
+      "action": ["pane", "/interface/sexbound/customizer/customizer.config"]
+    }
+  }
+]

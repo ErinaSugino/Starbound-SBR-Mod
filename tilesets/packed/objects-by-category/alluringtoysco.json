@@ -1,0 +1,25 @@
+{
+  "margin" : 0,
+  "name" : "objects-by-category/alluringtoysco",
+  "properties" : {
+  },
+  "spacing" : 0,
+  "tilecount" : 1,
+  "tileheight" : 16,
+  "tileproperties" : {
+    "0" : {
+      "//description" : "A condom dispenser that can be mounted to walls.",
+      "//name" : "lox_condomdispenser",
+      "//shortdescription" : "[ATC] Condom Dispenser",
+      "imagePositionX" : "-8",
+      "imagePositionY" : "-8",
+      "object" : "lox_condomdispenser"
+    }
+  },
+  "tiles" : {
+    "0" : {
+      "image" : "../../../../../tiled/packed/objects/lox_condomdispenser.png"
+    }
+  },
+  "tilewidth" : 16
+}

@@ -1,0 +1,17 @@
+{
+  "kind" : "climaxstandingfemale1",
+  "definition" : {
+    "type" : "ember",
+    "fullbright" : false,
+    "position" : [ 0, 0 ],
+    "size" : 0.75,
+    "color" : [ 0, 0, 0, 0 ],
+    "fade" : 0,
+    "initialVelocity" : [ 0, 0 ],
+    "finalVelocity" : [ 0, 0 ],
+    "approach" : [ 0, 0 ],
+    "timeToLive" : 0,
+    "layer" : "front",
+    "collidesForeground" : false
+  }
+}

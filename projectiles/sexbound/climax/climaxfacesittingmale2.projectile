@@ -1,0 +1,19 @@
+{
+  "projectileName": "climaxfacesittingmale2",
+  "image": "climax.png",
+  "physics": "climax",
+  "animationCycle": 0.5,
+  "frameNumber": 2,
+  "speed": 5,
+  "damagePoly": [
+    [-30, -30],
+    [30, -30],
+    [30, 30],
+    [-30, 30]
+  ],
+  "damageKind": "hidden",
+  "onlyHitTerrain": true,
+  "hydrophobic": true,
+
+  "scripts": ["/projectiles/sexbound/climax/climaxprojectile.lua"]
+}

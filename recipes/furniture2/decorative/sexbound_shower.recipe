@@ -1,0 +1,8 @@
+{
+  "input": [
+    { "item": "ironbar", "count": 5 },
+    { "item": "sexbux", "count": 300 }
+  ],
+  "output": { "item": "sexbound_shower", "count": 1 },
+  "groups": ["craftingfurniture", "decoration", "all"]
+}

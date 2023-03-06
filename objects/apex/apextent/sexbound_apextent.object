@@ -1,0 +1,93 @@
+{
+  "objectName"         : "sexbound_apextent",
+  "description"        : "A military tent.. But with orgies going on inside.",
+  "shortdescription"   : "[SxB] Military Tent",
+  "colonyTags"         : [ "apex", "explorer" ],
+  "rarity"             : "Rare",
+  "race"               : "generic",
+  "category"           : "furniture",
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 1000,
+  "interactive"        : true,
+  "apexDescription"    : "A tent often used for having sex while away from home.",
+  "avianDescription"   : "A tent often used for having sex while away from home.",
+  "floranDescription"  : "A tent often used for having sex while away from home.",
+  "glitchDescription"  : "A tent often used for having sex while away from home.",
+  "humanDescription"   : "A tent often used for having sex while away from home.",
+  "hylotlDescription"  : "A tent often used for having sex while away from home.",
+  "novakidDescription" : "A tent often used for having sex while away from home.",
+
+  "inventoryIcon" : "sexbound_apextenticon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "apextent.png:<color>",
+      "imagePosition"  : [ -32, 0 ],
+      "frames"         : 1,
+      "animationCycle" : 1.0,
+      "spaces"         : [
+        [-4, 4], [-3, 4], [-2, 4], [-1, 4], [0, 4], [1, 4], [2, 4], [3, 4],
+        [-4, 3], [-3, 3], [-2, 3], [-1, 3], [0, 3], [1, 3], [2, 3], [3, 3],
+        [-4, 2], [-3, 2], [-2, 2], [-1, 2], [0, 2], [1, 2], [2, 2], [3, 2],
+        [-4, 1], [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1], [3, 1],
+        [-4, 0], [-3, 0],                                   [2, 0], [3, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "scripts" : ["/scripts/sexbound/threeactors.lua"],
+
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [ -2,  0 ], [ -1, 0 ], [ 0,  0 ], [ 1,   0 ] ],
+    "sitPositions"  : [ [ 16, 20 ], [ 8, 20 ], [ 0, 20 ], [ -8, 20 ] ],
+    "position"      : {
+      "sex" : [ "missionary", "doggy", "cowgirl", "facesitting", "standing", "butterfly", "fellatio", "reverse_cowgirl" ]
+    }
+  },
+
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {    
+      "parts" : {
+        "tent" : {
+          "properties" : {
+            "offset" : [0, 2.625],
+            "zLevel" : -1,
+            "image"  : "/objects/apex/apextent/sexbound_apextent.png:<color>"
+          },
+
+          "partStates" : {
+            "props" : {
+              "none" : { "properties" : { "image" : "/objects/apex/apextent/apextent.png:<color>" } }
+            }
+          }
+        },
+
+        "tent-overlay" : {
+          "properties" : {
+            "anchorPart" : "tent",
+            "zLevel"     : 99,
+            "image"      : "/objects/apex/apextent/sexbound_apextent-xray.png:<color>"
+          },
+
+          "partStates" : {
+            "props" : {
+              "none" : {
+                "properties" : { "image" : "/objects/apex/apextent/sexbound_apextent-overlay.png:<color>" }
+              }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "tent",
+            "offset"     : [ 0, -2.625 ]
+          }
+        }
+      }
+    }
+  }
+}

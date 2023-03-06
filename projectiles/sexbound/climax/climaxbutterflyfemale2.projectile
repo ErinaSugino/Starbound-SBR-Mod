@@ -1,0 +1,19 @@
+{
+  "projectileName": "climaxbutterflyfemale2",
+  "physics": "climax",
+  "image": "climax.png",
+  "animationCycle": 1,
+  "frameNumber": 2,
+  "speed": 1,
+  "damagePoly": [
+    [-30, -30],
+    [30, -30],
+    [30, 30],
+    [-30, 30]
+  ],
+  "damageKind": "hidden",
+  "onlyHitTerrain": true,
+  "hydrophobic": true,
+
+  "scripts": ["/projectiles/sexbound/climax/climaxprojectile.lua"]
+}

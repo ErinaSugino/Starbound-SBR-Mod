@@ -1,0 +1,21 @@
+[
+  {
+    "op": "add",
+    "path": "/root/children/1",
+    "value": {
+      "title": "inverter",
+      "type": "decorator",
+      "name": "inverter",
+      "parameters": {},
+      "child": {
+        "title": "hasItemTag",
+        "type": "action",
+        "name": "hasItemTag",
+        "parameters": {
+          "objectEntity": { "key": "bed" },
+          "tag": { "value": "sex" }
+        }
+      }
+    }
+  }
+]

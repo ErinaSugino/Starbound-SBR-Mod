@@ -1,0 +1,69 @@
+{
+  "type" : "sexboundeasterbunny",
+  "baseType" : "merchant",
+  
+  "npcname" : "Easter Bunny",
+
+  "scripts" : [
+    "/npcs/bmain.lua",
+    "/scripts/sexbound/override/npc.lua"
+  ],
+  
+  "dropPools" : [ ],
+  
+  "identity" : {
+    "gender" : "female"
+  },
+
+  "scriptConfig" : {
+    "offeredQuests" : [ ],
+    "turnInQuests" : [ ],
+
+    "merchant" : {
+      "waitTime" : 40,
+      "storeRadius" : 8,
+      "poolsFile" : "/npcs/sexboundeasterbunny.config",
+      "categories" : {
+        "override" : ["all"]
+      },
+      "buyFactorRange" : [ 1.0, 1.0 ],
+      "sellFactorRange" : [ 0.2, 0.2 ],
+      "numItems" : 50,
+      "behaviorConfig" : { "sleep" : false },
+      "paneLayoutOverride" : {
+        "windowtitle" : {
+          "title" : "  [SxB] Easter Bunny",
+          "subtitle" : "  Happy Easter ya pervs!"
+        }
+      }
+    },
+
+    "dialog" : {
+      "converse" : {
+        "default" : {
+          "default" : [
+            "Happy Easter!"
+          ]
+        }
+      }
+    }
+  },
+
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "chest" : [ {"name" : "sexboundeasterbunnychest", "parameters" : { "colorIndex" : 0}} ],
+            "legs"  : [ {"name" : "sexboundeasterbunnylegs",  "parameters" : { "colorIndex" : 0}} ],
+            "head"  : [ {"name" : "sexboundeasterbunnyhead",  "parameters" : { "colorIndex" : 0}} ],
+
+            /* 50% chance to spawn with a carrot stuck in it's ass. */
+            "back"  : [ "", {"name" : "sexboundeasteranalcarrot",  "parameters" : { "colorIndex" : 0}} ],
+            "primary" : [
+              "sexboundeasteregg"
+            ]
+          }
+      ] ]
+    ]
+  }
+}

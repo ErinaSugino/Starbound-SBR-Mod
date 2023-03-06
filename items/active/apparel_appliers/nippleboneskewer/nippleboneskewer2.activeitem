@@ -1,0 +1,20 @@
+{
+  "itemName"         : "nippleboneskewer2",
+  "category"         : "tradeGoods",
+  "description"      : "Worn on your left nipple.",
+  "inventoryIcon"    : "nippleboneskewericon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 50,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "/scripts/sexbound/applyapparel.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Bone Skewer (L)",
+  "twoHanded"        : false,
+  "applyConfig"    : {
+    "target"   : 2,
+    "itemName" : "nippleboneskewer",
+    "wornType" : "nipple"
+  }
+}

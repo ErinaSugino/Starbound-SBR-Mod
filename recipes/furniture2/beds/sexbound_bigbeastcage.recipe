@@ -1,0 +1,8 @@
+{
+  "input": [
+    { "item": "darkwoodmaterial", "count": 25 },
+    { "item": "sexbux", "count": 300 }
+  ],
+  "output": { "item": "sexbound_bigbeastcage", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

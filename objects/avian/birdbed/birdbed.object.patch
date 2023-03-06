@@ -1,0 +1,172 @@
+[
+  {
+    "op"      : "test",
+    "path"    : "/scripts",
+    "inverse" : true
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactive",
+    "value" : true
+  },
+  
+  {
+    "op"   : "remove",
+    "path" : "/orientations/0/spaceScan"
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/materialSpaces",
+    "value" : [
+      [ [ 0,  1 ], "metamaterial:sexboundaddonbase" ]
+    ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/spaces",
+    "value" : [
+      [-2, 1], [-1, 1], [0, 1], [1, 1],
+      [-2, 0],                  [1, 0]
+    ]
+  },
+  
+  {
+    "op"   : "remove",
+    "path" : "/orientations/1/spaceScan"
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/orientations/1/materialSpaces",
+    "value" : [
+      [ [ 0,  1 ], "metamaterial:sexboundaddonbase" ]
+    ]
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/1/spaces",
+    "value" : [
+      [-2, 1], [-1, 1], [0, 1], [1, 1],
+      [-2, 0],                  [1, 0]
+    ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/scripts",
+    "value" : [ "/scripts/objectaddons.lua", "/scripts/sexbound/loungeable.lua" ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/sexboundConfig",
+    "value" : {
+      "animationPartsCentered" : true,
+      "actor"         : { "mirrorArtwork" : true },
+      "nodePositions" : [ [-1, 0], [0,  0] ],
+      "sitPositions"  : [ [8, 20], [0, 20] ],
+      "position" : {
+        "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing_in_bed", "facesitting_in_bed", "butterfly_in_bed", "fellatio_in_bed", "reverse_cowgirl_in_bed" ]
+      }
+    }
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/addonConfig",
+    "value" : {
+      "usesAddons" : [
+        {
+          "name"      : "sexboundLoungeableAddon",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon1",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon2",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : false,
+            "maxActors" : 3
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon3",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : false,
+            "maxActors" : 4
+          }
+        }
+      ]
+    }
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animation",
+    "value" : "/artwork/humanoid/twoactors-centered.animation"
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animationCustom",
+    "value" : {
+      "animatedParts" : {
+        "parts" : {
+          "bed" : {
+            "properties" : {
+              "offset" : [ 0, 0.75 ],
+              "zLevel" : -1,
+              "image"  : "/objects/avian/birdbed/birdbed.png:<color>"
+            },
+            
+            "partStates" : {
+              "props" : {
+                "position2" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 0.75], [0.125, 0.75], [0.25, 0.75], [0.375, 0.75], [0.25, 0.75]]
+                  }
+                },
+                
+                "position3" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 0.75], [0.125, 0.75], [0.25, 0.75], [0.375, 0.75], [0.25, 0.75]]
+                  }
+                }
+              }
+            }
+          },
+          
+          "actors" : {
+            "properties" : {
+              "anchorPart" : "bed",
+              "offset"     : [0, 0.125]
+            },
+            
+            "partStates" : {
+              "actors" : { "idle" : { "properties" : { "offset" : [ -0.5, 0.125 ] } } }
+            }
+          }
+        }
+      }
+    }
+  }
+]

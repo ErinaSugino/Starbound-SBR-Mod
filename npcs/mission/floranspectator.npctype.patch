@@ -1,0 +1,28 @@
+[
+  {
+    "op" : "replace",
+    "path" : "/damageTeamType",
+    "value" : "friendly"
+  },
+  
+  {
+    "op" : "replace",
+    "path" : "/scriptConfig/behavior",
+    "value" : "sexboundspectator"
+  },
+
+  {
+    "op" : "add",
+    "path" : "/scriptConfig/apparelConfig",
+    "value" : {
+      "nippleswear" : [
+        {
+          "item_name" : "nippleboneskewer"
+        },
+        {
+          "item_name" : "nippleboneskewer"
+        }
+      ]
+    }
+  }
+]

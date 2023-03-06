@@ -1,0 +1,13 @@
+[
+  {
+    "op" : "add",
+    "path" : "/scripts/-",
+    "value" : "/scripts/sexbound/override/npc.lua"
+  },
+  
+  {
+    "op" : "replace",
+    "path" : "/scriptConfig/behavior",
+    "value" : "sexboundWanderSimple"
+  }
+]

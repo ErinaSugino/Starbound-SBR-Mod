@@ -1,0 +1,32 @@
+[
+  {
+    "op": "add",
+    "path": "/basicTreasure/0/1/pool/-",
+    "value": { "weight": 0.04, "pool": "sexboundItem" }
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/sextoyTreasure",
+    "value" : [[0, {
+      "pool" : [
+        {"weight" : 0.25, "item" : "lox_standardstrapon"},
+        {"weight" : 0.25, "item" : "lox_standardstrapon_strapless"},
+        {"weight" : 0.25, "item" : "lox_horsestrapon"},
+        {"weight" : 0.25, "item" : "lox_horsestrapon_strapless"},
+        {"weight" : 0.25, "item" : "lox_gagball"},
+        {"weight" : 0.25, "item" : "lox_analjewel"},
+        {"weight" : 0.25, "item" : "lox_foxanaltail"},
+        {"weight" : 0.25, "item" : "lox_horseanaltail"},
+        {"weight" : 0.05, "item" : "lox_pregnancytest"},
+        {"weight" : 0.05, "item" : "lox_abortionpill"}
+      ]
+    }]]
+  },
+  
+  {
+    "op" : "add",
+    "path" : "/basicTreasure/0/1/pool/-",
+    "value" : {"weight" : 0.01, "pool" : "sextoyTreasure"}
+  }
+]

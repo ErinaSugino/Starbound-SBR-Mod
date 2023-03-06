@@ -1,0 +1,9 @@
+{
+  "itemName"         : "liquidsemen",
+  "category"         : "liquid",
+  "description"      : "A measure of semen.",
+  "inventoryIcon"    : "semenicon.png",
+  "liquid"           : "semen",
+  "rarity"           : "Uncommon",
+  "shortdescription" : "Semen"
+}

@@ -1,0 +1,77 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "device" : {
+        "default" : "idle",
+        "states" : {
+          "idle" : {
+            "frames" : 1,
+            "cycle" : 1,
+            "mode" : "loop"
+          }
+        }
+      },
+      
+      "result" : {
+        "default" : "none",
+        "states" : {
+          "none" : {},
+          "positive" : {
+            "frames" : 5,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "none"
+          },
+          "negative" : {
+            "frames" : 5,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "none"
+          }
+        }
+      }
+    },
+    
+    "parts" : {
+      "wand" : {
+        "properties" : {
+          "zLevel" : 1
+        },
+        "partStates" : {
+          "device" : {
+            "idle" : {
+              "properties" : {
+                "image" : "/items/active/lox_pregnancytest/pregnancytest.png:<frame>",
+                "offset" : [0, 0.5]
+              }
+            }
+          }
+        }
+      },
+      
+      "symbol" : {
+        "properties" : {
+          "fullbright" : true,
+          "zLevel" : 2
+        },
+        "partStates" : {
+          "result" : {
+            "positive" : {
+              "properties" : {
+                "image" : "/items/active/lox_pregnancytest/positive.png:<frame>",
+                "offset" : [0, 2]
+              }
+            },
+            
+            "negative" : {
+              "properties" : {
+                "image" : "/items/active/lox_pregnancytest/negative.png:<frame>",
+                "offset" : [0, 2]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

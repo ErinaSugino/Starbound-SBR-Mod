@@ -1,0 +1,26 @@
+{
+  "name": "sexboundsimple",
+  "description": null,
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Sexbound",
+        "type": "module",
+        "name": "sexbound",
+        "parameters": {}
+      },
+      {
+        "title": "simple",
+        "type": "module",
+        "name": "simple",
+        "parameters": {}
+      }
+    ]
+  }
+}

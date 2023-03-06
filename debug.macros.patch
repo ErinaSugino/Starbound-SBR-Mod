@@ -1,0 +1,118 @@
+[
+  {
+    "op": "add",
+    "path": "/sexboundaddon1",
+    "value": ["/spawnitem sexboundloungeableaddon1 99"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundaddon2",
+    "value": ["/spawnitem sexboundloungeableaddon2 99"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundaddon3",
+    "value": ["/spawnitem sexboundloungeableaddon3 99"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundcodex",
+    "value": ["/spawnitem sexbound1-codex"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundcustomizer",
+    "value": ["/spawnitem sexboundcustomizer"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundsandbox",
+    "value": ["/warp instanceworld:sexbound_sandbox"]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundtestpackmale",
+    "value": [
+      "/spawnitem sexbound_test_apexmale",
+      "/spawnitem sexbound_test_avianmale",
+      "/spawnitem sexbound_test_feneroxmale",
+      "/spawnitem sexbound_test_floranmale",
+      "/spawnitem sexbound_test_glitchmale",
+      "/spawnitem sexbound_test_humanmale",
+      "/spawnitem sexbound_test_hylotlmale",
+      "/spawnitem sexbound_test_novakidmale"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundtestpackfemale",
+    "value": [
+      "/spawnitem sexbound_test_apexfemale",
+      "/spawnitem sexbound_test_avianfemale",
+      "/spawnitem sexbound_test_feneroxfemale",
+      "/spawnitem sexbound_test_floranfemale",
+      "/spawnitem sexbound_test_glitchfemale",
+      "/spawnitem sexbound_test_humanfemale",
+      "/spawnitem sexbound_test_hylotlfemale",
+      "/spawnitem sexbound_test_novakidfemale"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundtestpackfull",
+    "value": [
+      "/spawnitem sexbound_test",
+      "/spawnitem sexbound_test_apexfemale",
+      "/spawnitem sexbound_test_apexmale",
+      "/spawnitem sexbound_test_avianfemale",
+      "/spawnitem sexbound_test_avianmale",
+      "/spawnitem sexbound_test_feneroxfemale",
+      "/spawnitem sexbound_test_feneroxmale",
+      "/spawnitem sexbound_test_floranfemale",
+      "/spawnitem sexbound_test_floranmale",
+      "/spawnitem sexbound_test_glitchfemale",
+      "/spawnitem sexbound_test_glitchmale",
+      "/spawnitem sexbound_test_humanfemale",
+      "/spawnitem sexbound_test_humanmale",
+      "/spawnitem sexbound_test_hylotlfemale",
+      "/spawnitem sexbound_test_hylotlmale",
+      "/spawnitem sexbound_test_novakidfemale",
+      "/spawnitem sexbound_test_novakidmale"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/sexboundbedpackfull",
+    "value": [
+      "/spawnitem sexbound_apexbed",
+      "/spawnitem sexbound_apextent",
+      "/spawnitem sexbound_airtightdome",
+      "/spawnitem sexbound_birdbed",
+      "/spawnitem sexbound_sacrificialaltar",
+      "/spawnitem sexbound_floranbed",
+      "/spawnitem sexbound_florancouch",
+      "/spawnitem sexbound_frontierbed",
+      "/spawnitem sexbound_medievalbed",
+      "/spawnitem sexbound_medievalcellbed",
+      "/spawnitem sexbound_prisonmattress",
+      "/spawnitem sexbound_rainbowwoodbed",
+      "/spawnitem sexbound_tier1bed",
+      "/spawnitem sexbound_tier2bed",
+      "/spawnitem sexbound_tier3bed",
+      "/spawnitem sexbound_tier4bed",
+      "/spawnitem sexbound_tribalbed2",
+      "/spawnitem sexbound_wheelbarrow",
+      "/spawnitem sexbound_woodenbed",
+      "/spawnitem sexbound_woodenbed2"
+    ]
+  }
+]

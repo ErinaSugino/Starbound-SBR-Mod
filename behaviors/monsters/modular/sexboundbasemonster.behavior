@@ -1,0 +1,44 @@
+{
+  "name": "sexboundmonster",
+  "description": "",
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "sexbound-notifications",
+        "type": "module",
+        "name": "sexbound-notifications",
+        "parameters": {}
+      },
+      {
+        "title": "sexbound-pregnant",
+        "type": "module",
+        "name": "sexbound-pregnant",
+        "parameters": {}
+      },
+      {
+        "title": "sexbound-transform",
+        "type": "module",
+        "name": "sexbound-transform",
+        "parameters": {}
+      },
+      {
+        "title": "sexbound-setup",
+        "type": "module",
+        "name": "sexbound-setup",
+        "parameters": {}
+      },
+      {
+        "title": "BaseMonster",
+        "type": "module",
+        "name": "monster",
+        "parameters": {}
+      }
+    ]
+  }
+}

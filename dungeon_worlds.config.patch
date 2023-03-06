@@ -1,0 +1,18 @@
+[
+  {
+    "op": "add",
+    "path": "/sexbound_sandbox",
+    "value": {
+      "primaryDungeon": "sexbound_sandbox",
+      "threatLevel": 1,
+      "gravity": 80,
+      "worldSize": [2000, 2000],
+      "dungeonBaseHeight": 1000,
+      "ambientLightLevel": [128, 128, 128],
+      "ambientNoises": "/sfx/environmental/garden_day.ogg",
+      "musicTrack": "/music/i-was-the-sun.ogg",
+      "biome": "forest",
+      "environmentStatusEffects": ["dontstarve"]
+    }
+  }
+]

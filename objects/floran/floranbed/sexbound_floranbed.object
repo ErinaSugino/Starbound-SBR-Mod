@@ -1,0 +1,120 @@
+{
+  "objectName"         : "sexbound_floranbed",
+  "description"        : "The bone frame is sort of kinky, but that fur blanket looks mighty comfy.",
+  "shortdescription"   : "[SxB] Primitive Bed",
+  "category"           : "furniture",
+  "colonyTags"         : [ "floran","floranvillage" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 250,
+  "race"               : "floran",
+  "rarity"             : "Uncommon",
+  "apexDescription"    : "A bed of bone and fur. With fur of my own this makes me uncomfortable.",
+  "avianDescription"   : "I hope the bed is warm, if nothing else.",
+  "floranDescription"  : "Floran sssleep amongsst bone and fur. The sssmell of the hunt make Floran dream good dreams.",
+  "glitchDescription"  : "Disgusted. How would such a piece look if made from the remains of a Glitch?",
+  "humanDescription"   : "The smell of blood clings to the sheets.",
+  "hylotlDescription"  : "Such disrespect, to reduce a living creature to a piece of furniture.",
+  "novakidDescription" : "This bed has rotten stink about it.",
+
+  "inventoryIcon" : "sexbound_floranbedicon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "floranbed.png:<color>",
+      "imagePosition"  : [ -24, 0 ],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces"         : [
+        [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-3, 0],                                   [2, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : ["/scripts/sexbound/threeactors.lua"],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ],
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing", "facesitting_in_bed", "butterfly", "fellatio", "reverse_cowgirl_in_bed" ]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "props" : {
+          "states" : {
+            "position4" : {
+              "properties" : {
+                "immediateSoundRangeMultiplier" : 0.2
+              },
+              "frameProperties" : {
+                "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"]
+              }
+            }
+          }
+        }
+      },
+    
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "offset" : [0, 1.5],
+            "zLevel" : -1,
+            "image"  : "/objects/floran/floranbed/floranbed.png:<color>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "position2" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+              
+              "position3" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                }
+              },
+
+              "position4" : {
+                "frameProperties" : {
+                  "offset" : [[0, 1.75], [0, 1.825], [0, 2], [0, 2.25], [0, 2]]
+                }
+              }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [0, -0.25]
+          },
+          
+          "partStates" : {
+            "actors" : {
+              "idle" : {"properties" : {"offset" : [-0.5, -1.625]}},
+              "position1" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position5" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position6" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-reset"  : {"properties" : {"offset" : [0, -1.625]}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

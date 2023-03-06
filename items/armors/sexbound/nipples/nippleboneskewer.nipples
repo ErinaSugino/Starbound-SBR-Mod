@@ -1,0 +1,18 @@
+{
+  "itemName" : "nippleboneskewer",
+  "category" : "nipples",
+
+  "maleFrames" : {
+    "image" : "nippleboneskewer.png"
+  },
+
+  "femaleFrames" : {
+    "image" : "nippleboneskewer.png"
+  },
+  
+  "sexboundConfig" : {
+    "addStatus"  : [ "equipped_nipplering" ],
+    "image"      : "/items/armors/sexbound/nipples/nippleboneskewer.png",
+    "startScale" : 0.6
+  }
+}

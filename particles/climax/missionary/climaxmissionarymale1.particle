@@ -1,0 +1,22 @@
+{
+  "kind" : "climaxmissionarymale1",
+  "definition" : {
+    "type" : "ember",
+    "fullbright" : true,
+    "position" : [0,0],
+    "size" : 1.25,
+    "color" : [255, 255, 255, 213],
+    "fade" : 0.7,
+    "initialVelocity" : [-1, 4],
+    "finalVelocity" : [-0.75, -10],
+    "approach" : [0, 3],
+    "timeToLive" : 3,
+    "layer" : "front",
+    "collidesForeground" : true,
+    "variance" : {
+      "size" : 0.5,
+      "initialVelocity" : [0.75, 1.25],
+      "finalVelocity" : [0, 5]
+    }
+  }
+}

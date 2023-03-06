@@ -1,0 +1,13 @@
+{
+  "itemName" : "sexbound_jargnome",
+  "price" : 2500,
+  "rarity" : "Legendary",
+  "category" : "craftingMaterial",
+  "inventoryIcon" : "sexbound_jargnome.png",
+  "description" : "A horny li'l gnome! You should keep it in a jar!",
+  "shortdescription" : "Horny li'l Gnome",
+  "itemTags" : [ "reagent" ],
+  "learnBlueprintsOnPickup" : [
+    "sexbound_gnomeinajar"
+  ]
+}

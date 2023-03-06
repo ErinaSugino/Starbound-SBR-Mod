@@ -1,0 +1,87 @@
+{
+  "objectName"         : "sexbound_birdbed",
+  "description"        : "A solid stone bed topped with a nest of sticky hay.",
+  "shortdescription"   : "[SxB] Guardian's Nest",
+  "category"           : "furniture",
+  "colonyTags"         : [ "avian", "aviantemple" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 210,
+  "race"               : "avian",
+  "rarity"             : "Uncommon",
+  "apexDescription"    : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "avianDescription"   : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "floranDescription"  : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "glitchDescription"  : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "humanDescription"   : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "hylotlDescription"  : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "novakidDescription" : "A love bird's nest. The love birds like to fuck on Avian sacred ground.",
+  "inventoryIcon"      : "sexbound_birdbedicon.png",
+
+  "orientations"       : [{
+      "dualImage"      : "birdbed.png:<color>",
+      "imagePosition"  : [-16, 0],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces" : [
+        [-2, 1], [-1, 1], [0, 1], [1, 1],
+        [-2, 0],                  [1, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : [ "/scripts/sexbound/twoactors.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-1, 0], [0,  0] ],
+    "sitPositions"  : [ [8, 20], [0, 20] ],
+    "position"      : {
+      "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "facesitting_in_bed", "standing_in_bed", "butterfly_in_bed", "fellatio_in_bed", "reverse_cowgirl_in_bed" ]
+    },
+    "idlePosition"  : "idle_laying"
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "offset" : [0, 0.75],
+            "zLevel" : -1,
+            "image" : "/objects/avian/birdbed/birdbed.png:<color>"
+          },
+          
+          "partStates" : {
+            "props" : {
+              "position2" : {
+                "frameProperties" : {
+                  "offset" : [[0, 0.75], [0.125, 0.75], [0.25, 0.75], [0.375, 0.75], [0.25, 0.75]]
+                }
+              },
+              
+              "position3" : {
+                "frameProperties" : {
+                  "offset" : [[0, 0.75], [0.125, 0.75], [0.25, 0.75], [0.375, 0.75], [0.25, 0.75]]
+                }
+              }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [0, 0.125]
+          },
+          
+          "partStates" : {
+            "actors" : { "idle" : { "properties" : { "offset" : [ -0.5, 0.125 ] } } }
+          }
+        }
+      }
+    }
+  }
+}

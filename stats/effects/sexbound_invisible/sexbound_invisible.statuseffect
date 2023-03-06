@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_invisible",
+  "defaultDuration" : 300,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_invisible.lua" ]
+}

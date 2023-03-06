@@ -1,0 +1,15 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "addStatus" : [ "equipped_peacekeeper" ],
+      "image" : [
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/unisex/head.png",
+        "/artwork/humanoid/<role>/default/wearable/peacekeeper/unisex/head_variant.png"
+      ],
+      "imageFrameName" : "<frameName>",
+      "mask" : "/artwork/humanoid/<role>/default/wearable/peacekeeper/unisex/head_mask.png"
+    }
+  }
+]

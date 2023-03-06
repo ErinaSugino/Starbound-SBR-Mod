@@ -1,0 +1,29 @@
+{
+  "name": "sexboundoutpostvisitor",
+  "description": null,
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Sexbound",
+        "type": "module",
+        "name": "sexbound",
+        "parameters": {}
+      },
+      {
+        "title": "outpostvisitor",
+        "type": "module",
+        "name": "outpostvisitor",
+        "parameters": {
+          "play": { "value": true },
+          "stayTime": { "value": [10, 60] }
+        }
+      }
+    ]
+  }
+}

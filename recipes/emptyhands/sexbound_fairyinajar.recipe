@@ -1,0 +1,12 @@
+{
+  "input": [
+    { "item": "sexbound_emptyjar", "count": 1 },
+    { "item": "sexbound_jarfairy", "count": 1 },
+    { "item": "sexbux", "count": 300 }
+  ],
+  "output": {
+    "item": "sexbound_fairyinajar",
+    "count": 1
+  },
+  "groups": ["plain", "objects", "all"]
+}

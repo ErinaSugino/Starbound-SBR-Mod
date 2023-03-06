@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/sexbux",
+    "value": { "representativeItem": "sexbux", "playerMax": 9999999 }
+  }
+]

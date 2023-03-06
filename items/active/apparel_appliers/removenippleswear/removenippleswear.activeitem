@@ -1,0 +1,15 @@
+{
+  "itemName"         : "removenippleswear",
+  "category"         : "tradeGoods",
+  "description"      : "Removes all worn nipples items.",
+  "inventoryIcon"    : "removenippleswearicon.png",
+  "itemTags"         : [ "sexbound" ],
+  "level"            : 1,
+  "maxStack"         : 99,
+  "price"            : 25,
+  "rarity"           : "Uncommon",
+  "scripts"          : [ "removenippleswear.lua" ],
+  "scriptDelta"      : 60,
+  "shortdescription" : "[SxB] Remove Nippleswear",
+  "twoHanded"        : false
+}

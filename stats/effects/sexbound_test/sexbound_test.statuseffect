@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_test",
+  "defaultDuration" : 30,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_test.lua" ]
+}

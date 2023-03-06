@@ -1,0 +1,40 @@
+{
+  "objectName"       : "sexbound_node_node",
+  "category"         : "furniture",
+  "colonyTags"       : [ "misc" ],
+  "description"      : "A node that communicates with a Sexbound Control object.",
+  "health"           : 199,
+  "interactive"      : false,
+  "itemTags"         : [ "sex", "sexbound" ],
+  "mouthPosition"    : [ 0, 3 ],
+  "objectType"       : "loungeable",
+  "price"            : 1,
+  "printable"        : false,
+  "race"             : "generic",
+  "rarity"           : "Common",
+  "scannable"        : false,
+  "shortdescription" : "[SxB] Node (Node)",
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ 4, 20 ],
+  "smashable"        : true,
+  "sitStatusEffects" : [ "sexbound_sex" ],
+
+  "inventoryIcon" : "sexbound_node.png",
+  "orientations" : [
+    {
+      "animationCycle"    : 1.0,
+      "animationPosition" : [ 0, 0 ],
+      "dualImage"         : "sexbound_node.png:default.1",
+      "frames"            : 1,
+      "imagePosition"     : [ 0, 0 ],
+      "metaBoundBox"      : [ 0, 0, 1, 1 ],
+      "spaceScan"         : 0.1,
+      "anchors"           : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : [ "sexbound_node_node.lua" ],
+  "scriptDelta" : 1
+}

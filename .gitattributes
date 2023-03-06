@@ -1,0 +1,12 @@
+# Default behaviour
+* text eol=lf
+
+# Exclude images and soundfiles
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.ogg binary
+*.wav binary
+*.mp3 binary

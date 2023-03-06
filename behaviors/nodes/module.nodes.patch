@@ -1,0 +1,67 @@
+[
+  {
+    "op": "add",
+    "path": "/sexbound",
+    "value": {
+      "type": "module",
+      "name": "sexbound",
+      "title": "sexbound",
+      "properties": {}
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/sexbound-notifications",
+    "value": {
+      "type": "module",
+      "name": "sexbound-notifications",
+      "title": "sexbound-notifications",
+      "properties": {}
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/sexbound-pregnant",
+    "value": {
+      "type": "module",
+      "name": "sexbound-pregnant",
+      "title": "sexbound-pregnant",
+      "properties": {}
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/sexbound-setup",
+    "value": {
+      "type": "module",
+      "name": "sexbound-setup",
+      "title": "sexbound-setup",
+      "properties": {}
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/sexbound-aroused",
+    "value": {
+      "type": "module",
+      "name": "sexbound-aroused",
+      "title": "sexbound-aroused",
+      "properties": {}
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/sexbound-transform",
+    "value": {
+      "type": "module",
+      "name": "sexbound-transform",
+      "title": "sexbound-transform",
+      "properties": {}
+    }
+  }
+]
