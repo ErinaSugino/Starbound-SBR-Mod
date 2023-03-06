@@ -22,19 +22,16 @@ function Sexbound.Actor.Storage:sync(callback)
     local promises = self:getParent():getParent():getPromises()
     promises:add(self:_retrieveStorageFromEntityById(entityId), function(storageData)
         storageData = self:fixPregnancyData(storageData)
-        sb.logInfo("actor syncing storage - before: "..self:dump(storageData.sexbound.pregnant or {}))
         if type(callback) == "function" then
             self:setData(callback(storageData) or storageData)
         else
             self:setData(storageData)
         end
-        sb.logInfo("actor syncing storage - after: "..self:dump(self:getData().sexbound.pregnant or {}))
         self:_sendStorageToEntityById(entityId)
     end)
 end
 
 function Sexbound.Actor.Storage:_sendStorageToEntityById(entityId)
-    sb.logInfo("Actor sending new sync data: "..self:dump(self:getData().sexbound.pregnant or {}))
     return world.sendEntityMessage(entityId, "Sexbound:Storage:Sync", self:getData())
 end
 
@@ -77,17 +74,4 @@ end
 -- Returns a reference to the parent Actor instance.
 function Sexbound.Actor.Storage:getParent()
     return self._parent
-end
-
-function Sexbound.Actor.Storage:dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. self:dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
 end
