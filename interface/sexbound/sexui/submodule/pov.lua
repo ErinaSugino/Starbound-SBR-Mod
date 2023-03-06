@@ -100,8 +100,9 @@ function SexUI.POV:render()
         if self.layersEnabled[self.layerIDs[i]] then self.controls:drawImage("/interface/sexbound/sexui/submodule/pov/button.png", {0, (0 + 15*(i-1))}, 1.0, self._config.color, false)
         else self.controls:drawImage("/interface/sexbound/sexui/submodule/pov/button_off.png", {0, (0 + 15*(i-1))}, 1.0, {255,255,255,255}, false) end
     end
-    for i,m in ipairs(faultyModules) do
+    for i=#faultyModules,1,-1 in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        local m = faultyModules[i]
         self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
@@ -118,8 +119,9 @@ function SexUI.POV:update(dt)
         stat,res = pcall(function() mod:update(dt) end)
         if not stat then sb.logError("POV module "..self.layerIDs[i].."'s update method errored!") sb.logError(res) table.insert(faultyModules, i) end
     end
-    for i,m in ipairs(faultyModules) do
+    for i=#faultyModules,1,-1 in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        local m = faultyModules[i]
         self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
@@ -134,8 +136,9 @@ function SexUI.POV:triggerUpdate(actors)
         stat,res = pcall(function() mod:triggerUpdate(actors) end)
         if not stat then sb.logError("POV module "..self.layerIDs[i].."'s triggerUpdate method errored!") sb.logError(res) table.insert(faultyModules, i) end
     end
-    for i,m in ipairs(faultyModules) do
+    for i=#faultyModules,1,-1 in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        local m = faultyModules[i]
         self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
