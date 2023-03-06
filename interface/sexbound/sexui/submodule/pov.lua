@@ -113,7 +113,7 @@ end
 -- @param dt
 function SexUI.POV:update(dt)
     local faultyModules = {}
-    for _,mod in ipairs(self.modules) do
+    for i,mod in ipairs(self.modules) do
         stat,res = pcall(function() mod:update(dt) end)
         if not stat then sb.logError("POV module "..self.layerIDs[i].."'s update method errored!") sb.logError(res) table.insert(faultyModules, i) end
     end
@@ -128,7 +128,7 @@ end
 -- @param a table of actors
 function SexUI.POV:triggerUpdate(actors)
     local faultyModules = {}
-    for _,mod in ipairs(self.modules) do
+    for i,mod in ipairs(self.modules) do
         stat,res = pcall(function() mod:triggerUpdate(actors) end)
         if not stat then sb.logError("POV module "..self.layerIDs[i].."'s triggerUpdate method errored!") sb.logError(res) table.insert(faultyModules, i) end
     end
