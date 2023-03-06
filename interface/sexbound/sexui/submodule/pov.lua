@@ -15,7 +15,8 @@ function SexUI.POV.new(parent, config)
         modules = {},
         layersEnabled = {},
         layerIDs = {},
-        buttonOffset = 0
+        buttonOffset = 0,
+        animationRate = 1
     }, SexUI.POV_mt)
 
     self:init(parent, config, "pov")
