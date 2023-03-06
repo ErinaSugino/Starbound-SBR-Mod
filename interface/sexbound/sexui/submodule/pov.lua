@@ -102,6 +102,7 @@ function SexUI.POV:render()
     end
     for i,m in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
     end
@@ -119,6 +120,7 @@ function SexUI.POV:update(dt)
     end
     for i,m in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
     end
@@ -134,6 +136,7 @@ function SexUI.POV:triggerUpdate(actors)
     end
     for i,m in ipairs(faultyModules) do
         -- Remove faulty modules from list to prevent error log spam and reduce unnecessary execution load
+        self._parent._buttons["pov"]["pov_module_"..self.layerIDs[m]] = nil
         table.remove(self.layerIDs, m)
         table.remove(self.modules, m)
     end
