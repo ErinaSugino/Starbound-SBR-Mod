@@ -566,7 +566,7 @@ end
 
 --- Makes a new baby and stores it in this actor's storage
 function Sexbound.Actor.Pregnant:makeBaby(otherActor)
-    local factory = BabyFactor:new(self)
+    local factory = BabyFactory:new(self)
     local baby = factory:make(otherActor)
     baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(otherActor)
     
