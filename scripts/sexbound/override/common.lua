@@ -268,6 +268,7 @@ function Sexbound.Common:getSubGender()
 end
 
 function Sexbound.Common:canLog(level)
+    level = "show"..(string.gsub(level, "^%l", string.upper))
     local logLevels = self._config or {}
     logLevels = logLevels.log or {}
     return not not logLevels[level]
