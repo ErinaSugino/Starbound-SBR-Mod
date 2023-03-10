@@ -3105,6 +3105,11 @@
 								"offset": [0.375,-0.375]
 							}
 						},
+						"idle_laying": {
+							"properties": {
+								"offset": [1,-1.875]
+							}
+						},
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -3501,6 +3506,11 @@
 						"idle": {
 							"properties": {
 								"offset": [0.125,-0.375]
+							}
+						},
+						"idle_laying": {
+							"properties": {
+								"offset": [0.75,-1.875]
 							}
 						},
 						"position1": {
@@ -5869,6 +5879,11 @@
 								"offset": [0.375,-0.375]
 							}
 						},
+						"idle_laying": {
+							"properties": {
+								"offset": [0.75,-0.825]
+							}
+						},
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -6696,6 +6711,11 @@
 						"idle": {
 							"properties": {
 								"offset": [0.125,-0.375]
+							}
+						},
+						"idle_laying": {
+							"properties": {
+								"offset": [0.5,-0.825]
 							}
 						},
 						"position1": {
@@ -8324,6 +8344,11 @@
 			"actor3-nipple1": {
 				"partStates": {
 					"actors": {
+						"idle_laying": {
+							"properties": {
+								"offset": [0,-1]
+							}
+						},
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -8619,6 +8644,11 @@
 			"actor3-nipple2": {
 				"partStates": {
 					"actors": {
+						"idle_laying": {
+							"properties": {
+								"offset": [-0.325,-1]
+							}
+						},
 						"position1": {
 							"frameProperties": {
 								"offset": [
