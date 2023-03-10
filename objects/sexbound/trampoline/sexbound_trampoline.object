@@ -110,6 +110,11 @@
                   "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
                 }
               },
+              "position4-postclimax": {
+                "properties": {
+                  "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
+                }
+              },
               "position4_1" : {
                 "frameProperties" : {
                   "image": [
@@ -133,6 +138,11 @@
                   "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
                 }
               },
+              "position4_1-postclimax": {
+                "properties": {
+                  "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
+                }
+              },
               "position4_2" : {
                 "frameProperties" : {
                   "image": [
@@ -152,6 +162,11 @@
                 }
               },
               "position4_2-climax": {
+                "properties": {
+                  "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
+                }
+              },
+              "position4_2-postclimax": {
                 "properties": {
                   "image": "/objects/sexbound/trampoline/trampoline.png:default.2"
                 }
@@ -189,6 +204,11 @@
                   "offset" : [0, -0.250]
                 }
               },
+              "position4-postclimax": {
+                "properties" : {
+                  "offset" : [0, -0.250]
+                }
+              },
               "position4_1" : {
                 "frameProperties" : {
                   "offset" : [
@@ -205,6 +225,11 @@
                   "offset" : [0, -0.250]
                 }
               },
+              "position4_1-postclimax": {
+                "properties" : {
+                  "offset" : [0, -0.250]
+                }
+              },
               "position4_2" : {
                 "frameProperties" : {
                   "offset" : [
@@ -217,6 +242,11 @@
                 }
               },
               "position4_2-climax": {
+                "properties" : {
+                  "offset" : [0, -0.250]
+                }
+              },
+              "position4_2-postclimax": {
                 "properties" : {
                   "offset" : [0, -0.250]
                 }

@@ -112,12 +112,15 @@
               "idle" : {"properties" : {"zLevel" : 0}},
               "position1" : {"properties" : {"zLevel" : 0}},
               "position1-climax" : {"properties" : {"zLevel" : 0}},
+              "position1-postclimax" : {"properties" : {"zLevel" : 0}},
               "position1-reset" : {"properties" : {"zLevel" : 0}},
               "position5" : {"properties" : {"zLevel" : 0}},
               "position5-climax" : {"properties" : {"zLevel" : 0}},
+              "position5-postclimax" : {"properties" : {"zLevel" : 0}},
               "position5-reset" : {"properties" : {"zLevel" : 0}},
               "position6" : {"properties" : {"zLevel" : 0}},
               "position6-climax" : {"properties" : {"zLevel" : 0}},
+              "position6-postclimax" : {"properties" : {"zLevel" : 0}},
               "position6-reset" : {"properties" : {"zLevel" : 0}}
             }
           }
@@ -134,12 +137,15 @@
               "idle" : {"properties" : {"offset" : [-0.5, -1.625]}},
               "position1" : {"properties" : {"offset" : [0, -1.625]}},
               "position1-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
               "position1-reset"  : {"properties" : {"offset" : [0, -1.625]}},
               "position5" : {"properties" : {"offset" : [0, -1.625]}},
               "position5-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
               "position5-reset"  : {"properties" : {"offset" : [0, -1.625]}},
               "position6" : {"properties" : {"offset" : [0, -1.625]}},
               "position6-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
               "position6-reset"  : {"properties" : {"offset" : [0, -1.625]}}
             }
           }
