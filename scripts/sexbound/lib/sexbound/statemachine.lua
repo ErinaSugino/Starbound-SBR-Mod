@@ -37,7 +37,7 @@ function Sexbound.StateMachine.new(parent)
         -- [Null State]----------------------------------------------------------------------------------
         nullState = {
             enter = function()
-                if not self:isIdle() and not self:isHavingSex() and not self:isClimaxing() and not self:isReseting() then
+                if not self:isIdle() and not self:isHavingSex() and not self:isClimaxing() and not self:isPostClimaxing() and not self:isReseting() then
                     return {}
                 end
             end,
@@ -100,6 +100,10 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterIdleState()
                 end
+                
+                if not self:getParent():getContainsPlayer() and self:getParent()._config.sex.npcStartSex then
+                    self:getParent():getPositions():switchRandomSexPosition(true)
+                end
             end,
 
             update = function(dt, stateData)
@@ -158,10 +162,6 @@ function Sexbound.StateMachine.new(parent)
 
             enteringState = function(stateData)
                 self:getLog():info("Entering Sex State.")
-
-                if not self:getParent():getContainsPlayer() then
-                    self:getParent():getPositions():switchRandomSexPosition()
-                end
 
                 local position = self:getParent():getPositions():getCurrentPosition()
 
@@ -507,7 +507,7 @@ function Sexbound.StateMachine:isClimaxing()
     return self:getStatus("climaxing")
 end
 
-function Sexbound.StateMachine:isPostClimax()
+function Sexbound.StateMachine:isPostClimaxing()
     return self:getStatus("postclimax")
 end
 

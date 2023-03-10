@@ -398,10 +398,12 @@ end
 function Sexbound.Actor.Climax:spawnProjectile(...)
     self:loadClimaxConfig()
     local args = {...}
-    local actor, facingDirection = self:getParent(), {object.direction(), 1}
     local climaxConfig = self._climaxConfig or {}
-    local spawnOffset = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
     local projectileName = args[1] or climaxConfig.projectileName
+    if not projectileName then return end
+    
+    local actor, facingDirection = self:getParent(), {object.direction(), 1}
+    local spawnOffset = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
     local spawnPosition = vec2.add(args[2] or actor:getClimaxSpawnPosition(), spawnOffset)
     local sourceEntityId = args[3] or actor:getEntityId()
     local spawnDirection = args[4] or
@@ -414,17 +416,20 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
 
     projectileLiquid = projectileLiquid[gender]
 
-    local actionOnReap = climaxConfig.projectileActionOnReap or {
-        ["1"] = {
-            action = "liquid",
-            liquid = projectileLiquid,
-            quantity = 0.2
+    local handler = {}
+    if projectileLiquid then
+        local actionOnReap = climaxConfig.projectileActionOnReap or {
+            ["1"] = {
+                action = "liquid",
+                liquid = projectileLiquid,
+                quantity = 0.2
+            }
         }
-    }
+        
+        handler.actionOnReap = actionOnReap
+    end
 
-    world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, {
-        actionOnReap = actionOnReap
-    })
+    world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
 end
 
 --- Attempts to cause this actor to begin climaxing.
