@@ -72,7 +72,7 @@ end
 --- [Helper] Handles when this actor prepares to climax (scripted)
 function Sexbound.Actor.SexTalk:handleBeginPreClimax()
     -- Say random with 'climaxing' as the prioritized status for both actors.
-    if not self:processIsActive("climaxState") then
+    if self:processIsActive("climaxState") then
         self._timer = 0
 
         local actor = self:getParent()
