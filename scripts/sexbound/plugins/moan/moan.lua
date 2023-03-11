@@ -34,7 +34,7 @@ function Sexbound.Actor.Moan:new(parent, config)
 end
 
 function Sexbound.Actor.Moan:onMessage(message)
-    if message:isType("Sexbound:Position:SwitchPosition") or message:isType("Sexbound:SwitchRoles") then
+    if message:isType("Sexbound:Positions:SwitchPosition") or message:isType("Sexbound:SwitchRoles") then
         local stateName = self:getParent():getParent():getStateMachine():stateDesc()
         self:processIsActive(stateName)
     end
