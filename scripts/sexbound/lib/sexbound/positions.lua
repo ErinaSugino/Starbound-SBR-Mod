@@ -216,7 +216,8 @@ function Sexbound.Positions:filterPositions(actorList)
         self._positionCount = positionCount
     end
     
-    if self._index ~= -1 and not self:isAvailable(self._lastPositionName) then self:switchPosition(-1) end
+    if self._index ~= -1 and not self:isAvailable(self._lastPositionName) then self:switchPosition(-1)
+    elseif self._index ~= -1 then self:findNewIndex(self._lastPositionName) end
     
     self:getParent():tickToken("positions")
     
@@ -357,6 +358,15 @@ function Sexbound.Positions:isAvailable(posName)
         if p:getName() == posName then return true end
     end
     return false
+end
+
+--- Sets the new index of the old position if still existant
+function Sexbound.Positions:findNewIndex(posName)
+    local index = -1
+    for i,p in ipairs(self._availablePositions) do
+        if p:getName() == posName then index = i break, end
+    end
+    self._index = index
 end
 
 --- Generate permutations of actor combinations for actorCount
