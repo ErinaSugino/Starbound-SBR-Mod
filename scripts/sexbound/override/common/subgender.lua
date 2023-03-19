@@ -125,7 +125,7 @@ function Sexbound.Common.SubGender:handleAddStatus(statusName)
     for _,subgender in ipairs(subgenders) do
         if subgender and self:passesGenderRestriction(subgender, gender) then
             self:replaceSxbSubGender(subgender)
-        elseif self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't change to "..tostring(statusName).." by status due to gender requirements!") end
+        elseif self._parent:canLog("warn") then sb.logWarn("Entity #"..entity.id().."'s sub-gender didn't change to "..tostring(subgender).." by status due to gender requirements!") end
     end
 end
 
