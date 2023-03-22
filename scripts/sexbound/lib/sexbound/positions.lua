@@ -364,7 +364,7 @@ end
 function Sexbound.Positions:findNewIndex(posName)
     local index = -1
     for i,p in ipairs(self._availablePositions) do
-        if p:getName() == posName then index = i break, end
+        if p:getName() == posName then index = i break end
     end
     self._index = index
 end
