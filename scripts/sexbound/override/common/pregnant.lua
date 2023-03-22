@@ -277,7 +277,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     local speciesConfig
     -- Attempt to read configuration from species config file.
     if not pcall(function()
-        speciesConfig = root.assetJson("/species/" .. (babyConfig.species or "human") .. ".species")
+        speciesConfig = root.assetJson("/species/" .. (babyConfig.birthSpecies or "human") .. ".species")
     end) then
         sb.logWarn("SxB: Could not find species config file.")
     end
