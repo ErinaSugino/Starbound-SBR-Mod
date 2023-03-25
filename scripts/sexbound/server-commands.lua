@@ -115,8 +115,10 @@ end
 
 function SexboundCommands:handleChangelogAction(commands, args)
     local version = commands._config.version
+    local versionStripped = string.gsub(version, "_?h%d+$", "")
+    local versionBase = string.gsub(version, "(%d%.%d)_.+", "%1")
     local message = "\n^red;:: SEXBOUND CHANGELOG v" .. version .. " ::^reset;\n\n"
-    local changes = commands._changelog[version] or {}
+    local changes = commands._changelog[version] or commands._changelog[versionStripped] or commands._changelog[versionBase] or {}
 
     for _, change in ipairs(changes) do
         message = message .. " => ^white;" .. change .. "^reset;\n"
