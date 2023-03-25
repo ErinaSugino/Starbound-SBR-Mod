@@ -99,7 +99,7 @@ function Sexbound.Common.SubGender:setSxbSubGender(sxbSubGenderName)
     storage.sexbound.identity.sxbSubGender = sxbSubGenderName
     status.statusProperty("sxbSubGender", sxbSubGenderName)
     
-    if #self._genderOrder < 1 then self:getParent():buildBodyTraits(sxbSubGenderName) end
+    if #self._genderOrder < 1 then self._currentGender = sxbSubGenderName self:getParent():buildBodyTraits(sxbSubGenderName) end
     self._previousSxbGender = sxbSubGenderName
     if self._parent:canLog("debug") then sb.logInfo("Persistently changed entity sub-gender of #"..entity.id().." to "..tostring(sxbSubGenderName)) end
 end
