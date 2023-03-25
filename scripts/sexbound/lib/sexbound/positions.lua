@@ -84,7 +84,7 @@ function Sexbound.Positions:loadIdle(sexboundConfig)
     
     _, _config = xpcall(function()
             if _config and _config.base and self._config[_config.base] then
-                _config = util.mergeTable(root.assetJson(self._config[_config.base].configFile), _config)
+                _config = self:util_mergeConfig(root.assetJson(self._config[_config.base].configFile), _config)
             end
 
             return _config
@@ -113,7 +113,7 @@ function Sexbound.Positions:loadPositions(sexboundConfig)
 
         _, _config = xpcall(function()
             if _config and _config.base and self._config[_config.base] then
-                _config = util.mergeTable(root.assetJson(self._config[_config.base].configFile), _config)
+                _config = self:util_mergeConfig(root.assetJson(self._config[_config.base].configFile), _config)
             end
 
             return _config
@@ -401,4 +401,16 @@ function Sexbound.Positions:util_perm(a,n,m)
 
         end
     end
+end
+
+--- Merge configs but overwrite nil-able values
+function Sexbound.Positions:util_mergeConfig(a,b)
+    for k, v in pairs(b) do
+        if type(v) == "table" and type(a[k]) == "table" and k ~= "requireTraits" and k ~= "interactionType" then
+            self:util_mergeConfig(a[k] or {}, v)
+        else
+            a[k] = v
+        end
+    end
+    return a
 end
