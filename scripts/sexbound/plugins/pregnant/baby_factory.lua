@@ -116,7 +116,7 @@ end
 --- Returns a random time representing the delay between the climax and the actual impregnation happening
 -- @return delay
 function BabyFactory:createImpregnationDelay()
-    local delay = util.randomInRange({60, 180})
+    return util.randomInRange({60, 180})
 end
 
 --- Returns the index in a given list of color palette where there is a the smallest color distance to a target palette

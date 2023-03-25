@@ -132,6 +132,7 @@ function Sexbound.Common.Pregnant:dataFilter()
             -- Update old babies to use new progressive pregnancy progression
             if type(v.fullBirthOSTime) ~= "number" then v.fullBirthOSTime = os.time() end
             if type(v.fullBirthWorldTime) ~= "number" then v.fullBirthWorldTime = math.max(v.birthWorldTime, 840) end
+            if type(v.delay) ~= "number" then v.delay = 0 end
         end
 
         count = count + 1
