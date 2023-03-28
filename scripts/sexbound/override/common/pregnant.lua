@@ -295,7 +295,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     if genderConfig then
         -- If gender config was found and hair declaration exists, choose random gender specific hair style for baby
         local hairStyles = genderConfig.hair
-        if hairStyles then params.identity.hairType = hairStyles[util.randomIntInRange(1,#hairStyles)] end
+        if hairStyles then params.identity.hairType = hairStyles[util.randomIntInRange({1,#hairStyles})] end
     end
     
     local spawnableNPC = {
