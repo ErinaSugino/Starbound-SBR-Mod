@@ -156,12 +156,10 @@ function Loungeable:initSexbound()
         return
     end
 
-    Sexbound.API.init()
+    Sexbound.API.init(maxActors)
 
     local nPositions = config.getParameter("sexboundConfig.nodePositions", {})
     local sPositions = config.getParameter("sexboundConfig.sitPositions", {})
-
-    maxActors = self._addon.addonData.maxActors or 2
 
     for i = 1, maxActors do
         Sexbound.API.Nodes.addNode(nPositions[i] or {0, 0}, sPositions[i] or {0, 0}) -- Add next node
