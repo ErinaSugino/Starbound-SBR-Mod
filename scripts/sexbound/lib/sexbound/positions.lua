@@ -173,26 +173,26 @@ end
 function Sexbound.Positions:filterPositions(actorList)
     actorList = actorList or {}
     local actorCount = 0
-    for i,a in ipairs(actorList) do actorCount = actorCount + 1 end
+    local hasPlayer = false
+    for i,a in ipairs(actorList) do actorCount = actorCount + 1 if a:getEntityType() == "player" then hasPlayer = true end end
     
     self:getLog():debug("Re-evaluating positions. Total available: "..#self._positions.." - actor count: "..actorCount)
     
-    local forceTarget = self:getParent():getConfig().position.force
-    if self:getParent():getConfig().sex.forceAllPositions or forceTarget then
-        self:updateActorRoles(actorList, actorCount)
-        if forceTarget and forceTarget ~= self._index then self:switchPosition(forceTarget) end
-        return
-    end -- filtering disabled - all positions available on load
+    --local forceTarget = self:getParent():getConfig().position.force
+    local forceAll = self:getParent():getConfig().sex.forceAllPositions and hasPlayer
     
     local availablePositions = {}
     local positionCount = 0
     
-    for _,p in ipairs(self._positions) do
+    for i,p in ipairs(self._positions) do
         local posConf = p:getConfig() or {}
-        local posMin = posConf.minRequiredActors or 0
+        local posMin = posConf.minRequiredActors or 1
         local posMax = posConf.maxAllowedActors or 3
         
-        if actorCount >= posMin and actorCount <= posMax then table.insert(availablePositions, p) positionCount = positionCount + 1 end
+        if forceAll or (actorCount >= posMin and actorCount <= posMax) then
+            table.insert(availablePositions, p)
+            positionCount = positionCount + 1
+        end
     end
     
     self:getLog():debug("Remaining positions after count check: "..positionCount)
