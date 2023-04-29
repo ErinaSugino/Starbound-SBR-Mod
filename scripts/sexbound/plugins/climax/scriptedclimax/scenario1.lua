@@ -107,7 +107,7 @@ function Sexbound.ScriptedClimax.Scenario1:spawnExplosion()
 
     world.spawnProjectile("burningexplosion", spawnPosition, self:getParent():getParent():getEntityId(), nil, false, {
         actionOnReap = {
-            ["1"] = {
+            [1] = {
                 action = "config",
                 file = "/projectiles/explosions/burningexplosion/burningexplosion.config"
             }

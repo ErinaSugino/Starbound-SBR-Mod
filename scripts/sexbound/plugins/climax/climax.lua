@@ -419,7 +419,7 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
     local handler = {}
     if projectileLiquid then
         local actionOnReap = climaxConfig.projectileActionOnReap or {
-            ["1"] = {
+            [1] = {
                 action = "liquid",
                 liquid = projectileLiquid,
                 quantity = 0.2
