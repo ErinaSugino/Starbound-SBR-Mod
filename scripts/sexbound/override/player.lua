@@ -192,15 +192,24 @@ function Sexbound.Player:showCustomizerUI(args)
     if "function" ~= type(player.interact) then return end
     xpcall(function()
         local _loadedConfig = root.assetJson("/interface/sexbound/customizer/customizer.config")
-        _loadedConfig.config.statistics = self:getStatistics():getStatistics()
-        _loadedConfig.config.currentGender = self._subGender._currentGender
-        _loadedConfig.config.subGenders = self._subGender:getAllSubGenders()
-        _loadedConfig.config.sterilized = self._status:hasStatus("sterilized")
+        --_loadedConfig.config.statistics = self:getStatistics():getStatistics()
+        --_loadedConfig.config.currentGender = self._subGender._currentGender
+        --_loadedConfig.config.subGenders = self._subGender:getAllSubGenders()
+        --_loadedConfig.config.sterilized = self._status:hasStatus("sterilized")
         player.interact("ScriptPane", _loadedConfig, player.id())
     end, function(err)
         sb.logError("Unable to load Sexbound Customizer UI config.")
         sb.logError(err)
     end)
+end
+
+function Sexbound.Player:handleGetCutomizerData(args)
+    local _loadedConfig = {}
+    _loadedConfig.statistics = self:getStatistics():getStatistics()
+    _loadedConfig.currentGender = self._subGender._currentGender
+    _loadedConfig.subGenders = self._subGender:getAllSubGenders()
+    _loadedConfig.sterilized = self._status:hasStatus("sterilized")
+    return _loadedConfig
 end
 
 function Sexbound.Player:handleDismissUI(args)
@@ -317,6 +326,9 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:CustomizerUI:Show", function(_, _, args)
         return self:handleShowCustomizerUI(args)
+    end)
+    message.setHandler("Sexbound:CustomizerUI:GetData", function(_, _, args)
+        return self:handleGetCutomizerData(args)
     end)
     message.setHandler("Sexbound:Reward:Currency", function(_, _, args)
         return self:handleRewardCurrency(args)

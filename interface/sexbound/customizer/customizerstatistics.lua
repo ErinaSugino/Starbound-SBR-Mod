@@ -3,8 +3,9 @@ Customizer.Statistics_mt = { __index = Customizer.Statistics }
 
 --- Instantiantes a new instance.
 -- @param config
-function Customizer.Statistics:new()
+function Customizer.Statistics:new(parent)
   return setmetatable({
+    _parent = parent,
     itemListName = "statisticsTab.statisticsList.itemList",
     isActive     = false
   }, Customizer.Statistics_mt)
@@ -46,7 +47,7 @@ end
 function Customizer.Statistics:reset()
   widget.clearListItems(self.itemListName)
 
-  self.statisticsConfig = config.getParameter("config.statistics", {})
+  self.statisticsConfig = self._parent.config.statistics or {}
 
   local haveSexCount = self.statisticsConfig.haveSexCount or 0
   self:addListItem("^shadow;> You've had sex ^green;" .. haveSexCount .. "^reset;^shadow; time(s)")

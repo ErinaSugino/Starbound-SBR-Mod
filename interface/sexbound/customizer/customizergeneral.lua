@@ -3,22 +3,24 @@ Customizer.General_mt = { __index = Customizer.General }
 
 --- Instantiantes a new instance.
 -- @param config
-function Customizer.General:new()
+function Customizer.General:new(parent)
   return setmetatable({
+    _parent = parent,
     isActive = true,
     currentSexbux = 0,
     currentSubGender = "None",
     currentSubGenderIndex = 1,
-    subGenderList = config.getParameter("config.subGenders") or {},
+    subGenderList = {},
     sterilized = false
   }, Customizer.General_mt)
 end
 
 function Customizer.General:init()
+  self.subGenderList = self._parent.config.subGenders or {}
   table.insert(self.subGenderList, 1, {name="None",available=true})
   self.maxSubGenderIndex = #self.subGenderList
   
-  local currentSubGender = config.getParameter("config.currentGender", "None")
+  local currentSubGender = self._parent.config.currentGender or "None"
   if currentSubGender ~= "male" and currentSubGender ~= "female" then self.currentSubGender = currentSubGender end
   
   self:updateSexbuxAmount()
@@ -27,7 +29,8 @@ function Customizer.General:init()
     if v.name == self.currentSubGender then self.currentSubGenderIndex = i break end
   end
   
-  self.sterilized = config.getParameter("config.sterilized", false)
+  self.sterilized = self._parent.config.sterilized
+  if self.sterilized == nil then self.sterilized = false end
   if self.sterilized then widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are^reset;^shadow; sterilized.") end
 end
 
