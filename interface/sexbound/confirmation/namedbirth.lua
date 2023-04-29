@@ -1,6 +1,6 @@
 function init()
     self.chosenName = nil
-    self.nameGen = config.getParameter("config.nameGenerator", "/species/humannamegen.config")
+    self.nameGen = config.getParameter("config.nameGenerator", "/species/humannamegen.config:names")
     self.babySpecies = config.getParameter("config.babySpecies", "human")
     self.babyGender = config.getParameter("config.babyGender", "male")
     self.babyGenderText = " boy"

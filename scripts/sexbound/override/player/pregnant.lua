@@ -252,17 +252,19 @@ function Sexbound.Player.Pregnant:openBabyNamingWindow(babyId)
     
     local babyGender = baby.birthGender or "male"
     local babySpecies = baby.birthSpecies or "human"
-    local nameGenerator = "/species/humannamegen.config"
+    local nameGenerator = "/species/humannamegen.config:names"
     local speciesConfig, genderId
     
-    -- Attempt to read configuration from species config file.
-    if not pcall(function()
-        speciesConfig = root.assetJson("/species/" .. babySpecies .. ".species")
-        genderId = self:getParent():getGenderId(speciesConfig, babyGender)
-        nameGenerator = speciesConfig.nameGen[genderId]
-    end) then
-        sb.logWarn("SxB: Could not find species config file for baby: "..tostring(babySpecies))
-    end
+    if baby.birthEntityGroup == "humanoid" then
+        -- Attempt to read configuration from species config file.
+        if not pcall(function()
+            speciesConfig = root.assetJson("/species/" .. babySpecies .. ".species")
+            genderId = self:getParent():getGenderId(speciesConfig, babyGender)
+            nameGenerator = speciesConfig.nameGen[genderId]
+        end) then
+            sb.logWarn("SxB: Could not find species config file for baby: "..tostring(babySpecies))
+        end
+    elseif baby.birthEntityGroup == "monster" then nameGenerator = "/quests/generated/petnames.config:names" end
     
     xpcall(function()
         local _loadedConfig = self:loadNamedBirthConfig()
