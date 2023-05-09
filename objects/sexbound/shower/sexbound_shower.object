@@ -11,8 +11,6 @@
   "race"               : "generic",
   "rarity"             : "Rare",
 
-  "nekiDescription"    : "Neki hate water, but best spot for fucks.",
-
   "placementImage" : "showerpreview.png",
   "placementImagePosition" : [ -24, 0 ],
   "inventoryIcon"  : "showericon.png",
