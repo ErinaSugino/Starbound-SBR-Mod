@@ -12,7 +12,7 @@ function Sexbound.NPC.Arousal:new(parent)
         _parent = parent
     }, Sexbound.NPC.Arousal_mt)
 
-    _self:init(parent)
+    _self:init(parent, npc.seed())
 
     return _self
 end
