@@ -191,6 +191,11 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         self:tryToRefreshStatusTextForThisActor(daddy)
         self:tryToApplyPregnantStatusEffectForThisActor(daddy)
     end
+    
+    if self._parent:getEntityType == "npc" and daddy:getEntityType() == "npc" then
+        self._parent._config.fertilityPenalty = self._parent._config.fertilityPenalty * (self._parnt._config.fertilityPenalty / 2)
+        if self._parent._config.fertilityPenalty < 0.0001 then self._parent._config.fertilityPenalty = 0 end
+    end
 
     self:storeBaby(babyConfig)
 
@@ -337,6 +342,9 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     if self:getParent():status():hasStatus("sexbound_custom_fertility") or otherActor:status():hasStatus("sexbound_custom_fertility") then 
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
+    end
+    if self:getParent:getEntityType() == "npc" and otherActor:getEntityType() == "npc" then
+        fertility = fertility * self._parent._config.fertilityPenalty
     end
     local pregnancyChance = self:generateRandomNumber() / 100;
     self:getLog():debug("Fertility roll: "..pregnancyChance.." <= "..fertility)
@@ -729,6 +737,8 @@ function Sexbound.Actor.Pregnant:storeBaby(baby)
         table.insert(storageData.sexbound.pregnant, baby)
         return storageData
     end)
+    
+    world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Common:UpdateFertility", self:getParent()._config.fertilityPenalty)
 end
 
 --- Adds "whichGendersCanOvulate" and "whichGendersCanProduceSperm" to own config from main config

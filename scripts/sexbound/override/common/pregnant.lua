@@ -240,7 +240,9 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
         motherUuid = babyConfig.motherUuid,
         motherName = babyConfig.motherName,
         fatherUuid = babyConfig.fatherUuid,
-        fatherName = babyConfig.fatherName
+        fatherName = babyConfig.fatherName,
+        generationFertility = babyConfig.generationFertility,
+        fertilityPenalty = babyConfig.generationFertility
     }
     params.identity = {}
     params.identity.gender = babyConfig.birthGender

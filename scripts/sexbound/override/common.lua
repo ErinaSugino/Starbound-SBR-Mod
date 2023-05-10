@@ -38,6 +38,11 @@ function Sexbound.Common:init(parent, entityType)
     self:loadSubscripts(entityType) -- Subscripts include SubGender, which verifies and, if needed, resets current sub-gender
 
     status.setStatusProperty("sexbound_birthday", status.statusProperty("sexbound_birthday", "default"))
+    
+    if status.statusProperty("generationFertility", nil) == nil then
+        status.setStatusProperty("generationFertility", 1.0)
+        status.setStatusProperty("fertilityPenalty", 1.0)
+    end
 end
 
 function Sexbound.Common:uninit()
@@ -250,6 +255,10 @@ function Sexbound.Common:updateSubgenderStatus(old, new)
             self._subGender:handleAddStatus(s)
         end
     end
+end
+
+function Sexbound.Common:updateFertility(newFertility)
+    status.setStatusProperty("fertilityPenalty", newFertility)
 end
 
 -- Getters/Setters

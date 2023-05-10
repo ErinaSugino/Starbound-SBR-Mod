@@ -137,6 +137,9 @@ function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Pregnant:HazardAbortion", function(_, _, args)
         return self:hazardAbortion()
     end)
+    message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
+        self:updateFertility(args)
+    end)
     
     --- Debug stuff
     message.setHandler("Sexbound:Debug:GetHitbox", function(_, _, args)
@@ -350,7 +353,9 @@ function Sexbound.NPC:getActorData()
         nippleswear = self:getApparel():prepareNippleswear(gender),
         type = npc.npcType(),
         seed = npc.seed(),
-        storage = storage
+        storage = storage,
+        generationFertility = status.statusProperty("generationFertility", 1.0),
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
 end
 

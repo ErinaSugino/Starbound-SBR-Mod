@@ -129,6 +129,9 @@ function Sexbound.Monster:initMessageHandlers()
     message.setHandler("Sexbound:Storage:Sync", function(_, _, args)
         return self:handleSyncStorage(args)
     end)
+    message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
+        self:updateFertility(args)
+    end)
 end
 
 function Sexbound.Monster:handleEnterIdleState(args)
@@ -249,7 +252,9 @@ function Sexbound.Monster:getActorData()
         identity = identity,
         type = monster.type(),
         seed = monster.seed(),
-        storage = storage
+        storage = storage,
+        generationFertility = status.statusProperty("generationFertility", 1.0),
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
 end
 

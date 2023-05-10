@@ -36,7 +36,8 @@ function BabyFactory:make(daddy)
         fatherId = daddy:getEntityId(),
         fatherUuid = daddy:getUniqueId(),
         fatherType = daddy:getEntityType(),
-        fatherSpecies = daddy:getSpecies()
+        fatherSpecies = daddy:getSpecies(),
+        generationFertility = actor._config.generationFertility
     }
 
     if baby.motherType == "player" then
@@ -60,6 +61,7 @@ function BabyFactory:make(daddy)
     if baby.motherType == "npc" and baby.fatherType == "npc" then
         local choices = {actor:getType(), daddy:getType()}
         baby.npcType = util.randomChoice(choices)
+        baby.generationFertility = baby.generationFertility * (baby.generationFertility / 2)
     end
 
     return baby
