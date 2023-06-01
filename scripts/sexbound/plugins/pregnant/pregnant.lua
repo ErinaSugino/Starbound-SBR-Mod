@@ -18,8 +18,7 @@ Sexbound.Actor.Pregnant_mt = {
 function Sexbound.Actor.Pregnant:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "PREG",
-        _config = config,
-        _insemins = {}
+        _config = config
     }, Sexbound.Actor.Pregnant_mt)
     
     local mainConfig = parent:getParent():getConfig() or {}
@@ -41,10 +40,58 @@ function Sexbound.Actor.Pregnant:onMessage(message)
     end
 end
 
+--- Returns a reference to this actor's insemination decay rate.
+function Sexbound.Actor.Pregnant:getInseminationDecay()
+    return self._config.inseminationDecay or { 0.2, 0.3 }
+end
+
 --- Handle delta time updates
 -- @param deltaTime
 function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
     if self:getParent():getEntityType() == "player" then self:progressBabyState(dt) end
+
+    if not self:isDripBlocked() then
+        local fillCount = self:getCurrentAllInseminations()
+        if fillCount > 0 then self:drip(dt, fillCount) end
+    end
+end
+
+function Sexbound.Actor.Pregnant:drip(dt, fillCount)
+    self._config.dripTimer = math.max(0, self._config.dripTimer - dt)
+
+    if self._config.dripTimer == 0 then
+        local decay = util.randomInRange(self:getInseminationDecay())
+        local actor = self:getParent()
+        local selfNumber = actor:getActorNumber()
+
+        local climaxPlugin = self:getPlugin("climax")
+        if climaxPlugin and climaxPlugin._config.enableClimaxParticles then
+            animator.burstParticleEmitter("insemination-drip" .. selfNumber)
+        end
+
+        self._config.dripTimer = math.min(2, 1 / fillCount ^ 1.5)
+
+        local prevBellyState = self:isBellySwollen()
+        local inseminations = self._config.inseminations
+        for k, v in pairs(inseminations) do
+            inseminations[k] = math.max(0, v - decay * v / fillCount)
+        end
+
+        if prevBellyState ~= self:isBellySwollen() then
+            actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(),
+                actor:resetDirectives(selfNumber))
+        end
+    end
+end
+
+function Sexbound.Actor.Pregnant:isDripBlocked()
+    local impregnators = self:getParent():getImpregnatorList()
+    for _, actor in ipairs(impregnators) do
+        if self:otherActorHasRoleInPositionWhichCanImpregnate(actor) then
+            return true
+        end
+    end
+    return false
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
@@ -759,7 +806,7 @@ function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
 end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
-    local inseminations = self._insemins
+    local inseminations = self._config.inseminations
     local otherUuid = otherActor._config.uniqueId or "other"
     local count = (inseminations[otherUuid] or 0) + 1
     inseminations[otherUuid] = count
@@ -768,13 +815,13 @@ function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
 end
 
 function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
-    local inseminations = self._insemins
+    local inseminations = self._config.inseminations
     local otherUuid = otherActor._config.uniqueId or "other"
     return inseminations[otherUuid] or 0
 end
 
 function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
-    local inseminations = self._insemins
+    local inseminations = self._config.inseminations
     local count = 0
     for k, v in pairs(inseminations) do
         count = count + v
@@ -876,6 +923,8 @@ end
 
 --- Validates the loaded config and sets missing config options to be default values.
 function Sexbound.Actor.Pregnant:validateConfig()
+    self:validateDripTimer(self._config.dripTimer)
+    self:validateInseminations(self._config.inseminations)
     self:validateCompatibleSpecies(self._config.compatibleSpecies)
     self:validateEnableAsexualReproduction(self._config.enableAsexualReproduction)
     self:validateEnableCompatibleSpeciesOnly(self._config.enableCompatibleSpeciesOnly)
@@ -895,6 +944,28 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateTrimesterCount(self._config.trimesterCount)
     self:validateTrimesterLength(self._config.trimesterLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
+end
+
+--- Ensures dripTimer is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateDripTimer(value)
+    if type(value) ~= "number" then
+        self._config.dripTimer = 0
+        return
+    end
+
+    self._config.dripTimer = value
+end
+
+--- Ensures inseminations is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateInseminations(value)
+    if type(value) ~= "table" then
+        self._config.inseminations = {}
+        return
+    end
+
+    self._config.inseminations = value
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
