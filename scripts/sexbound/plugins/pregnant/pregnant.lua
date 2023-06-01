@@ -233,6 +233,12 @@ end
 function Sexbound.Actor.Pregnant:isPregnant()
     return self:getCurrentPregnancyCount() > 0
 end
+
+--- Returns whether or not the actor has a swollen belly
+function Sexbound.Actor.Pregnant:isBellySwollen()
+    return self:getCurrentAllInseminations() >= 7.5 or self:isVisiblyPregnant()
+end
+
 --- Returns whether or not the actor is visibly pregnant
 function Sexbound.Actor.Pregnant:isVisiblyPregnant()
     return self:getCurrentVisiblePregnancyCount() > 0
@@ -352,7 +358,6 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     end
 
     local pregnancyChance = self:generateRandomNumber() / 100;
-    self:getLog():debug("Fertility roll: "..pregnancyChance.." <= "..fertility)
     self:getLog():info("Pregnancy roll : " .. pregnancyChance .. " <= " .. fertility)
     return pregnancyChance <= fertility
 end
@@ -766,6 +771,15 @@ function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
     local inseminations = self._insemins
     local otherUuid = otherActor._config.uniqueId or "other"
     return inseminations[otherUuid] or 0
+end
+
+function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
+    local inseminations = self._insemins
+    local count = 0
+    for k, v in pairs(inseminations) do
+        count = count + v
+    end
+    return count
 end
 
 --- Returns a reference to this actor's current pregnancies table
