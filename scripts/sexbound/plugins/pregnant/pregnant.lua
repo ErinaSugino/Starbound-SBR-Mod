@@ -32,6 +32,13 @@ function Sexbound.Actor.Pregnant:new(parent, config)
     return _self
 end
 
+function Sexbound.Actor.Pregnant:init(parent, logPrefix, callback)
+    Sexbound.Actor.Plugin.init(self, parent, logPrefix, callback)
+
+    self.dripTimer = 0
+    self.inseminations = {}
+end
+
 --- Handles message events.
 -- @param message
 function Sexbound.Actor.Pregnant:onMessage(message)
@@ -57,9 +64,9 @@ function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
 end
 
 function Sexbound.Actor.Pregnant:drip(dt, fillCount)
-    self._config.dripTimer = math.max(0, self._config.dripTimer - dt)
+    self.dripTimer = math.max(0, self.dripTimer - dt)
 
-    if self._config.dripTimer == 0 then
+    if self.dripTimer == 0 then
         local decay = util.randomInRange(self:getInseminationDecay())
         local actor = self:getParent()
         local selfNumber = actor:getActorNumber()
@@ -69,12 +76,11 @@ function Sexbound.Actor.Pregnant:drip(dt, fillCount)
             animator.burstParticleEmitter("insemination-drip" .. selfNumber)
         end
 
-        self._config.dripTimer = math.min(2, 1 / fillCount ^ 1.5)
+        self.dripTimer = math.min(2, 1 / fillCount ^ 1.5)
 
         local prevBellyState = self:isBellySwollen()
-        local inseminations = self._config.inseminations
-        for k, v in pairs(inseminations) do
-            inseminations[k] = math.max(0, v - decay * v / fillCount)
+        for k, v in pairs(self.inseminations) do
+            self.inseminations[k] = math.max(0, v - decay * v / fillCount)
         end
 
         if prevBellyState ~= self:isBellySwollen() then
@@ -806,24 +812,21 @@ function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
 end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
-    local inseminations = self._config.inseminations
     local otherUuid = otherActor._config.uniqueId or "other"
-    local count = (inseminations[otherUuid] or 0) + 1
-    inseminations[otherUuid] = count
+    local count = (self.inseminations[otherUuid] or 0) + 1
+    self.inseminations[otherUuid] = count
 
     self:getLog():info("Actor fill count " .. count)
 end
 
 function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
-    local inseminations = self._config.inseminations
     local otherUuid = otherActor._config.uniqueId or "other"
-    return inseminations[otherUuid] or 0
+    return self.inseminations[otherUuid] or 0
 end
 
 function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
-    local inseminations = self._config.inseminations
     local count = 0
-    for k, v in pairs(inseminations) do
+    for k, v in pairs(self.inseminations) do
         count = count + v
     end
     return count
@@ -923,8 +926,6 @@ end
 
 --- Validates the loaded config and sets missing config options to be default values.
 function Sexbound.Actor.Pregnant:validateConfig()
-    self:validateDripTimer(self._config.dripTimer)
-    self:validateInseminations(self._config.inseminations)
     self:validateCompatibleSpecies(self._config.compatibleSpecies)
     self:validateEnableAsexualReproduction(self._config.enableAsexualReproduction)
     self:validateEnableCompatibleSpeciesOnly(self._config.enableCompatibleSpeciesOnly)
@@ -944,28 +945,6 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateTrimesterCount(self._config.trimesterCount)
     self:validateTrimesterLength(self._config.trimesterLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
-end
-
---- Ensures dripTimer is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateDripTimer(value)
-    if type(value) ~= "number" then
-        self._config.dripTimer = 0
-        return
-    end
-
-    self._config.dripTimer = value
-end
-
---- Ensures inseminations is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateInseminations(value)
-    if type(value) ~= "table" then
-        self._config.inseminations = {}
-        return
-    end
-
-    self._config.inseminations = value
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
