@@ -308,7 +308,8 @@ end
 
 --- Returns whether or not the actor has a swollen belly
 function Sexbound.Actor.Pregnant:isBellySwollen()
-    return self:getCurrentAllInseminations() >= self:getSwellingThreshold() or self:isVisiblyPregnant()
+    return self._config.enableInflationFetish and self:getCurrentAllInseminations() >= self:getSwellingThreshold()
+        or self:isVisiblyPregnant()
 end
 
 --- Returns whether or not the actor is visibly pregnant
@@ -952,6 +953,7 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateEnableMultipleImpregnations(self._config.enableMultipleImpregnations)
     --self:validateEnableNotifyPlayers(self._config.enableNotifyPlayers)
     self:validateEnablePregnancyFetish(self._config.enablePregnancyFetish)
+    self:validateEnableInflationFetish(self._config.enableInflationFetish)
     --self:validateEnableSilentImpregnations(self._config.enableSilentImpregnations)
     self:validateFertility(self._config.fertility)
     self:validateFertilityBonusMult(self._config.fertilityBonusMult)
@@ -1042,6 +1044,16 @@ function Sexbound.Actor.Pregnant:validateEnablePregnancyFetish(value)
         return
     end
     self._config.enablePregnancyFetish = value
+end
+
+--- Ensures enableInflationFetish is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateEnableInflationFetish(value)
+    if type(value) ~= "boolean" then
+        self._config.enableInflationFetish = true
+        return
+    end
+    self._config.enableInflationFetish = value
 end
 
 --- Ensures enableSilentImpregnations is set to an allowed value
