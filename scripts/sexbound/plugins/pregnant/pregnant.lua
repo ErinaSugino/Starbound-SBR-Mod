@@ -18,7 +18,8 @@ Sexbound.Actor.Pregnant_mt = {
 function Sexbound.Actor.Pregnant:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "PREG",
-        _config = config
+        _config = config,
+        _insemins = {}
     }, Sexbound.Actor.Pregnant_mt)
     
     local mainConfig = parent:getParent():getConfig() or {}
@@ -156,6 +157,8 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
             bellyFull = self:thisActorIsAlreadyTooPregnant()
             
             self:getLog():debug("Pregnancy check for actor "..self:getParent():getActorNumber()..": Allow species " .. tostring(compatible) .. " - Can Impregnate " .. tostring(canImpregnate) .. " - Can be impregnated " .. tostring(canPregnate) .. " - Insertion " .. tostring(directInsertion))
+
+            self:handleInsemination(actor)
 
             if not bellyFull and not isProtected and not isClone and compatible and curFertility then self:becomePregnant(actor) end
         end
@@ -333,11 +336,21 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     end
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
+
+    local bonusCount = self:getCurrentInseminations(otherActor)
+    local bonusMax = self:getConfig().fertilityBonusMax or 0.6
+    if bonusCount > 0 and fertility < bonusMax then
+        local bonusMult = self:getConfig().fertilityBonusMult or 1.08
+
+        fertility = util.clamp(fertility + (bonusMult ^ bonusCount) - 1, fertility, bonusMax)
+    end
+
     local multiplier = self:getConfig().fertilityMult or 1.0
     if self:getParent():status():hasStatus("sexbound_custom_fertility") or otherActor:status():hasStatus("sexbound_custom_fertility") then 
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
+
     local pregnancyChance = self:generateRandomNumber() / 100;
     self:getLog():debug("Fertility roll: "..pregnancyChance.." <= "..fertility)
     self:getLog():info("Pregnancy roll : " .. pregnancyChance .. " <= " .. fertility)
@@ -740,6 +753,21 @@ function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     self._config.immersionLevel = mainConfig.immersionLevel or 1
 end
 
+function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
+    local inseminations = self._insemins
+    local otherUuid = otherActor._config.uniqueId or "other"
+    local count = (inseminations[otherUuid] or 0) + 1
+    inseminations[otherUuid] = count
+
+    self:getLog():info("Actor fill count " .. count)
+end
+
+function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
+    local inseminations = self._insemins
+    local otherUuid = otherActor._config.uniqueId or "other"
+    return inseminations[otherUuid] or 0
+end
+
 --- Returns a reference to this actor's current pregnancies table
 -- @param index
 function Sexbound.Actor.Pregnant:getCurrentPregnancies(index)
@@ -843,6 +871,8 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateEnablePregnancyFetish(self._config.enablePregnancyFetish)
     --self:validateEnableSilentImpregnations(self._config.enableSilentImpregnations)
     self:validateFertility(self._config.fertility)
+    self:validateFertilityBonusMult(self._config.fertilityBonusMult)
+    self:validateFertilityBonusMax(self._config.fertilityBonusMax)
     self:validateFertilityMult(self._config.fertilityMult)
     self:validateNotifications(self._config.notifications)
     self:validatePreventStatuses(self._config.preventStatuses)
@@ -945,6 +975,26 @@ function Sexbound.Actor.Pregnant:validateFertility(value)
         return
     end
     self._config.fertility = util.clamp(value, 0, 1)
+end
+
+--- Ensures fertility is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateFertilityBonusMult(value)
+    if type(value) ~= "number" then
+        self._config.fertilityBonusMult = 1.08
+        return
+    end
+    self._config.fertilityBonusMult = util.clamp(value, 1, 2)
+end
+
+--- Ensures fertility is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateFertilityBonusMax(value)
+    if type(value) ~= "number" then
+        self._config.fertilityBonusMax = 0.6
+        return
+    end
+    self._config.fertilityBonusMax = util.clamp(value, 0, 1)
 end
 
 --- Ensures fertility is set to an allowed value
