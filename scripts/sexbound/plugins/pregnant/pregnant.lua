@@ -180,40 +180,49 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
         directInsertion = self:canImpregnate(actor)
         canImpregnate = self:otherActorHasRoleInPositionWhichCanImpregnate(actor)
         -- If the checked two actors don't even fuck directly or the penetrator isn't penetrating the vagina, no need to continue. Neither pregnancy nor hazzard can occur
-        if directInsertion and canImpregnate then
-            if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
-                local chance = 0
-                local chances = self:getConfig().pregnancyHazards or {["default"] = {}}
-                chance = chances[thatSpecies] or chances["default"]
-                chance = chance[thisSpecies] or chance["default"] or 0
-                
-                if chance > 0 then
-                    local roll = self:generateRandomNumber() / 100
-                    
-                    self:getLog():debug("Pregnancy hazzard roll: "..thatSpecies.."->"..thisSpecies.." - "..roll.." <= "..chance)
-                    
-                    if roll <= chance then
-                        self:hazardAbortion()
-                        self:tryToNotifyThisActorOfHazardAbortion(actor)
-                        self:tryToNotifyOtherActorOfHazardAbortion(actor)
-                        -- When you were pregnant and a pregnancy hazard aborts it, you cannot get pregnant in the same turn - so abort here
-                        break
+        if directInsertion then
+            if canImpregnate then
+                if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
+                    local chance = 0
+                    local chances = self:getConfig().pregnancyHazards or { ["default"] = {} }
+                    chance = chances[thatSpecies] or chances["default"]
+                    chance = chance[thisSpecies] or chance["default"] or 0
+
+                    if chance > 0 then
+                        local roll = self:generateRandomNumber() / 100
+
+                        self:getLog():debug("Pregnancy hazzard roll: " ..
+                            thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. chance)
+
+                        if roll <= chance then
+                            self:hazardAbortion()
+                            self:tryToNotifyThisActorOfHazardAbortion(actor)
+                            self:tryToNotifyOtherActorOfHazardAbortion(actor)
+                            -- When you were pregnant and a pregnancy hazard aborts it, you cannot get pregnant in the same turn - so abort here
+                            break
+                        end
                     end
                 end
+
+                isClone = self:thisActorIsCloneOfOtherActor(actor)
+                --fuckedProtected = self:otherActorIsUsingContraception(actor)
+                --canCum = self:otherActorCanProduceSperm(actor)
+                compatible = self:otherActorIsCompatibleSpecies(actor)
+                curFertility = self:thisActorHasEnoughFertility(actor)
+                bellyFull = self:thisActorIsAlreadyTooPregnant()
+
+                self:getLog():debug("Pregnancy check for actor " .. self:getParent():getActorNumber()
+                    .. ": Allow species " .. tostring(compatible)
+                    .. " - Can Impregnate " .. tostring(canImpregnate)
+                    .. " - Can be impregnated " .. tostring(canPregnate)
+                    .. " - Insertion " .. tostring(directInsertion))
+
+                if not bellyFull and not isProtected and not isClone and compatible and curFertility then
+                    self:becomePregnant(actor)
+                end
             end
-            
-            isClone = self:thisActorIsCloneOfOtherActor(actor)
-            --fuckedProtected = self:otherActorIsUsingContraception(actor)
-            --canCum = self:otherActorCanProduceSperm(actor)
-            compatible = self:otherActorIsCompatibleSpecies(actor)
-            curFertility = self:thisActorHasEnoughFertility(actor)
-            bellyFull = self:thisActorIsAlreadyTooPregnant()
-            
-            self:getLog():debug("Pregnancy check for actor "..self:getParent():getActorNumber()..": Allow species " .. tostring(compatible) .. " - Can Impregnate " .. tostring(canImpregnate) .. " - Can be impregnated " .. tostring(canPregnate) .. " - Insertion " .. tostring(directInsertion))
 
             self:handleInsemination(actor)
-
-            if not bellyFull and not isProtected and not isClone and compatible and curFertility then self:becomePregnant(actor) end
         end
     end
 
