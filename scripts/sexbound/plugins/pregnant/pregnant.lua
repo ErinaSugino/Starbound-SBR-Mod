@@ -47,9 +47,19 @@ function Sexbound.Actor.Pregnant:onMessage(message)
     end
 end
 
---- Returns a reference to this actor's insemination decay rate.
+--- Returns a reference to this actor's insemination decay rate range.
 function Sexbound.Actor.Pregnant:getInseminationDecay()
     return self._config.inseminationDecay or { 0.2, 0.3 }
+end
+
+--- Returns a reference to this actor's drip rate modifier.
+function Sexbound.Actor.Pregnant:getDripRateModifier()
+    return self._config.dripRateModifier or 1.5
+end
+
+--- Returns a reference to this actor's abdomen swelling threshold.
+function Sexbound.Actor.Pregnant:getSwellingThreshold()
+    return self._config.swellingThreshold or 7.5
 end
 
 --- Handle delta time updates
@@ -76,7 +86,7 @@ function Sexbound.Actor.Pregnant:drip(dt, fillCount)
             animator.burstParticleEmitter("insemination-drip" .. selfNumber)
         end
 
-        self.dripTimer = math.min(2, 1 / fillCount ^ 1.5)
+        self.dripTimer = math.min(2, 1 / fillCount ^ self:getDripRateModifier())
 
         local prevBellyState = self:isBellySwollen()
         for k, v in pairs(self.inseminations) do
@@ -298,7 +308,7 @@ end
 
 --- Returns whether or not the actor has a swollen belly
 function Sexbound.Actor.Pregnant:isBellySwollen()
-    return self:getCurrentAllInseminations() >= 7.5 or self:isVisiblyPregnant()
+    return self:getCurrentAllInseminations() >= self:getSwellingThreshold() or self:isVisiblyPregnant()
 end
 
 --- Returns whether or not the actor is visibly pregnant
@@ -947,6 +957,9 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateFertilityBonusMult(self._config.fertilityBonusMult)
     self:validateFertilityBonusMax(self._config.fertilityBonusMax)
     self:validateFertilityMult(self._config.fertilityMult)
+    self:validateInseminationDecay(self._config.inseminationDecay)
+    self:validateDripRateModifier(self._config.dripRateModifier)
+    self:validateSwellingThreshold(self._config.swellingThreshold)
     self:validateNotifications(self._config.notifications)
     self:validatePreventStatuses(self._config.preventStatuses)
     --self:validateWhichGendersCanProduceSperm(self._config.whichGendersCanProduceSperm)
@@ -1078,6 +1091,48 @@ function Sexbound.Actor.Pregnant:validateFertilityMult(value)
         return
     end
     self._config.fertilityMult = util.clamp(value, 1, 10)
+end
+
+--- Ensures inseminationDecay is set to an allowed range
+-- @param value
+function Sexbound.Actor.Pregnant:validateInseminationDecay(value)
+    if type(value) ~= "table" then
+        self._config.inseminationDecay = { 0.2, 0.3 }
+        return
+    end
+
+    local lo = value[1]
+    local hi = value[2]
+
+    if type(lo) ~= "number" then lo = 0.2 end
+    if type(hi) ~= "number" then hi = 0.3 end
+
+    lo = util.clamp(lo, 0.1, 10)
+    hi = util.clamp(hi, 0.1, 10)
+
+    if hi < lo then hi = lo end
+
+    self._config.inseminationDecay = { lo, hi }
+end
+
+--- Ensures dripRateModifier is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateDripRateModifier(value)
+    if type(value) ~= "number" then
+        self._config.dripRateModifier = 1.5
+        return
+    end
+    self._config.dripRateModifier = util.clamp(value, 1, 5)
+end
+
+--- Ensures swellingThreshold is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateSwellingThreshold(value)
+    if type(value) ~= "number" then
+        self._config.swellingThreshold = 7.5
+        return
+    end
+    self._config.swellingThreshold = util.clamp(value, 1, 100)
 end
 
 --- Ensures notifications is set to an allowed value
