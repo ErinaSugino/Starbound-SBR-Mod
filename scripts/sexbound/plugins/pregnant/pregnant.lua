@@ -18,7 +18,9 @@ Sexbound.Actor.Pregnant_mt = {
 function Sexbound.Actor.Pregnant:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "PREG",
-        _config = config
+        _config = config,
+        _dripTimer = 0,
+        _inseminations = {}
     }, Sexbound.Actor.Pregnant_mt)
     
     local mainConfig = parent:getParent():getConfig() or {}
@@ -30,13 +32,6 @@ function Sexbound.Actor.Pregnant:new(parent, config)
     _self:setupMessageHandlers()
 
     return _self
-end
-
-function Sexbound.Actor.Pregnant:init(parent, logPrefix, callback)
-    Sexbound.Actor.Plugin.init(self, parent, logPrefix, callback)
-
-    self.dripTimer = 0
-    self.inseminations = {}
 end
 
 --- Handles message events.
@@ -74,9 +69,9 @@ function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
 end
 
 function Sexbound.Actor.Pregnant:drip(dt, fillCount)
-    self.dripTimer = math.max(0, self.dripTimer - dt)
+    self._dripTimer = math.max(0, self._dripTimer - dt)
 
-    if self.dripTimer == 0 then
+    if self._dripTimer == 0 then
         local decay = util.randomInRange(self:getInseminationDecay())
         local actor = self:getParent()
         local selfNumber = actor:getActorNumber()
@@ -86,11 +81,11 @@ function Sexbound.Actor.Pregnant:drip(dt, fillCount)
             animator.burstParticleEmitter("insemination-drip" .. selfNumber)
         end
 
-        self.dripTimer = math.min(2, 1 / fillCount ^ self:getDripRateModifier())
+        self._dripTimer = math.min(2, 1 / fillCount ^ self:getDripRateModifier())
 
         local prevBellyState = self:isBellySwollen()
-        for k, v in pairs(self.inseminations) do
-            self.inseminations[k] = math.max(0, v - decay * v / fillCount)
+        for k, v in pairs(self._inseminations) do
+            self._inseminations[k] = math.max(0, v - decay * v / fillCount)
         end
 
         if prevBellyState ~= self:isBellySwollen() then
@@ -833,20 +828,20 @@ end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
     local otherUuid = otherActor._config.uniqueId or "other"
-    local count = (self.inseminations[otherUuid] or 0) + 1
-    self.inseminations[otherUuid] = count
+    local count = (self._inseminations[otherUuid] or 0) + 1
+    self._inseminations[otherUuid] = count
 
     self:getLog():info("Actor fill count " .. count)
 end
 
 function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
     local otherUuid = otherActor._config.uniqueId or "other"
-    return self.inseminations[otherUuid] or 0
+    return self._inseminations[otherUuid] or 0
 end
 
 function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
     local count = 0
-    for k, v in pairs(self.inseminations) do
+    for k, v in pairs(self._inseminations) do
         count = count + v
     end
     return count
