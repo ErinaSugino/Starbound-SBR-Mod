@@ -310,7 +310,7 @@ function Sexbound.Actor:loadGroin(entityGroup, role, species, gender)
 
     local subGender = self:getSubGender()
 
-    if self:isVisiblyPregnant() and self:isEnabledPregnancyFetish() then
+    if self:isBellySwollen() and self:isEnabledPregnancyFetish() then
         if self:getGenitalType() == "male" then
             image = self:getSprite(animState, "groinGenitalPregnancy", {
                 entityGroup = entityGroup,
@@ -1271,6 +1271,14 @@ function Sexbound.Actor:isPregnant()
     end
 
     return plugin:isPregnant()
+end
+
+function Sexbound.Actor:isBellySwollen()
+    local plugin = self:getPlugins("pregnant")
+
+    if plugin == nil then return false end
+
+    return plugin:isBellySwollen()
 end
 
 function Sexbound.Actor:isVisiblyPregnant()
