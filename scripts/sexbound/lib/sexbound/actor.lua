@@ -310,7 +310,7 @@ function Sexbound.Actor:loadGroin(entityGroup, role, species, gender)
 
     local subGender = self:getSubGender()
 
-    if self:isVisiblyPregnant() and self:isEnabledPregnancyFetish() then
+    if (self:isVisiblyPregnant() and self:isEnabledPregnancyFetish()) or self:isInflated() then
         if self:getGenitalType() == "male" then
             image = self:getSprite(animState, "groinGenitalPregnancy", {
                 entityGroup = entityGroup,
@@ -1251,6 +1251,18 @@ function Sexbound.Actor:getUniqueId()
     return self._config.uniqueId
 end
 
+function Sexbound.Actor:getGenes()
+    local g = self:getIdentity() or {}
+    g = g.genetics or {}
+    return g.bodyColor, g.bodyColorAverage, g.undyColor, g.undyColorAverage, g.hairColor, g.hairColorAverage
+end
+
+function Sexbound.Actor:getGenePool()
+    local g = self:getIdentity() or {}
+    g = g.genetics or {}
+    return g.bodyColorPool, g.bodyColorPoolAverage, g.undyColorPool, g.undyColorPoolAverage, g.hairColorPool, g.hairColorPoolAverage
+end
+
 function Sexbound.Actor:isPregnant()
     local plugin = self:getPlugins("pregnant")
 
@@ -1259,6 +1271,14 @@ function Sexbound.Actor:isPregnant()
     end
 
     return plugin:isPregnant()
+end
+
+function Sexbound.Actor:isInflated()
+    local plugin = self:getPlugins("climax")
+
+    if plugin == nil then return false end
+
+    return plugin:isInflated()
 end
 
 function Sexbound.Actor:isVisiblyPregnant()
@@ -1319,6 +1339,17 @@ function Sexbound.Actor:hasTraits(traits)
         if t == "vagina" and not self:hasGenitalType("female") then return false end
     end
     return true
+end
+
+--- Checks if the actor is currently in a role in the current position that has the interaction type given
+function Sexbound.Actor:hasInteractionType(type)
+    local interactionTypes = self:getPosition()._config.interactionType
+    local actorList = self:getImpregnatorList()
+    for i,a in ipairs(actorList) do
+        local actorNum = a._actorNumber
+        if interactionTypes[actorNum] == type then return true end
+    end
+    return false
 end
 
 --- Legacy
