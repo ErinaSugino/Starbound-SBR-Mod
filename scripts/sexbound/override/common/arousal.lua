@@ -10,10 +10,15 @@ end
 
 --- Initializes this instance
 -- @param parent
-function Sexbound.Common.Arousal:init(parent)
+function Sexbound.Common.Arousal:init(parent, seed)
     self._parent = parent
+    seed = seed or os.time()
     arousalRate = parent:getConfig().sex.naturalHorninessRate
-    if type(arousalRate) == "table" then arousalRate = util.randomInRange(arousalRate) end
+    if type(arousalRate) == "table" then
+        local rng = sb.makeRandomSource(seed)
+        local roll = rng:randf()
+        arousalRate = arousalRate[1] + (arousalRate[2]-arousalRate[1]) * roll
+    end
     self._defaultConfig = {regenRates = {default = arousalRate, havingSex = 0.0}}
     self._config = config.getParameter("arousalConfig", self._defaultConfig)
     if not self._config.regenRates then self._config.regenRates = self._defaultConfig.regenRates end

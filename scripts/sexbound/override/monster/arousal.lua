@@ -12,7 +12,7 @@ function Sexbound.Monster.Arousal:new(parent)
         _parent = parent
     }, Sexbound.Monster.Arousal_mt)
 
-    _self:init(parent)
+    _self:init(parent, monster.seed())
 
     return _self
 end
