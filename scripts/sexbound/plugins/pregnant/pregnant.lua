@@ -52,11 +52,6 @@ function Sexbound.Actor.Pregnant:getDripRateModifier()
     return self._config.dripRateModifier or 1.5
 end
 
---- Returns a reference to this actor's abdomen swelling threshold.
-function Sexbound.Actor.Pregnant:getSwellingThreshold()
-    return self._config.swellingThreshold or 7.5
-end
-
 --- Handle delta time updates
 -- @param deltaTime
 function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
@@ -73,36 +68,24 @@ function Sexbound.Actor.Pregnant:drip(dt, fillCount)
 
     if self._dripTimer == 0 then
         local decay = util.randomInRange(self:getInseminationDecay())
-        local actor = self:getParent()
-        local selfNumber = actor:getActorNumber()
-
-        local climaxPlugin = self:getPlugin("climax")
-        if climaxPlugin and climaxPlugin._config.enableClimaxParticles then
-            animator.burstParticleEmitter("insemination-drip" .. selfNumber)
-        end
 
         self._dripTimer = math.min(2, 1 / fillCount ^ self:getDripRateModifier())
 
-        local prevBellyState = self:isBellySwollen()
         for k, v in pairs(self._inseminations) do
             self._inseminations[k] = math.max(0, v - decay * v / fillCount)
-        end
-
-        if prevBellyState ~= self:isBellySwollen() then
-            actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(),
-                actor:resetDirectives(selfNumber))
         end
     end
 end
 
 function Sexbound.Actor.Pregnant:isDripBlocked()
-    local impregnators = self:getParent():getImpregnatorList()
-    for _, actor in ipairs(impregnators) do
-        if self:otherActorHasRoleInPositionWhichCanImpregnate(actor) then
-            return true
-        end
-    end
-    return false
+    --local impregnators = self:getParent():getImpregnatorList()
+    --for _, actor in ipairs(impregnators) do
+    --    if self:otherActorHasRoleInPositionWhichCanImpregnate(actor) then
+    --        return true
+    --    end
+    --end
+    --return false
+    return self._parent:hasInteractionType("direct")
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
@@ -299,12 +282,6 @@ end
 --- Returns whether or not the actor is pregnant
 function Sexbound.Actor.Pregnant:isPregnant()
     return self:getCurrentPregnancyCount() > 0
-end
-
---- Returns whether or not the actor has a swollen belly
-function Sexbound.Actor.Pregnant:isBellySwollen()
-    return self._config.enableInflationFetish and self:getCurrentAllInseminations() >= self:getSwellingThreshold()
-        or self:isVisiblyPregnant()
 end
 
 --- Returns whether or not the actor is visibly pregnant
@@ -956,7 +933,6 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateFertilityMult(self._config.fertilityMult)
     self:validateInseminationDecay(self._config.inseminationDecay)
     self:validateDripRateModifier(self._config.dripRateModifier)
-    self:validateSwellingThreshold(self._config.swellingThreshold)
     self:validateNotifications(self._config.notifications)
     self:validatePreventStatuses(self._config.preventStatuses)
     --self:validateWhichGendersCanProduceSperm(self._config.whichGendersCanProduceSperm)
@@ -1041,16 +1017,6 @@ function Sexbound.Actor.Pregnant:validateEnablePregnancyFetish(value)
     self._config.enablePregnancyFetish = value
 end
 
---- Ensures enableInflationFetish is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateEnableInflationFetish(value)
-    if type(value) ~= "boolean" then
-        self._config.enableInflationFetish = true
-        return
-    end
-    self._config.enableInflationFetish = value
-end
-
 --- Ensures enableSilentImpregnations is set to an allowed value
 function Sexbound.Actor.Pregnant:validateEnableSilentImpregnations(value)
     if type(value) ~= "boolean" then
@@ -1130,16 +1096,6 @@ function Sexbound.Actor.Pregnant:validateDripRateModifier(value)
         return
     end
     self._config.dripRateModifier = util.clamp(value, 1, 5)
-end
-
---- Ensures swellingThreshold is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateSwellingThreshold(value)
-    if type(value) ~= "number" then
-        self._config.swellingThreshold = 7.5
-        return
-    end
-    self._config.swellingThreshold = util.clamp(value, 1, 100)
 end
 
 --- Ensures notifications is set to an allowed value

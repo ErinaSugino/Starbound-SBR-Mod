@@ -22,7 +22,9 @@ function Sexbound.Actor.Climax:new(parent, config)
         _emitterNames = {},
         _scenarios = {},
         _soundEffects = {},
-        _timer = {}
+        _timer = {},
+        _inflation = 0,
+        _dripTimer = 0
     }, Sexbound.Actor.Climax_mt)
 
     -- Init. this plugin
@@ -95,6 +97,11 @@ function Sexbound.Actor.Climax:onMessage(message)
     if message:isType("Sexbound:SwitchRoles") then
         self:refreshEmitterName()
     end
+    
+    -- On Message Received: Inflate
+    if message:isType("Sexbound:Climax:Inflate") then
+        self:inflate(message)
+    end
 end
 
 function Sexbound.Actor.Climax:loadClimaxConfig()
@@ -107,6 +114,8 @@ end
 
 function Sexbound.Actor.Climax:onUpdateAnyState(dt)
     self._config.currentPoints = self._config.currentPoints or 0
+    
+    if self:canDrip() then self:inflationDrip(dt) end
 end
 
 --- Handles event: onUpdateSexState
@@ -382,9 +391,13 @@ function Sexbound.Actor.Climax:shoot(...)
     local config = self:getParent():getPosition():getConfig()
     local interactionTypes = config.interactionType or {}
     local interaction = interactionTypes[actorNum]
-    if interaction == "oral" then
-        local target = config.actorRelation[actorNum]
-        if target then world.sendEntityMessage(target:getEntityId(), "Sexbound:Climax:Feed") end
+    local target = config.actorRelation[actorNum]
+    if target then
+        local _actor = actor:getParent():getActors()[target] or nil
+        if interaction == "oral" then
+            world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
+        end
+        if self._config.enableInflation then Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate()) end
     end
 end
 
@@ -430,6 +443,37 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
     end
 
     world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
+end
+
+--- Increases level of inflation
+function Sexbound.Actor.Climax:inflate(amount)
+    amount = amount or 0.1
+    local oldAmount = self._inflation
+    local actor = self._parent
+    self._inflation = self._inflation + amount
+    if oldAmount < self:getInflationThreshold() and self._inflation >= self:getInflationThreshold() then
+        actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+    end
+end
+
+--- Gradually drecreases level of inflation
+function Sexbound.Actor.Climax:inflationDrip(dt)
+    self._dripTimer = math.max(0, self._dripTimer - dt)
+
+    if self._dripTimer == 0 then
+        local oldAmount = self._inflation
+        local actor = self._parent
+        self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
+        if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
+            actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        end
+        
+        self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
+        
+        if self._config.enableClimaxParticles then
+            animator.burstParticleEmitter("insemination-drip" .. selfNumber)
+        end
+    end
 end
 
 --- Attempts to cause this actor to begin climaxing.
@@ -503,6 +547,36 @@ end
 --- Returns the max possible climax points.
 function Sexbound.Actor.Climax:getMaxPoints()
     return self._config.maxPoints or 100
+end
+
+--- Returns the belly inflation rate
+function Sexbound.Actor.Climax:getInflationRate()
+    return self._config.inflationRate or 0.1
+end
+
+--- Returns the belly inflation threshold
+function Sexbound.Actor.Climax:getInflationThreshold()
+    return self._config.inflationThreshold or 7.5
+end
+
+---Returns the inflation drip rate
+function Sexbound.Actor.Climax:getDripRate()
+    return self._config.dripRate or {0.2, 0.3}
+end
+
+--- Returns the inflation drip speed modifier
+function Sexbound.Actor.Climax:getDripSpeed()
+    return self._config.dripSpeed or 1.5
+end
+
+--- Returns whether or not dripping can currently occur
+function Sexbound.Actor.Climax:canDrip()
+    return not self._parent:hasInteractionType("direct")
+end
+
+--- Returns whether or not this actor is currently inflated
+function Sexbound.Actor.Climax:isInflated()
+    return self._inflation >= self:getInflationThreshold
 end
 
 --- Returns a sound effect by specifed name or the table of sound effects.
