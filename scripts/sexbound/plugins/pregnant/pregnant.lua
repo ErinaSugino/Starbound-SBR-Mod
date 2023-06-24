@@ -18,7 +18,9 @@ Sexbound.Actor.Pregnant_mt = {
 function Sexbound.Actor.Pregnant:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "PREG",
-        _config = config
+        _config = config,
+        _dripTimer = 0,
+        _inseminations = {}
     }, Sexbound.Actor.Pregnant_mt)
     
     local mainConfig = parent:getParent():getConfig() or {}
@@ -40,10 +42,50 @@ function Sexbound.Actor.Pregnant:onMessage(message)
     end
 end
 
+--- Returns a reference to this actor's insemination decay rate range.
+function Sexbound.Actor.Pregnant:getInseminationDecay()
+    return self._config.inseminationDecay or { 0.2, 0.3 }
+end
+
+--- Returns a reference to this actor's drip rate modifier.
+function Sexbound.Actor.Pregnant:getDripRateModifier()
+    return self._config.dripRateModifier or 1.5
+end
+
 --- Handle delta time updates
 -- @param deltaTime
 function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
     if self:getParent():getEntityType() == "player" then self:progressBabyState(dt) end
+
+    if not self:isDripBlocked() then
+        local fillCount = self:getCurrentAllInseminations()
+        if fillCount > 0 then self:drip(dt, fillCount) end
+    end
+end
+
+function Sexbound.Actor.Pregnant:drip(dt, fillCount)
+    self._dripTimer = math.max(0, self._dripTimer - dt)
+
+    if self._dripTimer == 0 then
+        local decay = util.randomInRange(self:getInseminationDecay())
+
+        self._dripTimer = math.min(2, 1 / fillCount ^ self:getDripRateModifier())
+
+        for k, v in pairs(self._inseminations) do
+            self._inseminations[k] = math.max(0, v - decay * v / fillCount)
+        end
+    end
+end
+
+function Sexbound.Actor.Pregnant:isDripBlocked()
+    --local impregnators = self:getParent():getImpregnatorList()
+    --for _, actor in ipairs(impregnators) do
+    --    if self:otherActorHasRoleInPositionWhichCanImpregnate(actor) then
+    --        return true
+    --    end
+    --end
+    --return false
+    return self._parent:hasInteractionType("direct")
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
@@ -126,38 +168,49 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
         directInsertion = self:canImpregnate(actor)
         canImpregnate = self:otherActorHasRoleInPositionWhichCanImpregnate(actor)
         -- If the checked two actors don't even fuck directly or the penetrator isn't penetrating the vagina, no need to continue. Neither pregnancy nor hazzard can occur
-        if directInsertion and canImpregnate then
-            if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
-                local chance = 0
-                local chances = self:getConfig().pregnancyHazards or {["default"] = {}}
-                chance = chances[thatSpecies] or chances["default"]
-                chance = chance[thisSpecies] or chance["default"] or 0
-                
-                if chance > 0 then
-                    local roll = self:generateRandomNumber() / 100
-                    
-                    self:getLog():debug("Pregnancy hazzard roll: "..thatSpecies.."->"..thisSpecies.." - "..roll.." <= "..chance)
-                    
-                    if roll <= chance then
-                        self:hazardAbortion()
-                        self:tryToNotifyThisActorOfHazardAbortion(actor)
-                        self:tryToNotifyOtherActorOfHazardAbortion(actor)
-                        -- When you were pregnant and a pregnancy hazard aborts it, you cannot get pregnant in the same turn - so abort here
-                        break
+        if directInsertion then
+            if canImpregnate then
+                if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
+                    local chance = 0
+                    local chances = self:getConfig().pregnancyHazards or { ["default"] = {} }
+                    chance = chances[thatSpecies] or chances["default"]
+                    chance = chance[thisSpecies] or chance["default"] or 0
+
+                    if chance > 0 then
+                        local roll = self:generateRandomNumber() / 100
+
+                        self:getLog():debug("Pregnancy hazzard roll: " ..
+                            thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. chance)
+
+                        if roll <= chance then
+                            self:hazardAbortion()
+                            self:tryToNotifyThisActorOfHazardAbortion(actor)
+                            self:tryToNotifyOtherActorOfHazardAbortion(actor)
+                            -- When you were pregnant and a pregnancy hazard aborts it, you cannot get pregnant in the same turn - so abort here
+                            break
+                        end
                     end
                 end
-            end
-            
-            isClone = self:thisActorIsCloneOfOtherActor(actor)
-            --fuckedProtected = self:otherActorIsUsingContraception(actor)
-            --canCum = self:otherActorCanProduceSperm(actor)
-            compatible = self:otherActorIsCompatibleSpecies(actor)
-            curFertility = self:thisActorHasEnoughFertility(actor)
-            bellyFull = self:thisActorIsAlreadyTooPregnant()
-            
-            self:getLog():debug("Pregnancy check for actor "..self:getParent():getActorNumber()..": Allow species " .. tostring(compatible) .. " - Can Impregnate " .. tostring(canImpregnate) .. " - Can be impregnated " .. tostring(canPregnate) .. " - Insertion " .. tostring(directInsertion))
 
-            if not bellyFull and not isProtected and not isClone and compatible and curFertility then self:becomePregnant(actor) end
+                isClone = self:thisActorIsCloneOfOtherActor(actor)
+                --fuckedProtected = self:otherActorIsUsingContraception(actor)
+                --canCum = self:otherActorCanProduceSperm(actor)
+                compatible = self:otherActorIsCompatibleSpecies(actor)
+                curFertility = self:thisActorHasEnoughFertility(actor)
+                bellyFull = self:thisActorIsAlreadyTooPregnant()
+
+                self:getLog():debug("Pregnancy check for actor " .. self:getParent():getActorNumber()
+                    .. ": Allow species " .. tostring(compatible)
+                    .. " - Can Impregnate " .. tostring(canImpregnate)
+                    .. " - Can be impregnated " .. tostring(canPregnate)
+                    .. " - Insertion " .. tostring(directInsertion))
+
+                if not bellyFull and not isProtected and not isClone and compatible and curFertility then
+                    self:becomePregnant(actor)
+                end
+            end
+
+            self:handleInsemination(actor)
         end
     end
 
@@ -235,6 +288,7 @@ end
 function Sexbound.Actor.Pregnant:isPregnant()
     return self:getCurrentPregnancyCount() > 0
 end
+
 --- Returns whether or not the actor is visibly pregnant
 function Sexbound.Actor.Pregnant:isVisiblyPregnant()
     return self:getCurrentVisiblePregnancyCount() > 0
@@ -338,16 +392,26 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     end
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
+
+    local bonusCount = self:getCurrentInseminations(otherActor)
+    local bonusMax = self:getConfig().fertilityBonusMax or 0.6
+    if bonusCount > 0 and fertility < bonusMax then
+        local bonusMult = self:getConfig().fertilityBonusMult or 1.08
+
+        fertility = util.clamp(fertility + (bonusMult ^ bonusCount) - 1, fertility, bonusMax)
+    end
+
     local multiplier = self:getConfig().fertilityMult or 1.0
     if self:getParent():status():hasStatus("sexbound_custom_fertility") or otherActor:status():hasStatus("sexbound_custom_fertility") then 
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
+    
     if self:getParent:getEntityType() == "npc" and otherActor:getEntityType() == "npc" then
         fertility = fertility * self._parent._config.fertilityPenalty
     end
+    
     local pregnancyChance = self:generateRandomNumber() / 100;
-    self:getLog():debug("Fertility roll: "..pregnancyChance.." <= "..fertility)
     self:getLog():info("Pregnancy roll : " .. pregnancyChance .. " <= " .. fertility)
     return pregnancyChance <= fertility
 end
@@ -750,6 +814,27 @@ function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     self._config.immersionLevel = mainConfig.immersionLevel or 1
 end
 
+function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
+    local otherUuid = otherActor._config.uniqueId or "other"
+    local count = (self._inseminations[otherUuid] or 0) + 1
+    self._inseminations[otherUuid] = count
+
+    self:getLog():info("Actor fill count " .. count)
+end
+
+function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
+    local otherUuid = otherActor._config.uniqueId or "other"
+    return self._inseminations[otherUuid] or 0
+end
+
+function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
+    local count = 0
+    for k, v in pairs(self._inseminations) do
+        count = count + v
+    end
+    return count
+end
+
 --- Returns a reference to this actor's current pregnancies table
 -- @param index
 function Sexbound.Actor.Pregnant:getCurrentPregnancies(index)
@@ -851,9 +936,14 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateEnableMultipleImpregnations(self._config.enableMultipleImpregnations)
     --self:validateEnableNotifyPlayers(self._config.enableNotifyPlayers)
     self:validateEnablePregnancyFetish(self._config.enablePregnancyFetish)
+    self:validateEnableInflationFetish(self._config.enableInflationFetish)
     --self:validateEnableSilentImpregnations(self._config.enableSilentImpregnations)
     self:validateFertility(self._config.fertility)
+    self:validateFertilityBonusMult(self._config.fertilityBonusMult)
+    self:validateFertilityBonusMax(self._config.fertilityBonusMax)
     self:validateFertilityMult(self._config.fertilityMult)
+    self:validateInseminationDecay(self._config.inseminationDecay)
+    self:validateDripRateModifier(self._config.dripRateModifier)
     self:validateNotifications(self._config.notifications)
     self:validatePreventStatuses(self._config.preventStatuses)
     --self:validateWhichGendersCanProduceSperm(self._config.whichGendersCanProduceSperm)
@@ -959,12 +1049,64 @@ end
 
 --- Ensures fertility is set to an allowed value
 -- @param value
+function Sexbound.Actor.Pregnant:validateFertilityBonusMult(value)
+    if type(value) ~= "number" then
+        self._config.fertilityBonusMult = 1.08
+        return
+    end
+    self._config.fertilityBonusMult = util.clamp(value, 1, 2)
+end
+
+--- Ensures fertility is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateFertilityBonusMax(value)
+    if type(value) ~= "number" then
+        self._config.fertilityBonusMax = 0.6
+        return
+    end
+    self._config.fertilityBonusMax = util.clamp(value, 0, 1)
+end
+
+--- Ensures fertility is set to an allowed value
+-- @param value
 function Sexbound.Actor.Pregnant:validateFertilityMult(value)
     if type(value) ~= "number" then
         self._config.fertilityMult = 2.5
         return
     end
     self._config.fertilityMult = util.clamp(value, 1, 10)
+end
+
+--- Ensures inseminationDecay is set to an allowed range
+-- @param value
+function Sexbound.Actor.Pregnant:validateInseminationDecay(value)
+    if type(value) ~= "table" then
+        self._config.inseminationDecay = { 0.2, 0.3 }
+        return
+    end
+
+    local lo = value[1]
+    local hi = value[2]
+
+    if type(lo) ~= "number" then lo = 0.2 end
+    if type(hi) ~= "number" then hi = 0.3 end
+
+    lo = util.clamp(lo, 0.1, 10)
+    hi = util.clamp(hi, 0.1, 10)
+
+    if hi < lo then hi = lo end
+
+    self._config.inseminationDecay = { lo, hi }
+end
+
+--- Ensures dripRateModifier is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateDripRateModifier(value)
+    if type(value) ~= "number" then
+        self._config.dripRateModifier = 1.5
+        return
+    end
+    self._config.dripRateModifier = util.clamp(value, 1, 5)
 end
 
 --- Ensures notifications is set to an allowed value

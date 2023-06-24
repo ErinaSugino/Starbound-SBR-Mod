@@ -615,83 +615,83 @@
 			"actors-overlay1": {
 				"partStates": {
 					"actors": {
-						"position0": {},
+						"position0": { },
 						"position0-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position0-reset": {},
-						"position1": {},
+						"position0-reset": { },
+						"position1": { },
 						"position1-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position1-reset": {},
-						"position2": {},
+						"position1-reset": { },
+						"position2": { },
 						"position2-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position2-reset": {},
-						"position3": {},
+						"position2-reset": { },
+						"position3": { },
 						"position3-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position3-reset": {},
-						"position4": {},
+						"position3-reset": { },
+						"position4": { },
 						"position4-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position4-reset": {},
-						"position4_1": {},
+						"position4-reset": { },
+						"position4_1": { },
 						"position4_1-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position4_1-reset": {},
-						"position4_2": {},
+						"position4_1-reset": { },
+						"position4_2": { },
 						"position4_2-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position4_2-reset": {},
-						"position5": {},
+						"position4_2-reset": { },
+						"position5": { },
 						"position5-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position5-reset": {},
-						"position6": {},
+						"position5-reset": { },
+						"position6": { },
 						"position6-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position6-reset": {},
-						"position7": {},
+						"position6-reset": { },
+						"position7": { },
 						"position7-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position7-reset": {},
-						"position8": {},
+						"position7-reset": { },
+						"position8": { },
 						"position8-climax": {
 							"properties": {
 								"image": "<part-overlay1>.r"
 							}
 						},
-						"position8-reset": {},
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"image": "<part-overlay1>.r"
@@ -709,83 +709,83 @@
 			"actors-overlay3": {
 				"partStates": {
 					"actors": {
-						"position0": {},
+						"position0": { },
 						"position0-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position0-reset": {},
-						"position1": {},
+						"position0-reset": { },
+						"position1": { },
 						"position1-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position1-reset": {},
-						"position2": {},
+						"position1-reset": { },
+						"position2": { },
 						"position2-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position2-reset": {},
-						"position3": {},
+						"position2-reset": { },
+						"position3": { },
 						"position3-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position3-reset": {},
-						"position4": {},
+						"position3-reset": { },
+						"position4": { },
 						"position4-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position4-reset": {},
-						"position4_1": {},
+						"position4-reset": { },
+						"position4_1": { },
 						"position4_1-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position4_1-reset": {},
-						"position4_2": {},
+						"position4_1-reset": { },
+						"position4_2": { },
 						"position4_2-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position4_2-reset": {},
-						"position5": {},
+						"position4_2-reset": { },
+						"position5": { },
 						"position5-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position5-reset": {},
-						"position6": {},
+						"position5-reset": { },
+						"position6": { },
 						"position6-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position6-reset": {},
-						"position7": {},
+						"position6-reset": { },
+						"position7": { },
 						"position7-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position7-reset": {},
-						"position8": {},
+						"position7-reset": { },
+						"position8": { },
 						"position8-climax": {
 							"properties": {
 								"image": "<part-overlay3>.r"
 							}
 						},
-						"position8-reset": {},
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"image": "<part-overlay3>.r"
@@ -803,83 +803,83 @@
 			"actors-overlay2": {
 				"partStates": {
 					"actors": {
-						"position0": {},
+						"position0": { },
 						"position0-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position0-reset": {},
-						"position1": {},
+						"position0-reset": { },
+						"position1": { },
 						"position1-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position1-reset": {},
-						"position2": {},
+						"position1-reset": { },
+						"position2": { },
 						"position2-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position2-reset": {},
-						"position3": {},
+						"position2-reset": { },
+						"position3": { },
 						"position3-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position3-reset": {},
-						"position4": {},
+						"position3-reset": { },
+						"position4": { },
 						"position4-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position4-reset": {},
-						"position4_1": {},
+						"position4-reset": { },
+						"position4_1": { },
 						"position4_1-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position4_1-reset": {},
-						"position4_2": {},
+						"position4_1-reset": { },
+						"position4_2": { },
 						"position4_2-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position4_2-reset": {},
-						"position5": {},
+						"position4_2-reset": { },
+						"position5": { },
 						"position5-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position5-reset": {},
-						"position6": {},
+						"position5-reset": { },
+						"position6": { },
 						"position6-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position6-reset": {},
-						"position7": {},
+						"position6-reset": { },
+						"position7": { },
 						"position7-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position7-reset": {},
-						"position8": {},
+						"position7-reset": { },
+						"position8": { },
 						"position8-climax": {
 							"properties": {
 								"image": "<part-overlay2>.r"
 							}
 						},
-						"position8-reset": {},
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"image": "<part-overlay2>.r"
@@ -897,42 +897,42 @@
 			"actor2-arm-back": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -945,42 +945,42 @@
 			"actor2-arm-front": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -993,42 +993,42 @@
 			"actor2-backwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -1041,7 +1041,7 @@
 			"actor2-body": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": { },
 						"idle": {
 							"properties": {
 								"offset": [
@@ -1050,9 +1050,9 @@
 								]
 							}
 						},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"properties": {
 								"offset": [
@@ -1316,42 +1316,42 @@
 			"actor2-bsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -1753,10 +1753,10 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1": {
 							"properties": {
@@ -1951,16 +1951,16 @@
 							}
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
 							"properties": {
@@ -1980,42 +1980,42 @@
 			"actor2-chestwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -2029,10 +2029,10 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1": {
 							"properties": {
@@ -2083,10 +2083,10 @@
 							}
 						},
 						"position3": {
-							"properties": {}
+							"properties": { }
 						},
 						"position3-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4": {
 							"properties": {
@@ -2185,25 +2185,25 @@
 							}
 						},
 						"position6": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
-							"properties": {}
+							"properties": { }
 						}
 					}
 				},
@@ -2215,42 +2215,42 @@
 			"actor2-fsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -2263,29 +2263,29 @@
 			"actor2-groin": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
 						"position5": {
 							"frameProperties": {
 								"zLevel": [
@@ -2311,16 +2311,16 @@
 								]
 							}
 						},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -2333,7 +2333,7 @@
 			"actor2-groin-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": { },
 						"idle": {
 							"properties": {
 								"offset": [
@@ -2558,12 +2558,12 @@
 								]
 							}
 						},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"offset": [
@@ -2593,8 +2593,8 @@
 			"actor2-head": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
+						"idle_laying": { },
+						"idle": { },
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -3034,42 +3034,42 @@
 			"actor2-head-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -3085,42 +3085,42 @@
 			"actor2-headwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -3133,42 +3133,42 @@
 			"actor2-headwear-static": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -3181,42 +3181,42 @@
 			"actor2-legswear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -3229,42 +3229,42 @@
 			"actor2-mouth": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -3280,19 +3280,19 @@
 			"actor2": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position1": {},
-						"position2": {},
-						"position3": {},
-						"position4": {},
-						"position4_1": {},
-						"position4_2": {},
-						"position5": {},
-						"position6": {},
-						"position7": {},
-						"position8": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position1": { },
+						"position2": { },
+						"position3": { },
+						"position4": { },
+						"position4_1": { },
+						"position4_2": { },
+						"position5": { },
+						"position6": { },
+						"position7": { },
+						"position8": { }
 					}
 				},
 				"properties": {
@@ -4211,8 +4211,8 @@
 			"actor1": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
+						"idle_laying": { },
+						"idle": { },
 						"position0": {
 							"frameProperties": {
 								"playSound": [
@@ -4269,7 +4269,7 @@
 								]
 							}
 						},
-						"position6": {},
+						"position6": { },
 						"position7": {
 							"frameProperties": {
 								"playSound": [
@@ -4298,42 +4298,42 @@
 			"actor1-arm-front": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -4346,42 +4346,42 @@
 			"actor1-backwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -4394,42 +4394,42 @@
 			"actor1-arm-back": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -4458,9 +4458,9 @@
 								]
 							}
 						},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"properties": {
 								"offset": [
@@ -4918,42 +4918,42 @@
 			"actor1-chestwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -4967,46 +4967,46 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position2": {
-							"properties": {}
+							"properties": { }
 						},
 						"position2-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position3": {
-							"properties": {}
+							"properties": { }
 						},
 						"position3-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position5": {
 							"properties": {
@@ -5033,25 +5033,25 @@
 							}
 						},
 						"position6": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
-							"properties": {}
+							"properties": { }
 						}
 					}
 				},
@@ -5258,10 +5258,10 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1": {
 							"properties": {
@@ -5336,16 +5336,16 @@
 							}
 						},
 						"position4": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2": {
 							"properties": {
@@ -5396,22 +5396,22 @@
 							}
 						},
 						"position6": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
 							"properties": {
@@ -5431,42 +5431,42 @@
 			"actor1-fsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -5479,7 +5479,7 @@
 			"actor1-groin-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": { },
 						"idle": {
 							"properties": {
 								"offset": [
@@ -5704,12 +5704,12 @@
 								]
 							}
 						},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"offset": [
@@ -5728,42 +5728,42 @@
 			"actor1-groin": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -5795,10 +5795,10 @@
 								]
 							}
 						},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -6184,42 +6184,42 @@
 			"actor1-head-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6235,42 +6235,42 @@
 			"actor1-headwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6283,42 +6283,42 @@
 			"actor1-headwear-static": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6331,42 +6331,42 @@
 			"actor1-mouth": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6382,42 +6382,42 @@
 			"actor1-legswear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6899,9 +6899,9 @@
 			"actor3": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
 						"position1": {
 							"properties": {
 								"offset": [
@@ -6910,14 +6910,14 @@
 								]
 							}
 						},
-						"position2": {},
-						"position3": {},
-						"position4": {},
-						"position4_1": {},
-						"position5": {},
-						"position6": {},
-						"position7": {},
-						"position8": {}
+						"position2": { },
+						"position3": { },
+						"position4": { },
+						"position4_1": { },
+						"position5": { },
+						"position6": { },
+						"position7": { },
+						"position8": { }
 					}
 				},
 				"properties": {
@@ -6932,39 +6932,39 @@
 			"actor3-arm-back": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -6977,42 +6977,42 @@
 			"actor1-bsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -7025,39 +7025,39 @@
 			"actor3-backwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -7070,7 +7070,7 @@
 			"actor3-body": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": { },
 						"idle": {
 							"properties": {
 								"offset": [
@@ -7079,9 +7079,9 @@
 								]
 							}
 						},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"properties": {
 								"offset": [
@@ -7327,39 +7327,39 @@
 			"actor3-bsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -7807,39 +7807,39 @@
 			"actor3-chestwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -7853,19 +7853,19 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
-						"position1": {},
-						"position2-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
+						"position1": { },
+						"position2-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
 						"position4": {
 							"properties": {
 								"offset": [
@@ -7891,10 +7891,10 @@
 							}
 						},
 						"position4_1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2": {
 							"properties": {
@@ -7921,28 +7921,28 @@
 							}
 						},
 						"position5": {
-							"properties": {}
+							"properties": { }
 						},
 						"position5-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
 							"properties": {
@@ -8140,39 +8140,39 @@
 			"actor3-arm-front": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -8186,73 +8186,73 @@
 				"partStates": {
 					"actors": {
 						"position0": {
-							"properties": {}
+							"properties": { }
 						},
 						"position0-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position2": {
-							"properties": {}
+							"properties": { }
 						},
 						"position2-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position3": {
-							"properties": {}
+							"properties": { }
 						},
 						"position3-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_1-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2": {
-							"properties": {}
+							"properties": { }
 						},
 						"position4_2-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position5": {
-							"properties": {}
+							"properties": { }
 						},
 						"position5-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6": {
-							"properties": {}
+							"properties": { }
 						},
 						"position6-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7": {
-							"properties": {}
+							"properties": { }
 						},
 						"position7-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8": {
-							"properties": {}
+							"properties": { }
 						},
 						"position8-climax": {
-							"properties": {}
+							"properties": { }
 						},
 						"position-birthing": {
-							"properties": {}
+							"properties": { }
 						}
 					}
 				},
@@ -8264,39 +8264,39 @@
 			"actor3-fsleeve": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -8320,11 +8320,11 @@
 			"actor3-groin-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"properties": {
 								"offset": [
@@ -8421,21 +8421,21 @@
 								]
 							}
 						},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
 						"position-birthing": {
 							"properties": {
 								"offset": [
@@ -8454,39 +8454,39 @@
 			"actor3-groin": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -8499,11 +8499,11 @@
 			"actor3-head": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
 						"position1": {
 							"frameProperties": {
 								"offset": [
@@ -8901,39 +8901,39 @@
 			"actor3-head-inner": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -8949,39 +8949,39 @@
 			"actor3-headwear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -8994,42 +8994,42 @@
 			"actor3-headwear-static": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position4_2": {},
-						"position4_2-climax": {},
-						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position4_2": { },
+						"position4_2-climax": { },
+						"position4_2-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -9042,39 +9042,39 @@
 			"actor3-legswear": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -9087,39 +9087,39 @@
 			"actor3-mouth": {
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
-						"idle": {},
-						"position0": {},
-						"position0-climax": {},
-						"position0-reset": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-reset": {},
-						"position2": {},
-						"position2-climax": {},
-						"position2-reset": {},
-						"position3": {},
-						"position3-climax": {},
-						"position3-reset": {},
-						"position4": {},
-						"position4-climax": {},
-						"position4-reset": {},
-						"position4_1": {},
-						"position4_1-climax": {},
-						"position4_1-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-reset": {},
-						"position6": {},
-						"position6-climax": {},
-						"position6-reset": {},
-						"position7": {},
-						"position7-climax": {},
-						"position7-reset": {},
-						"position8": {},
-						"position8-climax": {},
-						"position8-reset": {},
-						"position-birthing": {}
+						"idle_laying": { },
+						"idle": { },
+						"position0": { },
+						"position0-climax": { },
+						"position0-reset": { },
+						"position1": { },
+						"position1-climax": { },
+						"position1-reset": { },
+						"position2": { },
+						"position2-climax": { },
+						"position2-reset": { },
+						"position3": { },
+						"position3-climax": { },
+						"position3-reset": { },
+						"position4": { },
+						"position4-climax": { },
+						"position4-reset": { },
+						"position4_1": { },
+						"position4_1-climax": { },
+						"position4_1-reset": { },
+						"position5": { },
+						"position5-climax": { },
+						"position5-reset": { },
+						"position6": { },
+						"position6-climax": { },
+						"position6-reset": { },
+						"position7": { },
+						"position7-climax": { },
+						"position7-reset": { },
+						"position8": { },
+						"position8-climax": { },
+						"position8-reset": { },
+						"position-birthing": { }
 					}
 				},
 				"properties": {
@@ -9480,13 +9480,13 @@
 						}
 					},
 					"position-birthing": {
-							"properties": {
-								"offset": [
-									0.75,
-									-1.875
-								]
-							}
+						"properties": {
+							"offset": [
+								0.75,
+								-1.875
+							]
 						}
+					}
 				},
 				"properties": {
 					"anchorPart": "actor3-body",
@@ -10612,7 +10612,7 @@
 						"cycle": 1,
 						"mode": "loop"
 					},
-					"none": {}
+					"none": { }
 				},
 				"default": "none",
 				"properties": {
@@ -10801,7 +10801,7 @@
 						"cycle": 1,
 						"mode": "loop"
 					},
-					"none": {}
+					"none": { }
 				},
 				"default": "idle",
 				"properties": {
@@ -11109,6 +11109,27 @@
 				}
 			]
 		},
+		"insemination-drip1": {
+			"anchorPart": "actor1-groin-inner",
+			"burstCount": 10,
+			"particles": [
+				{ "particle": "climaxfellatiomale1" }
+			]
+		},
+		"insemination-drip2": {
+			"anchorPart": "actor2-groin-inner",
+			"burstCount": 10,
+			"particles": [
+				{ "particle": "climaxfellatiomale1" }
+			]
+		},
+		"insemination-drip3": {
+			"anchorPart": "actor3-groin-inner",
+			"burstCount": 10,
+			"particles": [
+				{ "particle": "climaxfellatiomale1" }
+			]
+		},
 		"climaxfellatiomale1": {
 			"anchorPart": "actor1-climax-with-penis",
 			"burstCount": 10,
@@ -11309,15 +11330,15 @@
 		}
 	},
 	"sounds": {
-		"actor1moan": [],
-		"actor2moan": [],
-		"actor3moan": [],
-		"actor4moan": [],
-		"actor1orgasm": [],
-		"actor2orgasm": [],
-		"actor3orgasm": [],
-		"actor4orgasm": [],
-		"climax": []
+		"actor1moan": [ ],
+		"actor2moan": [ ],
+		"actor3moan": [ ],
+		"actor4moan": [ ],
+		"actor1orgasm": [ ],
+		"actor2orgasm": [ ],
+		"actor3orgasm": [ ],
+		"actor4orgasm": [ ],
+		"climax": [ ]
 	},
 	"transformationGroups": {
 		"actors": {

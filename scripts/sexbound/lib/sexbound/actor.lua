@@ -310,7 +310,7 @@ function Sexbound.Actor:loadGroin(entityGroup, role, species, gender)
 
     local subGender = self:getSubGender()
 
-    if self:isVisiblyPregnant() and self:isEnabledPregnancyFetish() then
+    if (self:isVisiblyPregnant() and self:isEnabledPregnancyFetish()) or self:isInflated() then
         if self:getGenitalType() == "male" then
             image = self:getSprite(animState, "groinGenitalPregnancy", {
                 entityGroup = entityGroup,
@@ -1273,6 +1273,14 @@ function Sexbound.Actor:isPregnant()
     return plugin:isPregnant()
 end
 
+function Sexbound.Actor:isInflated()
+    local plugin = self:getPlugins("climax")
+
+    if plugin == nil then return false end
+
+    return plugin:isInflated()
+end
+
 function Sexbound.Actor:isVisiblyPregnant()
     local plugin = self:getPlugins("pregnant")
 
@@ -1331,6 +1339,17 @@ function Sexbound.Actor:hasTraits(traits)
         if t == "vagina" and not self:hasGenitalType("female") then return false end
     end
     return true
+end
+
+--- Checks if the actor is currently in a role in the current position that has the interaction type given
+function Sexbound.Actor:hasInteractionType(type)
+    local interactionTypes = self:getPosition()._config.interactionType
+    local actorList = self:getImpregnatorList()
+    for i,a in ipairs(actorList) do
+        local actorNum = a._actorNumber
+        if interactionTypes[actorNum] == type then return true end
+    end
+    return false
 end
 
 --- Legacy

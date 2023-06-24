@@ -1020,6 +1020,7 @@ function Sexbound:handleSyncUI(args)
             species         = actor:getSpecies(),
             status          = {
                 isPregnant  = actor:isVisiblyPregnant(),
+                isSwollen = actor:isBellySwollen(),
                 isClimaxing = actor._isClimaxing or false,
                 isPreClimaxing = actor._isPreClimaxing or false,
                 isScriptedClimaxing = actor._isScriptedClimaxing or false
