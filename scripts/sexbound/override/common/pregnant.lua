@@ -249,35 +249,7 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
     if babyName and babyName ~= "" then params.identity.name = babyName end
     util.mergeTable(params, babyConfig.birthParams or {})
     
-    --[[-- Apply genetic color directives
-    local bodyDirectives, emoteDirectives, hairDirectives = "", "", ""
-    if babyConfig.bodyColor then
-        local bodyColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.bodyColor) do bodyColorDirectives = bodyColorDirectives..";"..k.."="..v end
-        bodyDirectives = bodyColorDirectives
-        emoteDirectives = bodyColorDirectives
-    end
-    
-    if babyConfig.hairColor then
-        local hairColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.hairColor) do hairColorDirectives = hairColorDirectives..";"..k.."="..v end
-        hairDirectives = hairColorDirectives
-    end
-    
-    if babyConfig.undyColor then
-        local undyColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.undyColor) do undyColorDirectives = undyColorDirectives..";"..k.."="..v end
-        if bodyDirectives == "" then bodyDirectives = undyColorDirectives else bodyDirectives = bodyDirectives..";"..undyColorDirectives end
-        if emoteDirectives == "" then emoteDirectives = undyColorDirectives else emoteDirectives = emoteDirectives..";"..undyColorDirectives end
-        if hairDirectives == "" then hairDirectives = undyColorDirectives else hairDirectives = hairDirectives..";"..undyColorDirectives end
-    end
-    
-    if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
-    if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
-    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end]]
-    
-    -- Ensure gender-safe hair assignment
-    local speciesConfig
+    local speciesConfig = {}
     -- Attempt to read configuration from species config file.
     if not pcall(function()
         speciesConfig = root.assetJson("/species/" .. (babyConfig.birthSpecies or "human") .. ".species")
@@ -285,6 +257,62 @@ function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, b
         sb.logWarn("SxB: Could not find species config file.")
     end
     
+    -- Apply genetic color directives
+    local bodyDirectives, emoteDirectives, hairDirectives, facialHairDirectives, facialMaskDirectives = "", "", "", "", ""
+    local bodyColorPalette, hairColorPalette, undyColorPalette = "", "", ""
+    local bodyColor, hairColor, altColor, facialHairColor, facialMaskColor = "", "", "", "", ""
+    
+    local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
+    local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
+    local altOptionAsHairColor = not not speciesConfig.altOptionAsHairColor
+    local hairColorAsBodySubColor = not not speciesConfig.hairColorAsBodySubColor
+    local headOptionAsFacialhair = not not speciesConfig.headOptionAsFacialhair
+    local altOptionAsFacialMask = not not speciesConfig.altOptionAsFacialMask
+    local bodyColorAsFacialMaskSubColor = not not speciesConfig.bodyColorAsFacialMaskSubColor
+    local altColorAsFacialMaskSubColor = not not speciesConfig.altColorAsFacialMaskSubColor
+    
+    if babyConfig.bodyColor then
+        local bodyColorPalette = "?replace"
+        for k,v in pairs(babyConfig.bodyColor) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
+    end
+    
+    if babyConfig.hairColor then
+        local hairColorPalette = "?replace"
+        for k,v in pairs(babyConfig.hairColor) do hairColorPalette = hairColorPalette..";"..k.."="..v end
+    end
+    
+    if babyConfig.undyColor then
+        local undyColorPalette = "?replace"
+        for k,v in pairs(babyConfig.undyColor) do undyColorPalette = undyColorPalette..";"..k.."="..v end
+    end
+    
+    -- Build directives like Starbound does
+    bodyDirectives = bodyColor
+    if altOptionAsUndyColor then altColor = undyColorPalette
+    hairColor = bodyColor
+    if headOptionAsHairColor then
+        hairColor = hairColorPalette
+        if altOptionAsHairColor then hairColor = hairColor..undyColorPalette end
+    end
+    if hairColorAsBodySubColor then bodyColor = bodyColor..hairColor end
+    if headOptionAsFacialhair then facialHairColor = hairColor end
+    if bodyColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..bodyColor end
+    if altColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..altColor end
+    
+    bodyDirectives = bodyColor..altColor
+    emoteDirectives = bodyColor..altColor
+    hairDirectives = hairColor
+    facialHairDirectives = facialHairColor
+    facialMaskDirectives = facialMaskColor
+    
+    -- Finalize
+    if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
+    if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
+    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end
+    if facialHairDirectives ~= "" then params.identity.facialHairDirectives = facialHairDirectives end
+    if facialMaskDirectives ~= "" then params.identity.facialMaskDirectives = facialMaskDirectives end
+    
+    -- Ensure gender-safe hair assignment
     -- Find relevant gender config
     local genderConfig = nil
     for _index, _gender in ipairs(speciesConfig.genders) do

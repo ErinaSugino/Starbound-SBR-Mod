@@ -13,15 +13,8 @@ function Sexbound.Common.Identity:init(parent)
     self._parent = parent
 end
 
-function Sexbound.Common.Identity:addCustomProperties(identity)
-    local speciesConfig
-
-    -- Attempt to read configuration from species config file.
-    if not pcall(function()
-        speciesConfig = root.assetJson("/species/" .. identity.species .. ".species")
-    end) then
-        sb.logWarn("SxB: Could not find species config file.")
-    end
+function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
+    speciesConfig = speciesConfig or {}
 
     local genderId = self:getGenderId(speciesConfig, identity.gender)
     local genderConfig = speciesConfig.genders[genderId]
@@ -54,13 +47,13 @@ function Sexbound.Common.Identity:addCustomProperties(identity)
     identity.motherUuid = status.statusProperty("motherUuid", nil)
     identity.fatherUuid = status.statusProperty("fatherUuid", nil)
     
-    --[[-- Cache species genetic templates
+    -- Cache species genetic templates
     identity.genetics = {}
-    identity.genetics.bodyColorPool = speciesConfig.bodyColor
+    identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
     identity.genetics.bodyColorPoolAverage = {}
-    identity.genetics.undyColorPool = speciesConfig.undyColor
+    identity.genetics.undyColorPool = speciesConfig.undyColor or {}
     identity.genetics.undyColorPoolAverage = {}
-    identity.genetics.hairColorPool = speciesConfig.hairColor
+    identity.genetics.hairColorPool = speciesConfig.hairColor or {}
     identity.genetics.hairColorPoolAverage = {}
     
     -- Pre calculate color palette averages
@@ -105,7 +98,7 @@ function Sexbound.Common.Identity:addCustomProperties(identity)
         end
         avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
         table.insert(identity.genetics.hairColorPoolAverage, avg)
-    end]]
+    end
 
     return identity
 end

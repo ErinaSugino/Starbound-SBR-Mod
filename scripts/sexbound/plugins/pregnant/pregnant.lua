@@ -642,7 +642,7 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     local baby = factory:make(otherActor)
     baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(otherActor)
     
-    --[[local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
+    local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
     local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = otherActor:getGenes()
     local bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage
     if baby.birthEntityGroup ~= "humanoid" then return baby end -- no need to waste time on colors for monsters
@@ -650,7 +650,7 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     elseif baby.birthSpecies == otherActor:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = otherActor:getGenePool() -- Baby is same species as father - load species gene pool from cache
     else
         -- Baby is third species - load species file and extract color gene pool
-        local speciesConfig
+        local speciesConfig = {}
         
         -- Attempt to read configuration from species config file.
         if not pcall(function()
@@ -660,11 +660,11 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
             return baby -- No species file. Abort further genetics.
         end
         
-        bodyColorPool = speciesConfig.bodyColor
+        bodyColorPool = speciesConfig.bodyColor or {}
         bodyColorPoolAverage = {}
-        undyColorPool = speciesConfig.undyColor
+        undyColorPool = speciesConfig.undyColor or {}
         undyColorPoolAverage = {}
-        hairColorPool = speciesConfig.hairColor
+        hairColorPool = speciesConfig.hairColor or {}
         hairColorPoolAverage = {}
         
         -- Pre calculate color palette averages
@@ -750,7 +750,12 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     
     baby.bodyColor = babyBodyColor
     baby.undyColor = babyUndyColor
-    baby.hairColor = babyHairColor]]
+    baby.hairColor = babyHairColor
+    
+    sb.logInfo("Generated baby colors:")
+    sb.logInfo("Body "..motherBodyIndex.." x "..fatherBodyIndex.." - "..Sexbound.Util.dump(baby.bodyColor))
+    sb.logInfo("Undy "..motherUndyIndex.." x "..fatherUndyIndex.." - "..Sexbound.Util.dump(baby.undyColor))
+    sb.logInfo("Hair "..motherHairIndex.." x "..fatherHairIndex.." - "..Sexbound.Util.dump(baby.hairColor))
     
     return baby
 end

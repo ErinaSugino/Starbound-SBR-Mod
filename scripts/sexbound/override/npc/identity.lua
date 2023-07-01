@@ -17,21 +17,26 @@ end
 
 --- Returns a table consisting of identifying information about the entity.
 function Sexbound.NPC.Identity:build()
-    local identity = self:addCustomProperties(npc.humanoidIdentity())
+    local identity = npc.humanoidIdentity()
     
-    --[[-- Fetch current color palette "genes" of entity
-    local directives = identity.bodyDirectives..identity.hairDirectives
-    local presets = {Sexbound.Util.listToUpper(identity.genetics.bodyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.undyColorPool[1]), Sexbound.Util.listToUpper(identity.genetics.hairColorPool[1])}
+    local speciesConfig = {}
+    -- Attempt to read configuration from species config file.
+    if not pcall(function()
+        speciesConfig = root.assetJson("/species/" .. identity.species .. ".species")
+    end) then
+        sb.logWarn("SxB: Could not find species config file.")
+    end
+ 
+    local identity = self:addCustomProperties(identity, speciesConfig)
+    
+    local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
+    local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
     
     -- Separate directives string into individual color pairs
-    local result, i = {}, 0
-    for r in string.gmatch(directives, "?replace;([^?]+);?") do
-        i = i + 1
-        local res = {}
-        for k,v in string.gmatch(r, "(%w+)=(%w+);?") do res[string.upper(k)] = v end
-        table.insert(result, res)
-        if i == 3 then break end
-    end
+    local bodyColors
+    for r in string.gmatch(identity.bodyDirectives, "?replace;([^?]+);?") do table.insert(bodyColors, r) end
+    local hairColors
+    for r in string.gmatch(identity.hairDirectives, "?replace;([^?]+);?") do table.insert(hairColors, r) end
     
     identity.genetics.bodyColor = {}
     identity.genetics.bodyColorAverage = {0,0,0}
@@ -40,10 +45,9 @@ function Sexbound.NPC.Identity:build()
     identity.genetics.hairColor = {}
     identity.genetics.hairColorAverage = {0,0,0}
     
-    -- Match only values that exists in the species template
-    for k,v in pairs(result[1]) do if presets[1][k] then identity.genetics.bodyColor[k] = v end end
-    for k,v in pairs(result[2]) do if presets[2][k] then identity.genetics.undyColor[k] = v end end
-    for k,v in pairs(result[3]) do if presets[3][k] then identity.genetics.hairColor[k] = v end end
+    for k,v in string.gmatch(bodyColors[1], "(%w+)=(%w+);?") do identity.genetics.bodyColor[string.upper(k)] = v end
+    if altOptionAsUndyColor then for k,v in string.gmatch(bodyColors[#bodyColors], "(%w+)=(%w+);?") do identity.genetics.undyColor[string.upper(k)] = v end end
+    if headOptionAsHairColor then for k,v in string.gmatch(hairColors[1], "(%w+)=(%w+);?") do identity.genetics.hairColor[string.upper(k)] = v end end
     
     -- Pre calculate color palette averages
     local x = 0
@@ -66,7 +70,7 @@ function Sexbound.NPC.Identity:build()
         local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
         identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = identity.genetics.hairColorAverage[1]+r,identity.genetics.hairColorAverage[2]+g,identity.genetics.hairColorAverage[3]+b
     end
-    identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = math.floor(identity.genetics.hairColorAverage[1]/x),math.floor(identity.genetics.hairColorAverage[2]/x),math.floor(identity.genetics.hairColorAverage[3]/x)]]
+    identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = math.floor(identity.genetics.hairColorAverage[1]/x),math.floor(identity.genetics.hairColorAverage[2]/x),math.floor(identity.genetics.hairColorAverage[3]/x)
     
     return identity
 end
