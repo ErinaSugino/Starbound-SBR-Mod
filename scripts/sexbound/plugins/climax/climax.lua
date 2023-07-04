@@ -534,7 +534,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
         end
     end
     
-    if containsPlayer and playerControl then
+    if self._config.prioritizePlayer and containsPlayer and playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
         return
     end
