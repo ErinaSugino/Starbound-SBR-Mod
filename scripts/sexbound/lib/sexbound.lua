@@ -1000,40 +1000,7 @@ function Sexbound:handleSyncUI(args)
         switchingEnabled = curPos:getCompositionCount() > 1
     }
 
-    self:forEachActor(function(index, actor)
-        table.insert(data.actors, {
-            actorSlot       = "actor" .. actor:getActorNumber(),
-            bodyDirectives  = actor:getIdentity("bodyDirectives"),
-            bodyType        = actor:getBodyType(),
-            hairID          = actor:getIdentity("hairType"),
-            hairDirectives  = actor:getIdentity("hairDirectives"),
-            showBackwear    = actor:getApparel():getIsVisible("backwear"),
-            showChestwear   = actor:getApparel():getIsVisible("chestwear"),
-            showHeadwear    = actor:getApparel():getIsVisible("headwear"),
-            showLegswear    = actor:getApparel():getIsVisible("legswear"),
-            showNippleswear = actor:getApparel():getIsVisible("nippleswear"),
-            frameName       = actor:getFrameName(actor:getAnimationState()),
-            gender          = actor:getGender(),
-            subGender       = actor:getSubGender(),
-            entityType      = actor:getEntityGroup(),
-            genitalType     = actor:getGenitalTypes(),
-            species         = actor:getSpecies(),
-            status          = {
-                isPregnant  = actor:isVisiblyPregnant(),
-                isSwollen = actor:isBellySwollen(),
-                isClimaxing = actor._isClimaxing or false,
-                isPreClimaxing = actor._isPreClimaxing or false,
-                isScriptedClimaxing = actor._isScriptedClimaxing or false
-            }
-        })
-
-        if actor:getPlugins("climax") then
-            data.actors[index].climax = {
-                currentPoints = actor:getPlugins("climax"):getCurrentPoints(),
-                maxPoints = actor:getPlugins("climax"):getMaxPoints()
-            }
-        end
-    end)
+    self:forEachActor(function(index, actor) table.insert(data.actors, actor:getUIData(args)) end)
     
     if remoteTokens.positions ~= self._uiSyncTokens.positions then
         data.positions = {}
