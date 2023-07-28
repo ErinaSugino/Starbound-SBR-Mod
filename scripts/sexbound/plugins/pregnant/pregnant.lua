@@ -232,6 +232,10 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
     self:getLog():info("Actor will become pregnant: " .. self:getParent():getName())
 
     local babyConfig = self:makeBaby(daddy)
+    if babyConfig == nil then
+        self:getLog():warn("Actor has not become pregnant due to no successful pregnancy generation")
+        return
+    end
 
     self:getLog():debug(babyConfig)
 
@@ -246,13 +250,11 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
     end
     
     if self._parent:getEntityType == "npc" and daddy:getEntityType() == "npc" then
-        self._parent._config.fertilityPenalty = self._parent._config.fertilityPenalty * (self._parnt._config.fertilityPenalty / 2)
+        self._parent._config.fertilityPenalty = self._parent._config.fertilityPenalty * (self._parent._config.fertilityPenalty / 2)
         if self._parent._config.fertilityPenalty < 0.0001 then self._parent._config.fertilityPenalty = 0 end
     end
 
-    self:storeBaby(babyConfig)
-
-    self.otherActor = nil
+    self:storePregnancy(babyConfig)
 end
 
 --- Removes pregnancies and sends message to entity to do the same
@@ -477,8 +479,8 @@ function Sexbound.Actor.Pregnant:refreshStatusForThisActor()
 end
 
 --- Prepares the message to send to other actor
-function Sexbound.Actor.Pregnant:prepareMessageToSendToOtherActor(baby, otherActor)
-    local dayCount = baby.dayCount
+function Sexbound.Actor.Pregnant:prepareMessageToSendToOtherActor(pregnancy, otherActor)
+    local dayCount = pregnancy.dayCount
     local dialog = self:loadNotificationDialog() or {}
     local daystring = "day"
     if dayCount > 1 then daystring = "days" end
@@ -496,8 +498,8 @@ function Sexbound.Actor.Pregnant:prepareMessageToSendToOtherActor(baby, otherAct
 end
 
 --- Prepares the message to send to this actor
-function Sexbound.Actor.Pregnant:prepareMessageToSendToThisActor(baby, otherActor)
-    local dayCount = baby.dayCount
+function Sexbound.Actor.Pregnant:prepareMessageToSendToThisActor(pregnancy, otherActor)
+    local dayCount = pregnancy.dayCount
     local dialog = self:loadNotificationDialog() or {}
     local daystring = "day"
     if dayCount > 1 then daystring = "days" end
@@ -561,14 +563,14 @@ function Sexbound.Actor.Pregnant:tryToRefreshStatusTextForThisActor(otherActor)
 end
 
 --- Tries to send radio message to this actor
-function Sexbound.Actor.Pregnant:tryToSendRadioMessageToThisActor(baby, otherActor)
+function Sexbound.Actor.Pregnant:tryToSendRadioMessageToThisActor(pregnancy, otherActor)
     local immersionLevel = self:getConfig().immersionLevel
     if immersionLevel >= 2 then return end
     if "player" ~= self:getParent():getEntityType() then
         return
     end
 
-    local message = self:prepareMessageToSendToThisActor(baby, otherActor)
+    local message = self:prepareMessageToSendToThisActor(pregnancy, otherActor)
 
     world.sendEntityMessage(self:getParent():getEntityId(), "queueRadioMessage", {
         messageId = "Pregnant:Success",
@@ -580,14 +582,14 @@ function Sexbound.Actor.Pregnant:tryToSendRadioMessageToThisActor(baby, otherAct
 end
 
 --- Tries to send radio message to the other actor
-function Sexbound.Actor.Pregnant:tryToSendRadioMessageToOtherActor(baby, otherActor)
+function Sexbound.Actor.Pregnant:tryToSendRadioMessageToOtherActor(pregnancy, otherActor)
     local immersionLevel = self:getConfig().immersionLevel
     if immersionLevel >= 2 then return end
     if "player" ~= otherActor:getEntityType() then
         return
     end
 
-    local message = self:prepareMessageToSendToOtherActor(baby, otherActor)
+    local message = self:prepareMessageToSendToOtherActor(pregnancy, otherActor)
 
     world.sendEntityMessage(otherActor:getEntityId(), "queueRadioMessage", {
         messageId = "Pregnant:Success",
@@ -638,172 +640,23 @@ end
 
 --- Makes a new baby and stores it in this actor's storage
 function Sexbound.Actor.Pregnant:makeBaby(otherActor)
-    local factory = BabyFactory:new(self)
-    local baby = factory:make(otherActor)
-    baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(otherActor)
+    local factory = BabyFactory:new(self, self._config)
+    local pregnancy = factory:make(self._parent, otherActor)
+    if pregnancy == nil then return nil end
     
-    local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
-    local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = otherActor:getGenes()
-    local bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage
-    if baby.birthEntityGroup ~= "humanoid" then return baby end -- no need to waste time on colors for monsters
-    if baby.birthSpecies == self._parent:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = self._parent:getGenePool() -- Baby is same species as mother - load species gene pool from cache
-    elseif baby.birthSpecies == otherActor:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = otherActor:getGenePool() -- Baby is same species as father - load species gene pool from cache
-    else
-        -- Baby is third species - load species file and extract color gene pool
-        local speciesConfig = {}
-        
-        -- Attempt to read configuration from species config file.
-        if not pcall(function()
-            speciesConfig = root.assetJson("/species/" .. identity.species .. ".species")
-        end) then
-            sb.logWarn("SxB: Could not find species config file.")
-            return baby -- No species file. Abort further genetics.
-        end
-        
-        bodyColorPool = speciesConfig.bodyColor or {}
-        bodyColorPoolAverage = {}
-        undyColorPool = speciesConfig.undyColor or {}
-        undyColorPoolAverage = {}
-        hairColorPool = speciesConfig.hairColor or {}
-        hairColorPoolAverage = {}
-        
-        -- Pre calculate color palette averages
-        for i,r in ipairs(bodyColorPool) do
-            if type(r) ~= "table" then break end
-            local x = 0
-            local avg = {0,0,0}
-            local dist = 0
-            -- Get average color of current checked palette from list
-            for j,v in pairs(r) do
-                x = x + 1
-                local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
-            end
-            avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-            table.insert(bodyColorPoolAverage, avg)
-        end
-        for i,r in ipairs(undyColorPool) do
-            if type(r) ~= "table" then break end
-            local x = 0
-            local avg = {0,0,0}
-            local dist = 0
-            -- Get average color of current checked palette from list
-            for j,v in pairs(r) do
-                x = x + 1
-                local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
-            end
-            avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-            table.insert(undyColorPoolAverage, avg)
-        end
-        for i,r in ipairs(hairColorPool) do
-            if type(r) ~= "table" then break end
-            local x = 0
-            local avg = {0,0,0}
-            local dist = 0
-            -- Get average color of current checked palette from list
-            for j,v in pairs(r) do
-                x = x + 1
-                local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
-            end
-            avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-            table.insert(hairColorPoolAverage, avg)
-        end
-    end
-    
-    -- Map parent color themes to target space
-    local motherBodyIndex, d11 = factory:findClosestColorAverageGene(bodyColorPoolAverage, motherBodyColorAverage)
-    local fatherBodyIndex, d21 = factory:findClosestColorAverageGene(bodyColorPoolAverage, fatherBodyColorAverage)
-    local motherUndyIndex, d12 = factory:findClosestColorAverageGene(undyColorPoolAverage, motherUndyColorAverage)
-    local fatherUndyIndex, d22 = factory:findClosestColorAverageGene(undyColorPoolAverage, fatherUndyColorAverage)
-    local motherHairIndex, d13 = factory:findClosestColorAverageGene(hairColorPoolAverage, motherHairColorAverage)
-    local fatherHairIndex, d23 = factory:findClosestColorAverageGene(hairColorPoolAverage, fatherHairColorAverage)
-    
-    -- Generate crossed colors for baby
-    math.randomseed(os.time())
-    local bodyColorLambda = Sexbound.Util.normalDist()
-    local undyColorLambda = Sexbound.Util.normalDist()
-    local hairColorLambda = Sexbound.Util.normalDist()
-    
-    local babyBodyColor = nil
-    if bodyColorPool[motherBodyIndex] ~= "" then
-        babyBodyColor = {}
-        for i,v in pairs(bodyColorPool[motherBodyIndex]) do
-            babyBodyColor[i] = Sexbound.Util.rgbToHex(factory:crossfade({Sexbound.Util.hexToRgb(v)}, {Sexbound.Util.hexToRgb(bodyColorPool[fatherBodyIndex][i])}, bodyColorLambda))
-        end
-    end
-    local babyUndyColor = nil
-    if undyColorPool[motherUndyIndex] ~= "" then
-        babyUndyColor = {}
-        for i,v in pairs(undyColorPool[motherundyIndex]) do
-            babyUndyColor[i] = Sexbound.Util.rgbToHex(factory:crossfade({Sexbound.Util.hexToRgb(v)}, {Sexbound.Util.hexToRgb(undyColorPool[fatherUndyIndex][i])}, undyColorLambda))
-        end
-    end
-    local babyHairColor = nil
-    if hairColorPool[motherHairIndex] ~= "" then
-        babyHairColor = {}
-        for i,v in pairs(hairColorPool[motherHairIndex]) do
-            babyHairColor[i] = Sexbound.Util.rgbToHex(factory:crossfade({Sexbound.Util.hexToRgb(v)}, {Sexbound.Util.hexToRgb(hairColorPool[fatherHairIndex][i])}, hairColorLambda))
-        end
-    end
-    
-    baby.bodyColor = babyBodyColor
-    baby.undyColor = babyUndyColor
-    baby.hairColor = babyHairColor
-    
-    sb.logInfo("Generated baby colors:")
-    sb.logInfo("Body "..motherBodyIndex.." x "..fatherBodyIndex.." - "..Sexbound.Util.dump(baby.bodyColor))
-    sb.logInfo("Undy "..motherUndyIndex.." x "..fatherUndyIndex.." - "..Sexbound.Util.dump(baby.undyColor))
-    sb.logInfo("Hair "..motherHairIndex.." x "..fatherHairIndex.." - "..Sexbound.Util.dump(baby.hairColor))
-    
-    return baby
+    return pregnancy
 end
 
---- Reconciles differences between this actor and the other actor
-function Sexbound.Actor.Pregnant:reconcileEntityGroups(otherActor)
-    local geneticTable = self._config.geneticTable or {}
-    local species = self:getParent():getSpecies()
-    local otherSpecies = otherActor:getSpecies()
-    if geneticTable[species] and geneticTable[species][otherSpecies] then return geneticTable[species][otherSpecies] end -- Defined cross-breed species.
-    
-    if self:getParent():getEntityGroup() == "humanoid" and otherActor:getEntityGroup() == "humanoid" then
-        return "humanoid", self:generateBirthSpecies(otherActor)
-    end
-
-    if self:getParent():getEntityGroup() == "monsters" and otherActor:getEntityGroup() == "monsters" then
-        return "monsters", self:generateBirthSpecies(otherActor)
-    end
-
-    if self:getParent():getEntityGroup() == "monsters" then
-        return "monsters", species
-    end
-
-    if otherActor:getEntityGroup() == "monsters" then
-        return "monsters", otherSpecies
-    end
-
-    return self:getParent():getEntityGroup(), self:getParent():getSpecies()
-end
-
--- Returns a random species name based on the species of the parents
-function Sexbound.Actor.Pregnant:generateBirthSpecies(otherActor)
-    local actor1Species = self:getParent():getSpecies() or "human"
-    local actor2Species = otherActor:getSpecies() or actor1Species
-    if actor2Species == "sexbound_tentacleplant_v2" then return actor1Species end
-    return util.randomChoice({actor1Species, actor2Species})
-end
-
---- Stores a baby inside this actor
-function Sexbound.Actor.Pregnant:storeBaby(baby)
+--- Stores pregnancy data inside this actor
+function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
     local _storage = self:getParent():getStorage()
     local _storageData = _storage:getData()
-    table.insert(_storageData.sexbound.pregnant, baby)
+    table.insert(_storageData.sexbound.pregnant, pregnancy)
 
     self:getParent():getStorage():sync(function(storageData)
         storageData.sexbound = storageData.sexbound or {}
         storageData.sexbound.pregnant = storageData.sexbound.pregnant or {}
-        table.insert(storageData.sexbound.pregnant, baby)
+        table.insert(storageData.sexbound.pregnant, pregnancy)
         return storageData
     end)
     
@@ -939,10 +792,8 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateEnableCompatibleSpeciesOnly(self._config.enableCompatibleSpeciesOnly)
     self:validateEnableFreeForAll(self._config.enableFreeForAll)
     self:validateEnableMultipleImpregnations(self._config.enableMultipleImpregnations)
-    --self:validateEnableNotifyPlayers(self._config.enableNotifyPlayers)
     self:validateEnablePregnancyFetish(self._config.enablePregnancyFetish)
     self:validateEnableInflationFetish(self._config.enableInflationFetish)
-    --self:validateEnableSilentImpregnations(self._config.enableSilentImpregnations)
     self:validateFertility(self._config.fertility)
     self:validateFertilityBonusMult(self._config.fertilityBonusMult)
     self:validateFertilityBonusMax(self._config.fertilityBonusMax)
@@ -951,10 +802,7 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateDripRateModifier(self._config.dripRateModifier)
     self:validateNotifications(self._config.notifications)
     self:validatePreventStatuses(self._config.preventStatuses)
-    --self:validateWhichGendersCanProduceSperm(self._config.whichGendersCanProduceSperm)
-    --self:validateWhichGendersCanOvulate(self._config.whichGendersCanOvulate)
-    self:validateTrimesterCount(self._config.trimesterCount)
-    self:validateTrimesterLength(self._config.trimesterLength)
+    self:validatePregnancyLength(self._config.pregnancyLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
 end
 
@@ -1142,40 +990,30 @@ function Sexbound.Actor.Pregnant:validatePreventStatuses(value)
     end
 end
 
---- Ensures trimesterCount is set to an allowed value
+--- Ensures pregnancyLength is set to an allowed value
 -- @param value
-function Sexbound.Actor.Pregnant:validateTrimesterCount(value)
-    if type(value) ~= "number" then
-        self._config.trimesterCount = 3
-        return
-    end
-    self._config.trimesterCount = util.clamp(value, 1, value)
-end
-
---- Ensures trimesterLength is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateTrimesterLength(value)
+function Sexbound.Actor.Pregnant:validatePregnancyLength(value)
     if type(value) == "number" then
-        self._config.trimesterLength = util.clamp(value, 1, value)
+        self._config.pregnancyLength = util.clamp(value, 1, value)
         return
     end
     if type(value) == "table" then
         local lo = value[1]
         local hi = value[2]
         if type(lo) ~= "number" then
-            lo = 2
+            lo = 6
         end
         if type(hi) ~= "number" then
-            hi = 3
+            hi = 9
         end
-        self._config.trimesterLength = {}
-        self._config.trimesterLength[1] = util.clamp(lo, 1, lo)
-        self._config.trimesterLength[2] = util.clamp(hi, 1, hi)
+        self._config.pregnancyLength = {}
+        self._config.pregnancyLength[1] = util.clamp(lo, 1, lo)
+        self._config.pregnancyLength[2] = util.clamp(hi, 1, hi)
         return
     end
-    self._config.trimesterLength = {}
-    self._config.trimesterLength[1] = 2
-    self._config.trimesterLength[2] = 3
+    self._config.pregnancyLength = {}
+    self._config.pregnancyLength[1] = 6
+    self._config.pregnancyLength[2] = 9
 end
 
 --- Ensures whichGendersCanOvulate is set to an allowed value

@@ -34,9 +34,14 @@ function Sexbound.NPC.Pregnant:handleGiveBirth(index)
     local pregnancies = {}
     local birthResult = nil
 
-    for k, v in pairs(storage.sexbound.pregnant) do
-        if index == k then
-            birthResult = self:giveBirth(v)
+    for i, v in ipairs(storage.sexbound.pregnant) do
+        if index == i then
+            birthResult = {}
+            for _,b in pairs(v.babies) do
+                b.pregnancyType = v.pregnancyType --Propagate pregnancy type for giveBirth()
+                table.insert(birthResult, self:giveBirth(b))
+            end
+            if #birthResult < 1 then birthResult = nil end
         else
             table.insert(pregnancies, v)
         end

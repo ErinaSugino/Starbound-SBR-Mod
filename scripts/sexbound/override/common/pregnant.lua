@@ -133,6 +133,44 @@ function Sexbound.Common.Pregnant:dataFilter()
             if type(v.fullBirthOSTime) ~= "number" then v.fullBirthOSTime = os.time() end
             if type(v.fullBirthWorldTime) ~= "number" then v.fullBirthWorldTime = math.max(v.birthWorldTime, 840) end
             if type(v.delay) ~= "number" then v.delay = 0 end
+            
+            if type(v.babies) ~= "table" then
+                v.babies = {}
+                table.insert(v.babies, {
+                    birthGender = v.birthGender or "male",
+                    motherName = v.motherName or "Unknown",
+                    motherId = v.motherId or "",
+                    motherUuid = v.motherUuid or "",
+                    motherType = v.motherType or "villager",
+                    motherSpecies = v.motherSpecies or "human",
+                    fatherName = v.fatherName or "Unknown",
+                    fatherId = v.fatherId or "",
+                    fatherUuid = v.fatherUuid or "",
+                    fatherType = v.fatherType or "villager",
+                    fatherSpecies = v.fatherSpecies or "human",
+                    generationFertility = v.generationFertility or 1.0,
+                    npcType = v.npcType or "villager",
+                    birthEntityGroup = v.birthEntityGroup or "humanoid",
+                    birthSpecies = v.birthSpecies or "human"
+                })
+                v.pregnancyType = "baby"
+                
+                v.birthGender = nil
+                v.motherName = nil
+                v.motherId = nil
+                v.motherUuid = nil
+                v.motherType = nil
+                v.motherSpecies = nil
+                v.fatherName = nil
+                v.fatherId = nil
+                v.fatherUuid = nil
+                v.fatherType = nil
+                v.fatherSpecies = nil
+                v.generationFertility = nil
+                v.npcType = nil
+                v.birthEntityGroup = nil
+                v.birthSpecies = nil
+            end
         end
 
         count = count + 1
@@ -180,13 +218,21 @@ function Sexbound.Common.Pregnant:checkTimeToGiveBirthBasedOnPlayerWorldTime(bab
 end
 
 function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
-    babyConfig.birthEntityGroup = babyConfig.birthEntityGroup or "humanoid"
-
-    if babyConfig.birthEntityGroup == "monsters" then
-        return self:_giveBirthToMonster(babyConfig)
-    else
-        return self:_giveBirthToHumanoid(babyConfig, babyName)
+    local pregnancyType = babyConfig.pregnancyType or "baby"
+    
+    -- Try loading baby class
+    pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+    
+    local babyClass
+    if not pcall(function()
+        babyClass = _G[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
+    end) then
+        -- Can't load = can't generate baby = no pregnancy; abort
+        sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+        return nil
     end
+    
+    return babyClass:birth(babyConfig, babyName)
 end
 
 function Sexbound.Common.Pregnant:refreshStatusEffects()
@@ -209,159 +255,6 @@ end
 function Sexbound.Common.Pregnant:updateWorldTime()
     self._worldTime = world.day() + world.timeOfDay()
     return self._worldTime
-end
-
-function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableMonster(babyConfig)
-    local params = {}
-    params.baseParameters = {}
-    params.baseParameters.uniqueId = sb.makeUuid()
-    params.baseParameters.statusSettings = {}
-    params.baseParameters.statusSettings.statusProperties = {
-        sexbound_birthday = babyConfig
-    }
-    params = util.mergeTable(params, babyConfig.birthParams or {})
-    return {
-        params   = params,
-        position = babyConfig.birthPosition or entity.position(),
-        type     = babyConfig.birthSpecies  or "gleap"
-    }
-end
-
-function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
-    local params = {}
-    params.scriptConfig = {}
-    params.scriptConfig.uniqueId = sb.makeUuid()
-    params.statusControllerSettings = {}
-    params.statusControllerSettings.statusProperties = {
-        sexbound_birthday = babyConfig,
-        sexbound_previous_storage = {
-            previousDamageTeam = storage.previousDamageTeam
-        },
-        motherUuid = babyConfig.motherUuid,
-        motherName = babyConfig.motherName,
-        fatherUuid = babyConfig.fatherUuid,
-        fatherName = babyConfig.fatherName,
-        generationFertility = babyConfig.generationFertility,
-        fertilityPenalty = babyConfig.generationFertility
-    }
-    params.identity = {}
-    params.identity.gender = babyConfig.birthGender
-    if babyName and babyName ~= "" then params.identity.name = babyName end
-    util.mergeTable(params, babyConfig.birthParams or {})
-    
-    local speciesConfig = {}
-    -- Attempt to read configuration from species config file.
-    if not pcall(function()
-        speciesConfig = root.assetJson("/species/" .. (babyConfig.birthSpecies or "human") .. ".species")
-    end) then
-        sb.logWarn("SxB: Could not find species config file.")
-    end
-    
-    -- Apply genetic color directives
-    local bodyDirectives, emoteDirectives, hairDirectives, facialHairDirectives, facialMaskDirectives = "", "", "", "", ""
-    local bodyColorPalette, hairColorPalette, undyColorPalette = "", "", ""
-    local bodyColor, hairColor, altColor, facialHairColor, facialMaskColor = "", "", "", "", ""
-    
-    local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
-    local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
-    local altOptionAsHairColor = not not speciesConfig.altOptionAsHairColor
-    local hairColorAsBodySubColor = not not speciesConfig.hairColorAsBodySubColor
-    local headOptionAsFacialhair = not not speciesConfig.headOptionAsFacialhair
-    local altOptionAsFacialMask = not not speciesConfig.altOptionAsFacialMask
-    local bodyColorAsFacialMaskSubColor = not not speciesConfig.bodyColorAsFacialMaskSubColor
-    local altColorAsFacialMaskSubColor = not not speciesConfig.altColorAsFacialMaskSubColor
-    
-    if babyConfig.bodyColor then
-        local bodyColorPalette = "?replace"
-        for k,v in pairs(babyConfig.bodyColor) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
-    end
-    
-    if babyConfig.hairColor then
-        local hairColorPalette = "?replace"
-        for k,v in pairs(babyConfig.hairColor) do hairColorPalette = hairColorPalette..";"..k.."="..v end
-    end
-    
-    if babyConfig.undyColor then
-        local undyColorPalette = "?replace"
-        for k,v in pairs(babyConfig.undyColor) do undyColorPalette = undyColorPalette..";"..k.."="..v end
-    end
-    
-    -- Build directives like Starbound does
-    bodyDirectives = bodyColor
-    if altOptionAsUndyColor then altColor = undyColorPalette
-    hairColor = bodyColor
-    if headOptionAsHairColor then
-        hairColor = hairColorPalette
-        if altOptionAsHairColor then hairColor = hairColor..undyColorPalette end
-    end
-    if hairColorAsBodySubColor then bodyColor = bodyColor..hairColor end
-    if headOptionAsFacialhair then facialHairColor = hairColor end
-    if bodyColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..bodyColor end
-    if altColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..altColor end
-    
-    bodyDirectives = bodyColor..altColor
-    emoteDirectives = bodyColor..altColor
-    hairDirectives = hairColor
-    facialHairDirectives = facialHairColor
-    facialMaskDirectives = facialMaskColor
-    
-    -- Finalize
-    if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
-    if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
-    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end
-    if facialHairDirectives ~= "" then params.identity.facialHairDirectives = facialHairDirectives end
-    if facialMaskDirectives ~= "" then params.identity.facialMaskDirectives = facialMaskDirectives end
-    
-    -- Ensure gender-safe hair assignment
-    -- Find relevant gender config
-    local genderConfig = nil
-    for _index, _gender in ipairs(speciesConfig.genders) do
-        if (_gender.name == babyConfig.birthGender) then
-            genderConfig = speciesConfig.genders[_index]
-            break
-        end
-    end
-    
-    if genderConfig then
-        -- If gender config was found and hair declaration exists, choose random gender specific hair style for baby
-        local hairStyles = genderConfig.hair
-        if hairStyles then params.identity.hairType = hairStyles[util.randomIntInRange({1,#hairStyles})] end
-    end
-    
-    local spawnableNPC = {
-        level    = babyConfig.birthLevel or 1,
-        npcType  = babyConfig.npcType or "crewmembersexbound",
-        params   = params,
-        position = babyConfig.birthPosition or entity.position(),
-        seed     = babyConfig.birthSeed,
-        species  = babyConfig.birthSpecies or "human"
-    }
-
-    if npc then spawnableNPC.npcType = npc.npcType() end
-    if monster then spawnableNPC.npcType = "villager" end
-
-    return spawnableNPC
-end
-
-function Sexbound.Common.Pregnant:_giveBirthToHumanoid(babyConfig, babyName)
-    local spawnableNPC = self:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
-    return world.spawnNpc(
-        spawnableNPC.position,
-        spawnableNPC.species,
-        spawnableNPC.npcType,
-        spawnableNPC.level,
-        spawnableNPC.seed,
-        spawnableNPC.params
-    )
-end
-
-function Sexbound.Common.Pregnant:_giveBirthToMonster(babyConfig)
-    local spawnableMonster = self:_convertBabyConfigToSpawnableMonster(babyConfig)
-    return world.spawnMonster(
-        spawnableMonster.type,
-        spawnableMonster.position,
-        spawnableMonster.params
-    )
 end
 
 function Sexbound.Common.Pregnant:getConfig()

@@ -38,13 +38,19 @@ function Sexbound.Monster.Pregnant:handleGiveBirth(index)
     local pregnancies = {}
     local birthResult = nil
 
-    for k, v in pairs(storage.sexbound.pregnant) do
-        if index == k then
+    for i, v in ipairs(storage.sexbound.pregnant) do
+        if index == i then
             local giveBirthTo = config.getParameter('sexboundConfig', {}).giveBirthTo
             if giveBirthTo then
+                giveBirthTo.pregnancyType = giveBirthTo.pregnancyType or "baby"
                 birthResult = self:giveBirthTo(giveBirthTo)
             else
-                birthResult = self:giveBirth(v)
+                birthResult = {}
+                for _,b in pairs(v.babies) do
+                    b.pregnancyType = v.pregnancyType --Propagate pregnancy type for giveBirth()
+                    table.insert(birthResult, self:giveBirth(b))
+                end
+                if #birthResult < 1 then birthResult = nil end
             end
         else
             table.insert(pregnancies, v)
