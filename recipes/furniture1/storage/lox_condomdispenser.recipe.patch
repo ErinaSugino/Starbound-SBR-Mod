@@ -1,0 +1,11 @@
+[
+  {
+    "op": "replace",
+    "path": "/groups/0",
+    "value": "plain"
+  },
+  {
+    "op": "remove",
+    "path": "/groups/1"
+  }
+]

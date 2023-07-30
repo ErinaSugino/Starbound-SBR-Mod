@@ -45,7 +45,11 @@
     "items" : [
 	  {"item" : { "name" : "sexbound_sexbox"}},
 	  {"item" : { "name" : "sexbound_slut2go"}},
-	  {"item" : { "name" : "onewaytickettolustia"}}
+	  {"item" : { "name" : "onewaytickettolustia"}},
+	  {"item" : { "name" : "liquidejaculant", "parameters":{"price":10}}},
+	  {"item" : { "name" : "liquidsemen", "parameters":{"price":10}}},
+	  {"item" : { "name" : "lox_abortionpill"}},
+	  {"item" : { "name" : "lox_pregnancytest"}}
     ]
   },
   

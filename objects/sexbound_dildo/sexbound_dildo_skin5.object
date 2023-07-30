@@ -1,0 +1,130 @@
+{
+  "objectName" : "sexbound_dildo_skin5",
+  "shortdescription" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "description" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Uncommon",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 1000,
+  "level" : 20,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "avianDescription"   : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "floranDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "glitchDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "humanDescription"   : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "hylotlDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "novakidDescription" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "dildoicon.png?hueshift=20;?brightness=-51;?saturation=-40",
+  "orientations" : [
+    {
+      "image" : "dildo.png:idle.1?hueshift=20;?brightness=-51;?saturation=-40",
+
+      "imagePosition" : [-7, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-1, 1], [0, 1], [1, 1], [2, 1],
+                   [-1, 0], [0, 0], [1, 0], [2, 0] ],
+	  "fgAnchors" : [ [-2, 0], [-2, 1] ],
+	  "direction" : "right"
+    },
+	{
+      "image" : "dildo.png:idle.1?flipx;?hueshift=20;?brightness=-51;?saturation=-40",
+
+      "imagePosition" : [-25, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-3, 1], [-2, 1], [-1, 1], [0, 1],
+                   [-3, 1], [-2, 1], [-1, 1], [0, 0] ],
+	  "fgAnchors" : [ [1, 0], [1, 1] ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sexbound_dildo/dildo.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Dildo",
+    
+    "position" : {
+      "sex" : [ "doggy_sextoy_actor1" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+	
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0, 0]
+                }
+              }
+            }
+          }
+        },
+		
+		"bed" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [0.375, -0.125],
+            "zLevel" : -1
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.0, 0.0]
+          }
+        }
+      }
+    }
+  }
+}
