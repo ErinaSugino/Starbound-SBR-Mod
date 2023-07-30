@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/globalTagDefaults/rainbowDirectives",
+    "value": "0"
+  }
+]

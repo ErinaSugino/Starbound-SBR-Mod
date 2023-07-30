@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_floranmalecum",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A Floran Male teasing himself to orgasm.",
+  "shortdescription" : "Male Floran tease & cum",
+  "race" : "generic",
+
+  "apexDescription" : "Naughy Floran boy shooting his polinating liquid.",
+  "avianDescription" : "Naughy Floran boy shooting his polinating liquid.",
+  "floranDescription" : "Naughy Floran boy shooting his polinating liquid.",
+  "glitchDescription" : "Horny. Naughy Floran boy shooting his polinating liquid.",
+  "humanDescription" : "Naughy Floran boy shooting his polinating liquid.",
+  "hylotlDescription" : "Naughy Floran boy shooting his polinating liquid.",
+  "novakidDescription" : "Naughy Floran boy shooting his polinating liquid.",
+
+  "inventoryIcon" : "floranmalecumicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "floranmalecum.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 33,
+      "animationCycle" : 4.0,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+	{
+      "imageLayers" : [ { "image" : "floranmalecum.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 33,
+      "animationCycle" : 4.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

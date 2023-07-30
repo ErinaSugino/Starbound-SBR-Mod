@@ -1,0 +1,40 @@
+{
+  "id" : "keystonequestfinal",
+  "title" : "^green;The Machine Blessed By Lady Luck",
+  "text" : "It's finally over, an old project of mine. I have little use for it, but I'd be willing to give it to a great friend ^orange;if convinced enough^reset;. ^green;(Deliver 12 Letters of Recommendation.)^reset;",
+  "completionText" : "Here you go, you'll probably use it more than me.",
+  "moneyRange" : [50, 50],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_reassembler", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kailia, misc. merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "sexbound_recommendationletter",
+        "count" : 12,
+        "consume" : true
+      }
+    ]
+  }
+}

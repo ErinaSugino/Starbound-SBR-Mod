@@ -1,0 +1,28 @@
+[
+  {
+    "op": "add",
+    "path": "/sexscape",
+    "value": {
+      "primaryDungeon": "sexscape",
+      "threatLevel": 1,
+      "gravity": 80,
+      "worldSize": [
+        2000,
+        2000
+      ],
+      "dungeonBaseHeight": 600,
+      "dungeonSurfaceHeight": 700,
+      "ambientLightLevel": [
+        128,
+        128,
+        128
+      ],
+      "biome": "sexscape",
+      "ambientNoises": "/sfx/environmental/space_loop1.ogg",
+      "musicTrack": "/music/huniepoplustiesnightclub.ogg",
+      "environmentStatusEffects": [
+        "dontstarve"
+      ]
+    }
+  }
+]

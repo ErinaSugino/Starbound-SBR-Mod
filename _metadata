@@ -1,0 +1,10 @@
+{
+  "version" : "1.3.0",
+  "author" : "Sir Bumpleton",
+  "description" : "Adds sexboxes, a hooker network, a new place to meet up and fuck and so much more!",
+  "name" : "lustbound_base",
+  "steamContentId" : "",
+  "priority" : 200,
+  "friendlyName" : "Lustbound: Base",
+  "link" : ""
+}

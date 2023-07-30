@@ -1,0 +1,12 @@
+{
+  "name" : "sexbound_milkmode",
+  "effectConfig" : {},
+  "defaultDuration" : 600,
+
+  "scripts" : [
+    "sexbound_milkmode.lua"
+  ],
+	
+  "label" : "sexbound_milkmode",
+  "icon" : "/interface/statuses/sex.png"
+}

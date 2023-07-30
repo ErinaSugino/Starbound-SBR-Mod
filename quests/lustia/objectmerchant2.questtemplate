@@ -1,0 +1,47 @@
+{
+  "id" : "objectmerchant2",
+  "prerequisites" : [ "objectmerchant1" ],
+  "title" : "^green;Enough For Everyone",
+  "text" : "With that out of the way, I need to fill my stock of toys back up. The people here aren't picky, so just a handful of ^orange;Dildos and Fleshlights^reset; should do the job. ^green;(Deliver 8 Dildos and 8 Fleshlights.)^reset;",
+  "completionText" : "Perfect! One less thing to account for!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Konani, object merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "sexbound_dildo_v2",
+        "count" : 8,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "sexbound_fleshlight_v2",
+        "count" : 8,
+        "consume" : true
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "objectName" : "sxbold_florandancer",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "Hot stuff shaking it on the dance floor!",
+  "shortdescription" : "Floran Dancer",
+  "race" : "generic",
+
+  "inventoryIcon" : "florandancericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "florandancer.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-12, -12],
+      "frames" : 10,
+      "animationCycle" : 1.0,
+      "direction" : "right", 
+
+      "spaces" : [ [0,1] ],
+      "anchors" : [ "background" ]
+
+    },
+	{
+      "imageLayers" : [ { "image" : "florandancer.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-12, -12],
+      "frames" : 10,
+      "animationCycle" : 1.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaces" : [ [0,1] ],
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

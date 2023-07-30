@@ -1,0 +1,9 @@
+{
+  "itemName" : "sexbound_recommendationletter",
+  "price" : 420,
+  "rarity" : "Essential",
+  "category" : "quest",
+  "inventoryIcon" : "sexbound_recommendationletter.png",
+  "description" : "A letter of recommendation given to you for helping this one's fellow sisters.",
+  "shortdescription" : "Recommendation Letter"
+}

@@ -1,0 +1,84 @@
+{
+  "objectName"       : "sexbound_hylotlaquarium",
+  "colonyTags"       : [ "kinky" ],
+  "interactive"      : true,
+  "objectType"       : "loungeable",
+  "rarity"           : "Legendary",
+  "category"         : "furniture",
+  "price"            : 25000,
+  "description"      : "A hylotl in a aquarium. It's a cute one!",
+  "shortdescription" : "Hylotl Aquarium (???)",
+  "shortdescriptionPrefix" : "HylotlAquarium",
+  "race"             : "generic",
+  "itemTags"         : [ "sexbound", "sex" ],
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ 0, 20 ],
+  "sitStatusEffects" : [
+    {
+      "stat"   : "breathProtection",
+      "amount" : 1.0
+    },
+    "dontstarve",
+    "sexbound_sex"
+  ],
+
+  "retainObjectParametersInItem" : true,
+
+  "inventoryIcon" : "jarfilledicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "jarfilled.png:<color>.<frame>",
+      "imagePosition" : [-12, 0],
+      "frames" : 8,
+      "animationCycle" : 1.8,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    }
+  ],
+
+  "scripts"        : [ "/scripts/sexbound/become_node.lua", "/objects/sextoylegendary/minitoys/insertnpcplus.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "standing_mini", "missionary_mini", "doggy_mini", "cowgirl_mini", "facesitting_mini", "butterfly_mini", "fellatio_mini", "reverse_cowgirl_mini" ]
+    }
+  },
+
+  "actorRace" : "hylotl",
+  "isAnimated" : "true",
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "jar" : {
+          "properties" : {
+            "offset" : [ 0, 1.5 ],
+            "zLevel" : 9999,
+            "image"  : "/objects/sextoylegendary/minitoys/sexbound_hylotlaquarium/jarempty.png:<animaFrame>"
+          }
+        },
+
+        "jar-bg" : {
+          "properties" : {
+            "anchorPart" : "jar",
+            "zLevel" : -9999,
+            "image"  : "/objects/sextoylegendary/minitoys/sexbound_hylotlaquarium/jarhabitat.png:<animaFrame>"
+          }
+        },
+		
+        "actors" : {
+          "properties" : {
+            "offset" : [ 0, 6.75 ]
+          }
+        }
+      }
+    }
+  }
+}

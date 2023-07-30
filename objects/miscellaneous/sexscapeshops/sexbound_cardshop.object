@@ -1,0 +1,74 @@
+{
+  "objectName" : "sexbound_cardshop",
+  "shortdescription" : "Card Sex Shop",
+  "description" : "A merchant that sells Monster Girl Cards and related items.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells Monster Girl Cards and related items.",
+  "avianDescription"   : "A merchant that sells Monster Girl Cards and related items.",
+  "floranDescription"  : "A merchant that sells Monster Girl Cards and related items.",
+  "glitchDescription"  : "A merchant that sells Monster Girl Cards and related items.",
+  "humanDescription"   : "A merchant that sells Monster Girl Cards and related items.",
+  "hylotlDescription"  : "A merchant that sells Monster Girl Cards and related items.",
+  "novakidDescription" : "A merchant that sells Monster Girl Cards and related items.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+
+  "offeredQuests" : [
+  ],
+  "turnInQuests" : [
+  ],
+
+  "uniqueId" : "cardshop",
+
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Cards & Related",
+        "subtitle" : "Monster Girl Cards and related items."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}}
+    ]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_cardshopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_cardshop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

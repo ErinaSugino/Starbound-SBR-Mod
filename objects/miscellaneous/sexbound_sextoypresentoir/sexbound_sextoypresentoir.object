@@ -1,0 +1,97 @@
+{
+  "objectName" : "sexbound_sextoypresentoir",
+  "shortdescription" : "^pink;Sex Toy ^violet;Presentoir",
+  "description" : "A vending machine that sells unique sex toys and other useful trinkets.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 1000,
+  "lightColor" : [153, 0, 255],
+  "printable" : false,
+
+  "apexDescription"    : "This vending machine is fully stocked with kinky sex goods.",
+  "avianDescription"   : "This vending machine is fully stocked with kinky sex goods.",
+  "floranDescription"  : "Thisss vending machine is sfully ssstocked with kinky sssex goods.",
+  "glitchDescription"  : "Impressed. This vending machine is fully stocked with kinky sex goods.",
+  "humanDescription"   : "This vending machine is fully stocked with kinky sex goods.",
+  "hylotlDescription"  : "This vending machine is fully stocked with kinky sex goods.",
+  "novakidDescription" : "This vending machine is fully stocked with kinky sex goods.",
+  
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [{"image" : "sexbound_sextoypresentoir.png:<color>.<frame>"}, {"image" : "sexbound_sextoypresentoirlit.png:<color>.<frame>", "fullbright" : true}],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "imagePosition" : [-17, 0],
+	  "frames" : 27,
+      "animationCycle" : 2,
+
+      "anchors" : [ "bottom" ],
+      
+      "spaceScan" : 0.2,
+      
+      "collision" : "platform"
+    },
+    {
+      "imageLayers" : [{"image" : "sexbound_sextoypresentoir.png:<color>.<frame>"}, {"image" : "sexbound_sextoypresentoirlit.png:<color>.<frame>", "fullbright" : true}],
+      "direction" : "right",
+	  
+      "imagePosition" : [-17, 0],
+	  "frames" : 27,
+      "animationCycle" : 2,
+
+      "anchors" : [ "bottom" ],
+      
+      "spaceScan" : 0.2,
+      
+      "collision" : "platform"
+    }
+  ],
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Alluring Toys Co. Super Extras",
+        "subtitle" : "Even more toys and trinkets!"
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}},
+	  {"item" : { "name" : "sexbound_sextoyprinter"}},
+	  {"item" : { "name" : "sexbound_dildo_v2", "parameters" : {
+		"description" : "A basic colorful dildo. It has a suction cup to mount it on the wall.",
+		"shortdescription" : "Generic Dildo",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 325,
+		"saturationValue" : -33,
+		"brightnessValue" : -50,
+		"inventoryIcon" : "dildoicon.png?hueshift=325;?saturation=-33;?brightness=-50"
+	  }}},
+      {"item" : { "name" : "sexbound_fleshlight_v2", "parameters" : {
+		"description" : "A male masturbator made from translucent colorful plastic.",
+		"shortdescription" : "Generic Fleshlight",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 325,
+		"saturationValue" : -33,
+		"brightnessValue" : -50,
+		"inventoryIcon" : "fleshlighticon.png?hueshift=325;?saturation=-33;?brightness=-50"
+	  }}},
+      {"item" : { "name" : "sexbound_contraceptivepatch"}},
+      {"item" : { "name" : "sexbound_futamode"}},
+      {"item" : { "name" : "sexbound_birthingpill"}},
+	  {"item" : { "name" : "sexbound_onewaytickettolustia"}}
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "itemName" : "sexbound_contraceptivepatch",
+  "price" : 200,
+  "inventoryIcon" : "sexbound_contraceptivepatch.png",
+  "maxStack" : 1,
+  "rarity" : "Common",
+  "category" : "enviroProtectionPack",
+  "description" : "Unisex. Apply to back. Works in vanity slot.",
+  "shortdescription" : "Contraceptive Patch",
+  "level" : 1,
+
+  "maleFrames" : "back.png",
+  "femaleFrames" : "back.png",
+
+  "itemTags" : [ "sex" ],
+
+  "sexboundConfig" : {
+    "addStatus" : [ "infertile" ],
+    "image"     : "/artwork/humanoid/<role>/default/sexbound_contraceptivepatch.png",
+    "mask"      : "/artwork/humanoid/<role>/default/sexbound_contraceptivepatch.png"
+  }
+}

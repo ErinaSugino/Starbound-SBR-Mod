@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_floranpole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A Floran girl being spanked by a vine. Kinky.",
+  "shortdescription" : "Female Floran Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Ouch, painful but arousing!",
+  "avianDescription" : "Ouch, painful but arousing!",
+  "floranDescription" : "Ouch, painful but arousing!",
+  "glitchDescription" : "Horny. Ouch, painful but arousing!",
+  "humanDescription" : "Ouch, painful but arousing!",
+  "hylotlDescription" : "Ouch, painful but arousing!",
+  "novakidDescription" : "Ouch, painful but arousing!",
+
+  "inventoryIcon" : "floranpoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "floranpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 21,
+      "animationCycle" : 1.5,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "floranpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 21,
+      "animationCycle" : 1.5,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "objectName" : "sexbound_objectshop",
+  "shortdescription" : "Object Sex Shop",
+  "description" : "A merchant that sells sex objects.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells sex objects.",
+  "avianDescription"   : "A merchant that sells sex objects.",
+  "floranDescription"  : "A merchant that sells sex objects.",
+  "glitchDescription"  : "A merchant that sells sex objects.",
+  "humanDescription"   : "A merchant that sells sex objects.",
+  "hylotlDescription"  : "A merchant that sells sex objects.",
+  "novakidDescription" : "A merchant that sells sex objects.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "offeredQuests" : [
+    "objectmerchant1", "objectmerchant2", "objectmerchant3"
+  ],
+  "turnInQuests" : [
+    "objectmerchant1", "objectmerchant2", "objectmerchant3"
+  ],
+
+  "uniqueId" : "objectshop",
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Sex Objects",
+        "subtitle" : "Make your world sexy!"
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}},
+	  {"item" : { "name" : "sexboundloungeableaddon"}},
+	  {"item" : { "name" : "dildoshelf1"}},
+	  {"item" : { "name" : "dildoshelf2"}},
+	  {"item" : { "name" : "avianelectroobject"}},
+	  {"item" : { "name" : "avianchainedslave"}},
+	  {"item" : { "name" : "fhblow"}},
+	  {"item" : { "name" : "bikinidoggystyle"}},
+	  {"item" : { "name" : "humanshower"}},
+	  {"item" : { "name" : "wallpumpkinfuck"}},
+	  {"item" : { "name" : "floranmalecum"}},
+	  {"item" : { "name" : "hylotlcum"}},
+	  {"item" : { "name" : "apexspanksmall"}},
+	  {"item" : { "name" : "apexspank"}},
+	  {"item" : { "name" : "apexspankbig"}},
+	  {"item" : { "name" : "avianspanksmall"}},
+	  {"item" : { "name" : "avianspank"}},
+	  {"item" : { "name" : "avianspankbig"}},
+	  {"item" : { "name" : "floranspanksmall"}},
+	  {"item" : { "name" : "floranspank"}},
+	  {"item" : { "name" : "floranspankbig"}},
+	  {"item" : { "name" : "humanspanksmall"}},
+	  {"item" : { "name" : "humanspank"}},
+	  {"item" : { "name" : "humanspankbig"}},
+	  {"item" : { "name" : "hylotlspanksmall"}},
+	  {"item" : { "name" : "hylotlspank"}},
+	  {"item" : { "name" : "hylotlspankbig"}},
+	  {"item" : { "name" : "novakidspanksmall"}},
+	  {"item" : { "name" : "novakidspank"}},
+	  {"item" : { "name" : "novakidspankbig"}},
+	  {"item" : { "name" : "apexpole"}},
+	  {"item" : { "name" : "avalipole"}},
+	  {"item" : { "name" : "avianpole"}},
+	  {"item" : { "name" : "floranpole"}},
+	  {"item" : { "name" : "glitchpole"}},
+	  {"item" : { "name" : "humanpole"}},
+	  {"item" : { "name" : "hylotlpole"}},
+	  {"item" : { "name" : "novakidpole"}}
+    ]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_objectshopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_objectshop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

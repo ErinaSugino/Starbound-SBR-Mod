@@ -1,0 +1,11 @@
+[
+  {
+    "op": "replace",
+    "path": "/onlyFemaleActorsCanBeFutanari",
+    "value": false
+  },
+  {
+    "op": "remove",
+    "path": "/appliesToSpecies/0"
+  }
+]

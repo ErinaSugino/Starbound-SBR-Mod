@@ -1,0 +1,20 @@
+{
+  "input" : [
+    { "item" : "commonrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_fleshlight_v2",
+	"parameters" : {
+		"description" : "A male masturbator made from translucent colorful plastic.",
+		"shortdescription" : "Pink Fleshlight",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 300,
+		"saturationValue" : -50,
+		"brightnessValue" : -15,
+		"inventoryIcon" : "fleshlighticon.png?hueshift=300;?saturation=-50;?brightness=-15"
+	},
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoycommon" ]
+}

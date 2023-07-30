@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_hylotlcum",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A strapping Hylotl enjoying himself.",
+  "shortdescription" : "Hylotl Handjob",
+  "race" : "generic",
+
+  "apexDescription" : "A strapping Hylotl enjoying himself.",
+  "avianDescription" : "A strapping Hylotl enjoying himself.",
+  "floranDescription" : "A strapping Hylotl enjoying himself.",
+  "glitchDescription" : "Horny. A strapping Hylotl enjoying himself.",
+  "humanDescription" : "A strapping Hylotl enjoying himself.",
+  "hylotlDescription" : "A strapping Hylotl enjoying himself.",
+  "novakidDescription" : "A strapping Hylotl enjoying himself.",
+
+  "inventoryIcon" : "hylotlcumicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "hylotlcum.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 32,
+      "animationCycle" : 4.0,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+	{
+      "imageLayers" : [ { "image" : "hylotlcum.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 32,
+      "animationCycle" : 4.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

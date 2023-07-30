@@ -1,0 +1,47 @@
+{
+  "id" : "outfitmerchant2",
+  "prerequisites" : [ "outfitmerchant1" ],
+  "title" : "^green;Shinies!",
+  "text" : "I want to try my hand at making some jewelry, could you go get me some ^orange;Gold and Diamonds^reset;? ^green;(Deliver 10 Gold Bars and 3 Diamonds.)^reset;",
+  "completionText" : "That is perfect, thanks!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kayluyn, outfit merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "goldbar",
+        "count" : 10,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "diamond",
+        "count" : 3,
+        "consume" : true
+      }
+    ]
+  }
+}

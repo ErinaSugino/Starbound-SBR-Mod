@@ -1,0 +1,20 @@
+{
+  "itemName": "sexbound_onewaytickettolustia",
+  "price": 200,
+  "level": 1,
+  "maxStack": 1000,
+  "rarity": "common",
+  "category": "tool",
+  "description": "Go to explore the world of sex in Lustia!",
+  "shortdescription": "One Way Ticket To ^pink;Lustia",
+  "twoHanded": true,
+  "inventoryIcon": "sexbound_onewaytickettolustia.png",
+  "scripts": [
+    "/scripts/sexbound_onewaytickettolustia.lua"
+  ],
+  "fireTime": 2,
+  "fireOffset": [
+    1,
+    0
+  ]
+}

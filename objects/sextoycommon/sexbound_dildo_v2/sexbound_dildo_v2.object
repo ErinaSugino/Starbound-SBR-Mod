@@ -1,0 +1,139 @@
+{
+  "objectName" : "sexbound_dildo_v2",
+  "shortdescription" : "Blank Dildo",
+  "description" : "A special dildo that will change it's color once exposed to air.",
+  "shortdescriptionNew" : "Colored Dildo",
+  "descriptionNew" : "A basic colorful dildo. It has a suction cup to mount it on the wall.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Uncommon",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 1000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "Who left that here?",
+  "avianDescription"   : "Who left that here?",
+  "floranDescription"  : "Who left that here?",
+  "glitchDescription"  : "Perplexed. Who left that here?",
+  "humanDescription"   : "Who left that here?",
+  "hylotlDescription"  : "Who left that here?",
+  "novakidDescription" : "Who left that here?",
+  
+  "retainObjectParametersInItem" : true,
+  "cleanObject" : true,
+  "hueshiftValue" : 0,
+  "saturationValue" : -1,
+  "brightnessValue" : 0,
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "dildoicon.png?saturation=-100",
+  "orientations" : [
+    {
+      "image" : "dildo.png:idle.1?saturation=-100",
+
+      "imagePosition" : [-7, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-1, 1], [0, 1], [1, 1], [2, 1],
+                   [-1, 0], [0, 0], [1, 0], [2, 0] ],
+	  "fgAnchors" : [ [-2, 0], [-2, 1] ],
+	  "direction" : "right"
+    },
+	{
+      "image" : "dildo.png:idle.1?saturation=-100",
+
+      "imagePosition" : [-25, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+      "flipImages" : true,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-3, 1], [-2, 1], [-1, 1], [0, 1],
+                   [-3, 1], [-2, 1], [-1, 1], [0, 0] ],
+	  "fgAnchors" : [ [1, 0], [1, 1] ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoycommon/sexbound_dildo_v2/dildo.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Dildo",
+    
+    "position" : {
+      "sex" : [ "doggy_sextoy_actor1" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+	
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0, 0]
+                }
+              }
+            }
+          }
+        },
+		
+		"bed" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [0.375, -0.125],
+            "zLevel" : -1
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.0, 0.0]
+          }
+        }
+      }
+    }
+  }
+}

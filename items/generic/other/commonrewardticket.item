@@ -1,0 +1,9 @@
+{
+  "itemName" : "commonrewardticket",
+  "price" : 2000,
+  "rarity" : "Uncommon",
+  "category" : "currency",
+  "inventoryIcon" : "commonrewardticket.png",
+  "description" : "A common reward ticket used to buy a special toy of your choice.",
+  "shortdescription" : "Common Toy Ticket"
+}

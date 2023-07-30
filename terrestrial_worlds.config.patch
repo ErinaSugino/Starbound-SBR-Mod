@@ -1,0 +1,38 @@
+[
+  {
+    "op": "add",
+    "path": "/sexscape",
+    "value": {
+      "type": "FloatingDungeon",
+      "dungeonWorld": "sexscape",
+      "seed": 1234,
+      "spawningEnabled": false,
+      "beamUpRule": "Anywhere",
+      "disableDeathDrops": true,
+      "useUniverseClock" : true,
+      "worldProperties": {
+        "nonCombat": false
+      },
+      "skyParameters": {
+        "spaceLevel": 3000,
+        "skyType" : "atmospheric",
+        "skyColoring" : {
+			"mainColor" : [255, 255, 255],
+
+			"morningColors" : [ [230, 129, 204], [230, 164, 210] ],
+			"dayColors" : [ [230, 107, 132], [230, 152, 163] ],
+			"eveningColors" : [ [230, 69, 101], [230, 129, 145] ],
+			"nightColors" : [ [70, 20, 70], [70, 20, 70] ],
+
+			"morningLightColor" : [240, 100, 202],
+			"dayLightColor" : [240, 100, 202],
+			"eveningLightColor" : [240, 100, 202],
+			"nightLightColor" : [70, 20, 70]
+        },
+        "dayLength" : 1153.36,
+        "surfaceLevel" : 1200,
+        "seed" : -5288806180628666923
+      }
+    }
+  }
+]

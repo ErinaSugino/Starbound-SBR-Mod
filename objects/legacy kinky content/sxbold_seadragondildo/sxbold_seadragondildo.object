@@ -1,0 +1,34 @@
+{
+  "objectName" : "sxbold_seadragondildo",
+  "rarity" : "Rare",
+  "category" : "decoration",
+  "price" : 500,
+
+  "description" : "An elegantly shaped dildo with a ribbed texture.",
+  "shortdescription" : "Sea Dragon",
+  "race" : "generic",
+
+  "apexDescription" : "It has a fascinating curve to it.",
+  "avianDescription" : "It looks dynamic and energetic, like a masterfully crafted bow.",
+  "floranDescription" : "Ssskinny and chewy. Floran no like!",
+  "glitchDescription" : "INSERT TEXT",
+  "humanDescription" : "Living the fantasy!",
+  "hylotlDescription" : "An elegant penis, befitting a creature of the sea.",
+
+  "inventoryIcon" : "seadragondildoicon.png",
+  "orientations" : [
+    {
+      "image" : "seadragondildo.png:<color>",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ],
+  
+  "objectType" : "loungeable",
+  "sitPosition" : [4, 16]
+}

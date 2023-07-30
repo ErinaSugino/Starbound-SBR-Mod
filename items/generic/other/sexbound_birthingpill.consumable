@@ -1,0 +1,18 @@
+{
+  "itemName" : "sexbound_birthingpill",
+  "price" : 200,
+  "rarity" : "Common",
+  "category" : "medicine",
+  "inventoryIcon" : "sexbound_birthingpill.png",
+  "description" : "Swallow this to immensely accelerate the birthing process.",
+  "shortdescription" : "Birthing Pill",
+  "maxStack" : 1000,
+  "effects" : [ [
+    {
+      "effect" : "sexbound_birthingpill",
+      "duration" : 5
+    }
+  ] ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

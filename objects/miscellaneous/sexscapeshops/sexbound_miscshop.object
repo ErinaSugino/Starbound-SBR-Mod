@@ -1,0 +1,78 @@
+{
+  "objectName" : "sexbound_miscshop",
+  "shortdescription" : "Misc. Sex Shop",
+  "description" : "A merchant that sells miscellaneous sex items.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells miscellaneous sex items.",
+  "avianDescription"   : "A merchant that sells miscellaneous sex items.",
+  "floranDescription"  : "A merchant that sells miscellaneous sex items.",
+  "glitchDescription"  : "A merchant that sells miscellaneous sex items.",
+  "humanDescription"   : "A merchant that sells miscellaneous sex items.",
+  "hylotlDescription"  : "A merchant that sells miscellaneous sex items.",
+  "novakidDescription" : "A merchant that sells miscellaneous sex items.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+
+  "offeredQuests" : [
+    "keystonequestfinal", "miscmerchant1", "miscmerchant2", "miscmerchant3"
+  ],
+  "turnInQuests" : [
+    "keystonequestfinal", "miscmerchant1", "miscmerchant2", "miscmerchant3"
+  ],
+
+  "uniqueId" : "miscshop",
+
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Miscellaneous Sex Items",
+        "subtitle" : "Other sexbound related items."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}},
+	  {"item" : { "name" : "sexbound_slut2go"}},
+	  {"item" : { "name" : "onewaytickettolustia"}}
+    ]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_miscshopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_miscshop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

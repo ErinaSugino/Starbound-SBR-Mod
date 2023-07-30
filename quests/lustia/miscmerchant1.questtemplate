@@ -1,0 +1,64 @@
+{
+  "id" : "miscmerchant1",
+  "title" : "^green;An Ancient Project",
+  "text" : "I have this old project I have had for a while, but never had the materials to complete it. Could you get me ^orange;Silicon Boards, Small Batteries, Copper Wire, Tungsten Bars and a Tiny Wall Button^reset;, please? ^green;(Deliver 1 Silicon Board, 2 Small Batteries, 5 Copper Wires, 3 Tungsten Bars and 1 Tiny Wall Button.)^reset;",
+  "completionText" : "Alright! I'll finish this in no time now!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kailia, misc. merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "siliconboard",
+        "count" : 1,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "smallbattery",
+        "count" : 2,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "wire",
+        "count" : 5,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "tungstenbar",
+        "count" : 3,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "tinywallbutton",
+        "count" : 1,
+        "consume" : true
+      }
+    ]
+  }
+}

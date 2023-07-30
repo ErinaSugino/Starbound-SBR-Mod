@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_avianelectroobject",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "An Avian girl having a shocking orgasm.",
+  "shortdescription" : "Avian Electrical Orgasm",
+  "race" : "generic",
+
+  "apexDescription" : "How shocking!",
+  "avianDescription" : "How shocking!",
+  "floranDescription" : "How shocking!",
+  "glitchDescription" : "Horny. How shocking!",
+  "humanDescription" : "How shocking!",
+  "hylotlDescription" : "How shocking!",
+  "novakidDescription" : "How shocking!",
+
+  "inventoryIcon" : "avianelectroobjecticon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "avianelectroobject.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -10],
+      "frames" : 22,
+      "animationCycle" : 3.0,
+      "direction" : "right", 
+
+      "spaces" : [ [0,0] ],
+      "anchors" : [ "background" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "avianelectroobject.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -10],
+      "frames" : 22,
+      "animationCycle" : 3.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaces" : [ [0,0] ],
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

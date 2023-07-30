@@ -1,0 +1,33 @@
+{
+  "objectName" : "sxbold_avianpostertall2",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Common",
+  "description" : "A nice poster of A.V.I.A.N. butt",
+  "shortdescription" : "Tall A.V.I.A.N. butt",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 100,
+  "printable" : true,
+
+  "apexDescription" : "That's a nice ass",
+  "avianDescription" : "I'd like to ruffle her feathers",
+  "floranDescription" : "Avian without peel! Tasty!",
+  "glitchDescription" : "Confused. ...and horny",
+  "humanDescription" : "What the? Fuck yes!",
+  "hylotlDescription" : "My favourite part of this is the butt",
+  "novakidDescription" : "Oh nice ass! We had a few of those back on the station.",
+
+  "inventoryIcon" : "avianpostertallicon2.png",
+  "orientations" : [
+    {
+      "image" : "avianpostertall2.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

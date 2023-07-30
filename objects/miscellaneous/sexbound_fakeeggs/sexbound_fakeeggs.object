@@ -1,0 +1,42 @@
+{
+  "objectName" : "sexbound_fakeeggs",
+  "rarity" : "Common",
+  "category" : "decoration",
+  "price" : 200,
+
+  "description" : "A pile of gooey, sticky eggs that may or may not contain life.",
+  "shortdescription" : "Pile Of Eggs",
+  "race" : "generic",
+
+  "apexDescription" : "They look rather squishy.",
+  "avianDescription" : "Hey, are those mine or...?",
+  "floranDescription" : "Sssquishy and tasssty, but not like real eggsss.",
+  "glitchDescription" : "Concerned. Some avian left their children alone?",
+  "humanDescription" : "Living the fantasy!",
+  "hylotlDescription" : "Significantly bigger than what we are used to...",
+  "novakidDescription" : "Breakfast!",
+
+  "inventoryIcon" : "sexbound_fakeeggsicon.png",
+  "orientations" : [
+    {
+      "image" : "sexbound_fakeeggs.png",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "image" : "sexbound_fakeeggs.png?flipx",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ]
+}

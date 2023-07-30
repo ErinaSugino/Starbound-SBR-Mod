@@ -1,0 +1,80 @@
+{
+  "objectName" : "sexbound_outfitshop",
+  "shortdescription" : "Outfit Sex Shop",
+  "description" : "A merchant that sells sexy outfits.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells sexy outfits.",
+  "avianDescription"   : "A merchant that sells sexy outfits.",
+  "floranDescription"  : "A merchant that sells sexy outfits.",
+  "glitchDescription"  : "A merchant that sells sexy outfits.",
+  "humanDescription"   : "A merchant that sells sexy outfits.",
+  "hylotlDescription"  : "A merchant that sells sexy outfits.",
+  "novakidDescription" : "A merchant that sells sexy outfits.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "offeredQuests" : [
+    "outfitmerchant1", "outfitmerchant2", "outfitmerchant3"
+  ],
+  "turnInQuests" : [
+    "outfitmerchant1", "outfitmerchant2", "outfitmerchant3"
+  ],
+
+  "uniqueId" : "outfitshop",
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Sex Enabled Outfits",
+        "subtitle" : "Stay in style even in sex."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}},
+	  {"item" : { "name" : "sexbound_futamode"}},
+	  {"item" : { "name" : "sexbound_contraceptivepatch"}},
+	  {"item" : { "name" : "sexbound_blindfoldgag"}},
+	  {"item" : { "name" : "sexbound_blindfold"}}
+    ]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_outfitshopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_outfitshop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

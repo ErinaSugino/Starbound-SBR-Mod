@@ -1,0 +1,284 @@
+{
+  "objectName" : "sexbound_tentacleplant_v2",
+  "shortdescription" : "Juvenile Tentacle Plant",
+  "description" : "Plant it down for it to mature with it's true colors.",
+  "shortdescriptionNew" : "Rooted Tentacle Plant",
+  "descriptionNew" : "A docile tentacle plant that knows when to heck.",
+  "colonyTags" : ["sexbound", "sex", "jungle", "odd"],
+  "category" : "other",
+  "rarity" : "Legendary",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 25000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "Nothing weird about this plant.",
+  "avianDescription"   : "Maybe I should become what happens next.",
+  "floranDescription"  : "Floran happy to see nature have some fun with us.",
+  "glitchDescription"  : "Annoyed. This plant occasionally tangles with my circuitry.",
+  "humanDescription"   : "I already know where this is going...",
+  "hylotlDescription"  : "It feels like an octopus, yet so much more gentle.",
+  "novakidDescription" : "That ain't no buckin' bruncko!",
+  "nekiDescription"    : "Weird, tingly tentacle plant. But knows good fucks!",
+  
+  "retainObjectParametersInItem" : true,
+  "cleanObject" : true,
+  "hueshiftValue" : 0,
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "tentacleplanticon.png",
+  "orientations" : [
+    {
+      "dualImage" : "tentacleplant.png:idle.1",
+
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoylegendary/sexbound_tentacleplant_v2/tentacleplant.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Tentacle Plant",
+    
+    "position" : {
+      "sex" : [ "butterfly", "cowgirl_tentacleplant", "fellatio" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 2
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [2.750, 1.250]
+                }
+              },
+			  
+			  "position5-climax" : {
+                "properties" : {
+                  "offset" : [3.125, 1.250]
+                }
+              },
+			  
+			  "position6-climax" : {
+                "properties" : {
+                  "offset" : [3.50, 1.250]
+                }
+              }
+            }
+          }
+        },
+      
+	    "actor1" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+              
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+            
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+            
+              "position5" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position5-climax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position5-reset" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6-climax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6-reset" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              }
+            }
+          }
+        },
+	  
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+              
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+            
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+            
+              "position5" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position5-climax" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position5-reset" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position6" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              },
+              
+              "position6-climax" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              },
+              
+              "position6-reset" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              }
+            }
+          }
+        },
+		"actor1-arm-front": {
+		  "properties": {
+			"zLevel": 43
+			}
+		},
+		"actor2-groin" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42]
+                }
+              },
+              
+              "position4-climax" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+            
+              "position4-reset" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+              
+              "position5" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42]
+                }
+              },
+              
+              "position5-climax" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+            
+              "position5-reset" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "objectName" : "sxbold_avianhologirlwhite",
+  "colonyTags" : ["Prism", "Avian"],
+  "rarity" : "Common",
+  "category" : "light",
+  "lightColor" : [255, 255, 255],  
+  "price" : 250,
+  "printable" : false,
+  "description" : "A white Avian holographic Dancer",
+  "shortdescription" : "Avian Dancer white",
+  "race" : "generic",
+
+  "apexDescription" : "Do Avians even like these?",
+  "avianDescription" : "I've certainly never seen anything like this in the Klaux.",
+  "floranDescription" : "Why can't Floran touch thisss bird?",
+  "glitchDescription" : "Amazed: Technology has come a long way.",
+  "humanDescription" : "I'm not sure how to feel about this...",
+  "hylotlDescription" : "I didn't think Avians indulged in such... things.",
+  "novakidDescription" : "Shake those tail feathers!",
+  
+  "inventoryIcon" : "avianhologirl_icon_white.png",
+  "orientations" : 
+	[
+    		{
+      		"image" : "avianhologirlwhite.png:<color>.<frame>",
+	  		"flipImages" : false,
+      		"imagePosition" : [-10, 0],
+      		"frames" : 18,
+      		"animationCycle" : 1.5,
+      		"spaceScan" : 0.1,
+      		"anchors" : [ "bottom" ],
+	  		"direction" : "left"
+    		},
+    		{
+      		"image" : "avianhologirlwhite.png:<color>.<frame>",
+	  		"flipImages" : true,
+      		"imagePosition" : [-10, 0],
+      		"frames" : 18,
+      		"animationCycle" : 1.5,
+      		"spaceScan" : 0.1,
+     			 "anchors" : [ "bottom" ],
+	  		"direction" : "right"
+    		}
+  	],
+"animation" : "avianhologirl.animation",
+  "animationParts" : {
+    "bg" : "avianhologirlwhite.png",
+    "fg" : "avianhologirllit.png"
+  },
+  "animationPosition" : [-10, 0],
+
+"scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ],
+  "interactive" : false
+}

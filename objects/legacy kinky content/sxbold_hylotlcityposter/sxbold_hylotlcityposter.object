@@ -1,0 +1,33 @@
+{
+  "objectName" : "sxbold_hylotlcityposter",
+  "colonyTags" : ["hylotl","hylotloceancity","pretty"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 70,
+
+  "shortdescription" : "Hylotl City Poster",
+  "description" : "A framed poster of a city.",
+  "race" : "hylotl",
+
+  "apexDescription" : "It's a very nice photo of a city.",
+  "avianDescription" : "A picture of an unfamiliar city.",
+  "floranDescription" : "It'sss a picture.",
+  "glitchDescription" : "Curious. What city is depicted in this photograph?",
+  "humanDescription" : "It's a really lovely photo. Reminds me a little of home.",
+  "hylotlDescription" : "A beautiful photograph of a modern city. I could cry.",
+  "novakidDescription" : "A big unfamiliar cityscape.",
+
+  "inventoryIcon" : "hylotlcitypostericon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlcityposter.png:<color>",
+      "imagePosition" : [-16, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

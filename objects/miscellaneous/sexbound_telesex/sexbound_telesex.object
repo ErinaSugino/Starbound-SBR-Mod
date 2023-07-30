@@ -1,0 +1,78 @@
+{
+  "objectName" : "sexbound_telesex",
+  "colonyTags" : ["outpost"],
+  "objectType" : "teleporter",
+  "rarity" : "Legendary",
+
+  "description" : "This teleporter makes a great demonstration and a handy return point!",
+  "shortdescription" : "Lustia Teleporter",
+  "printable" : false,
+
+  "apexDescription" : "If I mark this teleporter I can return here from a different teleporter at any point.",
+  "avianDescription" : "A functioning teleporter! If I mark it I can return here from a different teleporter at any point.",
+  "floranDescription" : "If Floran marksss this teleporter Floran can return here from other teleport machines!",
+  "glitchDescription" : "Eager. By marking this teleporter I should be able to return to this point from any other teleporter!",
+  "humanDescription" : "It's a teleporter! If I mark it I should be able to return here from a different teleporter whenever I like.",
+  "hylotlDescription" : "A teleporter. If I mark it I should be able to return to this point from a different teleporter.",
+  "novakidDescription" : "By markin' this teleporter I can teleport straight back here if n' when I find another teleporter.",
+
+  "category" : "teleporter",
+  "lightColor" : [99, 132, 153],
+  "lightPosition" : [0, 5],
+
+  "interactAction" : "OpenTeleportDialog",
+  "interactData" : "/interface/warping/sexbound_telesex.config",
+
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_telesex.png:<color>", "fullbright" : true }, { "image" : "sexbound_telesexlit.png:<color>" } ],
+      "direction" : "right",
+
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaces" : [
+        [-3, 7], [-2, 7], [-1, 7], [0, 7], [1, 7],
+        [-3, 6], [-2, 6], [-1, 6], [0, 6], [1, 6],
+        [-2, 5], [-1, 5], [0, 5], [1, 5],
+        [-2, 4], [-1, 4], [0, 4], [1, 4],
+        [-2, 3], [-1, 3], [0, 3], [1, 3],
+        [-2, 2], [-1, 2], [0, 2], [1, 2],
+        [-2, 1], [-1, 1], [0, 1], [1, 1],
+        [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0]
+      ],
+      "anchors" : [ "bottom" ],
+      "collision" : "solid",
+      "collisionSpaces" : [ [-3, 0], [-2, 0], [-1, 0], [0, 0] ]
+    }
+  ],
+  
+  "teleporterFootPosition" : [-1, 1],
+
+  "scripts" : [ "sexbound_telesex.lua" ],
+  "scriptDelta" : 60,
+
+  "spawnInterval" : [40, 180],
+  "spawnOffset" : [-1, 3.5],
+
+  "npctypes" : [
+    {
+      "type" : "slut2gohookermale",
+      "species" : [ "human", "apex", "hylotl", "floran", "avian", "glitch", "novakid" ]
+    },
+    {
+      "type" : "slut2gohookermaleplus",
+      "species" : [ "human", "apex", "hylotl", "floran", "avian", "glitch", "novakid" ]
+    },
+    {
+      "type" : "slut2gohookerfemale",
+      "species" : [ "human", "apex", "hylotl", "floran", "avian", "glitch", "novakid" ]
+    },
+    {
+      "type" : "slut2gohookerfemaleplus",
+      "species" : [ "human", "apex", "hylotl", "floran", "avian", "glitch", "novakid" ]
+    }
+  ]
+}

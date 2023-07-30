@@ -1,0 +1,58 @@
+{
+  "objectName" : "sexbound_castingcouch",
+  "colonyTags" : ["misc"],
+  "rarity" : "Legendary",
+  "description" : "A fluffy three-seater couch.",
+  "shortdescription" : "Casting Couch",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 25000,
+
+  "apexDescription" : "This looks super comfortable.",
+  "avianDescription" : "I could sit content here for all eternity.",
+  "floranDescription" : "Sssoft.",
+  "glitchDescription" : "Amazed. Such softness.",
+  "humanDescription" : "A couch I can stretch out on and sink into.",
+  "hylotlDescription" : "Such comfort. I am able to achieve instant calm.",
+  "novakidDescription" : "There's such a thing as too soft.",
+
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+
+  "inventoryIcon" : "sexbound_castingcouchicon.png",
+  "orientations" : [
+    {
+      "image" : "/objects/sextoylegendary/sexbound_castingcouch/sexbound_castingcouch.png",
+      "sitCoverImage" : "/objects/sextoylegendary/sexbound_castingcouch/sexbound_castingcouchcover.png",
+      "imagePosition" : [-28, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "sitPositions" : [
+        // Positions from front to back.
+		[-11, 20], // Right
+        [2, 20], // Middle
+        [15, 20] // Left
+      ],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "/objects/sextoylegendary/sexbound_castingcouch/sexbound_castingcouch.png",
+      "sitCoverImage" : "/objects/sextoylegendary/sexbound_castingcouch/sexbound_castingcouchcover.png",
+      "imagePosition" : [-28, 0],
+      "direction" : "right",
+
+      "sitPositions" : [
+        // Positions from front to back.
+        [-14, 20], // Left
+        [-1, 20], // Middle
+		[12, 20] // Right
+      ],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

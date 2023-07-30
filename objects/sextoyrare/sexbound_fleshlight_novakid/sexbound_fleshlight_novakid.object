@@ -1,0 +1,154 @@
+{
+  "objectName" : "sexbound_fleshlight_novakid",
+  "shortdescription" : "Novakid Fleshlight",
+  "description" : "A novakid fleshlight. It feels like a water snake wiggler.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Rare",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 5000,
+  "level" : 0,
+  
+  "lightColor" : [162, 219, 219],
+  "lightPosition" : [0, -1],
+
+  "flickerPeriod" : 1.5,
+  "flickerMinIntensity" : 0.95,
+  "flickerMaxIntensity" : 1.1,
+  "flickerPeriodVariance" : 0,
+  "flickerIntensityVariance" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "Is that what a novakid's pussy actually looks like?",
+  "avianDescription"   : "Is that what a novakid's pussy actually looks like?",
+  "floranDescription"  : "Floran attracted, glow like firebugsssss!",
+  "glitchDescription"  : "Curious. Is that what a novakid's pussy actually looks like?",
+  "humanDescription"   : "Is that what a novakid's pussy actually looks like?",
+  "hylotlDescription"  : "Is that what a novakid's pussy actually looks like?",
+  "novakidDescription" : "Wow! The sex industry sure gives us alot more appeal than what we're equipped with!",
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "fleshlighticon.png",
+  "orientations" : [
+    {
+      "dualImage" : "fleshlight.png:idle.1",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "dualImage" : "fleshlight.png:idle.1?flipx",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoyrare/sexbound_fleshlight_novakid/fleshlight.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Fleshlight",
+    
+    "position" : {
+      "sex" : [ "standing_sextoy_actor2" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }
+            }
+          }
+        },
+      
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+            
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

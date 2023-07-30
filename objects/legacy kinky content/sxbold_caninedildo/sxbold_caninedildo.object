@@ -1,0 +1,35 @@
+{
+  "objectName" : "sxbold_caninedildo",
+  "rarity" : "Rare",
+  "category" : "decorative",
+  "price" : 500,
+
+  "description" : "A strangely shaped dildo with a large knot near the base.",
+  "shortdescription" : "Dog Dick",
+  "race" : "generic",
+
+  "apexDescription" : "...Intriguing.",
+  "avianDescription" : "Looks like you could easily get stuck on that.",
+  "floranDescription" : "Thiss one hasss some meat on it.",
+  "glitchDescription" : "Observation. All of those look incompatible with my pleasure orifices.",
+  "humanDescription" : "Man's best friend! Makes you wish they weren't extinct.",
+  "hylotlDescription" : "I've never seen this kind of sea cucumber.",
+
+  "inventoryIcon" : "caninedildoicon.png",
+  
+  "orientations" : [
+    {
+      "image" : "caninedildo.png:<color>",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ],
+  
+  "objectType" : "loungeable",
+  "sitPosition" : [4, 22]
+}

@@ -1,0 +1,290 @@
+{
+  "sexboxLoot" : [
+    [0, {
+      "pool" : [
+        {"weight" : 0.20, "pool" : "sexboxRare"},
+		{"weight" : 0.05, "item" : "commonrewardticket"},
+        {"weight" : 0.375, "pool" : "dildoPool"},
+        {"weight" : 0.375, "pool" : "fleshlightPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "sexboxRare" : [
+    [0, {
+      "pool" : [
+        {"weight" : 0.20, "pool" : "sexboxLegendary"},
+		{"weight" : 0.05, "item" : "rarerewardticket"},
+        {"weight" : 0.375, "pool" : "specialDildoPool"},
+		{"weight" : 0.375, "pool" : "specialFleshlightPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "sexboxLegendary" : [
+    [0, {
+      "pool" : [
+		{"weight" : 0.05, "item" : "legendaryrewardticket"},
+		{"weight" : 0.1583, "pool" : "tentacleplantPool"},
+		{"weight" : 0.1583, "pool" : "minitoysPool"},
+		{"weight" : 0.1583, "pool" : "milkingmachinePool"},
+		{"weight" : 0.1583, "pool" : "gloryholePool"},
+		{"weight" : 0.1583, "pool" : "castingcouchPool"},
+		{"weight" : 0.1583, "pool" : "bodypillowPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "sexboxPlusLoot" : [
+    [0, {
+      "pool" : [
+        {"weight" : 0.40, "pool" : "sexboxPlusRare"},
+		{"weight" : 0.10, "item" : "commonrewardticket"},
+        {"weight" : 0.25, "pool" : "dildoPool"},
+        {"weight" : 0.25, "pool" : "fleshlightPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "sexboxPlusRare" : [
+    [0, {
+      "pool" : [
+        {"weight" : 0.40, "pool" : "sexboxPlusLegendary"},
+		{"weight" : 0.10, "item" : "rarerewardticket"},
+        {"weight" : 0.25, "pool" : "specialDildoPool"},
+		{"weight" : 0.25, "pool" : "specialFleshlightPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "sexboxPlusLegendary" : [
+    [0, {
+      "pool" : [
+		{"weight" : 0.10, "item" : "legendaryrewardticket"},
+		{"weight" : 0.15, "pool" : "tentacleplantPool"},
+		{"weight" : 0.15, "pool" : "minitoysPool"},
+		{"weight" : 0.15, "pool" : "milkingmachinePool"},
+		{"weight" : 0.15, "pool" : "gloryholePool"},
+		{"weight" : 0.15, "pool" : "castingcouchPool"},
+		{"weight" : 0.15, "pool" : "bodypillowPool"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  
+  
+  
+  
+  "ancientCache" : [
+    [0, {
+      "pool" : [
+		{"weight" : 0.95, "item" : "sexbound_aphroditesgun"},
+		{"weight" : 0.05, "item" : "sexbound_galgun"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "jessiePool" : [
+    [0, {
+	  "fill" : [ 
+	    { "item" : "sexbound_jessiesears" },
+		{ "item" : "sexbound_jessieschest" },
+		{ "item" : "sexbound_jessieslegs" }
+	  ],
+      "pool" : [
+		{"weight" : 1.0, "item" : "sexbound_jessiestail"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "hookerPool"  : [
+    [0, {
+      "pool" : [
+		{"weight" : 0.2, "pool" : "sexboxLoot"},
+		{"weight" : 0.8, "pool" : "money"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  
+  
+  
+  
+  "dildoPool" : [
+    [0, {
+      "pool" : [
+        {"weight" : 1.00, "item" : "sexbound_dildo_v2"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "fleshlightPool" : [
+    [0, {
+      "pool" : [
+        {"weight" : 1.00, "item" : "sexbound_fleshlight_v2"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+
+
+
+  
+  "specialDildoPool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_dildo_canine"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_equine"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_hemi"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_magma"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_ovipositor"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_seadragon"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_tentacle"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_rainbow"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_human"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_apex"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_avian"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_novakid"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_floran"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_hylotl"},
+		{"weight" : 1.00, "item" : "sexbound_dildo_glitch"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "specialFleshlightPool" : [
+    [0, {
+      "pool" : [
+        {"weight" : 1.00, "item" : "sexbound_fleshlight_sugar"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_janine"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_rainbow"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_duke"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_david"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_snowball"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_natascha"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_nix"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_horned"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_human"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_apex"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_avian"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_novakid"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_floran"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_hylotl"},
+		{"weight" : 1.00, "item" : "sexbound_fleshlight_glitch"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+
+
+
+  
+  "tentacleplantPool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_tentacleplant_v2"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "minitoysPool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_floranpot"},
+		{"weight" : 1.00, "item" : "sexbound_aviancage"},
+		{"weight" : 1.00, "item" : "sexbound_hylotlaquarium"},
+		{"weight" : 1.00, "item" : "sexbound_novakidlamp"},
+		{"weight" : 1.00, "item" : "sexbound_feneroxcage"},
+		{"weight" : 1.00, "item" : "sexbound_glitchcomputer"},
+		{"weight" : 1.00, "item" : "sexbound_apexcage"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "bodypillowPool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fapex"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_favian"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fexotic"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_ffloran"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fglitch"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fhuman"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fhylotl"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_fnovakid"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mapex"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mavian"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mexotic"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mfloran"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mglitch"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mhuman"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mhylotl"},
+		{"weight" : 1.00, "item" : "sexbound_bodypillow_mnovakid"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "milkingmachinePool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_milkingmachine"},
+		{"weight" : 1.00, "item" : "sexbound_milkingmachine_mk2"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "gloryholePool" : [
+    [0, {
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_gloryhole"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  "castingcouchPool" : [
+    [0, {
+	  "fill" : [ { "item" : "sexboundloungeableaddon" } ],
+      "pool" : [
+		{"weight" : 1.00, "item" : "sexbound_castingcouch"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ]  
+}

@@ -1,0 +1,86 @@
+{
+  "objectName" : "sexbound_sexpostbed",
+  "colonyTags" : ["generic"],
+  "rarity" : "Common",
+  "description" : "A sex bed. For the sex of your life.",
+  "shortdescription" : "Sex Bed",
+  "race" : "human",
+  "category" : "furniture",
+  "price" : 95,
+
+  "interactive" : true,
+  
+  "mouthPosition" : [0, 4],
+  
+  "apexDescription" : "The most comfortable bed in the universe.",
+  "avianDescription" : "Once you lie here, you won't want to get up.",
+  "floranDescription" : "Floran sssink into bed, forget about ssstabbing for just a moment.",
+  "glitchDescription" : "Blissful. Truly, there is no better bed than this.",
+  "humanDescription" : "The most fun I've had in bed since I ate cheese before going to sleep.",
+  "hylotlDescription" : "I am speechless with wonder at how comfortable this bed is.",
+  "novakidDescription" : "This has to be the best darn bed I've slept in.",
+
+  "inventoryIcon" : "sexpostbedicon.png",
+  "orientations" : [{
+      "dualImage" : "sexpostbed.png:<color>?flipx",
+      
+      "imagePosition" : [-24, 0],
+      "animationPosition" : [0, 0],
+      
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaces" : [[-3, 0], [-3, 1], [-2, 0], [-2, 1], [-1, 1], [0, 1], [1,0], [1,1], [2,0], [2,1]],
+      
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["/scripts/sexbound/twoactors.lua"],
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Lustbound",
+            
+    "nodePositions" : [[-1, 0], [0, 0]],
+    
+    "sitPositions"  : [[8, 20], [0, 20]],
+    
+    "position" : {
+      "sex" : [
+        "cowgirl_in_bed",
+        "standing_in_bed",
+        "missionary_in_bed",
+        "doggy_in_bed",
+        "butterfly_in_bed",
+        "fellatio_in_bed"
+      ]
+    }
+  },
+    
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [0, 1.5],
+            "zLevel" : -1,
+            "image" : "/objects/miscellaneous/sexbound_sexpostbed/sexpostbed.png:default?flipx"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.25, 0.375]
+          }
+        }
+      }
+    }
+  }
+}
+
