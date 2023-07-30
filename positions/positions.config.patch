@@ -4,6 +4,12 @@
     "path" : "/cowgirl_tentacleplant",
     "value" : {
       "configFile" : "/positions/cowgirl_tentacleplant.config"
+  },
+  {
+    "op" : "add",
+    "path" : "/butterfly_tentacleplant",
+    "value" : {
+      "configFile" : "/positions/butterfly_tentacleplant.config"
     }
   },
   {
@@ -46,6 +52,12 @@
     "path" : "/cowgirl_sextoy_actor2",
     "value" : {
       "configFile" : "/positions/cowgirl_sextoy_actor2.config"
+  },
+  {
+    "op": "add",
+    "path" : "/fellatio_tentacleplant",
+    "value" : {
+      "configFile" : "/positions/fellatio_tentacleplant.config"
     }
   }
 ]
