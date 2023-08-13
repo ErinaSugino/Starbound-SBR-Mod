@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_glitchpole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A hot Glitch Female showing her gears.",
+  "shortdescription" : "Female Glitch Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "A hot Glitch Female showing her gears.",
+  "avianDescription" : "A hot Glitch Female showing her gears.",
+  "floranDescription" : "A hot Glitch Female showing her gears.",
+  "glitchDescription" : "Horny. A hot Glitch Female showing her gears.",
+  "humanDescription" : "A hot Glitch Female showing her gears.",
+  "hylotlDescription" : "A hot Glitch Female showing her gears.",
+  "novakidDescription" : "A hot Glitch Female showing her gears.",
+
+  "inventoryIcon" : "glitchpoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "glitchpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 60,
+      "animationCycle" : 5.5,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "glitchpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 60,
+      "animationCycle" : 5.5,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_birthingpill",
+  "defaultDuration" : 5,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_birthingpill.lua" ]
+}

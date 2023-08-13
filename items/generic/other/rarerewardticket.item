@@ -1,0 +1,9 @@
+{
+  "itemName" : "rarerewardticket",
+  "price" : 10000,
+  "rarity" : "Rare",
+  "category" : "currency",
+  "inventoryIcon" : "rarerewardticket.png",
+  "description" : "A rare reward ticket used to buy a special toy of your choice.",
+  "shortdescription" : "Rare Toy Ticket"
+}

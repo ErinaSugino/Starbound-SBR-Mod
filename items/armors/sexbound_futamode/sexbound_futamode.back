@@ -1,0 +1,22 @@
+{
+  "itemName" : "sexbound_futamode",
+  "price" : 200,
+  "inventoryIcon" : "sexbound_futamode.png",
+  "maxStack" : 1,
+  "rarity" : "Common",
+  "category" : "enviroProtectionPack",
+  "description" : "Apply on back vanity slot. Makes females into futanaris, and males into cuntboys.",
+  "shortdescription" : "Hormone Patch",
+  "level" : 1,
+
+  "maleFrames" : "back.png",
+  "femaleFrames" : "back.png",
+
+  "itemTags" : [ "sex" ],
+
+  "sexboundConfig" : {
+    "addStatus" : [ "equipped_futamode" ],
+    "image"     : "/artwork/humanoid/<role>/default/sexbound_contraceptivepatch.png",
+    "mask"      : "/artwork/humanoid/<role>/default/sexbound_contraceptivepatch.png"
+  }
+}

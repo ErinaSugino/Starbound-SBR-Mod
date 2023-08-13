@@ -1,0 +1,62 @@
+{
+  "objectName" : "sexbound_reassembler",
+  
+  "colonyTags" : ["crafting"],
+
+  "rarity" : "Legendary",
+  "printable" : false,
+  "category" : "crafting",
+  "price" : 6900,
+  "description" : "A machine that can transform some things into other things.",
+  "shortdescription" : "Reassembler",
+  "race" : "generic",
+
+  "objectType" : "container",
+  
+  "openSounds" : [ "/sfx/objects/metalbox_open.ogg" ],
+  "closeSounds" : [ "/sfx/objects/metalbox_close.ogg" ],
+  "slotCount" : 1,
+  "uiConfig" : "/interface/sexbound_reassembler/sexbound_reassemblerui.config",
+  "frameCooldown" : 5,
+  "autoCloseCooldown" : 3600,  
+
+  "apexDescription"    : "A machine that can transform some things into other things.",
+  "avianDescription"   : "A machine that can transform some things into other things.",
+  "floranDescription"  : "A machine that can transform some things into other things.",
+  "glitchDescription"  : "A machine that can transform some things into other things.",
+  "humanDescription"   : "A machine that can transform some things into other things.",
+  "hylotlDescription"  : "A machine that can transform some things into other things.",
+  "novakidDescription" : "A machine that can transform some things into other things.",
+
+  "inventoryIcon" : "sexbound_reassemblericon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sexbound_reassembler.png:<color>.1",
+
+      "imagePosition" : [-32, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "animation" : "sexbound_reassembler.animation",
+  
+  "animationParts" : {
+    "bow"   		: "parts/aphroditesbow.png",
+	"keystoneE"   	: "parts/keystoneE.png",
+	"keystoneF"   	: "parts/keystoneF.png",
+	"keystoneH"   	: "parts/keystoneH.png",
+	"keystoneI"   	: "parts/keystoneI.png",
+	"keystoneS"		: "parts/keystoneS.png",
+	"dildo"			: "parts/dildo.png",
+	"fleshlight"	: "parts/fleshlight.png",
+	"tentacleplant"	: "parts/tentacleplant.png",
+    "empty" 		: "parts/empty.png",
+    "string" 		: "parts/aphroditesbowstring.png"
+  },
+  
+  "scripts" : ["sexbound_reassembler.lua"]
+}

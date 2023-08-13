@@ -1,0 +1,40 @@
+{
+  "id" : "objectmerchant1",
+  "title" : "^green;Broken Dragon",
+  "text" : "Hey there! I ran into a pickle, and now I owe someone a ^orange;really rare toy!^reset; I just can't finish setting up shop today or they'll eat me alive! Can you get me ^orange;tons of sexboxes^reset; for them, please? ^green;(Deliver 10 Sexboxes.)^reset;",
+  "completionText" : "Whew! Thank you, now I won't have to fear meeting them in person.",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Konani, object merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "sexbound_sexbox",
+        "count" : 10,
+        "consume" : true
+      }
+    ]
+  }
+}

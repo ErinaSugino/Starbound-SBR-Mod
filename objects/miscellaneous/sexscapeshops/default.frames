@@ -1,0 +1,35 @@
+{
+
+  "frameGrid" : {
+    "size" : [56, 40],
+    "dimensions" : [3, 1],
+    "names" : [
+      [ "openeye", "mideye", "closedeye"]
+    ]
+  },
+  "aliases" : {
+    "default.default" : "openeye",
+	"default.0" : "openeye",
+	"default.1" : "openeye",
+	"default.2" : "openeye",
+	"default.3" : "openeye",
+	"default.4" : "openeye",
+	"default.5" : "openeye",
+	"default.6" : "openeye",
+	"default.7" : "openeye",
+	"default.8" : "openeye",
+	"default.9" : "openeye",
+	"default.10" : "openeye",
+	"default.11" : "openeye",
+	"default.12" : "openeye",
+	"default.13" : "openeye",
+	"default.14" : "openeye",
+	"default.15" : "openeye",
+	"default.16" : "openeye",
+	"default.17" : "mideye",
+	"default.18" : "closedeye",
+	"default.19" : "mideye"
+  }
+
+}
+

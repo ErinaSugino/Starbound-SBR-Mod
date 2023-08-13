@@ -1,0 +1,41 @@
+{
+  "id" : "miscmerchant2",
+  "prerequisites" : [ "miscmerchant1" ],
+  "title" : "^green;Real Adult Gaming",
+  "text" : "Having visited the Hylotl citadels once, I got especially enticed by the arcade machines. I want to try to make my own game, so could you bring me a ^orange;Starbound Arcade Machine^reset;, please? ^green;(Deliver 1 Starbound Arcade Machine.)^reset;",
+  "completionText" : "Alright! I'll finish this in no time now!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kailia, misc. merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "arcadestarbound",
+        "count" : 1,
+        "consume" : true
+      }
+    ]
+  }
+}

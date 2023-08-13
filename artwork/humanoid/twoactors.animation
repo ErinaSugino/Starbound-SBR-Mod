@@ -9469,6 +9469,11 @@
 						"cycle": 1,
 						"mode": "loop"
 					},
+					"idle_toy": {
+						"frames": 1,
+						"cycle": 1,
+						"mode":" loop"
+					},
 					"position1": {
 						"frames": 5,
 						"cycle": 1,
@@ -9759,6 +9764,11 @@
 						"mode": "loop"
 					},
 					"idle": {
+						"frames": 1,
+						"cycle": 1,
+						"mode": "loop"
+					},
+					"idle_toy": {
 						"frames": 1,
 						"cycle": 1,
 						"mode": "loop"

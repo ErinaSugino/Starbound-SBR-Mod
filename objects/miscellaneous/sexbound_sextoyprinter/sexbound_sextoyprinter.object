@@ -1,0 +1,65 @@
+{
+  "objectName" : "sexbound_sextoyprinter",
+  "colonyTags" : ["crafting"],
+  "rarity" : "Uncommon",
+  "interactAction" : "OpenCraftingInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/sexbound_sextoyprinter.config",
+	"filter" : [ "sextoyspecial" ]
+  },
+  
+  "price" : 1000,
+  "printable" : false,
+  "lightColor" : [23, 33, 38],
+  
+  "flickerPeriod" : 0.3,
+  "flickerMinIntensity" : 0.95,
+  "flickerMaxIntensity" : 1,
+  "flickerPeriodVariance" : 0.1,
+  "flickerIntensityVariance" : 0.0,
+
+  "description" : "This machine can reorganize reward tickets into almost any sex toy.",
+  "shortdescription" : "^pink;Sex Toy ^green;Printer",
+  "race" : "generic",
+  "category" : "crafting",
+
+  "apexDescription" : "A sex toy printer... So few people have access to these.",
+  "avianDescription" : "Sex toy printing... The technology that changed the universe.",
+  "floranDescription" : "Pretty ticketssss print pretty thingss for Floran.",
+  "glitchDescription" : "In love. Such technology is art.",
+  "humanDescription" : "Sex toy printing... Near god-like power.",
+  "hylotlDescription" : "Sex toy printing, the power of the tickets at my fingertips... The 'god particle'.",
+  "novakidDescription" : "Sex toy printing is pretty fancy.",
+
+  "inventoryIcon" : "sexbound_sextoyprintericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_sextoyprinter.png:<color>.<frame>?flipx" }, { "image" : "sexbound_sextoyprinterlitleft.png:<color>.<frame>", "fullbright" : true } ],
+
+      "imagePosition" : [-8, 0],
+      "frames" : 4,
+      "animationCycle" : 0.4,
+      
+      "lightPosition" : [0,1],
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_sextoyprinter.png:<color>.<frame>" }, { "image" : "sexbound_sextoyprinterlit.png:<color>.<frame>", "fullbright" : true } ],
+
+      "imagePosition" : [-8, 0],
+      "frames" : 4,
+      "animationCycle" : 0.4,
+      
+      "lightPosition" : [0,1],
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

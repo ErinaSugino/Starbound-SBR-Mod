@@ -1,0 +1,27 @@
+[
+  {
+    "op" : "replace",
+    "path" : "/sitStatusEffects",
+    "value" : ["sexbound_sex"]
+  },
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig/idlePosition",
+    "value" : "idle_toy"
+  },
+  {
+    "op" : "add",
+    "path" : "/animationCustom/animatedParts/parts/actor1/partStates/actors/position4-postclimax",
+    "value" : {"properties": {"offset": [-3.375,0.125]}}
+  },
+  {
+    "op" : "add",
+    "path" : "/animationCustom/animatedParts/parts/actor2/partStates/actors/position4-postclimax",
+    "value" : {"properties": {"offset": [-1.875,1.5]}}
+  },
+  {
+    "op" : "add",
+    "path" : "/animationCustom/animatedParts/parts/actor2-groin/partStates/actors/position4-postclimax",
+    "value" : {"frameProperties": {"zLevel": [42,42,42,42,42,42,42,42,42,42,42,42,42]}}
+  }
+]

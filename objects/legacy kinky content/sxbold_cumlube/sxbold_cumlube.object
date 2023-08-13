@@ -1,0 +1,31 @@
+{
+  "objectName" : "sxbold_cumlube",
+  "rarity" : "Rare",
+  "category" : "decorative",
+  "price" : 500,
+
+  "description" : "Allegedly harvested from the most fertile young dragons.",
+  "shortdescription" : "Personal Lubricant",
+  "race" : "generic",
+
+  "apexDescription" : "New and improved formula!",
+  "avianDescription" : "Slimy and slippery, just like a Hylotl.",
+  "floranDescription" : "Tasssty beverage, goes well with meat.",
+  "glitchDescription" : "Confused. I didn't know organic life forms needed to lubricate their joints too.",
+  "humanDescription" : "Looks like semen!",
+  "hylotlDescription" : "It's water based, so it wouldn't under the sea.",
+
+  "inventoryIcon" : "lubeicon.png",
+  "orientations" : [
+    {
+      "image" : "cumlube.png:<color>",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

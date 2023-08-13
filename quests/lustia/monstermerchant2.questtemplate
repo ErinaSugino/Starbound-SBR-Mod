@@ -1,0 +1,41 @@
+{
+  "id" : "monstermerchant2",
+  "prerequisites" : [ "monstermerchant1" ],
+  "title" : "^green;Even More Friends!",
+  "text" : "I have had alot of clients come in recently, and my supply of pets has been, well, quite low. I'll need to capture some more monsters to tame, yet lack the ressources. Fetch me some ^orange;Capture Pods^reset;, will you? ^green;(Deliver 3 Capture Pods.)^reset;",
+  "completionText" : "I'll be going on a hunt soon, I'll reserve you the best one!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kalini, monster merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "capturepod",
+        "count" : 3,
+        "consume" : true
+      }
+    ]
+  }
+}

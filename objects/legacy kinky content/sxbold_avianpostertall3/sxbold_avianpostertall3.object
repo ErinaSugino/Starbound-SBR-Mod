@@ -1,0 +1,33 @@
+{
+  "objectName" : "sxbold_avianpostertall3",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Common",
+  "description" : "An A.V.I.A.N teasing you",
+  "shortdescription" : "Tall A.V.I.A.N. Spread",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 100,
+  "printable" : true,
+
+  "apexDescription" : "Nice Tits",
+  "avianDescription" : "I need some alone time with this poster",
+  "floranDescription" : "Avian without peel! Tasty!",
+  "glitchDescription" : "Confused. ...and Horny",
+  "humanDescription" : "Wow..Bird pussy",
+  "hylotlDescription" : "My favourite part of this is her tits",
+  "novakidDescription" : "We had a few of those bird sluts back on the station.",
+
+  "inventoryIcon" : "avianpostertallicon3.png",
+  "orientations" : [
+    {
+      "image" : "avianpostertall3.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "op": "add",
+    "path": "/commonToys",
+    "value": {
+      "relation": "BinaryPool",
+      "types" : ["Item", "Item"],
+      "poolFile": "/quests/generated/pools/commonsextoy.config"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/rareToys",
+    "value": {
+      "relation": "BinaryPool",
+      "types" : ["Item", "Item"],
+      "poolFile": "/quests/generated/pools/raresextoy.config"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/legendaryToys",
+    "value": {
+      "relation": "BinaryPool",
+      "types" : ["Item", "Item"],
+      "poolFile": "/quests/generated/pools/legendarysextoy.config"
+    }
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "objectName" : "sxbold_hologirl",
+  "colonyTags" : ["Prism", "Human"],
+  "rarity" : "Common",
+  "category" : "light",
+  "lightColor" : [255, 255, 255],  
+  "price" : 250,
+  "printable" : false,
+  "description" : "A holographic dancer",
+  "shortdescription" : "Holographic Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Big Ape used to have these things. Disgusting.",
+  "avianDescription" : "I wonder why humans are so fond of these?",
+  "floranDescription" : "Floran confused as to why humans keep ghostsss.",
+  "glitchDescription" : "Conflicted. This dancer is not real, yet...",
+  "humanDescription" : "Aww yeah, strippers! Now it's a party!",
+  "hylotlDescription" : "I remember these being very popular in my culture.",
+  "novakidDescription" : "What a dame! Shame she ain't real.",
+  
+  "inventoryIcon" : "hologirl_icon.png",
+  "orientations" : [
+    {
+      "image" : "hologirl.png:<color>.<frame>",
+	  "flipImages" : false,
+      "imagePosition" : [-10, 0],
+      "frames" : 18,
+      "animationCycle" : 1.5,
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    },
+    {
+      "image" : "hologirl.png:<color>.<frame>",
+	  "flipImages" : true,
+      "imagePosition" : [-10, 0],
+      "frames" : 18,
+      "animationCycle" : 1.5,
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    }
+  ]
+}

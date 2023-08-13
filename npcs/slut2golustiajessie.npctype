@@ -1,0 +1,17 @@
+{
+  "type" : "slut2golustiajessie",
+  "baseType" : "slut2gojessie",
+
+  "scriptConfig" : {
+    "behavior" : "tutorial",
+	
+    "dialog" : {
+      "greeting" : "/dialog/lustiahint1converse.config:converse",
+      "converse" : "/dialog/lustiahint1converse.config:converse"
+    },
+	
+	"questGenerator" : {
+      "enableParticipation" : false
+    }
+  }
+}

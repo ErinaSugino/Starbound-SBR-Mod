@@ -1,0 +1,98 @@
+{
+  "verticalOrigin": -40,
+  "layers": [
+	{
+      "kind" : "cityscape0",
+      "offset" : [0, 615],
+      "parallax" : 8,
+      "directives" : "?hueshift=-200?brightness=30?saturation=25",
+      "fadePercent" : 0.15
+    },
+	{
+      "kind" : "cityscape6",
+      "offset" : [0, 445],
+      "parallax" : 6,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape5",
+      "offset" : [0, 550],
+      "parallax" : 5,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape4",
+      "offset" : [0, 700],
+      "parallax" : 4,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+	  "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape4lit",
+      "offset" : [0, 700],
+      "parallax" : 4,
+      "nohueshift": true,
+      "unlit": true,
+      "timeOfDayCorrelation": "nightVisible",
+	  "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape1",
+      "offset" : [0, 1000],
+      "parallax" : 2.8,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape1lit",
+      "offset" : [0, 1000],
+      "parallax" : 2.8,
+      "nohueshift": true,
+      "unlit": true,
+      "timeOfDayCorrelation": "nightVisible",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape2",
+      "offset" : [150, 950],
+      "parallax" : 3,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape2lit",
+      "offset" : [150, 950],
+      "parallax" : 3,
+      "nohueshift": true,
+      "unlit": true,
+      "timeOfDayCorrelation": "nightVisible",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape3",
+      "offset" : [300, 900],
+      "parallax" : 3.25,
+      "directives" : "?hueshift=-200?brightness=30?saturation=20",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    },
+    {
+      "kind" : "cityscape3lit",
+      "offset" : [300, 900],
+      "parallax" : 3.25,
+      "nohueshift": true,
+      "unlit": true,
+      "timeOfDayCorrelation": "nightVisible",
+      "noRandomOffset": true,
+      "fadePercent" : 0.15
+    }
+  ]
+}

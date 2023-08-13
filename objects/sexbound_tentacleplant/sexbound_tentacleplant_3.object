@@ -1,0 +1,277 @@
+{
+  "objectName" : "sexbound_tentacleplant_3",
+  "shortdescription" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "description" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "colonyTags" : ["sexbound", "sex", "jungle", "odd"],
+  "category" : "other",
+  "rarity" : "Legendary",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 25000,
+  "level" : 108,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "avianDescription"   : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "floranDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "glitchDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "humanDescription"   : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "hylotlDescription"  : "OBSOLETE OBJECT, PLEASE DESTROY",
+  "novakidDescription" : "OBSOLETE OBJECT, PLEASE DESTROY",
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "tentacleplanticon.png?hueshift=108",
+  "orientations" : [
+    {
+      "dualImage" : "tentacleplant.png:idle.1?hueshift=108",
+
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["/objects/sexbound_tentacleplant/tentacleplant.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Tentacle Plant",
+    
+    "position" : {
+      "sex" : [ "butterfly", "cowgirl_tentacleplant", "fellatio" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 2
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [2.750, 1.250]
+                }
+              },
+			  
+			  "position5-climax" : {
+                "properties" : {
+                  "offset" : [3.125, 1.250]
+                }
+              },
+			  
+			  "position6-climax" : {
+                "properties" : {
+                  "offset" : [3.50, 1.250]
+                }
+              }
+            }
+          }
+        },
+      
+	    "actor1" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+              
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+            
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
+            
+              "position5" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position5-climax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position5-reset" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6-climax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
+              
+              "position6-reset" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              }
+            }
+          }
+        },
+	  
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+              
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+            
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
+            
+              "position5" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position5-climax" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position5-reset" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                }
+              },
+              
+              "position6" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              },
+              
+              "position6-climax" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              },
+              
+              "position6-reset" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              }
+            }
+          }
+        },
+		"actor1-arm-front": {
+		  "properties": {
+			"zLevel": 43
+			}
+		},
+		"actor2-groin" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42]
+                }
+              },
+              
+              "position4-climax" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+            
+              "position4-reset" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+              
+              "position5" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42]
+                }
+              },
+              
+              "position5-climax" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+            
+              "position5-reset" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

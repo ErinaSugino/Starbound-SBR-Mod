@@ -1,0 +1,12 @@
+{
+  "type" : "slut2gohookerfemaleplus",
+  "baseType" : "slut2gohookerplus",
+  
+  "npcname" : "Female Hooker Plus",
+  
+  "persistent" : true,
+  
+  "identity" : {
+    "gender"    : "female"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_avianchainedslave",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A cute little avian all chained up.",
+  "shortdescription" : "Avian Chained Slave",
+  "race" : "generic",
+
+  "apexDescription" : "She will make a fun little toy!",
+  "avianDescription" : "She will make a fun little toy!",
+  "floranDescription" : "She will make a fun little toy!",
+  "glitchDescription" : "Horny. She will make a fun little toy!",
+  "humanDescription" : "She will make a fun little toy!",
+  "hylotlDescription" : "She will make a fun little toy!",
+  "novakidDescription" : "She will make a fun little toy!",
+
+  "inventoryIcon" : "avianchainedslaveicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "avianchainedslave.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -13],
+      "frames" : 8,
+      "animationCycle" : 1.8,
+      "direction" : "right", 
+
+      "spaces" : [ [0,0] ],
+      "anchors" : [ "background" ]
+
+    },
+	{
+      "imageLayers" : [ { "image" : "avianchainedslave.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -13],
+      "frames" : 8,
+      "animationCycle" : 1.8,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaces" : [ [0,0] ],
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

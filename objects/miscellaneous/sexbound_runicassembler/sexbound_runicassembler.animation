@@ -1,0 +1,243 @@
+{
+  "globalTagDefaults" : {
+    "part-bow"    : "parts/empty.png",
+    "part-string" : "parts/empty.png"
+  },
+
+  "animatedParts" : {
+    "stateTypes" : {
+      "main" : {
+        "default" : "idling",
+        "states" : {
+          "idling" : {
+            "frames" : 1,
+            "cycle"  : 1,
+            "mode"   : "loop"
+          },
+          
+          "crafting" : {
+            "frames" : 2,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "craftingLoop",
+            "frameProperties" : {
+              "immediateSound" : ["/sfx/objects/crystaltrap_on2.ogg"]
+            }
+          },
+          
+          "craftingLoop" : {
+            "frames" : 75,
+            "cycle"  : 1,
+            "mode"   : "loop",
+            "properties" : {
+              "particleEmittersOn" : ["weld"]
+            },
+            "frameProperties" : {
+              "immediateSound" : [ "", "", "/sfx/objects/terraformer_smaller_loop.ogg", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ]
+            }
+          },
+          
+          "craftingEnd" : {
+            "frames" : 4,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "finished",
+            "properties" : {
+              "particleEmittersOff" : ["weld"]
+            },
+            "frameProperties" : {
+              "immediateSound" : ["/sfx/objects/terraformer_deactivate.ogg"]
+            }
+          },
+          
+          "finished" : {
+            "frames" : 1,
+            "cycle"  : 1,
+            "mode"   : "loop"
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "machine" : {
+        "properties" : {
+          "offset" : [0, 3]
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "sexbound_runicassembler.png:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "sexbound_runicassembler.png:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "sexbound_runicassembler.png:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "sexbound_runicassembler.png:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "sexbound_runicassembler.png:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "bow" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-bow>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-bow>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-bow>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-bow>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-bow>:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "bowString" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -1
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-string>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-string>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-string>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-string>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-string>:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "spawn" : {
+        "properties" : {
+          "anchorPart" : "bow",
+          "offset" : [0, 0]
+        }
+      }
+    }
+  },
+  
+  "particleEmitters" : {
+    "weld" : {
+      "emissionRate" : 30.0,
+      "emissionRateVariance" : 0.5,
+      "particles" : [
+        {
+          "particle" : {
+            "type" : "animated",
+			"animation" : "/animations/sparkles/sparkleloop6.animation",
+			"position" : [-0.875, 3.375],
+			"initialVelocity" : [0, 0],
+			"finalVelocity" : [0, 0],
+			"approach" : [6, 6],
+			"fade" : 0.5,
+			"destructionAction" : "shrink",
+			"destructionTime" : 1,
+			"size" : 1.0,
+			"timeToLive" : 0.7,
+			"fullbright" : true,
+			"variance" : {
+			  // "position" : [1, 1],
+			  "initialVelocity" : [8.0, 8.0],
+			  "finalVelocity" : [0.0, 0.0]
+			}
+          } 
+        },
+        {
+          "particle" : {
+            "type" : "animated",
+			"animation" : "/animations/sparkles/sparkleloop6.animation",
+			"position" : [0.875, 3.375],
+			"initialVelocity" : [0, 0],
+			"finalVelocity" : [0, 0],
+			"approach" : [6, 6],
+			"fade" : 0.5,
+			"destructionAction" : "shrink",
+			"destructionTime" : 1,
+			"size" : 1.0,
+			"timeToLive" : 0.7,
+			"fullbright" : true,
+			"variance" : {
+			  // "position" : [1, 1],
+			  "initialVelocity" : [8.0, 8.0],
+			  "finalVelocity" : [0.0, 0.0]
+			}
+          }
+        }
+      ]
+    }
+  },
+  
+  "sounds" : {}
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "op": "add",
+    "path": "/enableSpawnItems",
+    "value": "true"
+  },
+  {
+    "op": "add",
+    "path": "/projectileItem",
+    "value": {
+      "default": {
+        "male": "liquidsemen",
+        "female": "liquidejaculant"
+      }
+    }
+  }
+]

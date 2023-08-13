@@ -1,0 +1,84 @@
+{
+  "objectName"       : "sexbound_floranpot",
+  "colonyTags"       : [ "kinky" ],
+  "interactive"      : true,
+  "objectType"       : "loungeable",
+  "rarity"           : "Legendary",
+  "category"         : "furniture",
+  "price"            : 25000,
+  "description"      : "A floran in a flower pot. It's a cute one!",
+  "shortdescription" : "Floran Pot (???)",
+  "shortdescriptionPrefix" : "FloranPot",
+  "race"             : "generic",
+  "itemTags"         : [ "sexbound", "sex" ],
+  "sitAngle"         : 0,
+  "sitFlipDirection" : false,
+  "sitOrientation"   : "lay",
+  "sitPosition"      : [ 0, 20 ],
+  "sitStatusEffects" : [
+    {
+      "stat"   : "breathProtection",
+      "amount" : 1.0
+    },
+    "dontstarve",
+    "sexbound_sex"
+  ],
+
+  "retainObjectParametersInItem" : true,
+
+  "inventoryIcon" : "jarfilledicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "jarfilled.png:default",
+
+      "imagePosition" : [-6, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "scripts"        : [ "/scripts/sexbound/become_node.lua", "/objects/sextoylegendary/minitoys/insertnpcplus.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "standing_mini", "missionary_mini", "doggy_mini", "cowgirl_mini", "facesitting_mini", "butterfly_mini", "fellatio_mini", "reverse_cowgirl_mini" ]
+    }
+  },
+
+  "actorRace" : "floran",
+  "actorHeadwear" : "floweryhead",
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "jar" : {
+          "properties" : {
+            "offset" : [ 0, 1 ],
+            "zLevel" : 9999,
+            "image"  : "/objects/sextoylegendary/minitoys/sexbound_floranpot/jarempty.png:default"
+          }
+        },
+
+        "jar-bg" : {
+          "properties" : {
+            "anchorPart" : "jar",
+            "zLevel" : -9999,
+            "image"  : "/objects/sextoylegendary/minitoys/sexbound_floranpot/jarhabitat.png:default"
+          }
+        },
+		
+        "actors" : {
+          "properties" : {
+            "offset" : [ 0, 4 ]
+          }
+        }
+      }
+    }
+  }
+}

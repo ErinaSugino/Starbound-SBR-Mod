@@ -1,0 +1,17 @@
+[
+  {
+    "op" : "replace",
+    "path" : "/sitStatusEffects",
+    "value" : ["sexbound_sex"]
+  },
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig/idlePosition",
+    "value" : "idle_toy"
+  },
+  {
+    "op" : "add",
+    "path" : "/animationCustom/animatedParts/parts/actor2/partStates/actors/position2-postclimax",
+    "value" : {"properties": {"offset": [-2.0,0.0]}}
+  }
+]

@@ -387,10 +387,16 @@ function Sexbound.Actor.Climax:shoot(...)
         self:spawnProjectile(...)
     end
     
+    -- Spawn items when enabled
+    if self._config.enableSpawnItems then
+        self:spawnItem(...)
+    end
+    
     local actorNum = self:getParent():getActorNumber()
     local config = self:getParent():getPosition():getConfig()
     local interactionTypes = config.interactionType or {}
     local interaction = interactionTypes[actorNum]
+    
     local target = config.actorRelation[actorNum]
     if target then
         local _actor = actor:getParent():getActors()[target] or nil
@@ -443,6 +449,40 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
     end
 
     world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
+end
+
+function Sexbound.Actor.Climax:spawnItem(...)
+    self:loadClimaxConfig()
+    local args = {...}
+    local actor = self:getParent()
+    local species = actor:getSpecies()
+    
+    local dospawnitem = false
+    for _,_actor in pairs(self:getRoot():getActors()) do
+        local _species = _actor:getSpecies()
+        if species ~= _actor:getSpecies() and ((_species == "sexbound_milkingmachine") or (_species == "sexbound_milkingmachine_mk2")) then
+            dospawnitem = true
+        end
+    end
+    if species ~= "sexbound_dildo_ovipositor" and not dospawnitem then return end
+    
+    local facingDirection = {object.direction(), 1}
+    local climaxConfig   = self._climaxConfig or {}
+    local spawnOffset    = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
+    local spawnPosition  = vec2.add(args[2] or actor:getClimaxSpawnPosition(), spawnOffset)
+    local genitals = actor:getGenitalTypes()
+    
+    if dospawnitem then
+        -- Milkingmachine spawn
+        local config = self._config.projectileItem or {}
+        config = config.default or {}
+        for _,g in ipairs(genitals) do
+            local item = config[g]
+            if item then world.spawnItem(item, spawnPosition, 1) end
+        end
+    else
+        world.spawnItem("sexbound_fakeeggs", spawnPosition, 1) -- Ovipositor spawn
+    end
 end
 
 --- Increases level of inflation

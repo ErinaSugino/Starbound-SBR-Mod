@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_fhblow",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A sexy human girl going down on a hot florans cock.",
+  "shortdescription" : "Human On Floran Blowjob",
+  "race" : "generic",
+
+  "apexDescription" : "A sexy human girl going down on a hot florans cock",
+  "avianDescription" : "A sexy human girl going down on a hot florans cock",
+  "floranDescription" : "A sexy human girl going down on a hot florans cock",
+  "glitchDescription" : "Horny. A sexy human girl going down on a hot florans cock",
+  "humanDescription" : "A sexy human girl going down on a hot florans cock",
+  "hylotlDescription" : "A sexy human girl going down on a hot florans cock",
+  "novakidDescription" : "A sexy human girl going down on a hot florans cock",
+
+  "inventoryIcon" : "FHblowicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "fhblow.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 3.0,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "fhblow.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 3.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

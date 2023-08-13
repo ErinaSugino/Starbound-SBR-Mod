@@ -1,0 +1,20 @@
+{
+  "frameGrid" : {
+    "size" : [64, 48],
+    "dimensions" : [7, 1],
+    "names" : [
+      [ "1", "2", "3", "4", "5", "6", "7" ]
+    ]
+  },
+  "aliases" : {
+    "default.1"  : "1",
+    "idling.1"   : "1",
+    "crafting.1" : "2",
+    "crafting.2" : "3",
+    "craftingend.1" : "4",
+    "craftingend.2" : "5",
+    "craftingend.3" : "6",
+    "craftingend.4" : "7",
+    "finished.1" : "7"
+  }
+}

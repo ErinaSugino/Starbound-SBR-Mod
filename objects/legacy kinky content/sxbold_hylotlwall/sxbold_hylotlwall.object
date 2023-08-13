@@ -1,0 +1,32 @@
+{
+  "objectName" : "sxbold_hylotlwall",
+  "rarity" : "Common",
+  "description" : "A lucky Hylotl Chick Getting gangbanged by some Agarans.",
+  "shortdescription" : "Hylotl Sex Scene",
+  "race" : "apex",
+  "category" : "decorative",
+  "price" : 450,
+
+  "apexDescription" : "Should I join? I'm sure the Big Ape wouldn't mind.",
+  "avianDescription" : "Kinda like a ritual at home...",
+  "floranDescription" : "Thisss one LOVESss the nature too much.",
+  "glitchDescription" : "Recording mode...ON.",
+  "humanDescription" : "Any place for one more?...",
+  "hylotlDescription" : "She must feel pretty good there...",
+
+  "inventoryIcon" : "hylotlwallicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "hylotlwall.png:<color>.<frame>",
+
+      "imagePosition" : [-20, 0],
+      "frames" : 4,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+
+    }
+  ]
+}

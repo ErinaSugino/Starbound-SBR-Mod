@@ -1,0 +1,31 @@
+{
+  "objectName" : "sxbold_dildoshelf2",
+  "rarity" : "Rare",
+  "category" : "decorative",
+  "price" : 2500,
+
+  "description" : "A plethora of alien looking dildos. You can't wait to plug up your orifices with these. 2",
+  "shortdescription" : "Shelf with Dragon Dildos 2",
+  "race" : "generic",
+
+  "apexDescription" : "I'd like to conduct some further studies with these specimens.",
+  "avianDescription" : "Oh my...!",
+  "floranDescription" : "Sssssmellss of Apex butt.",
+  "glitchDescription" : "Disappointment. If only my exhaust vent had delicate sensors like those of organic lifeforms...",
+  "humanDescription" : "Priceless earth arifacts. They belong in a museum.",
+  "hylotlDescription" : "They are so...big.",
+
+  "inventoryIcon" : "dildoshelf2icon.png",
+  "orientations" : [
+    {
+      "image" : "dildoshelf2.png:<color>",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

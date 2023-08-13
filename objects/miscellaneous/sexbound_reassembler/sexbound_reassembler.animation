@@ -1,0 +1,566 @@
+{
+  "globalTagDefaults" : {
+    "part-bow"    		: "parts/empty.png",
+	"part-keystoneE"    : "parts/empty.png",
+	"part-keystoneF"    : "parts/empty.png",
+	"part-keystoneH"    : "parts/empty.png",
+	"part-keystoneI"    : "parts/empty.png",
+	"part-keystoneS"    : "parts/empty.png",
+    "part-dildo" 		: "parts/empty.png",
+    "part-fleshlight" 	: "parts/empty.png",
+    "part-tentacleplant": "parts/empty.png",
+    "part-string" 		: "parts/empty.png"
+  },
+
+  "animatedParts" : {
+    "stateTypes" : {
+      "main" : {
+        "default" : "idling",
+        "states" : {
+          "idling" : {
+            "frames" : 1,
+            "cycle"  : 1,
+            "mode"   : "loop"
+          },
+          
+          "crafting" : {
+            "frames" : 2,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "craftingLoop",
+            "frameProperties" : {
+              "immediateSound" : ["/sfx/objects/mechcrafting_lower.ogg"]
+            }
+          },
+          
+          "craftingLoop" : {
+            "frames" : 75,
+            "cycle"  : 1,
+            "mode"   : "loop",
+            "properties" : {
+              "particleEmittersOn" : ["weld"]
+            },
+            "frameProperties" : {
+              "immediateSound" : [ "", "", "/sfx/objects/penguin_welding1.ogg", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "/sfx/objects/penguin_welding2.ogg", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "/sfx/objects/penguin_welding3.ogg", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "/sfx/objects/penguin_welding4.ogg", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "/sfx/objects/penguin_welding5.ogg", "", "", "", "", "", "", "", "", "", "", "", "" ]
+            }
+          },
+          
+          "craftingEnd" : {
+            "frames" : 4,
+            "cycle"  : 1,
+            "mode"   : "transition",
+            "transition" : "finished",
+            "properties" : {
+              "particleEmittersOff" : ["weld"]
+            },
+            "frameProperties" : {
+              "immediateSound" : ["/sfx/objects/mechcrafting_raise.ogg"]
+            }
+          },
+          
+          "finished" : {
+            "frames" : 1,
+            "cycle"  : 1,
+            "mode"   : "loop"
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "machine" : {
+        "properties" : {
+          "offset" : [0, 3]
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "sexbound_reassembler.png:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "sexbound_reassembler.png:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "sexbound_reassembler.png:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "sexbound_reassembler.png:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "sexbound_reassembler.png:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "bow" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-bow>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-bow>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-bow>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-bow>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-bow>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "keystoneE" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-keystoneE>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-keystoneE>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-keystoneE>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-keystoneE>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-keystoneE>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "keystoneF" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-keystoneF>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-keystoneF>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-keystoneF>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-keystoneF>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-keystoneF>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "keystoneH" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-keystoneH>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-keystoneH>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-keystoneH>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-keystoneH>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-keystoneH>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "keystoneI" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-keystoneI>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-keystoneI>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-keystoneI>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-keystoneI>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-keystoneI>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "keystoneS" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-keystoneS>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-keystoneS>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-keystoneS>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-keystoneS>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-keystoneS>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "dildo" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-dildo>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-dildo>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-dildo>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-dildo>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-dildo>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "fleshlight" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-fleshlight>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-fleshlight>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-fleshlight>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-fleshlight>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-fleshlight>:finished.1"
+              }
+            }
+          }
+        }
+      },
+	  
+	  "tentacleplant" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -2
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-tentacleplant>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-tentacleplant>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-tentacleplant>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-tentacleplant>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-tentacleplant>:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "bowString" : {
+        "properties" : {
+          "anchorPart" : "machine",
+          "zLevel" : -1
+        },
+        "partStates" : {
+          "main" : {
+            "idling" : {
+              "properties" : {
+                "image" : "<part-string>:idling.1"
+              }
+            },
+            
+            "crafting" : {
+              "properties" : {
+                "image" : "<part-string>:crafting.<frame>"
+              }
+            },
+            
+            "craftingLoop" : {
+              "properties" : {
+                "image" : "<part-string>:crafting.2"
+              }
+            },
+            
+            "craftingEnd" : {
+              "properties" : {
+                "image" : "<part-string>:craftingend.<frame>"
+              }
+            },
+            
+            "finished" : {
+              "properties" : {
+                "image" : "<part-string>:finished.1"
+              }
+            }
+          }
+        }
+      },
+      
+      "spawn" : {
+        "properties" : {
+          "anchorPart" : "bow",
+          "offset" : [0, 0]
+        }
+      }
+    }
+  },
+  
+  "particleEmitters" : {
+    "weld" : {
+      "emissionRate" : 20.0,
+      "emissionRateVariance" : 0.5,
+      "particles" : [
+        {
+          "particle" : {
+            "type" : "ember",
+            "position" : [0.5625, 5.0],
+            "size" : 1.0,
+            "color" : [253, 160, 57, 255],
+            "fade" : 0.9,
+            "initialVelocity" : [0.0, 5.0],
+            "finalVelocity" : [0.0, 35.0],
+            "approach" : [0, 20],
+            "timeToLive" : 0.3,
+            "layer" : "middle",
+            "variance" : {
+              "initialVelocity" : [3.0, 3.0],
+              "color" : [253, 218, 19, 255]
+            }
+          } 
+        },
+        
+        {
+          "particle" : {
+            "type" : "ember",
+            "position" : [0.5625, 4.0],
+            "size" : 1.0,
+            "color" : [253, 160, 57, 255],
+            "fade" : 0.9,
+            "initialVelocity" : [0.0, -5.0],
+            "finalVelocity" : [0.0, -35.0],
+            "approach" : [0, 20],
+            "timeToLive" : 0.3,
+            "layer" : "middle",
+            "variance" : {
+              "initialVelocity" : [3.0, 3.0],
+              "color" : [253, 218, 19, 255]
+            }
+          } 
+        }
+      ]
+    }
+  },
+  
+  "sounds" : {}
+}

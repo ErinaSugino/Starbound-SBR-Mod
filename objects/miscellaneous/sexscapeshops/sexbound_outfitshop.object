@@ -1,0 +1,177 @@
+{
+  "objectName" : "sexbound_outfitshop",
+  "shortdescription" : "Outfit Sex Shop",
+  "description" : "A merchant that sells sexy outfits.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells sexy outfits.",
+  "avianDescription"   : "A merchant that sells sexy outfits.",
+  "floranDescription"  : "A merchant that sells sexy outfits.",
+  "glitchDescription"  : "A merchant that sells sexy outfits.",
+  "humanDescription"   : "A merchant that sells sexy outfits.",
+  "hylotlDescription"  : "A merchant that sells sexy outfits.",
+  "novakidDescription" : "A merchant that sells sexy outfits.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "offeredQuests" : [
+    "outfitmerchant1", "outfitmerchant2", "outfitmerchant3"
+  ],
+  "turnInQuests" : [
+    "outfitmerchant1", "outfitmerchant2", "outfitmerchant3"
+  ],
+
+  "uniqueId" : "outfitshop",
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Sex Enabled Outfits",
+        "subtitle" : "Stay in style even in sex."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}},
+	  {"item" : { "name" : "sexbound_futamode"}},
+	  {"item" : { "name" : "sexbound_contraceptivepatch"}},
+	  {"item" : { "name" : "sexbound_blindfoldgag"}},
+	  {"item" : { "name" : "sexbound_blindfold"}},
+      {"item" : { "name" : "sxbold_apexpeniserect"}},
+      {"item" : { "name" : "sxbold_avianpeniserect"}},
+      {"item" : { "name" : "sxbold_caninepeniserect"}},
+      {"item" : { "name" : "sxbold_floranpeniserect"}},
+      {"item" : { "name" : "sxbold_glitchpeniserect"}},
+      {"item" : { "name" : "sxbold_humanpeniserect"}},
+      {"item" : { "name" : "sxbold_hylotlpeniserect"}},
+      {"item" : { "name" : "sxbold_blindfold"}},
+      {"item" : { "name" : "sxbold_blindfoldgag"}},
+      {"item" : { "name" : "sxbold_latex_captain_cap"}},
+      {"item" : { "name" : "sxbold_latex_cat_cap"}},
+      {"item" : { "name" : "sxbold_latex_cat_hood"}},
+      {"item" : { "name" : "sxbold_latex_commander_top"}},
+      {"item" : { "name" : "sxbold_latex_commander_pants"}},
+      {"item" : { "name" : "sxbold_latex_commander_skirt"}},
+      {"item" : { "name" : "sxbold_latex_dress_top"}},
+      {"item" : { "name" : "sxbold_latex_dress_skirt"}},
+      {"item" : { "name" : "sxbold_latex_fish_net"}},
+      {"item" : { "name" : "sxbold_latex_fish_net_skirt"}},
+      {"item" : { "name" : "sxbold_latex_jacket"}},
+      {"item" : { "name" : "sxbold_latex_kimono_top"}},
+      {"item" : { "name" : "sxbold_latex_kimono_skirt"}},
+      {"item" : { "name" : "sxbold_latex_long_sleeve"}},
+      {"item" : { "name" : "sxbold_latex_mask"}},
+      {"item" : { "name" : "sxbold_latex_noble_top"}},
+      {"item" : { "name" : "sxbold_latex_noble_skirt"}},
+      {"item" : { "name" : "sxbold_latex_nurse_hat"}},
+      {"item" : { "name" : "sxbold_latex_nurse_top"}},
+      {"item" : { "name" : "sxbold_latex_nurse_skirt"}},
+      {"item" : { "name" : "sxbold_latex_officer_top"}},
+      {"item" : { "name" : "sxbold_latex_officer_pants"}},
+      {"item" : { "name" : "sxbold_latex_pants"}},
+      {"item" : { "name" : "sxbold_latex_pleated_skirt"}},
+      {"item" : { "name" : "sxbold_latex_scarf"}},
+      {"item" : { "name" : "sxbold_latex_scarf_mask"}},
+      {"item" : { "name" : "sxbold_latex_skirt_leggings"}},
+      {"item" : { "name" : "sxbold_latex_sleeveless_top"}},
+      {"item" : { "name" : "sxbold_latex_sweat_pants"}},
+      {"item" : { "name" : "sxbold_latex_sweater_vest"}},
+      {"item" : { "name" : "sxbold_latex_tank_top"}},
+      {"item" : { "name" : "sxbold_latex_top_gloves"}},
+      {"item" : { "name" : "sxbold_latex_tshirt"}},
+      {"item" : { "name" : "sxbold_latex_tube_top"}},
+      {"item" : { "name" : "sxbold_latex_tube_top_glove"}},
+      {"item" : { "name" : "sxbold_latex_bra"}},
+      {"item" : { "name" : "sxbold_latex_panties"}},
+      {"item" : { "name" : "kawaii_bras"}},
+      {"item" : { "name" : "kawaii_bras_gloves"}},
+      {"item" : { "name" : "kawaii_bras_netgloves"}},
+      {"item" : { "name" : "kawaii_bras_stripedgloves"}},
+      {"item" : { "name" : "kawaii_catears"}},
+      {"item" : { "name" : "kawaii_bunnytail"}},
+      {"item" : { "name" : "kawaii_catears"}},
+      {"item" : { "name" : "kawaii_cattail"}},
+      {"item" : { "name" : "kawaii_fishnets"}},
+      {"item" : { "name" : "kawaii_gloves"}},
+      {"item" : { "name" : "kawaii_maidheadband"}},
+      {"item" : { "name" : "kawaii_maidrobes"}},
+      {"item" : { "name" : "kawaii_maidsleeves"}},
+      {"item" : { "name" : "kawaii_netgloves"}},
+      {"item" : { "name" : "kawaii_panties"}},
+      {"item" : { "name" : "kawaii_panties_fishnets"}},
+      {"item" : { "name" : "kawaii_panties_pantyhose"}},
+      {"item" : { "name" : "kawaii_panties_stockings"}},
+      {"item" : { "name" : "kawaii_panties_stripeys"}},
+      {"item" : { "name" : "kawaii_pantyhose"}},
+      {"item" : { "name" : "kawaii_shoes"}},
+      {"item" : { "name" : "kawaii_shoes_fishnets"}},
+      {"item" : { "name" : "kawaii_shoes_panties"}},
+      {"item" : { "name" : "kawaii_shoes_panties_fishnets"}},
+      {"item" : { "name" : "kawaii_shoes_panties_pantyhose"}},
+      {"item" : { "name" : "kawaii_shoes_panties_stockings"}},
+      {"item" : { "name" : "kawaii_shoes_panties_stripeys"}},
+      {"item" : { "name" : "kawaii_shoes_pantyhose"}},
+      {"item" : { "name" : "kawaii_shoes_shorts"}},
+      {"item" : { "name" : "kawaii_shoes_shorts_fishnets"}},
+      {"item" : { "name" : "kawaii_shoes_shorts_pantyhose"}},
+      {"item" : { "name" : "kawaii_shoes_shorts_stockings"}},
+      {"item" : { "name" : "kawaii_shoes_shorts_stripeys"}},
+      {"item" : { "name" : "kawaii_shoes_stockings"}},
+      {"item" : { "name" : "kawaii_shoes_stripeys"}},
+      {"item" : { "name" : "kawaii_shorts"}},
+      {"item" : { "name" : "kawaii_shorts_fishnets"}},
+      {"item" : { "name" : "kawaii_shorts_pantyhose"}},
+      {"item" : { "name" : "kawaii_shorts_stockings"}},
+      {"item" : { "name" : "kawaii_shorts_stripeys"}},
+      {"item" : { "name" : "kawaii_skinnysuit"}},
+      {"item" : { "name" : "kawaii_skinnysuit_gloves"}},
+      {"item" : { "name" : "kawaii_skinnysuit_netgloves"}},
+      {"item" : { "name" : "kawaii_skinnysuit_stripedgloves"}},
+      {"item" : { "name" : "kawaii_stockings"}},
+      {"item" : { "name" : "kawaii_strapless"}},
+      {"item" : { "name" : "kawaii_strapless_gloves"}},
+      {"item" : { "name" : "kawaii_strapless_netgloves"}},
+      {"item" : { "name" : "kawaii_strapless_stripedgloves"}},
+      {"item" : { "name" : "kawaii_stripedgloves"}},
+      {"item" : { "name" : "kawaii_stripeys"}}
+    ]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_outfitshopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_outfitshop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

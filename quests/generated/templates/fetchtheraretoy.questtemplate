@@ -1,0 +1,111 @@
+{
+  "id" : "fetchtheraretoy.generated",
+  "parameters" : {
+    "questGiver" : {
+      "type" : "entity"
+    },
+    "cropList" : {
+      "type" : "itemList",
+      "example" : {
+        "items" : [{"name" : "sexbound_dildo_rainbow", "count" : 1}]
+      }
+    },
+    "seedList" : {
+      "type" : "itemList",
+      "example" : {
+        "items" : [{"name" : "sexbound_sexbox", "count" : 3}]
+      }
+    },
+    "extraRewards" : {
+      "type" : "itemList",
+      "example" : {
+        "items" : [{"name" : "sexbound_sexboxplus", "count" : 3}]
+      }
+    }
+  },
+  "moneyRange" : [250, 500],
+  "rewards" : [
+    [ [ "sexbound_sexboxplus", 1],[ "sexbound_sexboxplus", 1],[ "sexbound_sexboxplus", 1] ]
+  ],
+  "rewardParameters" : [ "rewards", "extraRewards" ],
+  "canBeAbandoned" : true,
+  "ephemeral" : true,
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/generated/fetchtoy.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "default" : "questGiver"
+    },
+    "generatedText" : {
+	  "title" : {
+        "default" : [
+          "Rare toy retrieval"
+        ]
+      },
+      "text" : {
+        "first" : {
+          "floran" : [
+            "Firsst, Floran needs you to ^green;find ^orange;<cropList>. ^white;Go go go!",
+            "Floran can't find ^orange;<cropList>. ^white;Floran will reward you generously if you ^green;fetch sssome."
+          ],
+          "glitch" : [
+            "Excited. First ^green;I need you to gather ^orange;<cropList>^white; for me. Thank you in advance!",
+            "Excited. For my job, ^green;I need you to gather ^orange;<cropList>^white; for me."
+          ],
+          "default" : [
+            "To begin, ^green;I'll need ^orange;<cropList>^white;. Could you lend a hand?",
+            "Initially, ^green;we'll need to gather ^orange;<cropList>^white;. Could you handle that?"
+          ]
+        },
+        "default" : {
+          "floran" : [
+            "Time to ^green;find ^orange;<cropList>. ^white;It'sss very important we do this next.",
+            "As your next tasssk, could you ^green;find us ^orange;<cropList>? ^white;Not too big a job for someone sskillful like you."
+          ],
+          "glitch" : [
+            "Confident. Next ^green;we'll need ^orange;<cropList>.^white; I'm sure that's well within your capabilities.",
+            "Eager. Next, ^green;I need you to collect ^orange;<cropList>^white;."
+          ],
+          "default" : [
+            "Next, ^green;we'll need ^orange;<cropList>^white;. You can handle that, right?",
+            "^green;The next thing I'll need is ^orange;<cropList>^white;. It's important to my job."
+          ]
+        }
+      },
+      "completionText" : {
+        "first" : {
+          "floran" : [
+            "Great! Let'ss get to work with our <cropList>.",
+            "Perfect - now Floran can put these to ussse!"
+          ],
+          "glitch" : [
+            "Grateful. I appreciate you gathering those toys for me! Now, my clients will be much more excited.",
+            "Pleased. These items are just what I need for my job!"
+          ],
+          "default" : [
+            "Excellent! Now we can put these to use.",
+            "Well done <player>, I never doubted you could do it!"
+          ]
+        },
+        "default" : {
+          "floran" : [
+            "Perfect, time to put our <cropList> to ussse.",
+            "That was quicker than Floran expected! Floran very pleassed."
+          ],
+          "glitch" : [
+            "Appreciative. I'm so pleased that you managed to gather these for me, they're essential for my job. Thank you!",
+            "Exuberant. Thank you for getting these for me, I have plans for them!"
+          ],
+          "default" : [
+            "Thank you, this is exactly what I need for my next live show...",
+            "Perfect, this will work nicely. Thank you!"
+          ]
+        }
+      }
+    },
+    "fetchList" : "cropList",
+    "portraitParameter" : "questGiver",
+    "requireTurnIn" : true
+  }
+}

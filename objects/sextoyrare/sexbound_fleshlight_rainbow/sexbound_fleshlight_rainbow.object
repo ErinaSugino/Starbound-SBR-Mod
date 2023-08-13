@@ -1,0 +1,159 @@
+{
+  "objectName" : "sexbound_fleshlight_rainbow",
+  "shortdescription" : "^red;F^orange;e^yellow;r^green;v^blue;i^violet;d ^pink;J^violet;o^blue;y ^green;H^yellow;o^orange;l^red;e^reset;",
+  "description" : "A high tech color changing fleshlight.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Rare",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 5000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "How does it do that?",
+  "avianDescription"   : "How does it do that?",
+  "floranDescription"  : "How doesss it do that?",
+  "glitchDescription"  : "Impressed. How does it do that?",
+  "humanDescription"   : "Reminds me of that time I walked in on an orgy in the '60s tent at the Millennial Faire.",
+  "hylotlDescription"  : "How does it do that?",
+  "novakidDescription" : "How does it do that?",
+  "nekiDescription"    : "Hole for fucks that hypnotizes.",
+  
+  "sitStatusEffects" : [
+    "dontstarve",
+    "sexbound_sex"
+  ],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "fleshlighticon.png",
+  "orientations" : [
+    {
+      "image" : "fleshlight.png:idle.1",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "image" : "fleshlight.png:idle.1?flipx",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoyrare/sexbound_fleshlight_rainbow/fleshlight.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Fleshlight",
+    
+    "position" : {
+      "sex" : [ "standing_sextoy_actor2" ]
+    },
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }
+            }
+          }
+        },
+		
+        "actor1-body": {
+		  "partStates": {
+		    "actors": {
+			  "idle": {
+			    "properties" : {
+                  "image" : "/objects/sexbound_fleshlight/fleshlight.png<rainbowDirectives>",
+				  "offset" : [0, -1.5]
+                }
+			  }
+	  	    }
+		  }
+	    },
+		
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+            
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

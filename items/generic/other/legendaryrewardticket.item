@@ -1,0 +1,9 @@
+{
+  "itemName" : "legendaryrewardticket",
+  "price" : 50000,
+  "rarity" : "Legendary",
+  "category" : "currency",
+  "inventoryIcon" : "legendaryrewardticket.png",
+  "description" : "A legendary reward ticket used to buy a special toy of your choice.",
+  "shortdescription" : "Legendary Toy Ticket"
+}

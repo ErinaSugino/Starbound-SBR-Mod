@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_wallpumpkinfuck",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A cute little avian all chained up.",
+  "shortdescription" : "Wall Pumpkin Fuck",
+  "race" : "generic",
+
+  "apexDescription" : "She will make a fun little toy!",
+  "avianDescription" : "She will make a fun little toy!",
+  "floranDescription" : "She will make a fun little toy!",
+  "glitchDescription" : "Horny. She will make a fun little toy!",
+  "humanDescription" : "She will make a fun little toy!",
+  "hylotlDescription" : "She will make a fun little toy!",
+  "novakidDescription" : "She will make a fun little toy!",
+
+  "inventoryIcon" : "wallpumpkinfuckicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "wallpumpkinfuck.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 9,
+      "animationCycle" : 1.4,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "wallpumpkinfuck.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 9,
+      "animationCycle" : 1.4,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

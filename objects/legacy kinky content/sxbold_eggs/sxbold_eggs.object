@@ -1,0 +1,31 @@
+{
+  "objectName" : "sxbold_eggs",
+  "rarity" : "Rare",
+  "category" : "decoration",
+  "price" : 500,
+
+  "description" : "A pile of gooey, sticky eggs that may or may not contain life.",
+  "shortdescription" : "Pile of Eggs",
+  "race" : "generic",
+
+  "apexDescription" : "They look rather squishy.",
+  "avianDescription" : "Hey, are those mine or...?",
+  "floranDescription" : "Sssquishy and tasssty, but not like real eggsss.",
+  "glitchDescription" : "INSERT TEXT",
+  "humanDescription" : "Living the fantasy!",
+  "hylotlDescription" : "Significantly bigger than what we are used to...",
+
+  "inventoryIcon" : "eggsicon.png",
+  "orientations" : [
+    {
+      "image" : "eggs.png:<color>",
+      "imagePosition" : [0, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

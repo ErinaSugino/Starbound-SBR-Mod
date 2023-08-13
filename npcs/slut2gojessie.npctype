@@ -1,0 +1,45 @@
+{
+  "type" : "slut2gojessie",
+  "baseType" : "slut2gohooker",
+  
+  "npcname" : "Jessie Maye",
+  
+  "dropPools" : [ "jessiePool" ],
+  
+  "persistent" : true,
+  
+  "identity" : {
+    "gender"    : "female",
+    "hairType" : "fem12",
+    "bodyDirectives" : "?replace=ffe2c5FF=e4ba98FF?replace=ffc181FF=cd8d69FF?replace=d39c6cFF=a8735eFF?replace=c7815bFF=855644FF",
+    "emoteDirectives" : "?replace=ffe2c5FF=e4ba98FF?replace=ffc181FF=cd8d69FF?replace=d39c6cFF=a8735eFF?replace=c7815bFF=855644FF",
+    "hairDirectives" : "?replace=d9c189FF=f1c992FF?replace=a38d59FF=daa55eFF?replace=735e3aFF=b5894dFF",	
+	"personalityIdle" : "idle.5",
+	"personalityArmIdle" : "idle.5"
+  },
+
+  "scriptConfig" : {
+    "dialog" : {
+    "greeting" : "/dialog/jessieconverse.config:converse",
+    "converse" : "/dialog/jessieconverse.config:converse"
+    },
+	
+	"questGenerator" : {
+      "enableParticipation" : false
+    }
+  },
+
+  "matchColorIndices" : true,
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "chest" : [ { "name" : "sexbound_jessieschest" , "parameters" : { "colorIndex" : [1] } } ],
+            "legs"  : [ { "name" : "sexbound_jessieslegs", "parameters" : { "colorIndex" : [1] } } ],
+			"head"  : [ { "name" : "sexbound_jessiesears", "parameters" : { "colorIndex" : [1] } } ],
+			"back"	: [ { "name" : "sexbound_jessiestail", "parameters" : { "colorIndex" : [1] } } ]
+          }
+        ] ]
+    ]
+  }
+}
