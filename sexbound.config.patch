@@ -1,7 +1,0 @@
-[
-  {
-    "op": "replace",
-    "path": "/actor/plugins/futanari/enable",
-    "value": true
-  }
-]

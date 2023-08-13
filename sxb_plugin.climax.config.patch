@@ -1,11 +1,6 @@
 [
   {
     "op": "add",
-    "path": "/noSquirtStatuses",
-    "value": [ "equipped_condom" ]
-  },
-  {
-    "op": "add",
     "path": "/enableSpawnItems",
     "value": "true"
   },
