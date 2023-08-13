@@ -52,6 +52,15 @@ function Sexbound.Common.Pregnant:appendMainConfig()
     self._config.immersionLevel = mainConfig.immersionLevel or 1
 end
 
+--- Loads notifications configuration from file
+function Sexbound.Common.Pregnant:loadNotificationDialog()
+    local notifications = self:getParent():getNotifications() or {}
+    notifications.plugins = notifications.plugins or {}
+    notifications.plugins.pregnant = notifications.plugins.pregnant or {}
+
+    return notifications.plugins.pregnant
+end
+
 function Sexbound.Common.Pregnant:init(parent)
     self._parent = parent
 
@@ -218,21 +227,75 @@ function Sexbound.Common.Pregnant:checkTimeToGiveBirthBasedOnPlayerWorldTime(bab
 end
 
 function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
-    local pregnancyType = babyConfig.pregnancyType or "baby"
-    
-    -- Try loading baby class
-    pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
-    
-    local babyClass
-    if not pcall(function()
-        babyClass = _G[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
-    end) then
-        -- Can't load = can't generate baby = no pregnancy; abort
-        sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+    local roll = math.random()
+    local threshold = self._config.stillbornChance or 0
+    if roll < threshold then
+        self:notifyOfStillborn(babyConfig, babyName)
+        sb.logInfo("Baby birth is a stillborn!")
         return nil
+    else
+        local pregnancyType = babyConfig.pregnancyType or "baby"
+        
+        -- Try loading baby class
+        pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+        
+        local babyClass
+        if not pcall(function()
+            babyClass = _G[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
+        end) then
+            -- Can't load = can't generate baby = no pregnancy; abort
+            sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+            return nil
+        end
+        
+        return babyClass:birth(babyConfig, babyName)
+    end
+end
+
+function Sexbound.Common.Pregnant:notifyOfStillborn(baby, name)
+    if baby.motherType ~= "player" then return end
+    
+    local notification = self:loadNotificationDialog()
+    notification = notification.birth or {}
+    
+    local babyGender = baby.birthGender
+
+    if babyGender == "male" then
+        babyGender = "^blue;boy^reset;"
+    end
+
+    if babyGender == "female" then
+        babyGender = "^pink;girl^reset;"
     end
     
-    return babyClass:birth(babyConfig, babyName)
+    local message = notification.stillborn or ""
+    message = util.replaceTag(message, "babyname", name)
+
+    message = util.replaceTag(message, "babygender", babyGender)
+
+    world.sendEntityMessage(baby.motherUuid, "queueRadioMessage", {
+        messageId = "Sexbound_Event:Stillborn",
+        unique = false,
+        text = message
+    })
+
+    local motherName = baby.motherName or "UNKNOWN"
+    motherName = "^green;" .. motherName .. "^reset;"
+
+    message = notification.remoteStillborn or ""
+    message = util.replaceTag(message, "name", motherName)
+    message = util.replaceTag(message, "babyname", name)
+    message = util.replaceTag(message, "babygender", babyGender)
+
+    for _, playerId in ipairs(world.players()) do
+        if world.entityUniqueId(playerId) ~= baby.motherUuid then
+            world.sendEntityMessage(playerId, "queueRadioMessage", {
+                messageId = "Sexbound_Event:Stillborn",
+                unique = false,
+                text = message
+            })
+        end
+    end
 end
 
 function Sexbound.Common.Pregnant:refreshStatusEffects()

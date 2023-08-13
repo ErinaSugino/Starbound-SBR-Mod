@@ -119,15 +119,6 @@ function Sexbound.Player.Pregnant:abortPregnancy()
     self:notifyPlayerAboutAbortionViaRadioMessage()
 end
 
---- Loads notifications configuration from file
-function Sexbound.Player.Pregnant:loadNotificationDialog()
-    local notifications = self:getParent():getNotifications() or {}
-    notifications.plugins = notifications.plugins or {}
-    notifications.plugins.pregnant = notifications.plugins.pregnant or {}
-
-    return notifications.plugins.pregnant
-end
-
 function Sexbound.Player.Pregnant:triggerActualPregnancy(pregnancy)
     local config = self:getConfig()
     local dayCount = pregnancy.dayCount
