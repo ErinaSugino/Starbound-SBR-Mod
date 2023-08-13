@@ -1,0 +1,340 @@
+{
+  "type"     : "crewmembersexbound",
+  "baseType" : "crewmember",
+
+  "damageTeamType" : "friendly",
+
+  "dropPools" : [ ],
+
+  "persistent" : true,
+
+  "scriptConfig" : {
+    "behavior" : "sexboundcrewmember",
+    "behaviorConfig" : {
+      "emptyHands" : true,
+
+      "wanderTime"     : 1,
+      "idleTime"       : 10,
+      "outerHomeRange" : 20,
+      "innerHomeRange" : 15,
+
+      "hostileDamageTeam" : {"type" : "friendly", "team" : 1}
+    },
+
+    "crew" : {
+      "recruitable" : true,
+
+      "recruitInteractAction" : {
+        "messageType" : "recruits.offerRecruit",
+        "messageArgs" : []
+      },
+
+      "powerMultiplierExponent" : 1.0,
+
+      "role" : {
+        "type"  : "family",
+        "name"  : "Family Member",
+        "field" : "Offspring"
+      },
+
+      "ranks" : [
+        "New <role>",
+        "Friendly <role>",
+        "Loving <role>",
+        "Cherished <role>"
+      ],
+
+      "uniformSlots" : []
+    },
+
+    "questGenerator" : {
+      "enableParticipation" : false
+    },
+
+    "dialog" : {
+      "crewmember" : {
+        "offer" : {
+          "default" : {
+            "default" : [
+              "Would you allow me to explore the universe with you?"
+            ]
+          }
+        },
+
+        "roleDescription" : {
+          "default" : {
+            "default" : [
+              "I'll be here for you if you need to talk to someone!",
+              "You know where to find me!",
+              "I'll be here!"
+            ]
+          }
+        },
+
+        "respawned" : {
+          "default" : {
+            "default" : [
+              "Heh... Dying tickles.",
+              "What just happened?",
+              "I'm born again! And alive!",
+              "I'm born again and in one piece!",
+              "I'm alive again! That's good.",
+              "My head hurts.",
+              "What was I doing just before I died?"
+            ]
+          }
+        },
+
+        "unfollow" : {
+          "default" : {
+            "default" : [
+              "I'll just wait here.",
+              "Do you need me to stay here?",
+              "I'll stay here for now, then.",
+              "I'll stay here."
+            ]
+          }
+        },
+
+        "follow" : {
+          "default" : {
+            "default" : [
+              "Let's get going!",
+              "Are we going somewhere?"
+            ]
+          }
+        },
+
+        "cantreach" : {
+          "default" : {
+            "default" : [
+              "I can't reach you!",
+              "You're too far!",
+              "Hey, wait up!",
+              "Don't go too far!",
+              "Let me catch up!"
+            ]
+          }
+        }
+      },
+
+      "tenant" : {
+        "grumbles" : {
+          "tagCriteria"  : "/dialog/grumble.config:tagCriteria",
+          "enclosedArea" : "/dialog/grumble.config:enclosedArea",
+          "otherDeed"    : "/dialog/grumble.config:otherDeed",
+          "severe"       : "/dialog/grumble.config:severe",
+          "final"        : "/dialog/grumble.config:final"
+        },
+
+        "arrivedHome" : {
+          "beacon" : "/dialog/arrivedhome.config:beacon",
+          "rent"   : "/dialog/arrivedhome.config:rent"
+        }
+      },
+
+      "converse"     : "/dialog/converse.config:converse",
+      "attack"       : "/dialog/combat.config:attack",
+      "reattack"     : "/dialog/combat.config:reattack",
+      "killedTarget" : "/dialog/combat.config:killedTarget",
+      "lostTarget"   : "/dialog/combat.config:lostTarget",
+      "outOfSight"   : "/dialog/combat.config:outOfSight",
+      "cheerOn"      : "/dialog/combat.config:cheerOn",
+      "cantReach"    : "/dialog/combat.config:cantReach"
+    }
+  },
+
+  "movementParameters" : {
+    "runSpeed" : 14.0
+  },
+
+  "matchColorIndices" : true,
+  "items" : {
+    "default" : [
+      [0, [
+          {
+            "primary"         : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "avian" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "avianadventurershirt", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "aviancommonershirt", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "avianfancyshirt", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "avianworkershirt", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "legs" : [
+              { "name" : "avianadventurerpants", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "aviancommonerlegs", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "avianfancyskirt", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "apex" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "apexcommanderjacket", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexnavyjacket", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexofficerjacket", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexspecialistjacket", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "legs" : [
+              { "name" : "apexcommanderpants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexnavypants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexofficerpants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "apexspecialistpants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "fenerox": [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "woolychest" }
+            ],
+            "legs" : [
+              { "name" : "woolylegs" }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+      ]]
+    ],
+
+    "floran" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "floranfurnivourchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranhunterchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranleafchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranpeltchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "legs" : [
+              { "name" : "floranfurnivourlegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranhunterlegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranleaflegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "floranpeltlegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "glitch" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "noblechest", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "peasantchest", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "legs" : [
+              { "name" : "noblelegs", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }, 
+              { "name" : "peasantlegs", "parameters" : { "colorIndex" : [1, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "human" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "coolchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "workoutchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "legs" : [
+              { "name" : "coollegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "workoutlegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+      ]]
+    ],
+
+    "hylotl" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "kimonochest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "monkchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "traditionalchest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "traineechest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+
+            "legs" : [
+              { "name" : "kimonolegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "monklegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "traditionallegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "traineelegs", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ],
+
+    "novakid" : [
+      [0, [
+          {
+            "chest" : [
+              { "name" : "novakidfancychest", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidjacket", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidsuspenders", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidwaistcoat", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+
+            "legs" : [
+              { "name" : "novakidfancypants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidjacketpants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidsuspenderspants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+              { "name" : "novakidblackpants", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+            ],
+            "primary" : [""],
+            "sheathedprimary" : [""]
+          }
+        ] ]
+    ]
+  },
+
+  "statusControllerSettings" : {
+    "statusProperties" : {
+      "hitInvulnerability"          : true,
+      "hitInvulnerabilityThreshold" : 0.0333,
+      "hitInvulnerabilityTime"      : 1,
+      "hitInvulnerabilityFlash"     : 0.15,
+      "damageFlashOnDirectives"     : "",
+      "damageFlashOffDirectives"    : ""
+    },
+
+    "stats" : {
+      "maxHealth" : {
+        "baseValue" : 500.0
+      },
+      "powerMultiplier" : {
+        "baseValue" : 0.30
+      },
+      "healthRegen" : {
+        "baseValue" : 2.5
+      }
+    }
+  }
+}

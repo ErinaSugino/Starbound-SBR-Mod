@@ -1,0 +1,91 @@
+[
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "anticockring1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "clitstandardring1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiesdaisy1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiesdaisy2" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiesheart1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiesheart2" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiescross1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplepastiescross2" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplestandardring1" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "nipplestandardring2" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "removegroinwear" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "removenippleswear" }
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "socialdistancinghead" }
+  },
+
+  {
+    "op"    : "add", 
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "sexboundloungeableaddon1" }
+  },
+
+  {
+    "op"    : "add", 
+    "path"  : "/interactData/items/-",
+    "value" : { "item" : "sexboundloungeableaddon2" }
+  }
+]

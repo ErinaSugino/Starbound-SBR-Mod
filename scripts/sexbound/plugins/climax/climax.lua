@@ -506,7 +506,6 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
         self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
         if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
             actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
-                                                                    
         end
         
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())

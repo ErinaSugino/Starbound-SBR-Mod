@@ -1,0 +1,188 @@
+[
+  {
+    "op"      : "test",
+    "path"    : "/scripts",
+    "inverse" : true
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/interactive",
+    "value" : true
+  },
+  
+  {
+    "op"   : "remove",
+    "path" : "/orientations/0/spaceScan"
+  },
+
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/materialSpaces",
+    "value" : [
+      [ [ 0,  1 ], "metamaterial:sexboundaddonbase" ]
+    ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/orientations/0/spaces",
+    "value" : [
+      [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+      [-3, 0],                                   [2, 0]
+    ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/scripts",
+    "value" : [ "/scripts/objectaddons.lua", "/scripts/sexbound/loungeable.lua" ]
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/sexboundConfig",
+    "value" : {
+      "animationPartsCentered" : true,
+      "actor"         : { "mirrorArtwork" : true },
+      "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,  0] ],
+      "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 0] ],
+      "position"      : {
+        "sex" : [ "missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing", "facesitting_in_bed", "butterfly", "fellatio", "reverse_cowgirl_in_bed" ]
+      },
+      "idlePosition"  : "idle_laying"
+    }
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/addonConfig",
+    "value" : {
+      "usesAddons" : [
+        {
+          "name"      : "sexboundLoungeableAddon",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon1",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 2
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon2",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : true,
+            "maxActors" : 3
+          }
+        },
+
+        {
+          "name"      : "sexboundLoungeableAddon3",
+          "position"  : [0, 0],
+          "addonData" : {
+            "enabled"   : false,
+            "maxActors" : 4
+          }
+        }
+      ]
+    }
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animation",
+    "value" : "/artwork/humanoid/twoactors-centered.animation"
+  },
+  
+  {
+    "op"    : "add",
+    "path"  : "/animationCustom",
+    "value" : {
+      "animatedParts" : {
+        "stateTypes" : {
+          "props" : {
+            "states" : {
+              "position4" : {
+                "properties"      : { "immediateSoundRangeMultiplier" : 0.2 },
+                "frameProperties" : { "immediateSound" : ["", "", "", "/sfx/sexbound/thud.ogg"] }
+              }
+            }
+          }
+        },
+      
+        "parts" : {
+          "bed" : {
+            "properties" : {
+              "offset" : [0, 1.5],
+              "zLevel" : -1,
+              "image"  : "/objects/floran/floranbed/floranbed.png:<color>"
+            },
+            
+            "partStates" : {
+              "props" : {
+                "position2" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                  }
+                },
+                
+                "position3" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1.5], [0.125, 1.5], [0.25, 1.5], [0.375, 1.5], [0.25, 1.5]]
+                  }
+                },
+
+                "position4" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1.75], [0, 1.825], [0, 2], [0, 2.25], [0, 2]]
+                  }
+                },
+
+                "position4_1" : {
+                  "frameProperties" : {
+                    "offset" : [[0, 1.75], [0, 1.825], [0, 2], [0, 2.25], [0, 2]]
+                  }
+                }
+              }
+            }
+          },
+          
+          "actors" : {
+            "properties" : {
+              "anchorPart" : "bed",
+              "offset"     : [ 0, -0.25 ]
+            },
+            
+            "partStates" : {
+              "actors" : {
+                "idle" : {"properties" : {"offset" : [-0.5, -1.625]}},
+                "position1" : {"properties" : {"offset" : [0, -1.625]}},
+                "position1-climax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position1-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position1-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+                "position5" : {"properties" : {"offset" : [0, -1.625]}},
+                "position5-climax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position5-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position5-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+                "position6" : {"properties" : {"offset" : [0, -1.625]}},
+                "position6-climax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position6-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+                "position6-reset"  : {"properties" : {"offset" : [0, -1.625]}}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+]

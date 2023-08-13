@@ -1,0 +1,29 @@
+{
+  "itemName"         : "sexboundeasteregg",
+  "ammoUsage"        : 1,
+  "category"         : "throwableItem",
+  "cooldown"         : 0.2,
+  "description"      : "A special Easter egg that induces mind control on the thing it hits.",
+  "edgeTrigger"      : true,
+  "image"            : "sexboundeasteregg.png",
+  "inventoryIcon"    : "sexboundeastereggicon.png",
+  "piercing"         : true,
+  "price"            : 50,
+  "rarity"           : "Common",
+  "shortdescription" : "[SxB] Easter Egg",
+  "windupTime"       : 0.0,
+
+  "projectileType"   : "sexboundeasteregg",
+  "projectileConfig" : {
+    "speed" : 40,
+    "power" : 0,
+    "periodicActions" : [
+      {
+        "action"  : "sound",
+        "options" : [ "/sfx/projectiles/throw_item_small.ogg" ],
+        "repeat"  : false,
+        "time"    : 0
+      }
+    ]
+  }
+}

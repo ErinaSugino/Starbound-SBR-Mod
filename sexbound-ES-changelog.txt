@@ -1,0 +1,100 @@
+=====CHANGELOG=====
+	D O N E
+		[Player affecting changes]
+			=> General
+				-> Added "Fertility Pill" item. Boosts the fertility chance set in the config by another new config set multiplier while the effect is active
+				-> Added "Hyperfertility Pill" item. Guarantees impregnation while effect is active.
+				-> Made pregnancy tests not infinitely reusable. Can be turned back on in config.
+				-> Made pregnancy test's output text more streamlined - only displays the type of time (OS vs. in-world) that is enabled in the config. Only gives vague information until close before finish. (Settings will follow)
+				-> Babies from only two NPCs are no longer invincible "family members" to the player but normal villager NPCs
+				-> Added option for custom music during sex. One that actually works.
+				-> Disallowed NPCs to immediately run off frame one of a climax
+				-> Added codexes to explain certain features in an in-world-lore-ish flair.
+				-> Integrated "Naturally Horny" mod
+					--> NPCs now get horny by natural means, seeking out sex by themselves. (Configurable rate)
+					--> Arousal value persists once again
+				-> Added filter mechanic to sex positions. Now sex actually makes sense! (Can be turned off in config)
+				-> Added "immersionLevel" config, determining the level of notification messages received
+				-> Added use for Sexbux and Customizer UI; Sexbound customizer now enables you to persistently change your character's sub-gender and un/sterilize you for a cost
+				-> Unbroke Lustbound - With either a temporary patch or a permanent fix in Lustbound both mods now fully work together!
+				-> Added manual control over which layers of POV are displayed into the Sex UI. Or turn it off altogether!
+			=> Climax System
+				-> Made special climaxes actual climaxes (can impregnate, trigger dialogue, apply arousal penalty based on config value x2)
+				-> NPCs never auto-climax if a player is present in the orgy. Except when the player is being raped during sexbound defeat.
+				-> Updated special climax scenario1 to be an actually enjoyable climax experience
+				-> Updated climax logic to properly account for multi-genders and conditions when it comes to pregnancy triggers and displaying particles
+				-> Added transition animation after a climax
+			=> Pregnancy System
+				-> Impregnation logic works properly with multiple actors
+				-> Pregancies are more realistic. They do not instantly trigger (for players, NPC are the same)
+				-> They also do not instantly become visible, but progress dynamically [waiting for new sprites]
+				-> Player pregnancy in-world time is now bound to script update ticks, meaning pregnancies progress properly no matter where in the universe you are.
+				-> Added new realistic "Ovulation cycle" system - female players can only get pregnant during that phase. Lasts for a default ingame day (840 seconds) and occurs within a config set range of days. Can be turned off in config.
+					--> Hyperfertility pill triggers ovulation period immediately (10 second delay) or prolongs duration to a full day again when already active.
+				-> Added separate fertility config options for players and non-players (to account for players and non-players maybe having different fertility systems)
+				-> Added option for player mothers to name their baby upon giving birth.
+				-> [CONTENT WARNING] Added pregnancy hazards. When having unprotected sex while pregnant, certain conditions can lead to an involuntary "abortion". Can be turned off and configured in the config.
+				-> [CONTENT WARNING] Added still-born chance. (Chance to not successfully give birth to a baby.) Can be configured (0% = off) in the config
+			=> Sextalk System
+				-> Sextalk works on players by default now
+				-> Sextalk works properly with three (and probably more) actors now
+				-> Actors don't all talk at the same time overriding the dialogue anymore
+				-> Added "roleplayMode" config option, which disables sextalk on players when no NPCs are present
+		[Modding affecting changes]
+			=> General
+				-> Actor logic now properly determines "otherActor" via sex position actor relation (requires new data in position config). New method "getOtherActorPositionsafe()".
+				-> Option to get an actor's gender string with regards to a futanari's role in the penetration chain in relation to another actor (requires same new data in position config). New method "getGenderFutasafe(otherActorNumber)".
+					--> This entire system will change in the future
+				-> Fixed UI (and API) only supporting 8 sex positions at a time.
+				-> Hook system to execute stuff when an entity's statistic increases.
+				-> Hook to execute stuff when an entity's statistic increases for the first time.
+				-> Default status effects can be defined per gender in the species config file. (gender.genderId.sxbNaturalStatus: ["status1", "status2"])
+				-> Actor logic now properly determines an actor's gender, both visually and logically
+				-> Added filter system to sex positions
+					--> Unless disabled, sex positions only show up when the actor number requirement is met
+					--> Unless disabled, sex positions only show up when at least one actor composition fulfills all body trait requirements for the actors
+					--> Body trait requirements via new "requireTrait" config option in position config: [["trait1", "trait2"], null, null, null]
+						---> Available traits: "boobs", "insert" (has means to penetrate), "dick" (has biological dick), "vagina"
+				-> Added "immersionLevel" config option to main config file, replacing old "enableSilentImpregnations" and "enablePlayerNotifications" redundant settings in pregnancy plugin. (Old ones kept for backwards patching compatibility)
+				-> Revised body trait generation to be more efficient. Now only updates body traits upon init or changing sub-gender, reading a simple value for the rest of the time
+					--> subGenders now stored in main config as trait list tables. Traits "name", "canOvulate", "canProduceSperm", "hasPenis" and "hasVagina" supported
+					--> Makes old "whichGendersCanOvulate" and "whichGendersCanProduceSperm" config options obsolete
+				-> Added persistent status manager to entities. Via entity messages "Sexbound:Status:Add" and "Sexbound:Status:Remove" you can now persistently set or remove a sexbound status to an entity
+				-> Added modular script loading support to the sexbound node. Partial script overrides can be done by adding your own script to the config, which only changes the methods it needs to.
+				-> Implemented Red3Red's monster gender logic
+					--> Monsters now generate a gender based on a given "gender" status resource (default: 0 - "male or female generation") upon entity initialization.
+					--> This fixes incompatibility with new entity sided body trait logic, which always removed pregnancies from monsters even when they did not reset.
+				-> Upgraded UI system with proper canvas management.
+					--> Now, the entire 600x300 area is available to mouse events and hence button placement.
+					--> Data stays mostly the same, though modules are now responsible to generate their buttons individually so they can give them the "offset" parameter into their cvonfig. This value needs to contain the x and y position of the canvas they will be rendered in
+						---> This is to allow local in-canvas coordinates for image rendering to stay the same like before, but automatically account for global offsets not that the mouse coordinates changed for hover and click events
+				-> Added modular POV module/layering system
+					--> Add a module script file into '/interface/sexbound/sexui/submodule/pov/modules' named '<moduleName_lowercase>.lua' and containing the class 'SexUI.POV.Modules.<moduleName>'
+					--> This class needs/supports the following methods: '.new(parent, config)', ':update(dt)', 'triggerUpdate(actors)' [for syncing actor states with the node], ':isAvailable() => Boolean' [Returns whether this module has anything to display], ':render(canvas)' [no need to clear canvas]
+					--> Patch into '/interface/sexbound/sexui.config' and add your module to 'config/pov/modules' as object {"class":"<moduleName>", "icon":"<optional path to 11x11 button icon>"}
+					--> A button to toggle this layer on or off is autogenerated for each module.
+			=> Climax System
+				-> Made special climaxes statesafe (i.e. switching state machine to climaxing state)
+				-> Added "preclimaxing" state to special climaxes, mainly to enable special sextalk dialogue to occur.
+				-> Revamped structure of special climax scenario script to have more control over what is happening when (when to pre-climax, when to climax, ...)
+				-> Special climaxes behave like actual climaxes now (arousal penalty, pregnancy checks, ...)
+			=> Pregnancy System
+				-> Impregnation logic uses penetration table to determine who can impregnate who in a position (requires new data in position config, see "General")
+				-> Fixed baby data inconsistencies occuring (hopefully)
+				-> Fixed pre-generated baby gender never being applied to spawned NPC
+				-> Added pregnancy hazard config table
+				-> Added species type. Species of the same type (or type "universal") are natively compatible for reproduction, independent from "compatibleSpecies" config. Species type "null" (or not set) is universally incompatible. (sxbSpeciesType)
+					--> Default values: "human" (Humans, Apex), "avian" (Avian), "floran" (Floran), "mechanic" (Glitch), "aquatic" (Hylotl). Novakid have none (universally incompatible)
+					--> Config "compatibleSpecies" acts as a per-case override. Same species still always compatible.
+				-> Restructured pregnancy trigger logic to be more efficient using early termination conditions and less checks
+			=> Sextalk System
+				-> Added proper dialogue loading and management. (Properly load states affecting dialogue, properly load dialogue based on states every time not randomly, added config table to set some species x species dialogue to override default instead of adding to it)
+					--> Will change in future
+				-> Added preclimaxing state to dialogue states
+			=> Subgender System (was Futanari)
+				-> Changed futanari plugin logic to be applicable to multiple subgenders
+					--> Config "statuseffects" now links "statusEffect": "applied subgender" / "statusEffect": ["applied subgender 1", "applied subgender 2"]
+				-> Removed all features except for status effects that apply subgenders.
+					--> For global subgenders per species, use species gender specific default statuses (see [GENERAL])
+					--> For entity specific overrides, use entity identity storage
+===================

@@ -8,5 +8,56 @@
     "op": "add",
     "path": "/genericScriptContexts/obsoleteobjects",
     "value": "/scripts/player/obsoleteobjects.lua"
+  },
+  {
+    "op" : "add",
+    "path" : "/defaultBlueprints/tier1/-",
+    "value" : {"item" : "lox_sextoyvendingmachine"}
+  },
+	
+  {
+    "op" : "add",
+    "path" : "/defaultBlueprints/tier1/-",
+    "value" : {"item" : "lox_condomdispenser"}
+  },
+  
+  {
+    "op": "add",
+    "path": "/companionsConfig/scripts/-",
+    "value": "/scripts/sexbound/override/player.lua"
+  },
+
+  {
+    "op": "add",
+    "path": "/statusControllerSettings/primaryScriptSources/-",
+    "value": "/scripts/sexbound/override/stats/player_primary.lua"
+  },
+
+  {
+    "op": "add",
+    "path": "/deploymentConfig/scripts/-",
+    "value": "/scripts/sexbound/override/player_alt.lua"
+  },
+
+  {
+    "op": "add",
+    "path": "/statusControllerSettings/stats/maxClimax",
+    "value": { "baseValue": 100.0 }
+  },
+
+  {
+    "op": "add",
+    "path": "/statusControllerSettings/stats/climaxThreshold",
+    "value": { "baseValue": 0.5 }
+  },
+
+  {
+    "op": "add",
+    "path": "/statusControllerSettings/resources/climax",
+    "value": {
+      "maxStat": "maxClimax",
+      "deltaValue": 0.0,
+      "initialPercentage": 0.0
+    }
   }
 ]

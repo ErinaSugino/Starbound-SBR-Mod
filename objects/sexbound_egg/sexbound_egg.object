@@ -1,0 +1,44 @@
+{
+  "objectName"       : "sexbound_egg",
+  "category"         : "farmBeastEgg",
+  "colonyTags"       : [ "misc" ],
+  "description"      : "Hatches into a ???",
+  "price"            : 250,
+  "printable"        : false,
+  "race"             : "generic",
+  "rarity"           : "Rare",
+  "shortdescription" : "Egg (???)",
+
+  "retainObjectParametersInItem" : true,
+
+  "apexDescription"    : "It's an egg. There is something inside.",
+  "avianDescription"   : "An egg with a tiny creature inside... I suddenly feel very parental and protective.",
+  "floranDescription"  : "Little sspeckled egg.",
+  "glitchDescription"  : "Excited. This egg looks ready to hatch!",
+  "humanDescription"   : "There's a little creature inside this egg.",
+  "hylotlDescription"  : "An egg - one of nature's simplest yet most exquisite designs.",
+  "novakidDescription" : "This egg's about ready to hatch.",
+
+  "inventoryIcon" : "sexbound_egg.png:idle.1",
+  "orientations" : [
+    {
+      "direction"     : "right",
+      "image"         : "sexbound_egg.png:idle.1",
+      "imagePosition" : [ -7, -3 ],
+      "spaces"        : [ [-1, 0], [-1, 1], [0, 0], [0, 1], [1, 0], [1, 1] ],
+      "anchors"       : [ "bottom" ]
+    }
+  ],
+
+  "animation"         : "/objects/farmables/eggs/farmableegg.animation",
+  "animationPosition" : [-7, -3],
+  "animationParts"    : { "egg" : "sexbound_egg.png" },
+
+  "scripts"           : ["/objects/farmables/eggs/farmableegg.lua"],
+  "scriptDelta"       : 60,
+
+  "hatchTime"         : 40,
+  "forceHatchTime"    : 80,
+  "spawnMonster"      : "henbaby",
+  "spawnOffset"       : [ 0.5, 0.5 ]
+}

@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_birthing",
+  "blockingStat"    : "specialStatusImmunity",
+  "defaultDuration" : 300,
+  "effectConfig"    : {},
+  "label"           : "SxB Birthing",
+  "scripts"         : [ "sexbound_birthing.lua" ]
+}

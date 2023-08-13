@@ -1,0 +1,24 @@
+{
+  "metadata" : {
+    "name" : "outpost_alluringtoysco",
+    "species" : "generic",
+    "rules" : [
+    ],
+
+    "anchor" : [ "outpost_alluringtoysco" ],
+
+    "maxRadius" : 1000000,
+    "maxParts" : 1,
+    "protected" : true
+  },
+
+  "parts" : [
+    {
+      "name" : "outpost_alluringtoysco",
+      "rules" : [
+        [ "maxSpawnCount", [1] ]
+      ],
+      "def" : [ "tmx", "outpost_alluringtoysco.json" ]
+    }
+  ]
+}

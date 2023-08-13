@@ -1,0 +1,98 @@
+{
+  "name": "sexbound-notifications",
+  "description": "",
+  "scripts": [
+    "/scripts/actions/notification.lua",
+    "/scripts/actions/sexbound.lua",
+    "/scripts/actions/status.lua"
+  ],
+  "parameters": {},
+  "root": {
+    "title": "parallel",
+    "type": "composite",
+    "name": "parallel",
+    "parameters": {
+      "fail": { "value": -1 },
+      "success": { "value": -1 }
+    },
+    "children": [
+      {
+        "title": "sequence",
+        "type": "composite",
+        "name": "sequence",
+        "parameters": {},
+        "children": [
+          {
+            "title": "receivedNotification",
+            "type": "action",
+            "name": "receivedNotification",
+            "parameters": {
+              "type": { "value": "sexbound.smashSexNode" }
+            }
+          },
+          {
+            "title": "smashSexNode",
+            "type": "action",
+            "name": "smashSexNode",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "title": "sequence",
+        "type": "composite",
+        "name": "sequence",
+        "parameters": {},
+        "children": [
+          {
+            "title": "receivedNotification",
+            "type": "action",
+            "name": "receivedNotification",
+            "parameters": {
+              "type": { "value": "sexbound.birthday" }
+            }
+          },
+          {
+            "title": "announceBirth",
+            "type": "action",
+            "name": "announceBirth",
+            "parameters": {}
+          }
+        ]
+      },
+      {
+        "title": "sequence",
+        "type": "composite",
+        "name": "sequence",
+        "parameters": {},
+        "children": [
+          {
+            "title": "receivedNotification",
+            "type": "action",
+            "name": "receivedNotification",
+            "parameters": {
+              "type": { "value": "sexbound.becomeAroused" }
+            }
+          },
+          {
+            "title": "safeGetResource",
+            "type": "action",
+            "name": "safeGetResource",
+            "parameters": {
+              "resource": { "value": "arousal" }
+            }
+          },
+          {
+            "title": "setResource",
+            "type": "action",
+            "name": "setResource",
+            "parameters": {
+              "amount": { "value": 100 },
+              "resource": { "value": "arousal" }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

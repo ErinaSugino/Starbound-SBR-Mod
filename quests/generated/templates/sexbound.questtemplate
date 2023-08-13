@@ -1,0 +1,54 @@
+{
+  "id": "sexbound.generated",
+
+  "parameters": {
+    "questGiver": {
+      "type": "entity"
+    }
+  },
+
+  "moneyRange": [100, 200],
+  "rewards": [[["sexboundrewardbag", 1]]],
+  "rewardParameters": ["rewards"],
+  "canBeAbandoned": true,
+  "ephemeral": true,
+
+  "updateDelta": 10,
+  "script": "/quests/scripts/generated/sexbound.lua",
+  "scriptConfig": {
+    "portraits": {
+      "default": "questGiver"
+    },
+    "generatedText": {
+      "title": {
+        "default": ["Are you up for a quickie?"]
+      },
+      "text": {
+        "default": {
+          "default": [
+            "I'm feeling horny as hell! I could really go for a quickie right about now.\n\nWould you like to give me a go?"
+          ]
+        }
+      },
+      "completionText": {
+        "default": {
+          "default": ["That was such great fun!"]
+        }
+      }
+    },
+
+    "requireTurnIn": true,
+
+    "objectives": [
+      {
+        "id": "have_sex",
+        "text": "Have sex with <questGiver>"
+      },
+
+      {
+        "id": "return",
+        "text": "Return to <questGiver>"
+      }
+    ]
+  }
+}

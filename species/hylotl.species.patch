@@ -1,0 +1,211 @@
+[
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale01.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale02.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale03.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale04.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale05.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale06.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale07.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale08.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale09.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale10.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale11.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale12.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale13.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale14.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale15.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale16.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale17.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale18.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale19.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbShowNipples",
+    "value": false
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbShowNipples",
+    "value": true
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/0/d35eae",
+    "value": "ff918f"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/1/d35eae",
+    "value": "ffa38e"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/2/d35eae",
+    "value": "da8c9b"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/3/d35eae",
+    "value": "e7a4a1"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/4/d35eae",
+    "value": "b17294"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/5/d35eae",
+    "value": "906880"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/6/d35eae",
+    "value": "9786b0"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/7/d35eae",
+    "value": "99a8db"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/8/d35eae",
+    "value": "8598f5"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/9/d35eae",
+    "value": "9290F8"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/10/d35eae",
+    "value": "a868de"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/11/d35eae",
+    "value": "ffa0ea"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/12/d35eae",
+    "value": "fba9cf"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/13/d35eae",
+    "value": "a8bd89"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/14/d35eae",
+    "value": "8aaa7a"
+  },
+
+  {
+    "op": "add",
+    "path": "/undyColor/15/d35eae",
+    "value": "f2aff3"
+  },
+
+  {
+    "op": "add",
+    "path": "/sxbSpeciesType",
+    "value": "aquatic"
+  }
+]

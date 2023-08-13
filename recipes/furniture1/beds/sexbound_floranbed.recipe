@@ -1,0 +1,8 @@
+{
+  "input": [
+    { "item": "floranbed", "count": 1 },
+    { "item": "sexbux", "count": 100 }
+  ],
+  "output": { "item": "sexbound_floranbed", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

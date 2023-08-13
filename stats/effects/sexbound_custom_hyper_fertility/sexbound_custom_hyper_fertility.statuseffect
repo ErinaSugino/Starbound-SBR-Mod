@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_custom_hyper_fertility",
+  "defaultDuration" : 300,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/hyperfertile.png",
+  "label"           : "Extremely Fertile!",
+  "scripts"         : [ "sexbound_custom_hyper_fertility.lua" ]
+}

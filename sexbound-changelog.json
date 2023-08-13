@@ -1,0 +1,16 @@
+{
+  "1.0_r1" : [
+	"» REVISON 1 «",
+	"- Included \"Sexbound Extended Dialogues\" with author permission",
+	"- Various bugfixes"
+  ],
+  "1.0" : [
+    "» INITIAL RELEASE «",
+	"- Revamped, immersive pregnancy system",
+	"- Reworked modular body trait system (was futa plugin)",
+	"- Reworked position and actor order management system",
+	"- Fixes on several systems",
+	"- Detail additions to several systems",
+	"- Details, full changelog and modding information in download"
+  ]
+}

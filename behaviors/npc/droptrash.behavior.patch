@@ -1,0 +1,37 @@
+[
+	{ "op" : "test", "path" : "/root/children/2/name", "value" : "containerAddItem" },
+	{
+		"op" : "replace",
+		"path" : "/root/children/2",
+		"value" :       {
+			"title": "randomize",
+			"type": "composite",
+			"name": "randomize",
+			"parameters": {},
+			"children": [
+				{
+					"title": "containerAddItem",
+					"type": "action",
+					"name": "containerAddItem",
+					"parameters": {
+						"amount": {"value": 1},
+						"entity": {"key": "reactTarget"},
+						"itemName": {"value": "soggypaper"},
+						"parameters": {"value": {}}
+					}
+				},
+				{
+					"title": "containerAddItem",
+					"type": "action",
+					"name": "containerAddItem",
+					"parameters": {
+						"amount": {"value": 1},
+						"entity": {"key": "reactTarget"},
+						"itemName": {"value": "lox_usedcondom"},
+						"parameters": {"value": {}}
+					}
+				}
+			]
+		}
+	}
+]

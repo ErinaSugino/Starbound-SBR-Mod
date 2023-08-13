@@ -1,0 +1,21 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "addStatus" : [ "equipped_peacekeeper" ],
+      "images" : {
+        "body" : [
+          "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/chest.png",
+          "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/chest_variant.png"
+        ],
+        "bodyPregnant" : [
+          "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/chest_pregnant.png",
+          "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/chest_pregnant_variant.png"
+        ],
+        "backSleeve"   : "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/bsleeve.png",
+        "frontSleeve"  : "/artwork/humanoid/<role>/default/wearable/peacekeeper/<gender>/fsleeve.png"
+      }
+    }
+  }
+]

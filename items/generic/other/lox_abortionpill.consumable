@@ -1,0 +1,14 @@
+{
+  "itemName" : "lox_abortionpill",
+  "price" : 100,
+  "rarity" : "Uncommon",
+  "category" : "medicine",
+  "inventoryIcon" : "lox_abortionpill.png",
+  "description" : "Take one to abort all of your current pregnancies.",
+  "shortdescription" : "Abortion Pill",
+  "effects" : [ 
+    [ "sexbound_abortion" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

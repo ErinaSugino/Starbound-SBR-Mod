@@ -1,0 +1,95 @@
+{
+  "objectName"         : "sexbound_florancouch",
+  "description"        : "A couch made of leather hide and large bones.",
+  "shortdescription"   : "[SxB] Primitive Couch",
+  "category"           : "furniture",
+  "colonyTags"         : [ "floran", "floranvillage" ],
+  "interactive"        : true,
+  "itemTags"           : [ "sexbound", "sex" ],
+  "price"              : 300,
+  "race"               : "floran",
+  "rarity"             : "Rare",
+  "apexDescription"    : "A couch built from bones and leather.",
+  "avianDescription"   : "These bones are as soft as they are sharp.",
+  "floranDescription"  : "Floran with large kill make bone couch. Other Floran sssit on couch. Admire Floran's kill.",
+  "glitchDescription"  : "Disgusted. There are blood stains on the leather.",
+  "humanDescription"   : "This couch looks like it would belong to a particularly bloodthirsty Floran.",
+  "hylotlDescription"  : "To picture Floran sitting upon the bones of a living thing fills me with disgust.",
+  "novakidDescription" : "I just can't see how anyone can relax on a couch this pointy.",
+
+  "inventoryIcon" : "sexbound_florancouchicon.png",
+  "orientations"  : [
+    {
+      "dualImage"      : "florancouch.png:<color>",
+      "imagePosition"  : [-24, 0],
+      "animationCycle" : 1.0,
+      "frames"         : 1,
+      "spaces"         : [
+        [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-3, 0],                                   [2, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts"        : [ "/scripts/sexbound/threeactors.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "actor"         : { "mirrorArtwork" : true },
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ],
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : ["missionary_in_bed", "doggy_in_bed", "cowgirl_in_bed", "standing", "facesitting_in_bed", "butterfly", "fellatio", "reverse_cowgirl_in_bed"]
+    }
+  },
+  
+  "animation"       : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "couch" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [ 0, 1.5 ],
+            "zLevel" : -1,
+            "image"  : "/objects/floran/florancouch/florancouch.png:<color>"
+          }
+        },
+        
+        "couchcover" : {
+          "properties" : {
+            "centered"   : true,
+            "anchorPart" : "couch",
+            "zLevel"     : 99,
+            "image"      : "/objects/floran/florancouch/florancouchcover.png"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "couch",
+            "offset"     : [0, -0.75]
+          },
+          
+          "partStates" : {
+            "actors" : {
+              "idle" : {"properties" : {"offset" : [0.5, -1.625]}},
+              "position1" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position1-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position5" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position5-reset"  : {"properties" : {"offset" : [0, -1.625]}},
+              "position6" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-climax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-postclimax" : {"properties" : {"offset" : [0, -1.625]}},
+              "position6-reset"  : {"properties" : {"offset" : [0, -1.625]}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

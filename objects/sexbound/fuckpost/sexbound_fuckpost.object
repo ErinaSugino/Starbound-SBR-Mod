@@ -1,0 +1,320 @@
+{
+  "objectName": "sexbound_fuckpost",
+  "colonyTags": ["misc"],
+  "printable": false,
+  "rarity": "Uncommon",
+  "description": "A wooden fuck post. Careful you don't get a splinter!",
+  "shortdescription": "[SxB] Wooden Fuck Post",
+  "race": "generic",
+  "category": "furniture",
+  "price": 500,
+  "itemTags": [ "sexbound", "sex" ],
+
+  "interactive": true,
+
+  "zlevel": 1,
+
+  "inventoryIcon": "fuckposticon.png",
+  "orientations": [
+    {
+      "dualImage": "fuckpost.png:default.1",
+
+      "imagePosition": [-24, 0],
+      "animationPosition": [0, 0],
+
+      "frames": 1,
+      "animationCycle": 1.0,
+
+      "spaces": [
+        [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1],
+        [-3, 0],                                   [2, 0]
+      ],
+
+      "anchors": ["bottom"]
+    }
+  ],
+
+  "scripts": [ "/scripts/sexbound/twoactors.lua" ],
+
+  "sexboundConfig": {
+    "animationPartsCentered": true,
+
+    "nodePositions": [
+      [-1, 0],
+      [0, 0]
+    ],
+
+    "sitPositions": [
+      [8, 20],
+      [0, 20]
+    ],
+
+    "position": {
+      "sex": [ "double_doggy" ]
+    }
+  },
+
+  "animation": "/artwork/humanoid/twoactors-centered.animation",
+
+  "animationCustom": {
+    "animatedParts": {
+      "parts": {
+        "platform": {
+          "properties": {
+            "offset": [0, 1.5],
+            "zLevel": -1,
+            "image": "/objects/sexbound/fuckpost/fuckpost.png:default.1"
+          }
+        },
+
+        "actors": {
+          "properties": {
+            "anchorPart": "platform",
+            "offset": [ -0.5625, -1.5 ]
+          }
+        },
+
+        "actor1": {
+          "properties": {
+            "offset": [-1.75, 0]
+          }
+        },
+
+        "actor2": {
+          "properties": {
+            "offset": [1.75, 0]
+          }
+        },
+
+        "actor1-head": {
+          "partStates": {
+            "actors": {
+              "position2": {
+                "frameProperties": {
+                  "offset": [
+                    [0.625, -1.5],
+                    [0.75, -1.5],
+                    [0.875, -1.375],
+                    [1, -1.375],
+                    [0.875, -1.5]
+                  ]
+                }
+              },
+
+              "position2-climax": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              },
+
+              "position2-postclimax": {
+                "frameProperties": {
+                  "offset": [
+                    [0.625, -1.5],
+                    [0.75, -1.5],
+                    [0.75, -1.5],
+                    [0.875, -1.375],
+                    [0.875, -1.375],
+                    [0.875, -1.375],
+                    [1, -1.375],
+                    [1, -1.375],
+                    [1, -1.375],
+                    [1, -1.375],
+                    [1, -1.375],
+                    [0.875, -1.5],
+                    [0.875, -1.5]
+                  ]
+                }
+              },
+
+              "position2-reset": {
+                "properties": {
+                  "offset": [0.625, -1.5]
+                }
+              }
+            }
+          }
+        },
+
+        "actor1-groin-inner" : {
+          "partStates" : {
+            "actors" : {
+              "position2": {
+                "properties" : {
+                  "offset" : [ -0.5, -1.75 ]
+                }
+              },
+              
+              "position2-climax" : {
+                "properties" : {
+                  "offset" : [ -0.5, -1.75 ]
+                }
+              },
+
+              "position2-postclimax" : {
+                "properties" : {
+                  "offset" : [ -0.5, -1.75 ]
+                }
+              },
+
+              "position2-reset"  : {
+                "properties" : {
+                  "offset" : [ -0.5, -1.75 ]
+                }
+              }
+            }
+          }
+        },
+
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {
+              "position2" : {
+                "properties" : {
+                  "offset" : [ 0.5, -0.5 ]
+                }
+              },
+              "position2-climax" : {
+                "properties" : {
+                  "offset" : [ 0.5, -0.5 ]
+                }
+              },
+              "position2-postclimax" : {
+                "properties" : {
+                  "offset" : [ 0.5, -0.5 ]
+                }
+              },
+              "position2-reset"  : {
+                "properties" : {
+                  "offset" : [ 0.5, -0.5 ]
+                }
+              }
+            }
+          }
+        },
+
+        "actor1-climax-with-vagina" : {
+          "partStates" : {
+            "actors" : {
+              "position2" : {
+                "properties" : {
+                  "offset" : [ 0, -0.125 ]
+                }
+              },
+              
+              "position2-climax" : {
+                "properties" : {
+                  "offset" : [ 0, -0.125 ]
+                }
+              },
+
+              "position2-postclimax" : {
+                "properties" : {
+                  "offset" : [ 0, -0.125 ]
+                }
+              },
+  
+              "position2-reset" : {
+                "properties" : {
+                  "offset" : [ 0, -0.125 ]
+                }
+              }
+            }
+          }
+        },
+
+        "actor1-nipple1" : {
+          "partStates" : {
+            "actors" : {
+              "position2": {
+                "frameProperties": {
+                  "offset" : [
+                    [0.75, -1.75], [0.75, -1.875], [0.875, -1.875], [1, -1.875], [0.875, -1.875]
+                  ]
+                }
+              },
+
+              "position2-climax": {
+                "properties" : {
+                  "offset" : [0.625, -2]
+                }
+              },
+
+              "position2-postclimax": {
+                "frameProperties": {
+                  "offset" : [
+                    [0.75, -1.75],
+                    [0.75, -1.875],
+                    [0.75, -1.875],
+                    [0.875, -1.875],
+                    [0.875, -1.875],
+                    [0.875, -1.875],
+                    [1, -1.875],
+                    [1, -1.875],
+                    [1, -1.875],
+                    [1, -1.875],
+                    [1, -1.875],
+                    [0.875, -1.875],
+                    [0.875, -1.875]
+                  ]
+                }
+              },
+
+              "position2-reset": {
+                "properties" : {
+                  "offset" : [0.625, -2]
+                }
+              }
+            }
+          }
+        },
+
+        "actor1-nipple2" : {
+          "partStates": {
+            "actors": {
+              "position2": {
+                "frameProperties": {
+                  "offset" : [
+                    [1, -1.75], [1, -1.875], [1.125, -1.875], [1.25, -1.875], [1.125, -1.875]
+                  ]
+                }
+              },
+
+              "position2-climax": {
+                "properties" : {
+                  "offset" : [0.875, -2]
+                }
+              },
+
+              "position2-postclimax": {
+                "frameProperties": {
+                  "offset" : [
+                    [1, -1.75],
+                    [1, -1.875],
+                    [1, -1.875],
+                    [1.125, -1.875],
+                    [1.125, -1.875],
+                    [1.125, -1.875],
+                    [1.25, -1.875],
+                    [1.25, -1.875],
+                    [1.25, -1.875],
+                    [1.25, -1.875],
+                    [1.25, -1.875],
+                    [1.125, -1.875],
+                    [1.125, -1.875]
+                  ]
+                }
+              },
+
+              "position2-reset": {
+                "properties" : {
+                  "offset" : [0.875, -2]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

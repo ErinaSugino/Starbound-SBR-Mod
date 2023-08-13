@@ -1,0 +1,13 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "image" : [
+        "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/pants.png",
+        "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/pants_variant.png"
+      ],
+      "imagePregnant" : "/artwork/humanoid/<role>/default/wearable/hawaiian/<gender>/pants_pregnant.png"
+    }
+  }
+]

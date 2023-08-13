@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_abortion",
+  "defaultDuration" : 1,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_abortion.lua" ]
+}

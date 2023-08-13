@@ -1,0 +1,46 @@
+{
+  "itemName" : "nipplepastiesdaisy",
+  "category" : "nipples",
+
+  "maleFrames" : {
+    "image" : "nipplepastiesdaisy.png"
+  },
+
+  "femaleFrames" : {
+    "image" : "nipplepastiesdaisy.png"
+  },
+
+  "colorOptions" : [
+    // DEFAULT
+    { "ffffff" : "ffffff" },
+    // BLACK
+    { "ffffff" : "000000" },
+    // GREY
+    { "ffffff" : "b5b5b5" },
+    // WHITE
+    { "ffffff" : "e6e6e6" },
+    // RED
+    { "ffffff" : "f4988c" },
+    // ORANGE
+    { "ffffff" : "ffd495" },
+    // YELLOW
+    { "ffffff" : "ffffa7" },
+    // GREEN
+    { "ffffff" : "b2e89d" },
+    // BLUE
+    { "ffffff" : "96cbe7" },
+    // PURPLE
+    { "ffffff" : "d29ce7" },
+    // PINK
+    { "ffffff" : "eab3db" },
+    // BROWN
+    { "ffffff" : "ccae7c" }
+  ],
+
+  "sexboundConfig" : {
+    "addStatus"  : [ "equipped_nipplepasties" ],
+    "image"      : "/items/armors/sexbound/nipples/nipplepastiesdaisy.png",
+    "startAngle" : 45,
+    "startScale" : 0.6
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "type" : "sextoymerchant",
+  "baseType" : "merchant",
+  
+  "dropPools" : [ "sextoyTreasure" ],
+  
+  "scriptConfig" : {
+    "questGenerator" : {
+      "pools" : ["common"]
+    },
+    
+    "merchant" : {
+      "waitTime" : 10,
+      "storeRadius" : 8,
+      "poolsFile" : "/npcs/sextoymerchantpool.config",
+      "categories" : {
+        "override" : [ "all" ]
+      },
+      "buyFactorRange" : [ 1, 1 ],
+      "sellFactorRange" : [ 0.25, 0.4 ],
+      "numItems" : 25,
+      "behaviorConfig" : { "sleep" : false },
+      "paneLayoutOverride" : {
+        "windowtitle" : {
+          "title" : "  Sex Toy Merchant",
+          "subtitle" : "  Sexy and kinky items!"
+        }
+      }
+    },
+
+    "dialog" : {
+      "merchant" : {
+        "start" : {
+          "default" : {
+            "default" : [
+              "Welcome to my shop of kinky goods!",
+              "How can I service you, today?"
+            ]
+          }
+        },
+        "end" : {
+          "default" : {
+            "default" : [
+              "Thanks for shopping!"
+            ]
+          }
+        }
+      }
+    }
+  },
+  
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "chest" : [ "strapchest" ],
+            "legs"  : [ "straplegs" ],
+            "head"  : [ "demonhornshead" ],
+            "back"  : [ "" ],
+            "sheathedprimary" : [
+              "npcdagger"
+            ]
+          }
+        ] ]
+    ]
+  }
+}

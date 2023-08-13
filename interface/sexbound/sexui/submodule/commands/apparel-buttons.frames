@@ -1,0 +1,12 @@
+{
+  "frameGrid" : {
+    "size"       : [ 17, 17 ],
+    "dimensions" : [ 8,   4 ],
+    "names"      : [
+      [ "actor1headwear.1", "actor1headwear.2", "actor1chestwear.1", "actor1chestwear.2", "actor1backwear.1", "actor1backwear.2","actor1legswear.1", "actor1legswear.2" ],
+      [ "actor2headwear.1", "actor2headwear.2", "actor2chestwear.1", "actor2chestwear.2", "actor2backwear.1", "actor2backwear.2","actor2legswear.1", "actor2legswear.2" ],
+      [ "actor3headwear.1", "actor3headwear.2", "actor3chestwear.1", "actor3chestwear.2", "actor3backwear.1", "actor3backwear.2","actor3legswear.1", "actor3legswear.2" ],
+      [ "actor4headwear.1", "actor4headwear.2", "actor4chestwear.1", "actor4chestwear.2", "actor4backwear.1", "actor4backwear.2","actor4legswear.1", "actor4legswear.2" ]
+    ]
+  }
+}

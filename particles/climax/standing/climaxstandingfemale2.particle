@@ -1,0 +1,22 @@
+{
+  "kind" : "climaxstandingfemale2",
+  "definition" : {
+    "type" : "ember",
+    "fullbright" : true,
+    "position" : [0, 0],
+    "size" : 0.75,
+    "color" : [213, 213, 255, 170],
+    "fade" : 0.7,
+    "initialVelocity" : [0.0, -1.5],
+    "finalVelocity" : [0.0, -3.5],
+    "approach" : [0, 1],
+    "timeToLive" : 0.75,
+    "layer" : "front",
+    "collidesForeground" : true,
+    "variance" : {
+      "size" : 0.15,
+      "initialVelocity" : [0.25, 1.25],
+      "finalVelocity" : [0.1, 0.0]
+    }
+  }
+}

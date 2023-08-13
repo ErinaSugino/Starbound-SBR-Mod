@@ -1,0 +1,25 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "hearts" : {
+        "default" : "on",
+        "states"  : {
+          "off" : {},
+          "on"  : { "frames" : 1, "cycle" : 1, "mode" : "loop" }
+        }
+      }
+    },
+    
+    "parts" : {
+      "hearts" : {
+        "properties" : { "fullbright" : true, "offset" : [0, 4.5] },
+        "partStates" : {
+          "hearts" : {
+            "off" : { "properties" : { "image" : null } },
+            "on"  : { "properties" : { "image" : "<partImage>" } }
+          }
+        }
+      }
+    }
+  }
+}

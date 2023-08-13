@@ -1,0 +1,171 @@
+[
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/human/humanmoanfemale01.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale02.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale03.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale04.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale05.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale06.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale07.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale08.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale09.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale10.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale11.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale12.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale13.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale14.ogg",
+      "/sfx/sexbound/moans/human/humanmoanfemale15.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/human/humanorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/human/humanorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/human/humanorgasmfemale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbShowNipples",
+    "value": false
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbShowNipples",
+    "value": true
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/0/d35eae",
+    "value": "684e3b"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/1/d35eae",
+    "value": "836249"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/2/d35eae",
+    "value": "c86c59"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/3/d35eae",
+    "value": "92703f"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/4/d35eae",
+    "value": "cf8a7c"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/5/d35eae",
+    "value": "e08061"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/6/d35eae",
+    "value": "ff9d81"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/7/d35eae",
+    "value": "f69aa2"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/8/d35eae",
+    "value": "f9a8a9"
+  },
+
+  {
+    "op": "add",
+    "path": "/bodyColor/9/d35eae",
+    "value": "f7a7d3"
+  },
+
+  {
+    "op": "add",
+    "path": "/sxbSpeciesType",
+    "value": "human"
+  }
+]

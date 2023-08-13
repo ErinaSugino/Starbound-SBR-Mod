@@ -1,0 +1,108 @@
+{
+  "objectName" : "sexbound_test_novakidmale",
+  "colonyTags" : ["misc"],
+  "printable" : false,
+  "rarity" : "Common",
+  "description" : "A Sexbound test object.",
+  "shortdescription" : "[SxB] Test - Novakid (M)",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 1,
+  
+  "interactive" : true,
+  
+  "zlevel" : 1,
+  
+  "inventoryIcon" : "sexbound_test_icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sexbound_test.png:default.1",
+
+      "imagePosition" : [-16, 0],
+      "animationPosition" : [0, 0],
+      
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaces" : [
+        [-2, 1], [-1, 1], [0, 1], [1, 1],
+        [-2, 0],                  [1, 0]
+      ],
+      
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["sexbound_test.lua"],
+  
+  "sexboundConfig" : {
+    "actors" : [
+      {
+        "entityId" : -99999,
+        "entityType" : "npc",
+        "identity" : {
+          "facialHairType": "10",
+          "hairType": "male10",
+          "gender": "male",
+          "hairGroup": "hair",
+          "species": "novakid",
+          "facialMaskGroup": "",
+          "name": "Test Subject",
+          "facialHairDirectives": "?replace;fde03f=56ebf8;806319=0c2b4b;fff8b5=c7feff;f6b919=12c2e8",
+          "hairDirectives": "?replace;fde03f=56ebf8;806319=0c2b4b;fff8b5=c7feff;f6b919=12c2e8",
+          "facialHairFolder": "brand",
+          "hairFolder": "hair",
+          "facialHairGroup": "brand",
+          "bodyDirectives": "?replace;fde03f=56ebf8;806319=0c2b4b;fff8b5=c7feff;f6b919=12c2e8?replace;dc1f00=b1e994;951500=4f7b43;f32200=eeffdc;be1b00=7cad69",
+          "facialMaskDirectives": "",
+          "emoteDirectives": "?replace;fde03f=56ebf8;806319=0c2b4b;fff8b5=c7feff;f6b919=12c2e8?replace;dc1f00=b1e994;951500=4f7b43;f32200=eeffdc;be1b00=7cad69",
+          "facialMaskFolder": "",
+          "facialMaskType": ""
+        }
+      }
+    ],
+
+    "animationPartsCentered" : true,
+    
+    "nodePositions" : [[-1, 0], [0, 0]],
+    
+    "sitPositions"  : [[8, 36], [0, 36]],
+    
+    "position" : {
+      "sex" : [
+        "standing", 
+        "doggy", 
+        "missionary",
+        "cowgirl",
+        "facesitting",
+        "butterfly",
+        "fellatio",
+        "reverse_cowgirl"
+      ]
+    }
+  },
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "animationCustom" : {
+    "animatedParts" : {    
+      "parts" : {
+        "test-table" : {
+          "properties" : {
+            "centered" : false,
+            "offset" : [-2, 0],
+            "zLevel" : -1,
+            "image" : "/objects/sexbound_test/sexbound_test.png:default.1"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "test-table",
+            "offset" : [2, 1.875]
+          }
+        }
+      }
+    }
+  }
+}

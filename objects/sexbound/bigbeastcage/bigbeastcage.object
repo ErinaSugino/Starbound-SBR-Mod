@@ -1,0 +1,82 @@
+{
+  "objectName"       : "sexbound_bigbeastcage",
+  "colonyTags"       : [ "floran", "floranprison", "kinky" ],
+  "interactive"      : true,
+  "objectType"       : "loungeable",
+  "rarity"           : "Legendary",
+  "category"         : "furniture",
+  "price"            : 2500,
+  "description"      : "It's a big beast cage. Used for mating like big beasts.",
+  "shortdescription" : "[SxB] Big Beast Cage",
+  "race"             : "floran",
+  "itemTags"         : [ "sexbound", "sex" ],
+
+  "inventoryIcon" : "bigbeastcageicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "bigbeastcage.png:default",
+
+      "imagePosition" : [-40, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaces"         : [
+        [-5, 6], [-4, 6], [-3, 6], [-2, 6], [-1, 6], [0, 6], [1, 6], [2, 6], [3, 6], [4, 6],
+        [-5, 5], [-4, 5], [-3, 5], [-2, 5], [-1, 5], [0, 5], [1, 5], [2, 5], [3, 5], [4, 5],
+        [-5, 4], [-4, 4], [-3, 4], [-2, 4], [-1, 4], [0, 4], [1, 4], [2, 4], [3, 4], [4, 4],
+        [-5, 3], [-4, 3], [-3, 3], [-2, 3], [-1, 3], [0, 3], [1, 3], [2, 3], [3, 3], [4, 3],
+        [-5, 2], [-4, 2], [-3, 2], [-2, 2], [-1, 2], [0, 2], [1, 2], [2, 2], [3, 2], [4, 2],
+        [-5, 1], [-4, 1], [-3, 1], [-2, 1], [-1, 1], [0, 1], [1, 1], [2, 1], [3, 1], [4, 1],
+        [-5, 0], [-4, 0], [-3, 0],                                   [2, 0], [3, 0], [4, 0]
+      ],
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "scripts"        : [ "/scripts/sexbound/twoactors.lua" ],
+  "sexboundConfig" : {
+    "animationPartsCentered" : true,
+    "nodePositions" : [ [-2,  0], [-1, 0], [0,  0], [1,   0] ], 
+    "sitPositions"  : [ [16, 20], [8, 20], [0, 20], [-8, 20] ],
+    "position"      : {
+      "sex" : [ "standing_big", "missionary_big", "doggy_big", "cowgirl_big", "facesitting_big", "butterfly_big", "fellatio_big", "reverse_cowgirl_big" ]
+    },
+    "idlePosition"  : "idle_big"
+  },
+
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "cage" : {
+          "properties" : {
+            "offset" : [ 0, 3.5 ],
+            "zLevel" : 9999,
+            "image"  : "/objects/sexbound/bigbeastcage/bigbeastcage-overlay.png:default"
+          },
+
+          "partStates" : {
+            "props" : {
+              "none" : { "properties" : { "image" : "/objects/sexbound/bigbeastcage/bigbeastcage.png:default" } }
+            }
+          }
+        },
+
+        "cage-back" : {
+          "properties" : {
+            "anchorPart" : "cage",
+            "offset" : [ 0, 0 ],
+            "zLevel" : -9999,
+            "image"  : "/objects/sexbound/bigbeastcage/bigbeastcage-back.png:default"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "offset" : [ -0.25, 0 ]
+          }
+        }
+      }
+    }
+  }
+}

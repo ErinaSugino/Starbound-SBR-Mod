@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/flowerspringHarvest/0/1/pool/-",
+    "value": { "weight": 0.003, "item": "sexbound_jarfairy" }
+  }
+]

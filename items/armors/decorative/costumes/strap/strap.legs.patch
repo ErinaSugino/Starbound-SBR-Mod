@@ -1,0 +1,10 @@
+[
+  {
+    "op" : "add",
+    "path" : "/sexboundConfig",
+    "value" : {
+      "image" : "/artwork/humanoid/<role>/default/wearable/strap/<gender>/pants.png",
+      "imagePregnant" : "/artwork/humanoid/<role>/default/wearable/strap/<gender>/pants_pregnant.png"
+    }
+  }
+]

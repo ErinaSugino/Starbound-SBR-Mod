@@ -1,0 +1,9 @@
+{
+  "input": [
+    { "item": "tungstenbar", "count": 5 },
+    { "item": "fabric", "count": 10 },
+    { "item": "sexbux", "count": 300 }
+  ],
+  "output": { "item": "sexbound_trampoline", "count": 1 },
+  "groups": ["craftingfurniture", "beds", "all"]
+}

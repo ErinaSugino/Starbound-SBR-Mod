@@ -1,0 +1,151 @@
+{
+  "sexboundItem": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.7, "pool": "sexboundCommonItem" },
+          { "weight": 0.2, "pool": "sexboundUncommonItem" },
+          { "weight": 0.075, "pool": "sexboundRareItem" },
+          { "weight": 0.025, "pool": "sexboundLegendaryItem" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundCommonItem": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.8, "pool": "sexboundCurrency" },
+          { "weight": 0.1, "pool": "sexboundCommonLoungeableItem" },
+          { "weight": 0.1, "pool": "sexboundCodices" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundCurrency": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.3, "item": ["sexbux", 20] },
+          { "weight": 0.4, "item": ["sexbux", 40] },
+          { "weight": 0.3, "item": ["sexbux", 30] }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundCommonLoungeableItem": [
+    [
+      0,
+      {
+        "pool": []
+      }
+    ]
+  ],
+
+  "sexboundUncommonItem": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.8, "item": "sexboundloungeableaddon1" },
+          { "weight": 0.2, "pool": "sexboundUncommonLoungeableItemRecipe" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundUncommonLoungeableItemRecipe": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 1.0, "item": "sexbound_apexbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_birdbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_floranbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_frontierbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_fuckpost-recipe" },
+          { "weight": 1.0, "item": "sexbound_medievalbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_rainbowwoodbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_sacrificialaltar-recipe" },
+          { "weight": 1.0, "item": "sexbound_woodenbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_woodenbed2-recipe" },
+          { "weight": 1.0, "item": "sexbound_tier1bed-recipe" },
+          { "weight": 1.0, "item": "sexbound_tier2bed-recipe" },
+          { "weight": 1.0, "item": "sexbound_tribalbed2-recipe" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundRareItem": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.6, "item": "sexboundloungeableaddon2" },
+          { "weight": 0.2, "pool": "sexboundRareLoungeableItemRecipe" },
+          { "weight": 0.2, "item": "sexbound_emptyjar" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundRareLoungeableItemRecipe": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 1.0, "item": "sexbound_airtightdome-recipe" },
+          { "weight": 1.0, "item": "sexbound_apextent-recipe" },
+          { "weight": 1.0, "item": "sexbound_florancouch-recipe" },
+          { "weight": 1.0, "item": "sexbound_medievalcellbed-recipe" },
+          { "weight": 1.0, "item": "sexbound_prisonmattress-recipe" },
+          { "weight": 1.0, "item": "sexbound_wheelbarrow-recipe" },
+          { "weight": 1.0, "item": "sexbound_tier3bed-recipe" },
+          { "weight": 1.0, "item": "sexbound_tier4bed-recipe" },
+          { "weight": 1.0, "item": "sexbound_shower" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundLegendaryItem": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 1.0, "pool": "sexboundLegendaryLoungeableItemRecipe" }
+        ]
+      }
+    ]
+  ],
+
+  "sexboundLegendaryLoungeableItemRecipe": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 0.5, "item": "sexbound_bigbeastcage-recipe" },
+          { "weight": 0.5, "item": "sexbound_trampoline-recipe" }
+        ]
+      }
+    ]
+  ],
+  
+  "sexboundCodices": [
+    [
+      0,
+      {
+        "pool": [
+          { "weight": 1.0, "item": "sexbound_sexed-codex" }
+        ]
+      }
+    ]
+  ]
+}

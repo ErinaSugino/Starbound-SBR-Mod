@@ -1,0 +1,26 @@
+{
+  "name": "sexboundspectator",
+  "description": null,
+  "scripts": [],
+  "parameters": {},
+  "root": {
+    "title": "dynamic",
+    "type": "composite",
+    "name": "dynamic",
+    "parameters": {},
+    "children": [
+      {
+        "title": "Sexbound",
+        "type": "module",
+        "name": "sexbound",
+        "parameters": {}
+      },
+      {
+        "title": "spectator",
+        "type": "module",
+        "name": "spectator",
+        "parameters": {}
+      }
+    ]
+  }
+}
