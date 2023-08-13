@@ -1,5 +1,0 @@
-list.bat
-list.txt
-twoactors-centered.animation
-twoactors-org.animation
-twoactors.animation
