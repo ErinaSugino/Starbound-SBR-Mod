@@ -9472,7 +9472,7 @@
 					"idle_toy": {
 						"frames": 1,
 						"cycle": 1,
-						"mode":" loop"
+						"mode": "loop"
 					},
 					"position1": {
 						"frames": 5,

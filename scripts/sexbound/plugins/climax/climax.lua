@@ -511,7 +511,7 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
         
         if self._config.enableClimaxParticles then
-            animator.burstParticleEmitter("insemination-drip" .. selfNumber)
+            animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
         end
     end
 end
@@ -616,7 +616,7 @@ end
 
 --- Returns whether or not this actor is currently inflated
 function Sexbound.Actor.Climax:isInflated()
-    return self._inflation >= self:getInflationThreshold
+    return self._inflation >= self:getInflationThreshold()
 end
 
 --- Returns a sound effect by specifed name or the table of sound effects.

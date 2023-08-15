@@ -249,7 +249,7 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         self:tryToApplyPregnantStatusEffectForThisActor(daddy)
     end
     
-    if self._parent:getEntityType == "npc" and daddy:getEntityType() == "npc" then
+    if self._parent:getEntityType() == "npc" and daddy:getEntityType() == "npc" then
         self._parent._config.fertilityPenalty = self._parent._config.fertilityPenalty * (self._parent._config.fertilityPenalty / 2)
         if self._parent._config.fertilityPenalty < 0.0001 then self._parent._config.fertilityPenalty = 0 end
     end
@@ -409,7 +409,7 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
     
-    if self:getParent:getEntityType() == "npc" and otherActor:getEntityType() == "npc" then
+    if self:getParent():getEntityType() == "npc" and otherActor:getEntityType() == "npc" then
         fertility = fertility * self._parent._config.fertilityPenalty
     end
     
@@ -793,7 +793,6 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateEnableFreeForAll(self._config.enableFreeForAll)
     self:validateEnableMultipleImpregnations(self._config.enableMultipleImpregnations)
     self:validateEnablePregnancyFetish(self._config.enablePregnancyFetish)
-    self:validateEnableInflationFetish(self._config.enableInflationFetish)
     self:validateFertility(self._config.fertility)
     self:validateFertilityBonusMult(self._config.fertilityBonusMult)
     self:validateFertilityBonusMax(self._config.fertilityBonusMax)

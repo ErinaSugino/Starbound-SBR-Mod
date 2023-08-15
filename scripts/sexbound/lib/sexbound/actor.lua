@@ -1378,7 +1378,7 @@ function Sexbound.Actor:getUIData(args)
             isPreClimaxing      = self._isPreClimaxing or false,
             isScriptedClimaxing = self._isScriptedClimaxing or false
         }
-    })
+    }
 
     if self:getPlugins("climax") then
         data.climax = {
