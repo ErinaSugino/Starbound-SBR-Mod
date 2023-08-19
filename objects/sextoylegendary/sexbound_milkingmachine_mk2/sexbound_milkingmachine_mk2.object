@@ -20,11 +20,7 @@
   "hylotlDescription"  : "Might come in handy.",
   "novakidDescription" : "Might come in handy.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex",
-	"sexbound_milkmode"
-  ],
+  "sitStatusEffects" : ["sexbound_sex",	"sexbound_milkmode"],
   
   "interactive" : true,
   
@@ -74,6 +70,7 @@
     "position" : {
       "sex" : [ "standing_milkingmachine_mk2_actor2" ]
     },
+	"idlePosition": "idle_toy2",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -135,6 +132,11 @@
                   "offset" : [0.0, 0.0]
                 }
               },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [0.0, 0.0]
+                }
+              },
               "position1-reset" : {
                 "properties" : {
                   "offset" : [0.0, 0.0]
@@ -152,6 +154,11 @@
                 }
               }, 
               "position1-climax" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              },
+			  "position1-postclimax" : {
                 "properties" : {
                   "offset" : [0.25, 0.0]
                 }
@@ -176,6 +183,11 @@
                 }
               }, 
               "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              },
+			  "position1-postclimax" : {
                 "properties" : {
                   "offset" : [-0.375, 0.0]
                 }

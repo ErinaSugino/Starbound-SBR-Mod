@@ -20,10 +20,7 @@
   "hylotlDescription"  : "A pillow with a character imprinted on it.",
   "novakidDescription" : "A pillow with a character imprinted on it.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -61,6 +58,7 @@
     "position" : {
       "sex" : [ "cowgirl_sextoy_actor2" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -117,13 +115,16 @@
                   "offset" : [-3.375, 0.125]
                 }
               },
-              
               "position4-climax" : {
                 "properties" : {
                   "offset" : [-3.375, 0.125]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0.125]
+                }
+              },
               "position4-reset" : {
                 "properties" : {
                   "offset" : [-3.375, 0.125]
@@ -141,13 +142,16 @@
                   "offset" : [-1.875, 1.5]
                 }
               },
-              
               "position4-climax" : {
                 "properties" : {
                   "offset" : [-1.875, 1.5]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-1.875, 1.5]
+                }
+              },
               "position4-reset" : {
                 "properties" : {
                   "offset" : [-1.875, 1.5]
@@ -169,13 +173,16 @@
                   "zLevel" : [42,42,42,42,42]
                 }
               },
-              
               "position4-climax" : {
                 "frameProperties" : {
                   "zLevel" : [42]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42,42,42,42,42,42,42,42,42]
+                }
+              },
               "position4-reset" : {
                 "frameProperties" : {
                   "zLevel" : [42]

@@ -21,10 +21,7 @@
   "hylotlDescription"  : "I certainly hope that's not intended to look like one of us.",
   "novakidDescription" : "There's something fishy about this dildo.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -78,6 +75,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false

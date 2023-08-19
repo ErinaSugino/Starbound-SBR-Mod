@@ -21,10 +21,7 @@
   "hylotlDescription"  : "A dragon dildo! Not bad.",
   "novakidDescription" : "A dragon dildo! Not bad.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -78,6 +75,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -120,6 +118,11 @@
                 }
               }, 
               "position2-climax" : {
+                "properties" : {
+                  "offset" : [-2.125, 0.0]
+                }
+              },
+			  "position2-postclimax" : {
                 "properties" : {
                   "offset" : [-2.125, 0.0]
                 }

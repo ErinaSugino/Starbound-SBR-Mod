@@ -30,10 +30,7 @@
   "hylotlDescription"  : "It's so glowy, I can nearly see the glow even when I'm using it.",
   "novakidDescription" : "This isn't the real thing, but it'll sure as hell work.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -87,6 +84,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false

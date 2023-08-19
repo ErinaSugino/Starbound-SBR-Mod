@@ -21,10 +21,7 @@
   "hylotlDescription"  : "Exoticity can be very appealing, but falling back to what you know best can sometimes be quite comforting.",
   "novakidDescription" : "This looks very much like a fish.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -78,6 +75,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false

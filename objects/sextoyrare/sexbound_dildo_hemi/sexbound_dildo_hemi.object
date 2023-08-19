@@ -22,10 +22,7 @@
   "novakidDescription" : "Snakes have two dicks? Who knew?",
   "nekiDescription"    : "Dick for two Neki holes. But only fit one Neki?",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -79,6 +76,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false

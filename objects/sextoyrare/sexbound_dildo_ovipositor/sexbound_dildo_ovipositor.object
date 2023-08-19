@@ -20,12 +20,8 @@
   "humanDescription"   : "Something about that dildo worries me.",
   "hylotlDescription"  : "Something about that dildo worries me.",
   "novakidDescription" : "Something about that dildo worries me.",
-  "nekiDescription"    : "Weird dick. Gives fucks, but shoves eggs in womb.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -79,6 +75,7 @@
     "position" : {
       "sex" : [ "doggy_ovipositor_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false

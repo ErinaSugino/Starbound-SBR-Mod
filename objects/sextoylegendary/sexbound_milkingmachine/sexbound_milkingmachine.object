@@ -19,13 +19,8 @@
   "humanDescription"   : "I don't think this milking machine is for mooshi.",
   "hylotlDescription"  : "I don't think this milking machine is for mooshi.",
   "novakidDescription" : "Looks like one o' them mooshi milkers. Always preferred to use my hands.",
-  "nekiDescription"    : "Machine that know to enjoy yummy Neki milk.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex",
-	"sexbound_milkmode"
-  ],
+  "sitStatusEffects" : ["sexbound_sex", "sexbound_milkmode"],
   
   "interactive" : true,
   
@@ -75,6 +70,7 @@
     "position" : {
       "sex" : [ "standing_milkingmachine_actor2" ]
     },
+	"idlePosition": "idle_toy2",
     
     "sex" : {
       "allowSwitchRoles" : false

@@ -21,16 +21,12 @@
   "humanDescription"   : "I already know where this is going...",
   "hylotlDescription"  : "It feels like an octopus, yet so much more gentle.",
   "novakidDescription" : "That ain't no buckin' bruncko!",
-  "nekiDescription"    : "Weird, tingly tentacle plant. But knows good fucks!",
   
   "retainObjectParametersInItem" : true,
   "cleanObject" : true,
   "hueshiftValue" : 0,
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -68,6 +64,7 @@
     "position" : {
       "sex" : [ "butterfly", "cowgirl_tentacleplant", "fellatio" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -97,13 +94,16 @@
                   "offset" : [2.750, 1.250]
                 }
               },
-			  
 			  "position5-climax" : {
                 "properties" : {
                   "offset" : [3.125, 1.250]
                 }
               },
-			  
+			  "position5-postclimax" : {
+                "properties" : {
+                  "offset" : [3.125, 1.250]
+                }
+              },
 			  "position6-climax" : {
                 "properties" : {
                   "offset" : [3.50, 1.250]
@@ -121,49 +121,56 @@
                   "offset" : [-3.375, 0]
                 }
               },
-              
               "position4-climax" : {
                 "properties" : {
                   "offset" : [-3.375, 0]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0]
+                }
+              },
               "position4-reset" : {
                 "properties" : {
                   "offset" : [-3.375, 0]
                 }
               },
-            
               "position5" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
                 }
               },
-              
               "position5-climax" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
                 }
               },
-              
+			  "position5-postclimax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
               "position5-reset" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
                 }
               },
-              
               "position6" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
                 }
               },
-              
               "position6-climax" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
                 }
               },
-              
+			  "position6-postclimax" : {
+                "properties" : {
+                  "offset" : [-2.25, 0]
+                }
+              },
               "position6-reset" : {
                 "properties" : {
                   "offset" : [-2.25, 0]
@@ -181,49 +188,56 @@
                   "offset" : [-3.5, 0.5]
                 }
               },
-              
               "position4-climax" : {
                 "properties" : {
                   "offset" : [-3.5, 0.5]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.5]
+                }
+              },
               "position4-reset" : {
                 "properties" : {
                   "offset" : [-3.5, 0.5]
                 }
               },
-            
               "position5" : {
                 "frameProperties" : {
-                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0], [-2.75, 0], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0], [-2.75, 0]]
                 }
               },
-              
               "position5-climax" : {
                 "frameProperties" : {
                   "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
                 }
               },
-              
+			  "position5-postclimax" : {
+                "frameProperties" : {
+                  "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0], [-2.75, 0], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0.125], [-2.75, 0], [-2.75, 0]]
+                }
+              },
               "position5-reset" : {
                 "frameProperties" : {
                   "offset" : [[-2.625, -0.125], [-2.625, -0.125], [-2.75, 0], [-2.75, 0.125], [-2.75, 0]]
                 }
               },
-              
               "position6" : {
                 "properties" : {
                   "offset" : [-1.625, 0]
                 }
               },
-              
               "position6-climax" : {
                 "properties" : {
                   "offset" : [-1.625, 0]
                 }
               },
-              
+			  "position6-postclimax" : {
+                "properties" : {
+                  "offset" : [-1.625, 0]
+                }
+              },
               "position6-reset" : {
                 "properties" : {
                   "offset" : [-1.625, 0]
@@ -245,31 +259,36 @@
                   "zLevel" : [42,42,42,42,42]
                 }
               },
-              
               "position4-climax" : {
                 "frameProperties" : {
                   "zLevel" : [42]
                 }
               },
-            
+			  "position4-postclimax" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42,42,42,42,42,42,42,42,42]
+                }
+              },
               "position4-reset" : {
                 "frameProperties" : {
                   "zLevel" : [42]
                 }
               },
-              
               "position5" : {
                 "frameProperties" : {
                   "zLevel" : [42,42,42,42,42]
                 }
               },
-              
               "position5-climax" : {
                 "frameProperties" : {
                   "zLevel" : [42]
                 }
               },
-            
+			  "position5-postclimax" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42,42,42,42,42,42,42,42,42]
+                }
+              },
               "position5-reset" : {
                 "frameProperties" : {
                   "zLevel" : [42]

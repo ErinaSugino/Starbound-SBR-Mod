@@ -20,10 +20,7 @@
   "hylotlDescription"  : "What a pretty fleshlight. That looks inviting.",
   "novakidDescription" : "What a pretty fleshlight. That looks inviting.",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -73,6 +70,7 @@
     "position" : {
       "sex" : [ "standing_sextoy_actor2" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -107,6 +105,11 @@
                   "offset" : [3.5, 1.5]
                 }
               },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
               "position1-reset" : {
                 "properties" : {
                   "offset" : [3.5, 1.5]
@@ -124,13 +127,16 @@
                   "offset" : [-0.75, 0]
                 }
               },
-              
               "position1-climax" : {
                 "properties" : {
                   "offset" : [-0.75, 0]
                 }
               },
-            
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
               "position1-reset" : {
                 "properties" : {
                   "offset" : [-0.75, 0]

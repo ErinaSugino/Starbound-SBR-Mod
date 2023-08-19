@@ -21,10 +21,7 @@
   "hylotlDescription"  : "How does it do that?",
   "novakidDescription" : "How does it do that?",
   
-  "sitStatusEffects" : [
-    "dontstarve",
-    "sexbound_sex"
-  ],
+  "sitStatusEffects" : ["sexbound_sex"],
   
   "interactive" : true,
   
@@ -78,6 +75,7 @@
     "position" : {
       "sex" : [ "doggy_sextoy_actor1" ]
     },
+	"idlePosition": "idle_toy",
     
     "sex" : {
       "allowSwitchRoles" : false
@@ -120,6 +118,11 @@
                 }
               }, 
               "position2-climax" : {
+                "properties" : {
+                  "offset" : [-2.625, 0.0]
+                }
+              },
+			  "position2-postclimax" : {
                 "properties" : {
                   "offset" : [-2.625, 0.0]
                 }
