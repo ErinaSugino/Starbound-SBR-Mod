@@ -510,7 +510,7 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
         
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
         
-        if self._config.enableClimaxParticles then
+        if self._config.enableClimaxParticles and oldAmount > 0 then
             animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
         end
     end
