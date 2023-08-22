@@ -1365,7 +1365,7 @@ function Sexbound.Actor:getUIData(args)
         showHeadwear    = self:getApparel():getIsVisible("headwear"),
         showLegswear    = self:getApparel():getIsVisible("legswear"),
         showNippleswear = self:getApparel():getIsVisible("nippleswear"),
-        frameName       = self:getFrameName(actor:getAnimationState()),
+        frameName       = self:getFrameName(self:getAnimationState()),
         gender          = self:getGender(),
         subGender       = self:getSubGender(),
         entityType      = self:getEntityGroup(),
@@ -1373,7 +1373,7 @@ function Sexbound.Actor:getUIData(args)
         species         = self:getSpecies(),
         status          = {
             isPregnant          = self:isVisiblyPregnant(),
-            isSwollen           = self:isBellySwollen(),
+            isInflated          = self:isInflated(),
             isClimaxing         = self._isClimaxing or false,
             isPreClimaxing      = self._isPreClimaxing or false,
             isScriptedClimaxing = self._isScriptedClimaxing or false

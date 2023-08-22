@@ -100,7 +100,7 @@ function Sexbound.Actor.Climax:onMessage(message)
     
     -- On Message Received: Inflate
     if message:isType("Sexbound:Climax:Inflate") then
-        self:inflate(message)
+        self:inflate(message:getData())
     end
 end
 
@@ -399,7 +399,7 @@ function Sexbound.Actor.Climax:shoot(...)
     
     local target = config.actorRelation[actorNum]
     if target then
-        local _actor = actor:getParent():getActors()[target] or nil
+        local _actor = self:getParent():getParent():getActors()[target] or nil
         if interaction == "oral" then
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
