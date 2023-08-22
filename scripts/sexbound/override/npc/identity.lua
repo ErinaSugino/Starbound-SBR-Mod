@@ -33,9 +33,9 @@ function Sexbound.NPC.Identity:build()
     local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
     
     -- Separate directives string into individual color pairs
-    local bodyColors
+    local bodyColors = {}
     for r in string.gmatch(identity.bodyDirectives, "?replace;([^?]+);?") do table.insert(bodyColors, r) end
-    local hairColors
+    local hairColors = {}
     for r in string.gmatch(identity.hairDirectives, "?replace;([^?]+);?") do table.insert(hairColors, r) end
     
     identity.genetics.bodyColor = {}
