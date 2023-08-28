@@ -1,5 +1,50 @@
 =====CHANGELOG=====
-	D O N E
+	1 . 1
+		[Player affection changes]
+			=> General
+				-> Merged Lustbound into SBR
+					--> Finding and downloading the "updooted" version of "Lustbound Base" and "Lustbound Base Manager", aswell as the SBR Patch are no longer necessary!
+					--> Full compatibility with old Lustbound addons, like the Aphrodite's Bow or Omnibrowser one.
+				-> Seed-fixed NPC arousal
+					--> Opposite to how it was before, the same NPC (entity with the same seed) will always have the same arousal gain. (Still based on the config range.)
+				-> Adjusted default natural horniness rate - it now only takes 3-7 in-game days (40 - 100 minutes).
+			=> Climax System
+				-> Added cum inflation (Thanks to XSpeedPL)
+					--> Multiple climaxes into the same actor trigger the pregnant belly sprite (configurable).
+				-> Re-added option for NPCs to auto-climax regardless of player presence.
+			=> Pregnancy System
+				-> Re-added baby color genetics
+					--> Babies will now try to match colors close to those of their parents.
+				-> Added multi-pregnancies
+					--> There is now a (configurable) chance for a pregnancy to consist of multiple babies (twins, triplets, ...)
+				-> Added cross-breed mechanics
+					--> If configured, the child of two specified species can now be a third species.
+				-> Added stacking fertility bonus (Thanks to XSpeedPL)
+					--> Multiple successive climaxes from the same actor gradually increases fertility.
+				-> Streamlined config "trimesterCount" and "trimesterLength" into "pregnancyLength".
+				-> Added stillborn chance (configurable).
+				-> Added generational NPC fertility degradation
+					--> NPCs fertility decreases with every NPCxNPC baby they have, until it reaches 0.
+					--> The starting multiplier also decreases with each generation of babies, until the next generation starts off infertile.
+					--> This is to counter the eventual overpopulation of the world through naturally horny, constantly fucking and birth-giving NPCs.
+					--> The player naturally bypasses this limit!
+				-> Added birthing effect
+					--> Upon giving birth, the player is forced into a solo-actor sexnode into a custom animation. This is to add immersion and make the player vulnerable throughout the process.
+					--> Currently this "animation" is a single lying frame from actor2 missionary, but can be animated properly.
+				-> **Restructured pregnancy data. Downgrading from 1.1 to a previous version will break/delete all ongoing pregnancies!**
+		[Modding affecting changes]
+			=> General
+				-> Made Actor UI data hookable
+					--> Actor data for SexUI syncing is now it's own method which can be easily overloaded, adding new data.
+			=> Pregnancy System
+				-> Modularized pregnancy system
+					--> Every pregnancy now has a type, by default "baby".
+					--> This pregnancy type is queried upon baby generation and giving birth, loading a module from the pregnancy plugin folder, by default "baby.lua" containing the class "Baby" (always capital first letter!)
+					--> This class contains the methods "create" and "birth" with the respective parameters to handle baby generation upon impregnation and birthing the entity from the pregnancy data.
+					--> This allows the creation of custom pregnancy types that behave differently, like egg-based monster pergnancies.
+				-> Added cross-breeding mechanic
+					--> Config table "geneticTable" controls which mother and father species create which third-species baby. Only child species should add these configs, as non-existant baby species will abort the whole process.
+	1 . 0
 		[Player affecting changes]
 			=> General
 				-> Added "Fertility Pill" item. Boosts the fertility chance set in the config by another new config set multiplier while the effect is active
@@ -97,4 +142,57 @@
 				-> Removed all features except for status effects that apply subgenders.
 					--> For global subgenders per species, use species gender specific default statuses (see [GENERAL])
 					--> For entity specific overrides, use entity identity storage
+
+	P E N D I N G		
+		=> [CORE] Add StarExtension Dependency [V1.1]
+			=> Enables varying thrust sound effects for sex
+			=> Enables new immersion layer, replacing SAIL radio messages with chat messages
+			=> Enables proper scaling for kid NPCs
+		=> [GENERAL] ~~Add new positions~~ (Thanks red!)
+		=> [GENERAL] Rework animation speed logic to be actor dependant not position dependant [I]
+		=> [GENERAL] Add race specific speed, arousal and other modifiers [I]
+		=> [GENERAL] Add proper NPC logic (logical way NPCs choose which sex node to join based on who is in it, who they prefer fucking with, ...) [Oh god that may take a while] [I]
+		=> [GENERAL] Add family relation system (Incest management, special dialogue for family members, ...) [F] <--
+		=> [GENERAL] Add general support for NPC (x NPC or x Player) relationships affection sex preferences [Yep, not anytime soon] [I]
+		=> [GENERAL] Support for non-humanoid species [B]
+		=> [GENERAL] __Rework persistent sub-gender system (again?) [I]__
+		=> [GENERAL] Add commands [C]
+		=> [GENERAL] Add humping variety to sex animation [Probably impossible] [I]
+		=> [GENERAL] Add true kid NPCs [F] <--
+		=> [CLIMAX] Make condoms degrading (climax with condom -> used condom -> broken condom) [S]
+		=> [CLIMAX] Upgrade status prevention/condoms to be gender specific [S]
+		=> [CLIMAX] Fix scripted climax cancel conditions [BUGFIX]
+		=> [CLIMAX] ~~Cumflation logic~~ [L]
+		=> [CLIMAX] ~~Cum drip logic~~ [L]
+		=> [CLIMAX] Rework cum drip logic [L]
+		=> [PREGNANCY] Add possibility for condoms to break [S]
+		=> [PREGNANCY] Add maximum complexity logic (lingering cum, washing) [L]
+		=> [PREGNANCY] NPC realistic pregnancy logic [L]/[F]?
+		=> [SEXTALK] Rework dialogue structure to be dynamic [BS]
+		=> [MODDING] Assimilate "Sexbound Defeat" if allowed [C]
+		=> [MODDING] Update default animation depth to the level of Red's "Relayer" project? [I]
+		=> [MODDING] Make sextalk loading and states modular and hookable?
+		=> [MODDING] Rework animation structure to accomodate for non-humanoid actor [B]
+		
+		=> [IDEA] Rework of climax system
+			==> Climax available at 100
+			==> Automatic climaxing at 120 for NPCs
+			==> Automatic special climax if 2 actors at 100+
+		=> [IDEA] Cum outside option
+			==> With persistent cum on head/body logic
+		=> [IDEA] Manual speed adjust
+			==> Slow, fast, thrust for sex animations
+			==> Needs NPC AI
+				==> NPCs change position only after climax, but change speed based on current timer
+		
+		=> Finish animation editor.
+		
+	S T A G I N G
+		=> Command & Conquer Update [C]
+		=> Founding Family Update [F] <--
+		=> Big Changes Update [B]
+		=> Bedtime Stories Update [BS]
+		=> Immersion Update [I]
+		=> Safe and Sound Update [S]
+		=> Locked & Loaded Update [L]
 ===================
