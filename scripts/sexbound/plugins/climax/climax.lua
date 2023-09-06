@@ -403,7 +403,9 @@ function Sexbound.Actor.Climax:shoot(...)
         if interaction == "oral" then
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
-        if self._config.enableInflation then Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate()) end
+        if interaction == "direct" and self._config.enableInflation then
+            Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate())
+        end
     end
 end
 
@@ -491,8 +493,10 @@ function Sexbound.Actor.Climax:inflate(amount)
     local oldAmount = self._inflation
     local actor = self._parent
     self._inflation = self._inflation + amount
+    self:getLog():debug("Actor "..actor:getActorNumber().." gotten inflation request. New value: "..self._inflation)
     if oldAmount < self:getInflationThreshold() and self._inflation >= self:getInflationThreshold() then
         actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to show inflated belly sprite.")
     end
 end
 
@@ -502,17 +506,21 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
 
     if self._dripTimer == 0 then
         local oldAmount = self._inflation
-        local actor = self._parent
-        self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
-        if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
-            actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        if oldAmount > 0 then
+            local actor = self._parent
+            self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
+            self:getLog():debug("Actor "..actor:getActorNumber().." dripping. New amount: "..self._inflation)
+            if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
+                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+                self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to hide inflated belly sprite.")
+            end
+            
+            if self._config.enableClimaxParticles then
+                animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
+            end
         end
         
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
-        
-        if self._config.enableClimaxParticles and oldAmount > 0 then
-            animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
-        end
     end
 end
 

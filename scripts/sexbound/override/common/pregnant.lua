@@ -240,11 +240,13 @@ function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
         pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
         
         local babyClass
-        if not pcall(function()
+        local r,err pcall(function()
             babyClass = _G[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
-        end) then
+        end)
+        if not r then
             -- Can't load = can't generate baby = no pregnancy; abort
             sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+            sb.logError("Error: "..tostring(err))
             return nil
         end
         
