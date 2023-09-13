@@ -18,3 +18,11 @@ The goal and purpose of this mod is to introduce the mechanics and concepts of n
 Major changes are noted on the releases, detailed changelog can always be found inside the released files.
 Detailed usage information, FAQs and modding tutorials can be found in the [Wiki](/../../wiki).
 When you found a bug or incompatibility with another mod you can report this in the [Issues](/../../issues). Only issues following standard reporting procedures will be taken into consideration.
+
+## Official Mod Sources
+Due to the GPL Open-Source nature of the mod, people have been starting to distribute copies in other places. The following list is a complete list of all **official, maintained** sources where the mod can be found:
+> This GitHub Repository
+> LoversLab (Mod ID **26132**)
+> Nexusmods (Mod ID **1015**)
+
+Any other source where the mod might be found is **inofficial**, not affiliated with me, and will most likely not receive any form of maintenance or support. Use at your own risk.
