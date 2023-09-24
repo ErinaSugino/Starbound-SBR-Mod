@@ -20,7 +20,7 @@ end
 --  !Entity tables such as "player", "npc", "monster" will not be available and "entity" refers to the sexnode object!
 function Baby:create(mother, father)
     local baby = {
-        birthGender = self:createRandomBirthGender(),
+        birthGender = self._parent:createRandomBirthGender(),
         motherName = mother:getName(),
         motherId = mother:getEntityId(),
         motherUuid = mother:getUniqueId(),
@@ -38,17 +38,17 @@ function Baby:create(mother, father)
         local choices = {actor:getType(), daddy:getType()}
         baby.npcType = util.randomChoice(choices)
         baby.generationFertility = baby.generationFertility * (baby.generationFertility / 2)
-    else if baby.motherType == "player" or baby.fatherType == "player" then baby.npcType = "crewmembersexbound"
-    else baby.npcType = "villager"end
+    elseif baby.motherType == "player" or baby.fatherType == "player" then baby.npcType = "crewmembersexbound"
+    else baby.npcType = "villager" end
     
     baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(mother, father)
     
-    local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = self._parent:getGenes()
-    local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = otherActor:getGenes()
+    local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = mother:getGenes()
+    local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = father:getGenes()
     local bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage
     if baby.birthEntityGroup ~= "humanoid" then return baby end -- no need to waste time on colors for monsters
-    if baby.birthSpecies == mother:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = self._parent:getGenePool() -- Baby is same species as mother - load species gene pool from cache
-    elseif baby.birthSpecies == father:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = otherActor:getGenePool() -- Baby is same species as father - load species gene pool from cache
+    if baby.birthSpecies == mother:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = mother:getGenePool() -- Baby is same species as mother - load species gene pool from cache
+    elseif baby.birthSpecies == father:getSpecies() then bodyColorPool, bodyColorPoolAverage, undyColorPool, undyColorPoolAverage, hairColorPool, hairColorPoolAverage = father:getGenePool() -- Baby is same species as father - load species gene pool from cache
     else
         -- Baby is third species - load species file and extract color gene pool
         if self._geneCache[baby.birthSpecies] == nil then self:fetchGenes(baby.birthSpecies) end
@@ -85,7 +85,7 @@ function Baby:create(mother, father)
     local babyUndyColor = nil
     if undyColorPool[motherUndyIndex] ~= "" then
         babyUndyColor = {}
-        for i,v in pairs(undyColorPool[motherundyIndex]) do
+        for i,v in pairs(undyColorPool[motherUndyIndex]) do
             babyUndyColor[i] = Sexbound.Util.rgbToHex(self._parent:crossfade({Sexbound.Util.hexToRgb(v)}, {Sexbound.Util.hexToRgb(undyColorPool[fatherUndyIndex][i])}, undyColorLambda))
         end
     end
@@ -311,7 +311,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         
         -- Build directives like Starbound does
         bodyDirectives = bodyColor
-        if altOptionAsUndyColor then altColor = undyColorPalette
+        if altOptionAsUndyColor then altColor = undyColorPalette end
         hairColor = bodyColor
         if headOptionAsHairColor then
             hairColor = hairColorPalette

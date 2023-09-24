@@ -31,11 +31,17 @@ function BabyFactory:make(actor, daddy)
     local pregnancyType = (pregnancyTypes[motherSpecies] or {})[fatherSpecies] or "baby"
     
     -- Try loading baby class
-    pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+    local r,err = pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+    if not r then
+        sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+        sb.logError("Error: "..tostring(err))
+        return nil
+    end
     
     local babyClass
-    local r,err = pcall(function()
-        babyClass = _ENV[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
+    r,err = pcall(function()
+        local ucPregnancyType = pregnancyType:gsub("^%l", string.upper)
+        babyClass = _ENV[ucPregnancyType]:new(self, self._config)
     end)
     if not r then
         -- Can't load = can't generate baby = no pregnancy; abort
@@ -71,8 +77,16 @@ function BabyFactory:make(actor, daddy)
     
     local nextBaby, babyCount = true, 0
     while nextBaby and babyCount < (self._config.multiPregnancyLimit or 3) do
-        table.insert(pregnancy.babies, babyClass:create(actor, daddy))
-        nextBaby = math.random() <= (self._config.multiPregnancyChance or 0.1)
+        r,err = pcall(function()
+            table.insert(pregnancy.babies, babyClass:create(actor, daddy))
+            babyCount = babyCount + 1
+            nextBaby = math.random() <= (self._config.multiPregnancyChance or 0.1)
+        end)
+        if not r then
+            sb.logError("SxB: Baby generation errored! Aborting further generation.")
+            sb.logError("Error: "..tostring(err))
+            nextBaby = false
+        end
     end
     if babyCount <= 0 then return nil end -- No babies? No pregnancy!
     pregnancy.babyCount = babyCount

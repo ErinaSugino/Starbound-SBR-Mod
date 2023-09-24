@@ -209,5 +209,5 @@ end
 -- @return hexString
 Sexbound.Util.rgbToHex = function(rgb)
     local r,g,b = rgb[1],rgb[2],rgb[3]
-    return string.format("%x",r*255)..string.format("%x",g*255)..string.format("%x",b*255)
+    return string.format("%x",r)..string.format("%x",g)..string.format("%x",b)
 end
