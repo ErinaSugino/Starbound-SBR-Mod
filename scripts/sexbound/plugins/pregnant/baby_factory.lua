@@ -35,7 +35,7 @@ function BabyFactory:make(actor, daddy)
     
     local babyClass
     local r,err = pcall(function()
-        babyClass = _G[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
+        babyClass = _ENV[pregnancyType:gsub("^%l", string.upper)]:new(self, self._config)
     end)
     if not r then
         -- Can't load = can't generate baby = no pregnancy; abort
