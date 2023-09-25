@@ -410,7 +410,7 @@ function Sexbound.Player:initMessageHandlers()
         self._pregnant:triggerActualPregnancy(baby)
     end)
     message.setHandler("Sexbound:Debug:Shrink", function(_, _, args)
-        status.addEphemeralEffect("sexbound_test")
+        status.addEphemeralEffect("sexbound_kid")
     end)
 end
 

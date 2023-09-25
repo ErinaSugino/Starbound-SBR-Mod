@@ -34,7 +34,7 @@ end
 -- @param dt
 function Sexbound.Common.Arousal:update(dt)
     self:try(function()
-        self:addAmount(self._regenRate * dt)
+        if not self._isKid then self:addAmount(self._regenRate * dt) end
     end)
 end
 
@@ -52,6 +52,8 @@ end
 --- Sets value of Arousal resource to entity's defined maxArousal stat
 -- @return a boolean value
 function Sexbound.Common.Arousal:instaMax()
+    if self._isKid then return false end
+    
     local result = false
     self:try(function()
         self:setAmount(self._maxAmount)
@@ -81,18 +83,23 @@ end
 --- Adds an amount to this entity's arousal resource
 -- @param amount a decimal number
 function Sexbound.Common.Arousal:addAmount(amount)
+    if self._isKid then return end
+    
     status.modifyResource(self._resourceName, amount)
 end
 
 --- Returns the value of this entity's arousal resource
 -- @return a decimal number
 function Sexbound.Common.Arousal:getAmount()
-    return status.resource(self._resourceName)
+    if self._isKid then return 0
+    else return status.resource(self._resourceName) end
 end
 
 --- Sets an amount to this entity's arousal resource
 -- @param amount a decimal number
 function Sexbound.Common.Arousal:setAmount(amount)
+    if self._isKid then return end
+    
     status.setResource(self._resourceName, amount)
 end
 

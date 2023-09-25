@@ -264,7 +264,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         fatherName = babyConfig.fatherName,
         generationFertility = babyConfig.generationFertility,
         fertilityPenalty = babyConfig.generationFertility,
-        kid = 840*5 --5 days of being a kid
+        kid = world.time() + 840*5 --5 days of being a kid
     }
     params.identity = {}
     params.identity.gender = babyConfig.birthGender
