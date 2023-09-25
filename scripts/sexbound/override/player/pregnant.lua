@@ -258,7 +258,7 @@ end
 
 function Sexbound.Player.Pregnant:doBirthingLoop(index, babyId, name)
     name = name or nil
-    local babyConfig = storage.sexbound.pregnancy[index].babies[babyId]
+    local babyConfig = storage.sexbound.pregnant[index].babies[babyId]
     if babyConfig == nil then
         sb.logInfo("Trying to give birth to a baby whose data does not exist. Aborting, removing data.")
         self:endBirthing(index)

@@ -230,7 +230,7 @@ function Sexbound.NPC:handleRetrieveStorage(args)
 end
 
 function Sexbound.NPC:handleSyncStorage(args)
-    if this._idKid then return end
+    if self._idKid then return end
     
     args = self:fixPregnancyData(args)
     self:mergeStorage(args)
