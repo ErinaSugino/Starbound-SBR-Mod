@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_applyapparel",
+  "blockingStat"    : "sexboundImmunity",
   "animationConfig" : "sexbound_applyapparel.animation",
   "defaultDuration" : 1,
   "effectConfig"    : {},

@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_changegenderdefault",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1,
   "effectConfig"    : {},
   "scripts"         : [ "sexbound_changegenderdefault.lua" ],

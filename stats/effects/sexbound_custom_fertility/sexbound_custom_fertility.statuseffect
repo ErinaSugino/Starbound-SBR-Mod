@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_custom_fertility",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 600,
   "effectConfig"    : {},
   "icon"            : "/interface/statuses/fertile.png",

@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_mind_control",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1,
   "scripts"         : [ "sexbound_mind_control.lua" ]
 }

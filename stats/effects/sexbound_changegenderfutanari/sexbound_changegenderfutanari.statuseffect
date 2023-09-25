@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_changegenderfutanari",
+  "blockingStat"    : "sexboundImmunity",
   "animationConfig" : "sexbound_changegenderfutanari.animation",
   "defaultDuration" : 3,
   "effectConfig"    : {},

@@ -1,4 +1,6 @@
 function init()
+  if status.stat('specialStatusImmunity') > 0 then effect.expire() return end
+  
   effect.addStatModifierGroup({
     { stat = "invulnerable",           amount = 1 },
     { stat = "fireStatusImmunity",     amount = 1 },

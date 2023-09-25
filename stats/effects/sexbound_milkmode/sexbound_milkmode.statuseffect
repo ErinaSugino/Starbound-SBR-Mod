@@ -1,5 +1,6 @@
 {
   "name" : "sexbound_milkmode",
+  "blockingStat" : "sexboundImmunity",
   "effectConfig" : {},
   "defaultDuration" : 600,
 

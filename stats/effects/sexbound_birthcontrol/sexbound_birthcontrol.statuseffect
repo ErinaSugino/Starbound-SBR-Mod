@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_birthcontrol",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 600,
   "effectConfig"    : {},
   "icon"            : "/interface/statuses/sex.png",

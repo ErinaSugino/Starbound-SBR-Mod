@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_sex",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 999,
   "effectConfig"    : {},
   "icon"            : "/interface/statuses/sex.png",

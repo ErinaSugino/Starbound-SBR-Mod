@@ -23,6 +23,8 @@ function Sexbound.NPC.Transform:new(parent)
 end
 
 function Sexbound.NPC.Transform:handleTransform(args)
+    if self._parent._isKid then return false end
+    
     if self:getCanTransform() then
         -- Override sexbound config that is supplied to the spawned sexnode
         self:setSexboundConfig(args.sexboundConfig)
@@ -72,6 +74,8 @@ function Sexbound.NPC.Transform:notifyTransform()
 end
 
 function Sexbound.NPC.Transform:tryCreateNode()
+    if self._parent._isKid then return nil end
+    
     local position = self:findNearbyOpenSpace()
 
     if position == false then

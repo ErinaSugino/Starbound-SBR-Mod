@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_givebirth",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1,
   "effectConfig"    : {},
   "scripts"         : [ "sexbound_givebirth.lua" ]

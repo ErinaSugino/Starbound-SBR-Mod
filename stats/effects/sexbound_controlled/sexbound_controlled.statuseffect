@@ -1,6 +1,7 @@
 {
   "name"            : "sexbound_controlled",
   "animationConfig" : "/artwork/humanoid/twoactors.animation",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 999,
   "effectConfig"    : {
     "npcConfig" : {

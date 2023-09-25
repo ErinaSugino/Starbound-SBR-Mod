@@ -1,5 +1,6 @@
 function init()
     effect.setParentDirectives("?scalenearest=0.6")
+    effect.addStatModifierGroup({{stat = "sexboundImmunity", amount = 1}})
 end
 
 function update(dt)

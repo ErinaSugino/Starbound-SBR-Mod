@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_birthingpill",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 5,
   "effectConfig"    : {},
   "scripts"         : [ "sexbound_birthingpill.lua" ]
