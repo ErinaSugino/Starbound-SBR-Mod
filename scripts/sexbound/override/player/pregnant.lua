@@ -223,7 +223,7 @@ function Sexbound.Player.Pregnant:handleGiveBirth(index)
             --self:openBabyNamingWindow(index)
             self:startBirthing(index)
         else
-            pregnancyConfig.birthWorldTime = babyConfig.birthWorldTime + 840
+            pregnancyConfig.birthWorldTime = pregnancyConfig.birthWorldTime + 840
             pregnancyConfig.birthOSTime = os.time() + 3600
             self._isGivingBirth = false
         end
@@ -242,7 +242,7 @@ function Sexbound.Player.Pregnant:startBirthing(index)
         }
     }) then
         status.addEphemeralEffect("sexbound_invisible", 600)
-        sb.logInfo("Player birthing transform request succeeded - controllerId = "..tostring(self._transform._controllerId))
+        sb.logInfo("Player birthing transform request succeeded - controllerId = "..tostring(self._parent._transform._controllerId))
     else sb.logInfo("Player birthing transform request failed") end
     status.addEphemeralEffect("sexbound_birthing", 600)
     self._parent._transform:setCanTransform(oldCanTransform)
