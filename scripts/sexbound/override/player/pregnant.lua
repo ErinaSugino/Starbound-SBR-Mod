@@ -45,6 +45,10 @@ function Sexbound.Player.Pregnant:addPlayerMessageHandlers()
     message.setHandler("Sexbound:Pregnant:DebugNamedBirth", function(_, _, args)
         return self:openBabyNamingWindow(args)
     end)
+    
+    message.setHandler("Sexbound:Pregnant:BirthingPill", function(_, _, args)
+        return self:speedupBirth()
+    end)
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
@@ -97,6 +101,23 @@ function Sexbound.Player.Pregnant:updatePeriodCycle(dt)
             status.addEphemeralEffect("sexbound_custom_ovulating")
         end
     end
+end
+
+function Sexbound.Player:speedupBirth()
+    local babyIndex = nil
+    local birthTime = math.huge
+    
+    for i,p in ipairs(storage.sexbound.pregnant) do
+        if (p.delay or 0) <= 0 then
+            if p.birthWorldTime < birthTime then
+                babyIndex = i
+                birthTime = p.birthWorldTime
+            end
+        end
+    end
+    
+    if babyIndex == nil then return nil end
+    return self:handleGiveBirth(babyIndex)
 end
 
 
@@ -295,11 +316,13 @@ function Sexbound.Player.Pregnant:openBabyNamingWindow(pregnancyId, babyId)
     if not pregnancy or (pregnancy.delay or 0) > 0 then
         sb.logInfo("Attempting to birth invalid pregnancy - aborting.")
         self:endBirthing()
+        return
     end
     local babyConfig = storage.sexbound.pregnant[pregnancyId].babies[babyId]
     if babyConfig == nil then
         sb.logInfo("Attempting to birth invalid babyData - aborting, removing data.")
         self:endBirthing(index)
+        return
     end
     
     -- Check if player.interact is a function because some previous version of starbound did not implement it
