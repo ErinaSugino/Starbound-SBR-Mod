@@ -310,7 +310,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         end
         
         -- Build directives like Starbound does
-        bodyDirectives = bodyColor
+        bodyColor = bodyColorPalette
         if altOptionAsUndyColor then altColor = undyColorPalette end
         hairColor = bodyColor
         if headOptionAsHairColor then
