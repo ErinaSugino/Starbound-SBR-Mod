@@ -103,7 +103,7 @@ function Sexbound.Player.Pregnant:updatePeriodCycle(dt)
     end
 end
 
-function Sexbound.Player:speedupBirth()
+function Sexbound.Player.Pregnant:speedupBirth()
     local babyIndex = nil
     local birthTime = math.huge
     

@@ -35,7 +35,7 @@ function Baby:create(mother, father)
     }
     
     if baby.motherType == "npc" and baby.fatherType == "npc" then
-        local choices = {mother:getType(), daddy:getType()}
+        local choices = {mother:getType(), father:getType()}
         baby.npcType = util.randomChoice(choices)
         baby.generationFertility = baby.generationFertility * (baby.generationFertility / 2)
     elseif baby.motherType == "player" or baby.fatherType == "player" then baby.npcType = "crewmembersexbound"
