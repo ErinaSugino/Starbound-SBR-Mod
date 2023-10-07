@@ -1,6 +1,6 @@
 =====CHANGELOG=====
 	1 . 1
-		[Player affection changes]
+		[Player affecting changes]
 			=> General
 				-> Merged Lustbound into SBR
 					--> Finding and downloading the "updooted" version of "Lustbound Base" and "Lustbound Base Manager", aswell as the SBR Patch are no longer necessary!
@@ -8,6 +8,11 @@
 				-> Seed-fixed NPC arousal
 					--> Opposite to how it was before, the same NPC (entity with the same seed) will always have the same arousal gain. (Still based on the config range.)
 				-> Adjusted default natural horniness rate - it now only takes 3-7 in-game days (40 - 100 minutes).
+				-> Reworked NPC behaviour for choosing sexnodes when aroused
+					--> All available sexnodes are sorted by how compatible the NPC is with this node/the other actors in it
+					--> In order to influence the NPC's behaviour, a new config table "multiplier" has been added to the main config, in the new "behaviour" category.
+					--> This table defines with which weight the individual conditions are influencing the NPC's decision.
+					--> Furthermore, the option to completely forbid incest between NPCs has been added there as well.
 			=> Climax System
 				-> Added cum inflation (Thanks to XSpeedPL)
 					--> Multiple climaxes into the same actor trigger the pregnant belly sprite (configurable).
@@ -32,6 +37,9 @@
 					--> Upon giving birth, the player is forced into a solo-actor sexnode into a custom animation. This is to add immersion and make the player vulnerable throughout the process.
 					--> Currently this "animation" is a single lying frame from actor2 missionary, but can be animated properly.
 				-> **Restructured pregnancy data. Downgrading from 1.1 to a previous version will break/delete all ongoing pregnancies!**
+				-> Added True Kid NPCs
+					--> New kids given birth to are smaller than normal NPCs until they grow up after about 5 in-game days.
+					--> During the small stage, any and all sexbound features are blocked for this entity.
 		[Modding affecting changes]
 			=> General
 				-> Made Actor UI data hookable
@@ -158,7 +166,6 @@
 		=> [GENERAL] __Rework persistent sub-gender system (again?) [I]__
 		=> [GENERAL] Add commands [C]
 		=> [GENERAL] Add humping variety to sex animation [Probably impossible] [I]
-		=> [GENERAL] Add true kid NPCs [F] <--
 		=> [CLIMAX] Make condoms degrading (climax with condom -> used condom -> broken condom) [S]
 		=> [CLIMAX] Upgrade status prevention/condoms to be gender specific [S]
 		=> [CLIMAX] Fix scripted climax cancel conditions [BUGFIX]

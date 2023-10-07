@@ -251,3 +251,97 @@ function unloadSexActor(args, board)
 
     return false
 end
+
+function debugBehaviour(args, board)
+    if (self.sb_monster or self.sb_npc):canLog("behaviour") then
+        sb.logInfo("LOGGING OF BEHAVIOUR")
+        sb.logInfo(leveledDump(args, 2))
+        sb.logInfo(leveledDump(board, 2))
+    end
+    return true
+end
+
+function sortSexnodes(args, board)
+    local list = args.list or {}
+    local i = 1
+    local res = nil
+    local seen = {}
+    local controllers = {}
+    local nodeToController = {}
+    while i <= #list do
+        -- For each node queries, fetch the controller that it belongs to
+        local id = list[i] or 0
+        res = world.callScriptedEntity(id, "returnControllerId");
+        i = i + 1
+        if (self.sb_monster or self.sb_npc):canLog("behaviour") then
+            sb.logInfo("CALLING NODE#"..id)
+            sb.logInfo("GOT ID #"..tostring(res))
+        end
+        if res and not seen[res] then
+            controllers[res] = false
+            seen[res] = true
+        end
+        if res then nodeToController[id] = res end
+    end
+    if not next(controllers) then return false end
+    res = nil
+    for id,_ in pairs(controllers) do
+        -- For each unique controller, fetch the compatibility index
+        res = world.callScriptedEntity(id, "checkNodeCompatibility", (self.sb_monster or self.sb_npc):getCompatibilityData());
+        if (self.sb_monster or self.sb_npc):canLog("behaviour") then
+            sb.logInfo("CALLING CONTROLLER #"..id)
+            sb.logInfo("GOT INDEX "..tostring(res))
+        end
+        controllers[id] = res
+    end
+    local targetNode = nil
+    local targetIndex = 0
+    for j=1,#list do
+        local curIndex = controllers[nodeToController[list[j]]] or 0
+        if curIndex > targetIndex then targetNode = list[j] targetIndex = curIndex end
+    end
+    if (self.sb_monster or self.sb_npc):canLog("behaviour") then sb.logInfo("FINAL NODE: #"..tostring(targetNode).." with "..tostring(targetIndex)) end
+    if targetNode == nil then return false end
+    return true, {list=list,entity=targetNode}
+end
+
+function dump(o)
+    if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+function shallowDump(o)
+    if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. tostring(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+function leveledDump(o,n,i)
+    i=i or 0
+    n=n or 1
+    if type(o) == 'table' and i < n then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. leveledDump(v,n,i+1) .. ','
+      end
+      return s .. '} '
+    else
+      return tostring(o)
+    end
+end

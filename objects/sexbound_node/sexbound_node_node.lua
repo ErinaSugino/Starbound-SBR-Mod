@@ -85,3 +85,7 @@ function uninit()
         })
     end
 end
+
+function returnControllerId()
+    return self.controllerId
+end

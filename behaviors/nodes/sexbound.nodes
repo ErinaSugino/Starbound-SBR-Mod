@@ -174,5 +174,32 @@
     "category": "sexbound",
     "script": "/scripts/actions/sexbound.lua",
     "output": {}
+  },
+  
+  "sortSexnodes": {
+    "type": "action",
+    "name": "sortSexnodes",
+    "title": "",
+    "properties": {
+        "list": {"type": "list", "key": null}
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+        "list": {"type": "list", "key": null},
+        "entity": {"type": "entity", "key": null}
+    }
+  },
+  
+  "debugBehaviour": {
+    "type": "action",
+    "name": "debugBehaviour",
+    "title": "",
+    "properties": {
+        "list": {"type": "list", "key": null}
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
   }
 }

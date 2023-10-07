@@ -1215,6 +1215,112 @@ function Sexbound:stopSexMusicForEntity(entityId)
     world.sendEntityMessage(entityId, "stopAltMusic", 1)
 end
 
+function Sexbound:checkNodeCompatibility(args)
+    local mothderUuid = args.motherUuid or nil
+    local fatherUuid = args.fatherUuid or nil
+    local multiplier = self._config.behaviour or {}
+    multiplier = multiplier.multiplier or {
+        incest=-1,
+        twoactor=1,
+        gender=1,
+        compatible=1
+    }
+    local allowIncest = (self._config.behaviour or {}).allowIncest
+    local compatibility = 10
+    
+    if #self._actors == 1 then compatibility = compatibility + multiplier.twoactor end
+    
+    local genderBonus = 0
+    local compatibleBonus = 0
+    for i,a in ipairs(self._actors) do
+        -- Check for incest level first because it can be an abortion criterium
+        local identity = a:getIdentity()
+        local uuid = a._config.uniqueId
+        if args.motherUuid ~= nil or args.fatherUuid ~= nil then
+            local incestLevel = -1
+            
+            if (identity.motherUuid == nil and identity.fatherUuid == nil) or (otherIdentity.motherUuid and otherIdentity.fatherUuid) then incestLevel = 0 end -- Orphan, can't have (known) incest
+            if identity.motherUuid == otherUuid or identity.fatherUuid == otherUuid or otherIdentity.motherUuid == uuid or otherIdentity.fatherUuid == uuid then incestLevel = 3 end -- Level 3 incest - sex with your parent
+            if incestLevel == -1 then
+                local thisPair = {identity.motherUuid, identity.fatherUuid}
+                local thatPair = {args.motherUuid, args.fatherUuid}
+                local matches = 0
+                for _,v1 in ipairs(thisPair) do
+                    for _,v2 in ipairs(thatPair) do
+                        if v1==v2 then matches = matches + 1 break end
+                    end
+                end
+                
+                -- Number of matches between this actor's parents and given actor's parents
+                -- 1 match = level 1 incest - Sex with half-sibling
+                -- 2 matches = level 2 incest - Sex with full-sibling
+                incestLevel = matches
+            end
+        else incestLevel = 0 end
+        
+        if incestLevel > 0 and not allowIncest then return 0 end -- Abort if unallowed incest
+        
+        compatibility = compatibility + (incestLevel * multiplier.incest)
+        
+        local bodyTraits = a._config.identity.body
+        if args.bodyTraits then
+            if (args.bodyTraits.hasPenis and bodyTraits.hasVagina) or (args.bodyTraits.hasVagina and bodyTraits.hasPenis) then genderBonus = 1 end
+        end
+        
+        if genderBonus then compatibility = compatibility + multiplier.gender end
+        
+        local pregnancy = a:getPlugins("pregnant")
+        if args.species and pregnancy and compatibleBonus == 0 then
+            -- Check if conditions immediately bypass this check
+            if pregnancy._config.enableFreeForAll == true or pregnancy._config.enableCompatibleSpeciesOnly == false or a:getSpecies() == args.species then
+                compatibleBonus = 1
+            else
+                -- Check if species types are compatible
+                if args.speciesType then
+                    local thisSpeciesType, thatSpeciesType = a:getIdentity("sxbSpeciesType"), args.speciesType
+                    if thisSpeciesType == "universal" or thatSpeciesType == "universal" or (thisSpeciesType == thatSpeciesType and thisSpeciesType ~= nil) then compatibleBonus = 1 end -- "nil" (aka. not set) is treated as universal incompatibility, so nil x nil == incompatible
+                end
+                
+                local speciesList
+                local ownSpecies
+                if compatibleBonus == 0 then
+                    -- Alternatively check if whitelist exists for species - present actors on this NPC
+                    speciesList = pregnancy._config.compatibleSpecies[args.species]
+                    if speciesList == "all" then compatibleBonus = 1
+                    else
+                        ownSpecies = a:getSpecies()
+                        for _, species in ipairs(speciesList or {}) do
+                            if ownSpecies == species then
+                                compatibleBonus = 1
+                                break
+                            end
+                        end
+                    end
+                end
+                
+                if compatibleBonus == 0 then
+                    -- Alternatively check if whitelist exists for species - this NPC on present actors
+                    speciesList = pregnancy._config.compatibleSpecies[a:getSpecies()]
+                    if speciesList == "all" then compatibleBonus = 1
+                    else
+                        ownSpecies = args.species
+                        for _, species in ipairs(speciesList or {}) do
+                            if ownSpecies == species then
+                                compatibleBonus = 1
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        
+        if compatibleBonus then compatibility = compatibility + multiplier.compatible end
+        
+        return compatibility
+    end
+end
+
 -- Getters / Setters
 
 --- Returns a reference to this instance's ordered actors table.
@@ -1400,4 +1506,9 @@ function Sexbound:tickClock()
         self._lastClockState = curState
         --animator.playSound("ping")
     end
+end
+
+function checkNodeCompatibility(args)
+    if not self._sexbound then return 0 end
+    return self._sexbound:checkNodeCompatibility(args)
 end

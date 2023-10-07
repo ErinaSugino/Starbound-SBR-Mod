@@ -372,3 +372,14 @@ end
 function Sexbound.Monster:getSpecies()
     return monster.type()
 end
+
+function Sexbound.Monster:getCompatibilityData()
+    return {
+        species = monster.type(),
+        speciesType = nil,
+        gender = self:getGender(),
+        bodyTraits = self._bodyTraits,
+        motherUuid = nil,
+        fatherUuid = nil
+    }
+end

@@ -573,3 +573,14 @@ end
 function Sexbound.NPC:getSpecies()
     return npc.species()
 end
+
+function Sexbound.NPC:getCompatibilityData()
+    return {
+        species = npc.species(),
+        speciesType = self._speciesType,
+        gender = npc.gender(),
+        bodyTraits = self._bodyTraits,
+        motherUuid = status.statusProperty("motherUuid", nil),
+        fatherUuid = status.statusProperty("fatherUuid", nil)
+    }
+end

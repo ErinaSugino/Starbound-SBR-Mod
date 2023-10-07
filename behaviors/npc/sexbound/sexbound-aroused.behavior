@@ -70,18 +70,38 @@
           }
         }
       },
-      {
-        "title": "listPop",
-        "type": "action",
-        "name": "listPop",
-        "parameters": {
-          "list": { "key": "loungables" }
-        },
-        "output": {
-          "list": "loungables",
-          "entity": "chair"
-        }
-      },
+	  {
+		"title": "Advanced Sorting",
+		"type": "action",
+		"name": "sortSexnodes",
+		"parameters": {
+			"list": {"key": "loungables"}
+		},
+		"output": {
+			"list": "loungables",
+			"entity": "chair"
+		}
+	  },
+	  {
+		"title": "Logging",
+		"type": "action",
+		"name": "debugBehaviour",
+		"parameters": {
+			"list": {"key": "loungables"}
+		}
+	  },
+      //{
+      //  "title": "listPop",
+      //  "type": "action",
+      //  "name": "listPop",
+      //  "parameters": {
+      //    "list": { "key": "loungables" }
+      //  },
+      //  "output": {
+      //    "list": "loungables",
+      //    "entity": "chair"
+      //  }
+      //},
       {
         "title": null,
         "type": "action",
