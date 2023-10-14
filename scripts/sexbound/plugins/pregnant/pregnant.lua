@@ -231,20 +231,22 @@ end
 function Sexbound.Actor.Pregnant:becomePregnant(daddy)
     self:getLog():info("Actor will become pregnant: " .. self:getParent():getName())
 
-    local babyConfig = self:makeBaby(daddy)
-    if babyConfig == nil then
+    local pregnancyConfig = self:makeBaby(daddy)
+    if pregnancyConfig == nil then
         self:getLog():warn("Actor has not become pregnant due to no successful pregnancy generation")
         return
     end
+    
+    pregnancyConfig.incestLevel = self:incestLevel(daddy)
 
-    self:getLog():debug(babyConfig)
+    self:getLog():debug(pregnancyConfig)
 
     self:increaseStatisticImpregnateOtherCountForOtherActor(daddy)
     if self:getParent():getEntityType() ~= "player" then
         -- Players trigger their pregnancies later so they do all this themselves
         self:increaseStatisticPregnancyCountForThisActor()
-        self:tryToSendRadioMessageToThisActor(babyConfig, daddy)
-        self:tryToSendRadioMessageToOtherActor(babyConfig, daddy)
+        self:tryToSendRadioMessageToThisActor(pregnancyConfig, daddy)
+        self:tryToSendRadioMessageToOtherActor(pregnancyConfig, daddy)
         self:tryToRefreshStatusTextForThisActor(daddy)
         self:tryToApplyPregnantStatusEffectForThisActor(daddy)
     end
@@ -254,7 +256,7 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         if self._parent._config.fertilityPenalty < 0.0001 then self._parent._config.fertilityPenalty = 0 end
     end
 
-    self:storePregnancy(babyConfig)
+    self:storePregnancy(pregnancyConfig)
 end
 
 --- Removes pregnancies and sends message to entity to do the same

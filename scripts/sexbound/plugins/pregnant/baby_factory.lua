@@ -51,6 +51,7 @@ function BabyFactory:make(actor, daddy)
     end
     
     local pregnancy = {
+        dataVersion = 3,
         pregnancyType = pregnancyType,
         babies = {},
         birthTime = self:createRandomBirthTime()

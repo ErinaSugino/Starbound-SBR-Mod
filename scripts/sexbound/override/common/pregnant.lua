@@ -163,6 +163,9 @@ function Sexbound.Common.Pregnant:dataFilter()
                     birthSpecies = v.birthSpecies or "human"
                 })
                 v.pregnancyType = "baby"
+                v.dataVersion = 3
+                v.incestLevel = 0
+                v.babyCount = 1
                 
                 v.birthGender = nil
                 v.motherName = nil
@@ -226,9 +229,12 @@ function Sexbound.Common.Pregnant:checkTimeToGiveBirthBasedOnPlayerWorldTime(bab
     return baby.birthWorldTime <= 0
 end
 
-function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
+function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName, incestLevel)
     local roll = math.random()
-    local threshold = self._config.stillbornChance or 0
+    local threshold = math.max((self._config.stillbornChance or 0), 0)
+    local incestLevel = incestLevel or 0
+    local incestModifiers = {0, 0.125, 0.25, 0.5}
+    threshold = threshold + (incestModifiers[incestLevel] or 0) -- Incest chance increase: 0: 0%; 1: 12.5%; 2: 25%, 3: 50%
     if roll < threshold then
         self:notifyOfStillborn(babyConfig, babyName)
         sb.logInfo("Baby birth is a stillborn!")

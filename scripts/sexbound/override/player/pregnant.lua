@@ -256,7 +256,7 @@ function Sexbound.Player.Pregnant:startBirthing(index)
     self._parent._transform:setCanTransform(true)
     if self._parent._transform:handleTransform({
         responseRequired = false,
-        sexboundConfig = {position = {sex = {"birthing"}, force = 1}},
+        sexboundConfig = {position = {sex = {"birthing"}, force = 1, forceJoin = 1, noSync = 1}},
         timeout = 600,
         spawnOptions = {
             noEffect = true
@@ -287,8 +287,8 @@ function Sexbound.Player.Pregnant:doBirthingLoop(index, babyId, name)
     end
     
     babyConfig.pregnancyType = storage.sexbound.pregnant[index].pregnancyType
-    self:giveBirth(babyConfig, name)
-    storage.sexbound.pregnant[index].babies[babyId] = nil
+    self:giveBirth(babyConfig, name, storage.sexbound.pregnant[index].incestLevel)
+    table.remove(storage.sexbound.pregnant[index].babies, babyId)
     local bIndex, bConfig = next(storage.sexbound.pregnant[index].babies)
     
     if bIndex == nil or bConfig == nil then
@@ -332,6 +332,7 @@ function Sexbound.Player.Pregnant:openBabyNamingWindow(pregnancyId, babyId)
         --table.remove(storage.sexbound.pregnant, babyId)
         --self:refreshStatusEffects()
         self:doBirthingLoop(pregnancyId, babyId)
+        return
     end
     
     local babyGender = babyConfig.birthGender or "male"

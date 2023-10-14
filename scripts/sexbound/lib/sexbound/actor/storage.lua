@@ -14,6 +14,8 @@ function Sexbound.Actor.Storage:new(parent)
 end
 
 function Sexbound.Actor.Storage:sync(callback)
+    if self._parent._parent._config.position.noSync then return end
+    
     local entityId = self:getParent():getEntityId()
 
     -- Check every sync because the entity could dissappear from the world
@@ -32,6 +34,8 @@ function Sexbound.Actor.Storage:sync(callback)
 end
 
 function Sexbound.Actor.Storage:_sendStorageToEntityById(entityId)
+    if self._parent._parent._config.position.noSync then return end
+    
     return world.sendEntityMessage(entityId, "Sexbound:Storage:Sync", self:getData())
 end
 

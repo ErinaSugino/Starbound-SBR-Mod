@@ -39,7 +39,7 @@ function Sexbound.NPC.Pregnant:handleGiveBirth(index)
             birthResult = {}
             for _,b in pairs(v.babies) do
                 b.pregnancyType = v.pregnancyType --Propagate pregnancy type for giveBirth()
-                table.insert(birthResult, self:giveBirth(b))
+                table.insert(birthResult, self:giveBirth(b, nil, v.incestLevel))
             end
             if #birthResult < 1 then birthResult = nil end
         else

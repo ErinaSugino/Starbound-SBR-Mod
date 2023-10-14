@@ -351,8 +351,10 @@ function Sexbound:addActor(actorConfig, store)
     -- Resort actors based on changed environment
     self:helper_reassignAllRoles()
     
+    if self._config.position.forceJoin then
+        self._positions:switchPosition(self._config.position.forceJoin)
     -- If we only have NPCs, try to initiate sex (switch from idle to a random available position)
-    if not self._containsPlayer and self._config.sex.npcStartSex then
+    elseif not self._containsPlayer and self._config.sex.npcStartSex then
         self._positions:switchRandomSexPosition(true)
     end
     
@@ -717,6 +719,8 @@ end
 
 --- Respawns the stored actor if it exists in this object's storage.
 function Sexbound:respawnStoredActor()
+    if self._config.position.noSync then return end
+    
     local actor = storage.actor
 
     if actor and actor.uniqueId then
@@ -1316,9 +1320,9 @@ function Sexbound:checkNodeCompatibility(args)
         end
         
         if compatibleBonus then compatibility = compatibility + multiplier.compatible end
-        
-        return compatibility
     end
+    
+    return compatibility
 end
 
 -- Getters / Setters
