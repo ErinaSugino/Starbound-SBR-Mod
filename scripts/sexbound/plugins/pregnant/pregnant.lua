@@ -237,7 +237,8 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         return
     end
     
-    pregnancyConfig.incestLevel = self:incestLevel(daddy)
+    if self._config.incestPenalty then pregnancyConfig.incestLevel = self:incestLevel(daddy)
+    else pregnancyConfig.incestLevel = 0 end
 
     self:getLog():debug(pregnancyConfig)
 
@@ -805,6 +806,7 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validatePreventStatuses(self._config.preventStatuses)
     self:validatePregnancyLength(self._config.pregnancyLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
+    self:validateIncestPenalty(self._config.incestPenalty)
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
@@ -1055,4 +1057,14 @@ function Sexbound.Actor.Pregnant:validateUseOSTimeForPregnancies(value)
         return
     end
     self._config.useOSTimeForPregnancies = value
+end
+
+--- Ensures useOSTimeForPregnancies is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateIncestPenalty(value)
+    if type(value) ~= "boolean" then
+        self._config.incestPenalty = true
+        return
+    end
+    self._config.incestPenalty = value
 end
