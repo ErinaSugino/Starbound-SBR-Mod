@@ -295,17 +295,17 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         local altColorAsFacialMaskSubColor = not not speciesConfig.altColorAsFacialMaskSubColor
         
         if babyConfig.bodyColor then
-            local bodyColorPalette = "?replace"
+            bodyColorPalette = "?replace"
             for k,v in pairs(babyConfig.bodyColor) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
         end
         
         if babyConfig.hairColor then
-            local hairColorPalette = "?replace"
+            hairColorPalette = "?replace"
             for k,v in pairs(babyConfig.hairColor) do hairColorPalette = hairColorPalette..";"..k.."="..v end
         end
         
         if babyConfig.undyColor then
-            local undyColorPalette = "?replace"
+            undyColorPalette = "?replace"
             for k,v in pairs(babyConfig.undyColor) do undyColorPalette = undyColorPalette..";"..k.."="..v end
         end
         

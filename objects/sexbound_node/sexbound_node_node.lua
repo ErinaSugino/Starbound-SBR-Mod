@@ -51,6 +51,12 @@ function init()
     message.setHandler("Sexbound:Actor:Remove", function(_, _, args)
         world.sendEntityMessage(self.controllerId, "Sexbound:Actor:Remove", args)
     end)
+    message.setHandler("Sexbound:Common:StartSexMusic", function(_, _, args)
+        world.sendEntityMessage(self.controllerId, "Sexbound:Common:StartSexMusic", args)
+    end)
+    message.setHandler("Sexbound:Common:StopSexMusic", function(_, _, args)
+        world.sendEntityMessage(self.controllerId, "Sexbound:Common:StopSexMusic", args)
+    end)
 end
 
 --- Update hook

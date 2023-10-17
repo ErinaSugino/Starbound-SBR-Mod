@@ -253,8 +253,8 @@ function unloadSexActor(args, board)
 end
 
 function debugBehaviour(args, board)
-    if (self.sb_monster or self.sb_npc):canLog("behaviour") then
-        sb.logInfo("LOGGING OF BEHAVIOUR")
+    if (self.sb_monster or self.sb_npc):canLog("behavior") then
+        sb.logInfo("LOGGING OF BEHAVIOR")
         sb.logInfo(leveledDump(args, 2))
         sb.logInfo(leveledDump(board, 2))
     end
@@ -268,13 +268,14 @@ function sortSexnodes(args, board)
     local seen = {}
     local controllers = {}
     local nodeToController = {}
+    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("NODE BEHAVIOUR OF ENTITY #"..entity.id()) end
     while i <= #list do
         -- For each node queries, fetch the controller that it belongs to
         local id = list[i] or 0
         res = world.callScriptedEntity(id, "returnControllerId");
         i = i + 1
-        if (self.sb_monster or self.sb_npc):canLog("behaviour") then
-            sb.logInfo("CALLING NODE#"..id)
+        if (self.sb_monster or self.sb_npc):canLog("behavior") then
+            sb.logInfo("CALLING NODE #"..id)
             sb.logInfo("GOT ID #"..tostring(res))
         end
         if res and not seen[res] then
@@ -287,8 +288,9 @@ function sortSexnodes(args, board)
     res = nil
     for id,_ in pairs(controllers) do
         -- For each unique controller, fetch the compatibility index
-        res = world.callScriptedEntity(id, "checkNodeCompatibility", (self.sb_monster or self.sb_npc):getCompatibilityData());
-        if (self.sb_monster or self.sb_npc):canLog("behaviour") then
+        local r,e = pcall(function() res = world.callScriptedEntity(id, "checkNodeCompatibility", (self.sb_monster or self.sb_npc):getCompatibilityData()) end)
+        if not r then sb.logError(e) res = -1 end
+        if (self.sb_monster or self.sb_npc):canLog("behavior") then
             sb.logInfo("CALLING CONTROLLER #"..id)
             sb.logInfo("GOT INDEX "..tostring(res))
         end
@@ -300,9 +302,85 @@ function sortSexnodes(args, board)
         local curIndex = controllers[nodeToController[list[j]]] or 0
         if curIndex > targetIndex then targetNode = list[j] targetIndex = curIndex end
     end
-    if (self.sb_monster or self.sb_npc):canLog("behaviour") then sb.logInfo("FINAL NODE: #"..tostring(targetNode).." with "..tostring(targetIndex)) end
+    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("FINAL NODE: #"..tostring(targetNode).." with "..tostring(targetIndex)) end
     if targetNode == nil then return false end
-    return true, {list=list,entity=targetNode}
+    return true, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}}
+end
+
+--- Function to count down a given time and FAIL upon completion.
+-- Starbound spaghetti 101: Behaviour loop abortions.
+-- There is an issue with the pathfinding that makes NPCs go stuck forever when their arousal told them to go to a node they can't reach, unless that node get's occupied by someone else or destroyed.
+-- Solution: Timeout which fails the current execution loop so the whole node finding process starts over (if applicable)
+-- Problem: Starbound. For a parallel execution node to fail, the specified number of nodes (parameter "fail") needs to return 'false' as first value. In this case any 1 node needs to fail for everything to abort.
+-- However, the timer returns 'true' upon completion and 'nil' while still ticking, like any yielding multi-tick node.
+function reverseTimer(args, board, _, dt)
+  local timer = timeRange(args.time)
+  local max = timer
+
+  while timer > 0 do
+    timer = timer - dt
+    dt = coroutine.yield(nil, {ratio = (max - timer) / max})
+  end
+  
+  self.nodeTimeout = true
+
+  return false, {ratio = 1.0}
+end
+
+function getNodeRestrictions(args, board)
+    local restrictions = {}
+    local sxb = (self.sb_npc or self.sb_monster)
+    if not sxb then
+        return true, restrictions
+    end
+    local storedRestrictions = (sxb._behaviorData or {}).excludedNodes
+    if storedRestrictions then
+        for c,d in pairs(storedRestrictions) do
+            if d.count >= 3 then
+                for _,n in ipairs((d.nodes or {})) do
+                    table.insert(restrictions, n)
+                end
+            end
+        end
+    end
+    
+    if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Loaded restrictions: "..dump(restrictions)) end
+    
+    return true, restrictions
+end
+
+function setNodeRestrictions(args, board)
+    if not self.nodeTimeout then return false end
+    
+    local target = args.entity
+    if not target then return false end
+    
+    local data = args.data
+    if not data then return false end
+    
+    local sxb = (self.sb_npc or self.sb_monster)
+    if not sxb then return false end
+    sxb._behaviorData = sxb._behaviorData or {}
+    local storedRestrictions = ((self.sb_npc or self.sb_monster)._behaviorData or {}).excludedNodes or {}
+    
+    local cid = data.nodeToController[target] or 0
+    if storedRestrictions[cid] then
+        storedRestrictions[cid].count = storedRestrictions.count + 1
+        storedRestrictions[cid].time = 60
+        local isIn = false
+        for _,n in ipairs(storedRestrictions[cid].nodes) do
+            if n == target then isIn = true break end
+        end
+        if not isIn then table.insert(storedRestrictions[cid].nodes, target) end
+    else
+        storedRestrictions[cid] = {count=1,time=60,nodes={target}}
+    end
+    sxb._behaviorData.excludedNodes = storedRestrictions
+    self.nodeTimeout = false
+    
+    if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Node #"..target.." couldn't be reached. Excluding #"..cid.." (times: "..storedRestrictions[cid].count..")") end
+    
+    return false
 end
 
 function dump(o)

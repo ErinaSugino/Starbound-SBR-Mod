@@ -1,0 +1,4 @@
+[
+	{"op": "test", "path": "/scripts"},
+	{"op": "add", "path": "/scripts/-", "value": "/scripts/actions/sexboundConverse.lua"}
+]

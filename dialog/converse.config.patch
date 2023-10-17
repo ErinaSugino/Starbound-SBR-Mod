@@ -1,0 +1,13 @@
+[
+	{
+		"op": "add",
+		"path": "/kid",
+		"value": {
+			"default": {
+				"default": [
+					"I am a kid!"
+				]
+			}
+		}
+	}
+]

@@ -56,7 +56,8 @@ function Sexbound.NPC.new()
         _states            = { "defaultState", "havingBirthdayState", "havingSexState" },
         _isClimaxing       = false,
         _isKid             = false,
-        _kidTimer          = 0
+        _kidTimer          = 0,
+        _behaviorData      = {excludedNodes = {}}
     }, Sexbound.NPC_mt)
 
     self:init(self, "npc") -- init defined in common.lua
@@ -94,6 +95,12 @@ function Sexbound.NPC:update(dt)
         if kidTime <= worldTime then self:updateKidStatus() end
         
         if self._isKid then self._kidTimer = 10 end -- Only check every 10 seconds
+    end
+    
+    -- Progress time on temporarily excluded sexnodes for behavior script
+    for c,d in pairs(self._behaviorData.excludedNodes) do
+        d.time = (d.time or 0) - dt
+        if d.time <= 0 then self._behaviorData.excludedNodes[c] = nil end
     end
 end
 

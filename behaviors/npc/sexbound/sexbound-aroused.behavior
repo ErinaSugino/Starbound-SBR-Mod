@@ -37,6 +37,15 @@
           "resource": { "value": "arousal" }
         }
       },
+	  {
+		"title": "Fetch excluded nodes",
+		"type": "action",
+		"name": "getNodeRestrictions",
+		"parameters": {},
+		"output": {
+			"banned": "banned"
+		}
+	  },
       {
         "title": "",
         "type": "action",
@@ -79,6 +88,7 @@
 		},
 		"output": {
 			"list": "loungables",
+			"data": "loungableData",
 			"entity": "chair"
 		}
 	  },
@@ -113,48 +123,73 @@
           "position": "chair"
         }
       },
-      {
-        "title": "",
-        "type": "composite",
-        "name": "parallel",
-        "parameters": {
-          "fail": { "value": 1 },
-          "success": { "value": -1 }
-        },
-        "children": [
-          {
-            "title": "entityExists",
-            "type": "action",
-            "name": "entityExists",
-            "parameters": {
-              "entity": { "key": "chair" }
-            }
-          },
-          {
-            "title": "",
-            "type": "action",
-            "name": "moveToPosition",
-            "parameters": {
-              "groundPosition": { "value": true },
-              "position": { "key": "chair" }
-            }
-          },
-          {
-            "title": null,
-            "type": "decorator",
-            "name": "inverter",
-            "parameters": {},
-            "child": {
-              "title": null,
-              "type": "action",
-              "name": "loungableOccupied",
-              "parameters": {
-                "entity": { "key": "chair" }
-              }
-            }
-          }
-        ]
-      },
+	  {
+		"title": "",
+		"type": "composite",
+		"name": "selector",
+		"parameters": {},
+		"children": [
+		  {
+			"title": "",
+			"type": "composite",
+			"name": "parallel",
+			"parameters": {
+			  "fail": { "value": 1 },
+			  "success": { "value": 3 }
+			},
+			"children": [
+			  {
+				"title": "entityExists",
+				"type": "action",
+				"name": "entityExists",
+				"parameters": {
+				  "entity": { "key": "chair" }
+				}
+			  },
+			  {
+				"title": null,
+				"type": "decorator",
+				"name": "inverter",
+				"parameters": {},
+				"child": {
+				  "title": null,
+				  "type": "action",
+				  "name": "loungableOccupied",
+				  "parameters": {
+					"entity": { "key": "chair" }
+				  }
+				}
+			  },
+			  {
+				"title": "Backup Timeout",
+				"type": "action",
+				"name": "reverseTimer",
+				"parameters": {
+				  "time": {"value": 10}
+				}
+			  },
+			  {
+				"title": "",
+				"type": "action",
+				"name": "moveToPosition",
+				"parameters": {
+				  "groundPosition": { "value": true },
+				  "position": { "key": "chair" }
+				}
+			  }
+			]
+		  },
+		  {
+			"title": "Store new broken node",
+			"type": "action",
+			"name": "setNodeRestrictions",
+			"parameters": {
+				"data": {"key": "loungableData"},
+				"entity": {"key": "chair"}
+			}
+		  }
+		]
+	  },
       {
         "title": "parallel",
         "type": "composite",
