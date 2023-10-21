@@ -1240,9 +1240,8 @@ function Sexbound:checkNodeCompatibility(args)
         -- Check for incest level first because it can be an abortion criterium
         local identity = a:getIdentity()
         local uuid = a._config.uniqueId
+        local incestLevel = -1
         if args.motherUuid ~= nil or args.fatherUuid ~= nil then
-            local incestLevel = -1
-            
             if (identity.motherUuid == nil and identity.fatherUuid == nil) or (otherIdentity.motherUuid and otherIdentity.fatherUuid) then incestLevel = 0 end -- Orphan, can't have (known) incest
             if identity.motherUuid == otherUuid or identity.fatherUuid == otherUuid or otherIdentity.motherUuid == uuid or otherIdentity.fatherUuid == uuid then incestLevel = 3 end -- Level 3 incest - sex with your parent
             if incestLevel == -1 then
