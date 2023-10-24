@@ -1,8 +1,8 @@
 {
 	"name": "aphrodites_sbr_patch",
-	"version": "6.2.0 x 1.0",
+	"version": "6.2.0 x 1.1",
 	"author": "Erina Sugino",
-	"description": "Temporary patch to make Aphrodites Bow 6.2.0 fully compatible with Sexbound Reborn 1.0",
+	"description": "Temporary patch to make Aphrodites Bow 6.2.0 fully compatible with Sexbound Reborn 1.1",
 	"friendlyName": "Aphrodites Bow x Sexbound Reborn Patch",
 	"priority": 500,
 	"link": "",
