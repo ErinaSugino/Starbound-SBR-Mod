@@ -1,0 +1,19 @@
+[
+	{
+		"op": "add",
+		"path": "/kid",
+		"value": {
+			"default": {
+				"default": [
+					"What should I play today?",
+					"When I grow up, I'll become a bounty hunter!",
+					"Can I hold your weapon? Just once? Pretty please?",
+					"I'm boooored!",
+					"I want to explore the stars too! So unfair...",
+					"The other day, I saw a monster that was thiiiiis big!",
+					"Where do babies come from?"
+				]
+			}
+		}
+	}
+]

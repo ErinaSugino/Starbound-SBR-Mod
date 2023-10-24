@@ -52,6 +52,15 @@ function Sexbound.Common.Pregnant:appendMainConfig()
     self._config.immersionLevel = mainConfig.immersionLevel or 1
 end
 
+--- Loads notifications configuration from file
+function Sexbound.Common.Pregnant:loadNotificationDialog()
+    local notifications = self:getParent():getNotifications() or {}
+    notifications.plugins = notifications.plugins or {}
+    notifications.plugins.pregnant = notifications.plugins.pregnant or {}
+
+    return notifications.plugins.pregnant
+end
+
 function Sexbound.Common.Pregnant:init(parent)
     self._parent = parent
 
@@ -133,6 +142,47 @@ function Sexbound.Common.Pregnant:dataFilter()
             if type(v.fullBirthOSTime) ~= "number" then v.fullBirthOSTime = os.time() end
             if type(v.fullBirthWorldTime) ~= "number" then v.fullBirthWorldTime = math.max(v.birthWorldTime, 840) end
             if type(v.delay) ~= "number" then v.delay = 0 end
+            
+            if type(v.babies) ~= "table" then
+                v.babies = {}
+                table.insert(v.babies, {
+                    birthGender = v.birthGender or "male",
+                    motherName = v.motherName or "Unknown",
+                    motherId = v.motherId or "",
+                    motherUuid = v.motherUuid or "",
+                    motherType = v.motherType or "villager",
+                    motherSpecies = v.motherSpecies or "human",
+                    fatherName = v.fatherName or "Unknown",
+                    fatherId = v.fatherId or "",
+                    fatherUuid = v.fatherUuid or "",
+                    fatherType = v.fatherType or "villager",
+                    fatherSpecies = v.fatherSpecies or "human",
+                    generationFertility = v.generationFertility or 1.0,
+                    npcType = v.npcType or "villager",
+                    birthEntityGroup = v.birthEntityGroup or "humanoid",
+                    birthSpecies = v.birthSpecies or "human"
+                })
+                v.pregnancyType = "baby"
+                v.dataVersion = 3
+                v.incestLevel = 0
+                v.babyCount = 1
+                
+                v.birthGender = nil
+                v.motherName = nil
+                v.motherId = nil
+                v.motherUuid = nil
+                v.motherType = nil
+                v.motherSpecies = nil
+                v.fatherName = nil
+                v.fatherId = nil
+                v.fatherUuid = nil
+                v.fatherType = nil
+                v.fatherSpecies = nil
+                v.generationFertility = nil
+                v.npcType = nil
+                v.birthEntityGroup = nil
+                v.birthSpecies = nil
+            end
         end
 
         count = count + 1
@@ -179,13 +229,88 @@ function Sexbound.Common.Pregnant:checkTimeToGiveBirthBasedOnPlayerWorldTime(bab
     return baby.birthWorldTime <= 0
 end
 
-function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName)
-    babyConfig.birthEntityGroup = babyConfig.birthEntityGroup or "humanoid"
-
-    if babyConfig.birthEntityGroup == "monsters" then
-        return self:_giveBirthToMonster(babyConfig)
+function Sexbound.Common.Pregnant:giveBirth(babyConfig, babyName, incestLevel)
+    local roll = math.random()
+    local threshold = math.max((self._config.stillbornChance or 0), 0)
+    local incestLevel = incestLevel or 0
+    local incestModifiers = {0, 0.125, 0.25, 0.5}
+    threshold = threshold + (incestModifiers[incestLevel] or 0) -- Incest chance increase: 0: 0%; 1: 12.5%; 2: 25%, 3: 50%
+    if roll < threshold then
+        self:notifyOfStillborn(babyConfig, babyName)
+        sb.logInfo("Baby birth is a stillborn!")
+        return nil
     else
-        return self:_giveBirthToHumanoid(babyConfig, babyName)
+        local pregnancyType = babyConfig.pregnancyType or "baby"
+        
+        -- Try loading baby class
+        local r,err = pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+        if not r then
+            sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+            sb.logError("Error: "..tostring(err))
+            return nil
+        end
+        
+        local babyClass
+        r,err = pcall(function()
+            local ucPregnancyType = pregnancyType:gsub("^%l", string.upper)
+            babyClass = _ENV[ucPregnancyType]:new(self, self._config)
+        end)
+        if not r then
+            -- Can't load = can't generate baby = no pregnancy; abort
+            sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+            sb.logError("Error: "..tostring(err))
+            return nil
+        end
+        
+        return babyClass:birth(babyConfig, babyName)
+    end
+end
+
+function Sexbound.Common.Pregnant:notifyOfStillborn(baby, name)
+    if baby.motherType ~= "player" then return end
+    
+    local notification = self:loadNotificationDialog()
+    notification = notification.birth or {}
+    
+    local babyGender = baby.birthGender
+
+    if babyGender == "male" then
+        babyGender = "^blue;boy^reset;"
+    end
+
+    if babyGender == "female" then
+        babyGender = "^pink;girl^reset;"
+    end
+    
+    local message = notification.stillborn or ""
+    message = util.replaceTag(message, "babyname", name)
+
+    message = util.replaceTag(message, "babygender", babyGender)
+
+    world.sendEntityMessage(baby.motherUuid, "queueRadioMessage", {
+        messageId = "Sexbound_Event:Stillborn",
+        unique = false,
+        text = message
+    })
+
+    local motherName = baby.motherName or "UNKNOWN"
+    motherName = "^green;" .. motherName .. "^reset;"
+
+    message = notification.remoteStillborn or ""
+    message = util.replaceTag(message, "name", motherName)
+    message = util.replaceTag(message, "babyname", name)
+    message = util.replaceTag(message, "babygender", babyGender)
+    
+    if world.players then
+        for _, playerId in ipairs(world.players()) do
+            if world.entityUniqueId(playerId) ~= baby.motherUuid then
+                world.sendEntityMessage(playerId, "queueRadioMessage", {
+                    messageId = "Sexbound_Event:Stillborn",
+                    unique = false,
+                    text = message
+                })
+            end
+        end
     end
 end
 
@@ -209,129 +334,6 @@ end
 function Sexbound.Common.Pregnant:updateWorldTime()
     self._worldTime = world.day() + world.timeOfDay()
     return self._worldTime
-end
-
-function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableMonster(babyConfig)
-    local params = {}
-    params.baseParameters = {}
-    params.baseParameters.uniqueId = sb.makeUuid()
-    params.baseParameters.statusSettings = {}
-    params.baseParameters.statusSettings.statusProperties = {
-        sexbound_birthday = babyConfig
-    }
-    params = util.mergeTable(params, babyConfig.birthParams or {})
-    return {
-        params   = params,
-        position = babyConfig.birthPosition or entity.position(),
-        type     = babyConfig.birthSpecies  or "gleap"
-    }
-end
-
-function Sexbound.Common.Pregnant:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
-    local params = {}
-    params.scriptConfig = {}
-    params.scriptConfig.uniqueId = sb.makeUuid()
-    params.statusControllerSettings = {}
-    params.statusControllerSettings.statusProperties = {
-        sexbound_birthday = babyConfig,
-        sexbound_previous_storage = {
-            previousDamageTeam = storage.previousDamageTeam
-        },
-        motherUuid = babyConfig.motherUuid,
-        motherName = babyConfig.motherName,
-        fatherUuid = babyConfig.fatherUuid,
-        fatherName = babyConfig.fatherName
-    }
-    params.identity = {}
-    params.identity.gender = babyConfig.birthGender
-    if babyName and babyName ~= "" then params.identity.name = babyName end
-    util.mergeTable(params, babyConfig.birthParams or {})
-    
-    --[[-- Apply genetic color directives
-    local bodyDirectives, emoteDirectives, hairDirectives = "", "", ""
-    if babyConfig.bodyColor then
-        local bodyColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.bodyColor) do bodyColorDirectives = bodyColorDirectives..";"..k.."="..v end
-        bodyDirectives = bodyColorDirectives
-        emoteDirectives = bodyColorDirectives
-    end
-    
-    if babyConfig.hairColor then
-        local hairColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.hairColor) do hairColorDirectives = hairColorDirectives..";"..k.."="..v end
-        hairDirectives = hairColorDirectives
-    end
-    
-    if babyConfig.undyColor then
-        local undyColorDirectives = "?replace"
-        for k,v in pairs(babyConfig.undyColor) do undyColorDirectives = undyColorDirectives..";"..k.."="..v end
-        if bodyDirectives == "" then bodyDirectives = undyColorDirectives else bodyDirectives = bodyDirectives..";"..undyColorDirectives end
-        if emoteDirectives == "" then emoteDirectives = undyColorDirectives else emoteDirectives = emoteDirectives..";"..undyColorDirectives end
-        if hairDirectives == "" then hairDirectives = undyColorDirectives else hairDirectives = hairDirectives..";"..undyColorDirectives end
-    end
-    
-    if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
-    if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
-    if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end]]
-    
-    -- Ensure gender-safe hair assignment
-    local speciesConfig
-    -- Attempt to read configuration from species config file.
-    if not pcall(function()
-        speciesConfig = root.assetJson("/species/" .. (babyConfig.birthSpecies or "human") .. ".species")
-    end) then
-        sb.logWarn("SxB: Could not find species config file.")
-    end
-    
-    -- Find relevant gender config
-    local genderConfig = nil
-    for _index, _gender in ipairs(speciesConfig.genders) do
-        if (_gender.name == babyConfig.birthGender) then
-            genderConfig = speciesConfig.genders[_index]
-            break
-        end
-    end
-    
-    if genderConfig then
-        -- If gender config was found and hair declaration exists, choose random gender specific hair style for baby
-        local hairStyles = genderConfig.hair
-        if hairStyles then params.identity.hairType = hairStyles[util.randomIntInRange({1,#hairStyles})] end
-    end
-    
-    local spawnableNPC = {
-        level    = babyConfig.birthLevel or 1,
-        npcType  = babyConfig.npcType or "crewmembersexbound",
-        params   = params,
-        position = babyConfig.birthPosition or entity.position(),
-        seed     = babyConfig.birthSeed,
-        species  = babyConfig.birthSpecies or "human"
-    }
-
-    if npc then spawnableNPC.npcType = npc.npcType() end
-    if monster then spawnableNPC.npcType = "villager" end
-
-    return spawnableNPC
-end
-
-function Sexbound.Common.Pregnant:_giveBirthToHumanoid(babyConfig, babyName)
-    local spawnableNPC = self:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
-    return world.spawnNpc(
-        spawnableNPC.position,
-        spawnableNPC.species,
-        spawnableNPC.npcType,
-        spawnableNPC.level,
-        spawnableNPC.seed,
-        spawnableNPC.params
-    )
-end
-
-function Sexbound.Common.Pregnant:_giveBirthToMonster(babyConfig)
-    local spawnableMonster = self:_convertBabyConfigToSpawnableMonster(babyConfig)
-    return world.spawnMonster(
-        spawnableMonster.type,
-        spawnableMonster.position,
-        spawnableMonster.params
-    )
 end
 
 function Sexbound.Common.Pregnant:getConfig()

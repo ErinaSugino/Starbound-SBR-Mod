@@ -1,0 +1,41 @@
+{
+  "id" : "monstermerchant3",
+  "prerequisites" : [ "monstermerchant2" ],
+  "title" : "^green;Too Many Friends!",
+  "text" : "With the new arrivals, I'll need some more space to display them. Can you hand me some ^orange;Pet Tethers^reset;? ^green;(Deliver 3 Pet Tethers.)^reset;",
+  "completionText" : "Thank you! Now, I'll be able to properly take care of them while a home is found for them!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kalini, monster merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "pettether",
+        "count" : 3,
+        "consume" : true
+      }
+    ]
+  }
+}

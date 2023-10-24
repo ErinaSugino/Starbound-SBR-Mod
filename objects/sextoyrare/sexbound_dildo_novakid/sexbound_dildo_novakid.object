@@ -1,0 +1,138 @@
+
+{
+  "objectName" : "sexbound_dildo_novakid",
+  "shortdescription" : "Novakid Dildo",
+  "description" : "A novakid dildo. It's pretty much a rounder glowstick.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Rare",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 5000,
+  "level" : 0,
+  
+  "lightColor" : [253, 224, 63],
+  "lightPosition" : [0, 1],
+
+  "flickerPeriod" : 1.5,
+  "flickerMinIntensity" : 0.95,
+  "flickerMaxIntensity" : 1.1,
+  "flickerPeriodVariance" : 0,
+  "flickerIntensityVariance" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "It's so glowy, I can nearly see the glow even when I'm using it.",
+  "avianDescription"   : "It's so glowy, I can nearly see the glow even when I'm using it.",
+  "floranDescription"  : "Floran attracted, glow like firebugsssss!",
+  "glitchDescription"  : "Disappointed. This is not nearly as cool as I expected.",
+  "humanDescription"   : "It's so glowy, I can nearly see the glow even when I'm using it.",
+  "hylotlDescription"  : "It's so glowy, I can nearly see the glow even when I'm using it.",
+  "novakidDescription" : "This isn't the real thing, but it'll sure as hell work.",
+  
+  "sitStatusEffects" : ["sexbound_sex"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "dildoicon.png",
+  "orientations" : [
+    {
+      "image" : "dildo.png:idle.1",
+
+      "imagePosition" : [-7, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-1, 1], [0, 1], [1, 1], [2, 1],
+                   [-1, 0], [0, 0], [1, 0], [2, 0] ],
+	  "fgAnchors" : [ [-2, 0], [-2, 1] ],
+	  "direction" : "right"
+    },
+	{
+      "image" : "dildo.png:idle.1?flipx",
+
+      "imagePosition" : [-25, -1],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "anchors" : [ "bottom" ],
+	  "spaces" : [ [-3, 1], [-2, 1], [-1, 1], [0, 1],
+                   [-3, 1], [-2, 1], [-1, 1], [0, 0] ],
+	  "fgAnchors" : [ [1, 0], [1, 1] ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoyrare/sexbound_dildo_novakid/dildo.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Dildo",
+    
+    "position" : {
+      "sex" : [ "doggy_sextoy_actor1" ]
+    },
+	"idlePosition": "idle_toy",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+	
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+	  
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0, 0]
+                }
+              }
+            }
+          }
+        },
+		
+		"bed" : {
+          "properties" : {
+            "centered" : true,
+            "offset" : [0.375, -0.125],
+            "zLevel" : -1
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.0, 0.0]
+          }
+        }
+      }
+    }
+  }
+}

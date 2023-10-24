@@ -1,6 +1,6 @@
 {
   "name"            : "sexbound_birthing",
-  "blockingStat"    : "specialStatusImmunity",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 300,
   "effectConfig"    : {},
   "label"           : "SxB Birthing",

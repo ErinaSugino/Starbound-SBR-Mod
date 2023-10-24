@@ -1,0 +1,46 @@
+{
+  "id" : "monstermerchant1",
+  "title" : "^green;A Little Zoo",
+  "text" : "I can't leave the store, otherwise the animals will run free! Can you get me ^orange;some Raw Steak and Wheat^reset; so they don't try to break out, please? ^green;(Deliver 5 Raw Steak and 5 Wheat.)^reset;",
+  "completionText" : "It's chow time fellas! I can't thank you enough.",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_monstershopportrait.png"} ],
+        "title" : "Sister Kalini"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kalini, monster merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "alienmeat",
+        "count" : 5,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "wheat",
+        "count" : 5,
+        "consume" : true
+      }
+    ]
+  }
+}

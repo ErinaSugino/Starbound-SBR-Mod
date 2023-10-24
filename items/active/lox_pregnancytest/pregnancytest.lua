@@ -150,10 +150,10 @@ function PregnancyTest:buildBirthTimeBasedOnPlayerWorldTime(birthTime)
   return text
 end
 
-function PregnancyTest:buildBabyGenderText(baby)
+function PregnancyTest:buildBabyGenderText(pregnancy)
   local text = config.getParameter("radioMessages.birthDetail") or ""
   local genderText = {male = "a boy", female = "a girl"}
-  local gender = genderText[baby.birthGender] or "a surprise"
+  local gender = genderText[pregnancy.babies[1].birthGender] or "a surprise"
   text = util.replaceTag(text, "detail", gender)
   return text
 end
@@ -167,24 +167,13 @@ function PregnancyTest:buildMultiBabyText(count)
 end
 
 function PregnancyTest:notifyThisEntityTheyArePregnant(pregnancies, config)
-  local baby = nil
-  local bCount = 1
+  local pregnancy = nil
   local useOS = config.useOSTimeForPregnancies or false
-  for i, b in pairs(pregnancies) do
+  for i, p in pairs(pregnancies) do
     if useOS then
-      if baby == nil or b.birthOSTime < baby.birthOSTime then
-        bCount = 1
-        baby = b
-      elseif b.birthOSTime == baby.birthOSTime then
-        bCount = bCount + 1
-      end
+      if pregnancy == nil or p.birthOSTime < pregnancy.birthOSTime then pregnancy = p end
     else
-      if baby == nil or b.birthWorldTime < baby.birthWorldTime then
-        bCount = 1
-        baby = b
-      elseif b.birthWorldTime == baby.birthWorldTime then
-        bCount = bCount + 1
-      end
+      if pregnancy == nil or p.birthWorldTime < pregnancy.birthWorldTime then pregnancy = p end
     end
   end
 
@@ -192,20 +181,20 @@ function PregnancyTest:notifyThisEntityTheyArePregnant(pregnancies, config)
   local text = "You're pregnant!\n\n"
   local progression = 0.0
   if useOS then
-    text = text .. self:buildBirthTimeBasedOnOSTime(baby.birthOSTime)
-    progression = (os.time() - baby.fullBirthOSTime) / (baby.birthOSTime - baby.fullBirthOSTime)
-  elseif baby.motherType == "player" then
-    text = text .. self:buildBirthTimeBasedOnPlayerWorldTime(baby.birthWorldTime)
-    progression = 1 - (baby.birthWorldTime / baby.fullBirthWorldTime)
+    text = text .. self:buildBirthTimeBasedOnOSTime(pregnancy.birthOSTime)
+    progression = (os.time() - pregnancy.fullBirthOSTime) / (pregnancy.birthOSTime - pregnancy.fullBirthOSTime)
+  elseif pregnancy.babies[1].motherType == "player" then
+    text = text .. self:buildBirthTimeBasedOnPlayerWorldTime(pregnancy.birthWorldTime)
+    progression = 1 - (pregnancy.birthWorldTime / pregnancy.fullBirthWorldTime)
   else
-    text = text .. self:buildBirthTimeBasedOnWorldTime(baby.birthWorldTime)
-    progression = (baby.birthWorldTime - baby.fullBirthWorldTime) / ((world.day() + world.timeOfDay()) - baby.fullBirthWorldTime)
+    text = text .. self:buildBirthTimeBasedOnWorldTime(pregnancy.birthWorldTime)
+    progression = (pregnancy.birthWorldTime - pregnancy.fullBirthWorldTime) / ((world.day() + world.timeOfDay()) - pregnancy.fullBirthWorldTime)
   end
   
   if progression > 0.75 then
     text = text .. "\n"
-    if bCount > 1 then text = text .. self:buildMultiBabyText(bCount)
-    else text = text .. self:buildBabyGenderText(baby) end
+    if pregnancy.babyCount > 1 then text = text .. self:buildMultiBabyText(pregnancy.babyCount)
+    else text = text .. self:buildBabyGenderText(pregnancy) end
   end
   
   local symbol = "(^green;+^reset;) "
@@ -249,6 +238,12 @@ end
 
 function update(dt)
   self.pregnancyTest:update(dt)
+end
+
+function uninit()
+  if self.pregnancyTest.toConsume then
+    if not item.consume(1) then player.consumeItem("lox_pregnancytest", true) end
+  end
 end
 
 function activate(fireMode, shiftHeld)

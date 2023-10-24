@@ -1,0 +1,151 @@
+{
+  "objectName" : "sexbound_fleshlight_human",
+  "shortdescription" : "Human Fleshlight",
+  "description" : "A human fleshlight. The baseline for any amateurs of sex toys.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Rare",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 5000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "The very definition of enticing. Slides in and out very well.",
+  "avianDescription"   : "The very definition of enticing. Slides in and out very well.",
+  "floranDescription"  : "Isss very round, lookssss tassssty.",
+  "glitchDescription"  : "Stern. The very definition of enticing. Slides in and out very well.",
+  "humanDescription"   : "Smells of wine and cheap perfume. I'm not sure if it wasn't used before.",
+  "hylotlDescription"  : "The very definition of enticing. Slides in and out very well.",
+  "novakidDescription" : "The very definition of enticing. Slides in and out very well.",
+  
+  "sitStatusEffects" : ["sexbound_sex"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "fleshlighticon.png",
+  "orientations" : [
+    {
+      "dualImage" : "fleshlight.png:idle.1",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "dualImage" : "fleshlight.png:idle.1?flipx",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoyrare/sexbound_fleshlight_human/fleshlight.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Fleshlight",
+    
+    "position" : {
+      "sex" : [ "standing_sextoy_actor2" ]
+    },
+	"idlePosition": "idle_toy",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }
+            }
+          }
+        },
+      
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

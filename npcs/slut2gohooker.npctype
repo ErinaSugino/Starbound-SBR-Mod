@@ -1,0 +1,135 @@
+{
+  "type" : "slut2gohooker",
+  "baseType" : "villager",
+  
+  "npcname" : "Hooker",
+  
+  "dropPools" : [ "hookerPool" ],
+  
+  "persistent" : true,
+
+  "scriptConfig" : {
+    "dialog" : {
+    "greeting" : "/dialog/hookerconverse.config:converse",
+    "converse" : "/dialog/hookerconverse.config:converse"
+    },
+	
+	"questGenerator" : {
+      "pools" : ["hookerquests"],
+      "enableParticipation" : false,
+
+      // Every 20 seconds, decide whether to generate a quest and if so, spend
+      // the rest of the 20s window trying to generate it.
+      "timeLimit" : 20,
+
+      // Don't generate new quests if there are already more than <nearbyQuestLimit>
+      // questmanager stagehands nearby, within a <nearbyQuestRange> tile range.
+      "nearbyQuestLimit" : 4,
+      "nearbyQuestRange" : 100,
+      "questCountRange" : [1, 5]
+    },
+	
+	"behaviorConfig" : {
+    "greetingChance" : 1.0
+	},
+	"personalities" : [
+	[1.0, {
+        "personality" : "flirty",
+        "additiveReactions" : [ "default" ],
+        "reactions" : {
+          "nearnpc" : [
+            [1.0, "wave"],
+            [1.0, "wink"]
+          ],
+          "nearplayer" : [
+            [1.0, "flirtwithplayer"]
+          ],
+          "neutral" : [
+            [1.0, "annoyed"],
+            [1.0, "quit"]
+          ],
+          "bored" : [
+            [1.0, "annoyed"],
+            [1.0, "quit"]
+          ],
+          "vomit" : [
+            [1.0, "annoyed"],
+            [1.0, "quit"]
+          ],
+          "wink" : [
+            [1.0, "wink"],
+            [1.0, "love"],
+            [0.3, "follow"]
+          ],
+          "nosebleed" : [
+            [1.0, "wink"],
+            [1.0, "love"],
+            [0.3, "follow"]
+          ],
+          "love" : [
+            [1.0, "love"],
+            [0.3, "follow"]
+          ],
+          "comfort" : [
+            [1.0, "love"],
+            [0.3, "follow"]
+          ],
+          "follow" : [
+            [1.0, "wink"]
+          ],
+          "gohome" : [
+            [1.0, "follow"]
+          ],
+          "chase" : [
+            [1.0, "wink"]
+          ],
+          "default" : [
+            [5.0, "wink"]
+          ]
+        }
+      }]
+	]
+  },
+
+  "matchColorIndices" : true,
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "chest" : [ { "name" : "kawaii_skinnysuit_gloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+            "legs"  : [ { "name" : "kawaii_shoes_panties_stockings", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+			"head"  : [ { "name" : "kawaii_bunnyears", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+			"back"	: [ { "name" : "kawaii_bunnytail", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ]
+          },
+		  {
+            "chest" : [ { "name" : "kawaii_skinnysuit_gloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+            "legs"  : [ { "name" : "kawaii_shoes_panties_stockings", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+			"head"  : [ { "name" : "kawaii_catears", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+			"back"	: [ { "name" : "kawaii_cattail", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ]
+          },
+		  {
+            "chest" : [ { "name" : "kawaii_gloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, { "name" : "kawaii_netgloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ],
+            "legs"  : [ { "name" : "kawaii_stockings", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }, { "name" : "kawaii_fishnets", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } } ]
+          },
+		  {
+            "chest" : [ 
+						{ "name" : "kawaii_bras_gloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_bras_netgloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_bras" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_strapless_gloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_strapless_netgloves" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_strapless" , "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+					  ],
+            "legs"  : [ 
+						{ "name" : "kawaii_shoes_panties_stockings", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_shoes_panties_fishnets", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_shoes_panties_pantyhose", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_shoes_shorts_stockings", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_shoes_shorts_fishnets", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } },
+						{ "name" : "kawaii_shoes_shorts_pantyhose", "parameters" : { "colorIndex" : [1, 3, 4, 5, 6, 7, 8, 9] } }
+					  ]
+          }
+        ] ]
+    ]
+  }
+}

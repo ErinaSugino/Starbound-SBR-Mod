@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_pregnant",
+  "blockingStat"    : "sexboundImmunity",
   "effectConfig"    : {},
   "defaultDuration" : 1,
   "icon"            : "/interface/statuses/pregnant.png",

@@ -1,0 +1,15 @@
+{
+  "projectileName" : "lubeprojectile",
+  "image" : "lubeprojectile.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "power" : 0,
+  "damagePoly" : [ [-40, 0], [-24, -24], [0, -40], [24, -24], [40, 0], [24, 24], [0, 40], [-24, 24] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default",
+  "statusEffects" : [
+    {"effect": "sexbound_lubedup", "duration" : 15}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "ironbar", "count" : 10 },
+    { "item" : "glass",   "count" : 5  }
+  ],
+  "output" : {
+    "item" : "lox_sextoyvendingmachine",
+    "count" : 1
+  },
+  "groups" : [ "plain", "all" ]
+}

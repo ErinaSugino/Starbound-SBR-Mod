@@ -10,10 +10,15 @@ end
 
 --- Initializes this instance
 -- @param parent
-function Sexbound.Common.Arousal:init(parent)
+function Sexbound.Common.Arousal:init(parent, seed)
     self._parent = parent
+    seed = seed or os.time()
     arousalRate = parent:getConfig().sex.naturalHorninessRate
-    if type(arousalRate) == "table" then arousalRate = util.randomInRange(arousalRate) end
+    if type(arousalRate) == "table" then
+        local rng = sb.makeRandomSource(seed)
+        local roll = rng:randf()
+        arousalRate = arousalRate[1] + (arousalRate[2]-arousalRate[1]) * roll
+    end
     self._defaultConfig = {regenRates = {default = arousalRate, havingSex = 0.0}}
     self._config = config.getParameter("arousalConfig", self._defaultConfig)
     if not self._config.regenRates then self._config.regenRates = self._defaultConfig.regenRates end
@@ -29,7 +34,7 @@ end
 -- @param dt
 function Sexbound.Common.Arousal:update(dt)
     self:try(function()
-        self:addAmount(self._regenRate * dt)
+        if not self._parent._isKid then self:addAmount(self._regenRate * dt) end
     end)
 end
 
@@ -47,6 +52,8 @@ end
 --- Sets value of Arousal resource to entity's defined maxArousal stat
 -- @return a boolean value
 function Sexbound.Common.Arousal:instaMax()
+    if self._parent._isKid then return false end
+    
     local result = false
     self:try(function()
         self:setAmount(self._maxAmount)
@@ -76,18 +83,23 @@ end
 --- Adds an amount to this entity's arousal resource
 -- @param amount a decimal number
 function Sexbound.Common.Arousal:addAmount(amount)
+    if self._parent._isKid then return end
+    
     status.modifyResource(self._resourceName, amount)
 end
 
 --- Returns the value of this entity's arousal resource
 -- @return a decimal number
 function Sexbound.Common.Arousal:getAmount()
-    return status.resource(self._resourceName)
+    if self._parent._isKid then return 0
+    else return status.resource(self._resourceName) end
 end
 
 --- Sets an amount to this entity's arousal resource
 -- @param amount a decimal number
 function Sexbound.Common.Arousal:setAmount(amount)
+    if self._parent._isKid then return end
+    
     status.setResource(self._resourceName, amount)
 end
 

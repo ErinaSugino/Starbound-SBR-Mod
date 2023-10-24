@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_novakidpole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A burning hot Novakid dancing on a pole. Most would hope she's not actually a kid.",
+  "shortdescription" : "Female Novakid Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Woo! Shake it baby!",
+  "avianDescription" : "Woo! Shake it baby!",
+  "floranDescription" : "Woo! Shake it baby!",
+  "glitchDescription" : "Horny. Woo! Shake it baby!",
+  "humanDescription" : "Woo! Shake it baby!",
+  "hylotlDescription" : "Woo! Shake it baby!",
+  "novakidDescription" : "Woo! Shake it baby!",
+
+  "inventoryIcon" : "novakidpoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "novakidpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 9,
+      "animationCycle" : 1.2,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "novakidpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 9,
+      "animationCycle" : 1.2,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

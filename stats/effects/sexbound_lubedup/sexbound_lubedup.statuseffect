@@ -1,0 +1,13 @@
+{
+  "name" : "sexbound_lubedup",
+  "blockingStat"    : "sexboundImmunity",
+  "effectConfig" : {},
+  "defaultDuration" : 600,
+
+  "scripts" : [
+    "sexbound_lubedup.lua"
+  ],
+	
+  "label" : "sexbound_lubedup",
+  "icon" : "/interface/statuses/sexbound_lubedup.png"
+}

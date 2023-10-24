@@ -1,0 +1,160 @@
+{
+  "objectName" : "sexbound_fleshlight_v2",
+  "shortdescription" : "Blank Fleshlight",
+  "description" : "A special fleshlight that will change it's color once exposed to air.",
+  "shortdescriptionNew" : "Colored Fleshlight",
+  "descriptionNew" : "A male masturbator made from translucent colorful plastic.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Uncommon",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 1000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "Who left that here?",
+  "avianDescription"   : "Who left that here?",
+  "floranDescription"  : "Who left that here?",
+  "glitchDescription"  : "Perplexed. Who left that here?",
+  "humanDescription"   : "Who left that here?",
+  "hylotlDescription"  : "Who left that here?",
+  "novakidDescription" : "Who left that here?",
+  
+  "retainObjectParametersInItem" : true,
+  "cleanObject" : true,
+  "hueshiftValue" : 0,
+  "saturationValue" : -1,
+  "brightnessValue" : 0,
+  
+  "sitStatusEffects" : ["sexbound_sex"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "fleshlighticon.png?saturation=-100",
+  "orientations" : [
+    {
+      "dualImage" : "fleshlight.png:idle.1?saturation=-100",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoycommon/sexbound_fleshlight_v2/fleshlight.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Fleshlight",
+    
+    "position" : {
+      "sex" : [ "standing_sextoy_actor2" ]
+    },
+	"idlePosition": "idle_toy",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }
+            }
+          }
+        },
+		
+        "actor1-body": {
+		  "partStates": {
+		    "actors": {
+			  "idle": {
+			    "properties" : {
+                  "image" : "/objects/sextoycommon/sexbound_fleshlight_v2/fleshlight.png<rainbowDirectives>",
+				  "offset" : [0, -1.5]
+                }
+			  }
+	  	    }
+		  }
+	    },
+      
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

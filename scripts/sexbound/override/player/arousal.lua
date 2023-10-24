@@ -12,7 +12,7 @@ function Sexbound.Player.Arousal:new(parent)
         _parent = parent
     }, Sexbound.Player.Arousal_mt)
 
-    _self:init(parent)
+    _self:init(parent, nil)
 
     return _self
 end

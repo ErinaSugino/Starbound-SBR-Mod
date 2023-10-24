@@ -38,6 +38,11 @@ function Sexbound.Common:init(parent, entityType)
     self:loadSubscripts(entityType) -- Subscripts include SubGender, which verifies and, if needed, resets current sub-gender
 
     status.setStatusProperty("sexbound_birthday", status.statusProperty("sexbound_birthday", "default"))
+    
+    if status.statusProperty("generationFertility", nil) == nil then
+        status.setStatusProperty("generationFertility", 1.0)
+        status.setStatusProperty("fertilityPenalty", 1.0)
+    end
 end
 
 function Sexbound.Common:uninit()
@@ -103,6 +108,8 @@ function Sexbound.Common:fetchCoreIdentity()
     
     self._speciesDefaultStatuses = genderConfig.sxbNaturalStatus
     if self._speciesDefaultStatuses and type(self._speciesDefaultStatuses) ~= "table" then self._speciesDefaultStatuses = {self._speciesDefaultStatuses} end
+    
+    self._speciesType = speciesConfig.sxbSpeciesType or nil
 end
 
 function Sexbound.Common:buildBodyTraits(gender)
@@ -167,13 +174,15 @@ function Sexbound.Common:announceBirth()
     message = util.replaceTag(message, "babyname", babyName)
     message = util.replaceTag(message, "babygender", babyGender)
 
-    for _, playerId in ipairs(world.players()) do
-        if world.entityUniqueId(playerId) ~= motherUuid then
-            world.sendEntityMessage(playerId, "queueRadioMessage", {
-                messageId = "Sexbound_Event:Birth",
-                unique = false,
-                text = message
-            })
+    if world.players then
+        for _, playerId in ipairs(world.players()) do
+            if world.entityUniqueId(playerId) ~= motherUuid then
+                world.sendEntityMessage(playerId, "queueRadioMessage", {
+                    messageId = "Sexbound_Event:Birth",
+                    unique = false,
+                    text = message
+                })
+            end
         end
     end
 
@@ -250,6 +259,10 @@ function Sexbound.Common:updateSubgenderStatus(old, new)
             self._subGender:handleAddStatus(s)
         end
     end
+end
+
+function Sexbound.Common:updateFertility(newFertility)
+    status.setStatusProperty("fertilityPenalty", newFertility)
 end
 
 -- Getters/Setters

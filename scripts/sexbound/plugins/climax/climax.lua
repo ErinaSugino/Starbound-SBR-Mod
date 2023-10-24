@@ -100,7 +100,7 @@ function Sexbound.Actor.Climax:onMessage(message)
     
     -- On Message Received: Inflate
     if message:isType("Sexbound:Climax:Inflate") then
-        self:inflate(message)
+        self:inflate(message:getData())
     end
 end
 
@@ -387,17 +387,25 @@ function Sexbound.Actor.Climax:shoot(...)
         self:spawnProjectile(...)
     end
     
+    -- Spawn items when enabled
+    if self._config.enableSpawnItems then
+        self:spawnItem(...)
+    end
+    
     local actorNum = self:getParent():getActorNumber()
     local config = self:getParent():getPosition():getConfig()
     local interactionTypes = config.interactionType or {}
     local interaction = interactionTypes[actorNum]
+    
     local target = config.actorRelation[actorNum]
     if target then
-        local _actor = actor:getParent():getActors()[target] or nil
+        local _actor = self:getParent():getParent():getActors()[target] or nil
         if interaction == "oral" then
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
-        if self._config.enableInflation then Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate()) end
+        if interaction == "direct" and self._config.enableInflation then
+            Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate())
+        end
     end
 end
 
@@ -445,14 +453,50 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
     world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
 end
 
+function Sexbound.Actor.Climax:spawnItem(...)
+    self:loadClimaxConfig()
+    local args = {...}
+    local actor = self:getParent()
+    local species = actor:getSpecies()
+    
+    local dospawnitem = false
+    for _,_actor in pairs(self:getRoot():getActors()) do
+        local _species = _actor:getSpecies()
+        if species ~= _actor:getSpecies() and ((_species == "sexbound_milkingmachine") or (_species == "sexbound_milkingmachine_mk2")) then
+            dospawnitem = true
+        end
+    end
+    if species ~= "sexbound_dildo_ovipositor" and not dospawnitem then return end
+    
+    local facingDirection = {object.direction(), 1}
+    local climaxConfig   = self._climaxConfig or {}
+    local spawnOffset    = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
+    local spawnPosition  = vec2.add(args[2] or actor:getClimaxSpawnPosition(), spawnOffset)
+    local genitals = actor:getGenitalTypes()
+    
+    if dospawnitem then
+        -- Milkingmachine spawn
+        local config = self._config.projectileItem or {}
+        config = config.default or {}
+        for _,g in ipairs(genitals) do
+            local item = config[g]
+            if item then world.spawnItem(item, spawnPosition, 1) end
+        end
+    else
+        world.spawnItem("sexbound_fakeeggs", spawnPosition, 1) -- Ovipositor spawn
+    end
+end
+
 --- Increases level of inflation
 function Sexbound.Actor.Climax:inflate(amount)
     amount = amount or 0.1
     local oldAmount = self._inflation
     local actor = self._parent
     self._inflation = self._inflation + amount
+    self:getLog():debug("Actor "..actor:getActorNumber().." gotten inflation request. New value: "..self._inflation)
     if oldAmount < self:getInflationThreshold() and self._inflation >= self:getInflationThreshold() then
         actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to show inflated belly sprite.")
     end
 end
 
@@ -462,17 +506,21 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
 
     if self._dripTimer == 0 then
         local oldAmount = self._inflation
-        local actor = self._parent
-        self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
-        if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
-            actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        if oldAmount > 0 then
+            local actor = self._parent
+            self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
+            self:getLog():debug("Actor "..actor:getActorNumber().." dripping. New amount: "..self._inflation)
+            if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
+                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+                self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to hide inflated belly sprite.")
+            end
+            
+            if self._config.enableClimaxParticles then
+                animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
+            end
         end
         
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
-        
-        if self._config.enableClimaxParticles then
-            animator.burstParticleEmitter("insemination-drip" .. selfNumber)
-        end
     end
 end
 
@@ -493,7 +541,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
         end
     end
     
-    if containsPlayer and playerControl then
+    if self._config.prioritizePlayer and containsPlayer and playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
         return
     end
@@ -576,7 +624,7 @@ end
 
 --- Returns whether or not this actor is currently inflated
 function Sexbound.Actor.Climax:isInflated()
-    return self._inflation >= self:getInflationThreshold
+    return self._inflation >= self:getInflationThreshold()
 end
 
 --- Returns a sound effect by specifed name or the table of sound effects.

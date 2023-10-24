@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_hylotlpole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A drunk Hylotl stripper.",
+  "shortdescription" : "Female Hylotl Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Can fish people drown in their drinks?",
+  "avianDescription" : "Can fish people drown in their drinks?",
+  "floranDescription" : "Can fish people drown in their drinks?",
+  "glitchDescription" : "Horny. Can fish people drown in their drinks?",
+  "humanDescription" : "Can fish people drown in their drinks?",
+  "hylotlDescription" : "Can fish people drown in their drinks?",
+  "novakidDescription" : "Can fish people drown in their drinks?",
+
+  "inventoryIcon" : "hylotlpoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "hylotlpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 11,
+      "animationCycle" : 1.5,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "hylotlpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 11,
+      "animationCycle" : 1.5,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

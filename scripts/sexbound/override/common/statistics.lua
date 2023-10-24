@@ -56,7 +56,7 @@ end
 --- Function to trigger reactions when a stat is raised
 function Sexbound.Common.Statistics:triggerEvent(s)
     if not self._eventHandlers[s] then return end
-    for _,c in ipairs(self._eventHandlers) do
+    for _,c in ipairs(self._eventHandlers[s]) do
         r,e = pcall(c)
         if not r then sb.logError("Error in statistic event handler: "..tostring(e)) end
     end
@@ -65,7 +65,7 @@ end
 --- Function to trigger reactions when a stat is raised for the first time
 function Sexbound.Common.Statistics:triggerFirstTime(s)
     if not self._firstTimeHandlers[s] then return end
-    for _,c in ipairs(self._firstTimeHandlers) do
+    for _,c in ipairs(self._firstTimeHandlers[s]) do
         r,e = pcall(c)
         if not r then sb.logError("Error in statistic event handler: "..tostring(e)) end
     end

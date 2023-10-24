@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "name": "sexscape",
+    "species": "generic",
+    "rules": [],
+    "anchor": [
+      "sexscape"
+    ],
+    "gravity": 80,
+    "maxRadius": 1000000,
+    "maxParts": 1,
+    "protected": true
+  },
+  "parts": [
+    {
+      "name": "sexscape",
+      "rules": [
+        [
+          "maxSpawnCount",
+          [
+            1
+          ]
+        ]
+      ],
+      "def": [
+        "tmx",
+        "sexscape.json"
+      ]
+    }
+  ]
+}

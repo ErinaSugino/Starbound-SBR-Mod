@@ -1,4 +1,14 @@
 [
+  { 
+    "op": "add", 
+    "path" : "/defaultBlueprints/tier1/-", 
+    "value" : { "item" : "sexbound_sextoypresentoir" }
+  },
+  {
+    "op": "add",
+    "path": "/genericScriptContexts/obsoleteobjects",
+    "value": "/scripts/player/obsoleteobjects.lua"
+  },
   {
     "op" : "add",
     "path" : "/defaultBlueprints/tier1/-",

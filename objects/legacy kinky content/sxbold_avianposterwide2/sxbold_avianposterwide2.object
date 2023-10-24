@@ -1,0 +1,33 @@
+{
+  "objectName" : "sxbold_avianposterwide2",
+  "colonyTags" : ["pretty"],
+  "rarity" : "Common",
+  "description" : "A.V.I.A.N displays her new aguements",
+  "shortdescription" : "Spicy A.V.I.A.N. Poster",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 100,
+  "printable" : true,
+
+  "apexDescription" : "Bird nips",
+  "avianDescription" : "Aw yea, sexy bird",
+  "floranDescription" : "Makesss Floran hungry!",
+  "glitchDescription" : "Puzzled. ... and horny",
+  "humanDescription" : "I would hit it",
+  "hylotlDescription" : "My favourite part of this is the breasts",
+  "novakidDescription" : "Oh nice! We had a few of those whores back at work.",
+
+  "inventoryIcon" : "avianposterwideicon2.png",
+  "orientations" : [
+    {
+      "image" : "avianposterwide2.png:<color>",
+      "imagePosition" : [-16, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

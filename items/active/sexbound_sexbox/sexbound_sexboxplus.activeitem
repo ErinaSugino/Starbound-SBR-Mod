@@ -1,0 +1,24 @@
+{
+  "itemName" : "sexbound_sexboxplus",
+  "price" : 10000,
+  "level" : 1,
+  "maxStack" : 1000,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "A special box that can contain any sex toy, but with better odds at rare ones!",
+  "shortdescription" : "Sex Box Plus",
+  "twoHanded" : true,
+
+  "inventoryIcon" : "sexbound_sexboxplus.png",
+  "animation" : "sexbound_sexboxplus.animation",
+  "animationCustom" : {},
+  "scripts" : ["sexbound_sexbox.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "sexboxPlusLoot",
+    "level" : 0
+  }
+}

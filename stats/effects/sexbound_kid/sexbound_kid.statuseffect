@@ -1,0 +1,6 @@
+{
+  "name"            : "sexbound_kid",
+  "defaultDuration" : 999,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_kid.lua" ]
+}

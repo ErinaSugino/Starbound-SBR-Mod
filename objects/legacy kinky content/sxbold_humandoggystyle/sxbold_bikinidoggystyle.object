@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_bikinidoggystyle",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A female human in a bikini being railed by a handsome human male.",
+  "shortdescription" : "Human Doggystyle in a Bikini",
+  "race" : "generic",
+
+  "apexDescription" : "Two humans getting it on!",
+  "avianDescription" : "Two humans getting it on!",
+  "floranDescription" : "Two humans getting it on!",
+  "glitchDescription" : "Horny. Two humans getting it on!",
+  "humanDescription" : "Two humans getting it on!",
+  "hylotlDescription" : "Two humans getting it on!",
+  "novakidDescription" : "Two humans getting it on!",
+
+  "inventoryIcon" : "bikinidoggystyleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "bikinidoggystyle.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 3.0,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "bikinidoggystyle.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 3.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

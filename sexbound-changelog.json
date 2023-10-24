@@ -1,4 +1,14 @@
 {
+  "1.1" : [
+    "» FOUNDING FAMILY «",
+	"- Integrated Lustbound Base",
+	"- Reworked pregnancies - cross-species, multi-babies, incest, color genetics, true kids, ...",
+	"- Reworked NPC behavior - smarter arousal, special dialog for families, no perma-stuck pathfinding",
+	"- Optional cumflation logic",
+	"- Modder-friendly API changes",
+	"- Fixes on many systems",
+	"- Details, full changelog and modding information in download"
+  ],
   "1.0_r1" : [
 	"» REVISON 1 «",
 	"- Included \"Sexbound Extended Dialogues\" with author permission",

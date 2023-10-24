@@ -1,0 +1,170 @@
+{
+  "objectName" : "sexbound_milkingmachine",
+  "shortdescription" : "Milking Machine",
+  "description" : "A machine that collects your sexual fluids. More fun than it sounds.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Legendary",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 25000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "I don't think this milking machine is for mooshi.",
+  "avianDescription"   : "I don't think this milking machine is for mooshi.",
+  "floranDescription"  : "Floran doesn't think thisss milking machine iss for mooshi.",
+  "glitchDescription"  : "Dismissive. Back home we just used a pail and our hands. It worked fine.",
+  "humanDescription"   : "I don't think this milking machine is for mooshi.",
+  "hylotlDescription"  : "I don't think this milking machine is for mooshi.",
+  "novakidDescription" : "Looks like one o' them mooshi milkers. Always preferred to use my hands.",
+  
+  "sitStatusEffects" : ["sexbound_sex", "sexbound_milkmode"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "milkingmachineicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "milkingmachine.png:idle.1",
+
+      "imagePosition" : [-9, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "dualImage" : "milkingmachine.png:idle.1?flipx",
+
+      "imagePosition" : [-9, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoylegendary/sexbound_milkingmachine/milkingmachine.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+
+	"modName" : "Milking Machine",
+    
+    "position" : {
+      "sex" : [ "standing_milkingmachine_actor2" ]
+    },
+	"idlePosition": "idle_toy2",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.875, 1.375]
+                }
+              }
+            }
+          }
+        },
+		
+		"actor2" : {
+		  "properties": {
+			"centered": true
+		  },
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              }
+            }
+          }
+        },
+		"actor1" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              }
+            }
+          }
+        },
+      
+        "bed" : {
+          "properties" : {
+            "centered" : false,
+            "offset" : [-1, -0.125],
+            "zLevel" : -1
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.0, 0.0]
+          }
+        }
+      }
+    }
+  }
+}

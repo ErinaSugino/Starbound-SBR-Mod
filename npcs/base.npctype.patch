@@ -23,6 +23,23 @@
   },
   
   {
+	"op": "add",
+	"path": "/scriptConfig/dialog/kid",
+	"value": "/dialog/converse.config:kid"
+  },
+  
+  {
+	"op": "add",
+	"path": "/scriptConfig/dialog/family",
+	"value": {
+		"default": "/dialog/family.config:default",
+		"greeting": "/dialog/family.config:greeting",
+		"converse": "/dialog/family.config:converse",
+		"kid": "/dialog/family.config:kid"
+	}
+  },
+  
+  {
     "op" : "add",
     "path" : "/statusControllerSettings/primaryScriptSources/-",
     "value" : "/scripts/sexbound/override/stats/npc_primary.lua"

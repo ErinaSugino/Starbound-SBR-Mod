@@ -1,0 +1,10 @@
+{
+  "input" : [
+    { "item" : "legendaryrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_bodypillow_fnovakid",
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoylegendary" ]
+}

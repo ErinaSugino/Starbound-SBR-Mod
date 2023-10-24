@@ -1,0 +1,20 @@
+{
+  "input" : [
+    { "item" : "commonrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_dildo_v2",
+	"parameters" : {
+		"description" : "A basic colorful dildo. It has a suction cup to mount it on the wall.",
+		"shortdescription" : "Red Dildo",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 0,
+		"saturationValue" : -15,
+		"brightnessValue" : -15,
+		"inventoryIcon" : "dildoicon.png?hueshift=0;?saturation=-15;?brightness=-15"
+	},
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoycommon" ]
+}

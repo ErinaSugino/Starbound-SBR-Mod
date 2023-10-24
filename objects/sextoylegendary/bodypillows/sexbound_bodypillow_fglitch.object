@@ -1,0 +1,197 @@
+{
+  "objectName" : "sexbound_bodypillow_fglitch",
+  "shortdescription" : "Female Glitch Dakimakura",
+  "description" : "A female glitch body pillow.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Legendary",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 25000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "A pillow with a character imprinted on it.",
+  "avianDescription"   : "A pillow with a character imprinted on it.",
+  "floranDescription"  : "Pillow with sssssomeone on it.",
+  "glitchDescription"  : "Stern. A pillow with a character imprinted on it.",
+  "humanDescription"   : "A pillow with a character imprinted on it.",
+  "hylotlDescription"  : "A pillow with a character imprinted on it.",
+  "novakidDescription" : "A pillow with a character imprinted on it.",
+  
+  "sitStatusEffects" : ["sexbound_sex"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "bodypillowicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "bodypillowfglitch.png:default",
+
+      "imagePosition" : [-20, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoylegendary/bodypillows/bodypillow.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Bodypillow",
+    
+    "position" : {
+      "sex" : [ "cowgirl_sextoy_actor2" ]
+    },
+	"idlePosition": "idle_toy",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+	
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+	  
+      "parts" : {
+	    "bed" : {
+          "properties" : {
+            "offset" : [0, 1.375],
+            "zLevel" : -999,
+            "image"  : "/objects/sextoylegendary/bodypillows/bedpillowfglitch.png:<color>"
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset"     : [-0.125, -1.375]
+          }
+        },
+		
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [2.750, 1.250]
+                }
+              }
+            }
+          }
+        },
+      
+	    "actor1" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-3.375, 0.125]
+                }
+              },
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0.125]
+                }
+              },
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-3.375, 0.125]
+                }
+              },
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-3.375, 0.125]
+                }
+              }
+            }
+          }
+        },
+	  
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "properties" : {
+                  "offset" : [-1.875, 1.5]
+                }
+              },
+              "position4-climax" : {
+                "properties" : {
+                  "offset" : [-1.875, 1.5]
+                }
+              },
+			  "position4-postclimax" : {
+                "properties" : {
+                  "offset" : [-1.875, 1.5]
+                }
+              },
+              "position4-reset" : {
+                "properties" : {
+                  "offset" : [-1.875, 1.5]
+                }
+              }
+            }
+          }
+        },
+		"actor1-arm-front": {
+		  "properties": {
+			"zLevel": 43
+			}
+		},
+		"actor2-groin" : {
+          "partStates" : {
+            "actors" : {
+              "position4" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42]
+                }
+              },
+              "position4-climax" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              },
+			  "position4-postclimax" : {
+                "frameProperties" : {
+                  "zLevel" : [42,42,42,42,42,42,42,42,42,42,42,42,42]
+                }
+              },
+              "position4-reset" : {
+                "frameProperties" : {
+                  "zLevel" : [42]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

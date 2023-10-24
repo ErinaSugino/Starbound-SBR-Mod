@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_avianpole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A cute Avian Pole Dancer showing you some love.",
+  "shortdescription" : "Female Avian Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Woo! Shake it baby!",
+  "avianDescription" : "Woo! Shake it baby!",
+  "floranDescription" : "Woo! Shake it baby!",
+  "glitchDescription" : "Horny. Woo! Shake it baby!",
+  "humanDescription" : "Woo! Shake it baby!",
+  "hylotlDescription" : "Woo! Shake it baby!",
+  "novakidDescription" : "Woo! Shake it baby!",
+
+  "inventoryIcon" : "avianpoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "avianpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 15,
+      "animationCycle" : 1.5,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "avianpole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 15,
+      "animationCycle" : 1.5,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

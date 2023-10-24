@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_lust",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1,
   "animationConfig" : "sexbound_lust.animation",
   "scripts"         : [ "sexbound_lust.lua" ]

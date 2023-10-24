@@ -10,9 +10,10 @@ BabyFactory_mt = {
 --- Instantiates a new instance of BabyFactory.
 -- @param parent
 -- @param config
-function BabyFactory:new(parent)
+function BabyFactory:new(parent, config)
     local _self = setmetatable({
-        _parent = parent
+        _parent = parent,
+        _config = config
     }, BabyFactory_mt)
     
     _self._lengthOfWorldDay = 840
@@ -21,48 +22,77 @@ function BabyFactory:new(parent)
     return _self
 end
 
-function BabyFactory:make(daddy)
-    local actor = self:getParent():getParent()
-
-    local baby = {
-        birthGender = self:createRandomBirthGender(),
-        birthTime = self:createRandomBirthTime(),
-        motherName = actor:getIdentity("name"),
-        motherId = actor:getEntityId(),
-        motherUuid = actor:getUniqueId(),
-        motherType = actor:getEntityType(),
-        motherSpecies = actor:getSpecies(),
-        fatherName = daddy:getName(),
-        fatherId = daddy:getEntityId(),
-        fatherUuid = daddy:getUniqueId(),
-        fatherType = daddy:getEntityType(),
-        fatherSpecies = daddy:getSpecies()
+function BabyFactory:make(actor, daddy)
+    local motherSpecies = actor:getSpecies()
+    local fatherSpecies = daddy:getSpecies()
+    local geneticTable = self._config.geneticTable or {}
+    local pregnancyTypes = self._config.pregnancyType or {}
+    
+    local pregnancyType = (pregnancyTypes[motherSpecies] or {})[fatherSpecies] or "baby"
+    
+    -- Try loading baby class
+    local r,err = pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
+    if not r then
+        sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+        sb.logError("Error: "..tostring(err))
+        return nil
+    end
+    
+    local babyClass
+    r,err = pcall(function()
+        local ucPregnancyType = pregnancyType:gsub("^%l", string.upper)
+        babyClass = _ENV[ucPregnancyType]:new(self, self._config)
+    end)
+    if not r then
+        -- Can't load = can't generate baby = no pregnancy; abort
+        sb.logError("SxB: Could not load baby class \""..pregnancyType.."\" - aborting pregnancy generation.")
+        sb.logError("Error: "..tostring(err))
+        return nil
+    end
+    
+    local pregnancy = {
+        dataVersion = 3,
+        pregnancyType = pregnancyType,
+        babies = {},
+        birthTime = self:createRandomBirthTime()
     }
-
-    if baby.motherType == "player" then
+    
+    -- Apply pregnancy timings
+    if actor:getEntityType() == "player" then
         -- Player mothers get the actual fertilization delayed for realistic immersion purposes
         -- They also progress the pregnancy based on script time, meaning their birth timings are a countdown
-        baby.birthWorldTime, baby.dayCount = self:createRandomPlayerBirthTime()
-        baby.birthWorldTime = baby.birthWorldTime + (self._lengthOfWorldDay * baby.birthTime)
-        baby.fullBirthWorldTime = baby.birthWorldTime
-        baby.delay = self:createImpregnationDelay()
+        pregnancy.birthWorldTime, pregnancy.dayCount = self:createRandomPlayerBirthTime()
+        pregnancy.birthWorldTime = pregnancy.birthWorldTime + (self._lengthOfWorldDay * pregnancy.birthTime)
+        pregnancy.fullBirthWorldTime = pregnancy.birthWorldTime
+        pregnancy.delay = self:createImpregnationDelay()
     else
         -- NPC mothers don't get a delay, as it is not necessary in any way (and they don't have script time mechanics by default)
         -- They also have their birth time bound to the actual world's time like before, because they are supposed to stay there and need to "progress" while unloaded
-        baby.birthDate, baby.dayCount = self:createRandomBirthDate()
-        baby.birthWorldTime = baby.birthDate + baby.birthTime
-        baby.fullBirthWorldTime = world.day()
-        baby.delay = 0
+        pregnancy.birthDate, pregnancy.dayCount = self:createRandomBirthDate()
+        pregnancy.birthWorldTime = pregnancy.birthDate + pregnancy.birthTime
+        pregnancy.fullBirthWorldTime = world.day()
+        pregnancy.delay = 0
     end
-    baby.birthOSTime = os.time() + (baby.dayCount * self._secondsInOneDay) + (baby.birthTime * self._secondsInOneDay)
-    baby.fullBirthOSTime = os.time()
+    pregnancy.birthOSTime = os.time() + (pregnancy.dayCount * self._secondsInOneDay) + (pregnancy.birthTime * self._secondsInOneDay)
+    pregnancy.fullBirthOSTime = os.time()
     
-    if baby.motherType == "npc" and baby.fatherType == "npc" then
-        local choices = {actor:getType(), daddy:getType()}
-        baby.npcType = util.randomChoice(choices)
+    local nextBaby, babyCount = true, 0
+    while nextBaby and babyCount < (self._config.multiPregnancyLimit or 3) do
+        r,err = pcall(function()
+            table.insert(pregnancy.babies, babyClass:create(actor, daddy))
+            babyCount = babyCount + 1
+            nextBaby = math.random() <= (self._config.multiPregnancyChance or 0.1)
+        end)
+        if not r then
+            sb.logError("SxB: Baby generation errored! Aborting further generation.")
+            sb.logError("Error: "..tostring(err))
+            nextBaby = false
+        end
     end
+    if babyCount <= 0 then return nil end -- No babies? No pregnancy!
+    pregnancy.babyCount = babyCount
 
-    return baby
+    return pregnancy
 end
 
 --- Returns a random birth gender.
@@ -76,16 +106,9 @@ end
 --- Returns a random birth date and day count.
 -- @return birthDate, dayCount
 function BabyFactory:createRandomBirthDate()
-    local config = self:getParent():getConfig()
-
-    local trimesterCount = util.randomIntInRange(config.trimesterCount or 3)
-    local trimesterLength = config.trimesterLength or {5, 8}
-
-    local dayCount = 0
-
-    for i = 1, trimesterCount do
-        dayCount = dayCount + util.randomIntInRange(trimesterLength)
-    end
+    local pregnancyLength = self._config.pregnancyLength or {6, 9}
+    
+    local dayCount = util.randomIntInRange(pregnancyLength)
 
     return (world.day() + dayCount), dayCount
 end
@@ -99,16 +122,9 @@ end
 --- Returns a random birth time and day count for in-game time measurement
 -- @return birthTime, dayCount
 function BabyFactory:createRandomPlayerBirthTime()
-    local config = self:getParent():getConfig()
+    local pregnancyLength = self._config.pregnancyLength or {6, 9}
     
-    local trimesterCount = util.randomIntInRange(config.trimesterCount or 3)
-    local trimesterLength = config.trimesterLength or {5, 8}
-    
-    local dayCount = 0
-    
-    for i = 1, trimesterCount do
-        dayCount = dayCount + util.randomIntInRange(trimesterLength)
-    end
+    local dayCount = util.randomIntInRange(pregnancyLength)
     
     return (self._lengthOfWorldDay * dayCount), dayCount
 end
@@ -199,4 +215,9 @@ end
 --- Returns a reference to the parent object
 function BabyFactory:getParent()
     return self._parent
+end
+
+--- Return a reference to the factory's config
+function BabyFactory:getConfig()
+    return self._config
 end

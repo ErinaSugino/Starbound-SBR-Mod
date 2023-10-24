@@ -1,0 +1,151 @@
+{
+  "objectName" : "sexbound_fleshlight_floran",
+  "shortdescription" : "Floran Fleshlight",
+  "description" : "A floran fleshlight. A rough texture, which is however extremely stimulating.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Rare",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 5000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "I feel like I'm going to be bitten if I put anything in there.",
+  "avianDescription"   : "I feel like I'm going to be bitten if I put anything in there.",
+  "floranDescription"  : "Issss not what floran have down there. But floran don't care.",
+  "glitchDescription"  : "Cautious. I feel like I'm going to be bitten if I put anything in there.",
+  "humanDescription"   : "I feel like I'm going to be bitten if I put anything in there.",
+  "hylotlDescription"  : "I feel like I'm going to be bitten if I put anything in there.",
+  "novakidDescription" : "I feel like I'm going to be bitten if I put anything in there.",
+  
+  "sitStatusEffects" : ["sexbound_sex"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "fleshlighticon.png",
+  "orientations" : [
+    {
+      "dualImage" : "fleshlight.png:idle.1",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "dualImage" : "fleshlight.png:idle.1?flipx",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoyrare/sexbound_fleshlight_floran/fleshlight.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Fleshlight",
+    
+    "position" : {
+      "sex" : [ "standing_sextoy_actor2" ]
+    },
+	"idlePosition": "idle_toy",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-with-penis" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [3.5, 1.5]
+                }
+              }
+            }
+          }
+        },
+      
+        "actor2" : {
+          "partStates" : {
+            "actors" : {
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.75, 0]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

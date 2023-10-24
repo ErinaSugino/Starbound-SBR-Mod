@@ -1,0 +1,123 @@
+{
+  "objectName" : "sexbound_gloryhole",
+  "colonyTags" : ["outpost"],
+  "rarity" : "Legendary",
+  "description" : "A bathroom stall. This one seems to have a hole.",
+  "shortdescription" : "Bathroom Stall?",
+  "race" : "generic",
+  "category" : "furniture",
+  "price" : 25000,
+
+  "apexDescription" : "A basic bathroom stall. I don't feel safe in this one...",
+  "avianDescription" : "A bathroom stall. There's a taped-out hole.",
+  "floranDescription" : "Floran likes hiding in ssstalls and waiting for sssurprise through hole!",
+  "glitchDescription" : "Neutral. A damaged bathroom stall.",
+  "humanDescription" : "Great for hiding in and masturbating.",
+  "hylotlDescription" : "A crude bathroom stall. Seems like a hole has been poked through it.",
+  "novakidDescription" : "When you gotta go, you gotta go.",
+
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sexbound_gloryhole.png:<color>",
+      "sitPosition" : [-6, 22],
+
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "objectType" : "loungeable",
+  "sitCoverImage" : "/objects/sextoylegendary/sexbound_gloryhole/sexbound_gloryholecover.png",
+  "sitFlipDirection" : false,
+  
+  "scripts" : ["/scripts/sexbound/twoactors.lua"],
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+	
+	"modName" : "Lustbound",
+            
+    "nodePositions" : [[-1, 0], [0, 0]],
+    
+    "sitPositions"  : [[1, 20], [0, 20]],
+    
+    "position" : {
+      "sex" : [
+        "fellatio"
+      ]
+    }
+  },
+  
+  "interactive" : true,
+  
+  "animation" : "/artwork/humanoid/twoactors.animation",
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "parts" : {
+        "bed" : {
+          "properties" : {
+            "centered" : false,
+            "offset" : [-3, 0],
+            "zLevel" : -1,
+            "image" : "/objects/sextoylegendary/sexbound_gloryhole/sexbound_gloryhole.png"
+          }
+        },
+		
+		"stall" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [3, 2.5],
+            "zLevel" : 50,
+            "image" : "/objects/sextoylegendary/sexbound_gloryhole/sexbound_gloryholecover.png"
+          }
+        },
+		
+		"actor1-groin": {
+			"properties": {
+				"offset" : [0.625, 0.0]
+			}		
+		},
+		
+		"actor1" : {
+          "partStates" : {
+            "actors" : {              
+              "idle" : {
+                "properties" : {
+                  "offset" : [-3.5, 0.0]
+                }
+              },
+			  "position6": {
+				"properties" : {
+                  "offset" : [-3.0, 0.0]
+                }
+			  },
+			  "position6-climax": {
+				"properties" : {
+                  "offset" : [-3.0, 0.0]
+                }
+			  },
+			  "position6-reset": {
+				"properties" : {
+                  "offset" : [-3.0, 0.0]
+                }
+			  }
+            }
+          }
+        },
+        
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [3.0, -0.125]
+          }
+        }
+      }
+    }
+  }
+}

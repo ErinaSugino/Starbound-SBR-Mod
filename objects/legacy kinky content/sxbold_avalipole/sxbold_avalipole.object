@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_avalipole",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "Avali jumping up and down, rubbing against the pole. Not really much of a dance..",
+  "shortdescription" : "Female Avali Pole Dancer",
+  "race" : "generic",
+
+  "apexDescription" : "Such an odd race. Do people find this sexy?",
+  "avianDescription" : "Such an odd race. Do people find this sexy?",
+  "floranDescription" : "Such an odd race. Do people find this sexy?",
+  "glitchDescription" : "Confused. Such an odd race. Do people find this sexy?",
+  "humanDescription" : "Such an odd race. Do people find this sexy?",
+  "hylotlDescription" : "Such an odd race. Do people find this sexy?",
+  "novakidDescription" : "Such an odd race. Do people find this sexy?",
+
+  "inventoryIcon" : "avalipoleicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "avalipole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 1.0,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "avalipole.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 18,
+      "animationCycle" : 1.0,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

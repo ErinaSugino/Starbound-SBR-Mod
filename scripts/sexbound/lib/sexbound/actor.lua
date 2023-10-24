@@ -1352,6 +1352,44 @@ function Sexbound.Actor:hasInteractionType(type)
     return false
 end
 
+--- Retrieves the data for UI syncing for this actor
+function Sexbound.Actor:getUIData(args)
+    local data = {
+        actorSlot       = "actor" .. self:getActorNumber(),
+        bodyDirectives  = self:getIdentity("bodyDirectives"),
+        bodyType        = self:getBodyType(),
+        hairID          = self:getIdentity("hairType"),
+        hairDirectives  = self:getIdentity("hairDirectives"),
+        showBackwear    = self:getApparel():getIsVisible("backwear"),
+        showChestwear   = self:getApparel():getIsVisible("chestwear"),
+        showHeadwear    = self:getApparel():getIsVisible("headwear"),
+        showLegswear    = self:getApparel():getIsVisible("legswear"),
+        showNippleswear = self:getApparel():getIsVisible("nippleswear"),
+        frameName       = self:getFrameName(self:getAnimationState()),
+        gender          = self:getGender(),
+        subGender       = self:getSubGender(),
+        entityType      = self:getEntityGroup(),
+        genitalType     = self:getGenitalTypes(),
+        species         = self:getSpecies(),
+        status          = {
+            isPregnant          = self:isVisiblyPregnant(),
+            isInflated          = self:isInflated(),
+            isClimaxing         = self._isClimaxing or false,
+            isPreClimaxing      = self._isPreClimaxing or false,
+            isScriptedClimaxing = self._isScriptedClimaxing or false
+        }
+    }
+
+    if self:getPlugins("climax") then
+        data.climax = {
+            currentPoints = self:getPlugins("climax"):getCurrentPoints(),
+            maxPoints = self:getPlugins("climax"):getMaxPoints()
+        }
+    end
+    
+    return data
+end
+
 --- Legacy
 
 function Sexbound.Actor:getBackwear()

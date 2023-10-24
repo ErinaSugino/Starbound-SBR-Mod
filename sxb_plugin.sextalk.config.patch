@@ -1,0 +1,12 @@
+[
+  {
+    "op" : "add",
+    "path" : "/skipMergeDefaultDialog/species/-",
+    "value" : "sexbound_tentacleplant_v2"
+  },
+  {
+    "op" : "add",
+    "path" : "/skipMergeDefaultDialog/species/-",
+    "value" : "sexbound_bodypillow"
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_avianspank",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A Female Avian chained to a spanking machine with a medium behind.",
+  "shortdescription" : "Avian Spanking Machine M",
+  "race" : "generic",
+
+  "apexDescription" : "Ouch! Painful but fun!",
+  "avianDescription" : "Ouch! Painful but fun!",
+  "floranDescription" : "Ouch! Painful but fun!",
+  "glitchDescription" : "Ouch! Painful but fun!",
+  "humanDescription" : "Ouch! Painful but fun!",
+  "hylotlDescription" : "Ouch! Painful but fun!",
+  "novakidDescription" : "Ouch! Painful but fun!",
+
+  "inventoryIcon" : "avianspankicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "avianspank.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -14],
+      "frames" : 22,
+      "animationCycle" : 1.3,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "avianspank.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -14],
+      "frames" : 22,
+      "animationCycle" : 1.3,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

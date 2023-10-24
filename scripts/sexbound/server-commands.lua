@@ -237,7 +237,7 @@ function SexboundCommands:defineVersionCommand()
 end
 
 function SexboundCommands:handleVersionAction(commands, args)
-    return "^white;Running Sexbound Reborn V" .. commands._config.version .. "^reset;"
+    return "^white;Running Sexbound Reborn V" .. tostring(commands._config.version) .. "^reset;"
 end
 
 --- LUA HOOKS
@@ -249,6 +249,8 @@ function init()
     end
 
     self.sexboundCommands = SexboundCommands.new()
+    local config = self.sexboundCommands._config
+    if config.log.showInfo or config.log.showDebug then sb.logInfo("[SxB | MAIN] : Running Reborn V"..tostring(config.version)) end
 end
 
 local sexbound_command_old = command

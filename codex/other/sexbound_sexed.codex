@@ -1,7 +1,7 @@
 {
   "id"           : "sexbound_sexed",
-  "title"        : "Sexbound - Sex-Ed excerpt",
-  "description"  : "An excerpt from an old Sex Ed book. Written for humans but usually universally aplicable.",
+  "title"        : "Old Sex-Ed excerpt",
+  "description"  : "An excerpt from an old Sex-Ed book. Written for humans but usually universally aplicable.",
   "icon"         : "sexboundcover1.png",
   "itemConfig"   : { "rarity" : "common", "price" : 25 },
   "contentPages" : [
@@ -9,27 +9,32 @@
 ",
 
 "During this process, at any given moment the male partner reaches a state of climax, releasing any amount of semen into the female's uterus.
-^orange;Note:^reset; While in a consensual procreation setting highly encouraged, for this endeavour to be fruitful it is entirely unnecessary for the female to reach a state of climax aswell, nor does it matter how much semen the male bringt forth into the female's womb in order to create the risk of pregnancy.
+^orange;Note:^reset; While in a consensual procreation setting highly encouraged, for this endeavour to be fruitful it is entirely unnecessary for the female to reach a state of climax aswell, nor does it matter how much semen the male brings forth into the female's womb in order to create the risk of pregnancy.
 
 ...
 ",
 
-"...do also mind that in some rarer parts of the universe you might find individuals commonly refered to as \"Futanaris\". This classification simply means that their bodies are fitted with both the male and female reproduction organs and hence are able to both impregnate as well as be impregnated during intercourse. You yourself should always keep in mind to not immediately judge another individual by their looks and always act responsibly in face of the act of procreation.
+"...do also mind that in some rarer parts of the universe you might find individuals commonly refered to as \"Futanari\". This non-scientific classification simply means that their bodies are fitted with both the male and female reproduction organs and hence are able to both impregnate as well as be impregnated during intercourse. You yourself should always keep in mind to not immediately judge another individual by their looks and always act responsibly in face of the act of procreation.
 ...
 ",
 
-"...when the moment of climax comes, the risk of fertilization is already high enough to be taken seriously. Should you find yourself in this situation without actively planning for a potential pregnancy, consult your doctor immediately. The only remaining condition to be met at this point for impregnation to occur is the actual fertilization of an ovum by the male's semen. Tthis event only ever occurs with a certainly probability so keep this in mind when aiming for bearing children.
+"...when the moment of climax comes, the risk of fertilization is already high enough to be taken seriously. Should you find yourself in this situation without actively planning for a potential pregnancy, consult your doctor immediately. The only remaining condition to be met at this point for impregnation to occur is the actual fertilization of an ovum by the male's semen. This event only ever occurs with a certain probability so keep this in mind when aiming for bearing children.
+",
+
+"Do also keep in mind that the female body is capable of adapting to a given male partner during extended periods of intercourse. When the mating process goes on for longer time and especially when additionally stimulated through multiple orgasms the chance of successful fertilization increases slightly. Another factor that can be helping or hindering depending on your objective and another reason to choose proper means of contraception where needed.
+",
+
+"However, for this chance to exist in the first place the female partner needs to be in a state of ovulation. The peak of her menstruation cycle during which one or rarely multiple hopefully fertile ova are present and ready for fertilization. While intercourse could be considered safe outside of this timeframe, its exact timing cannot be taken for granted and varies by person so caution and proper preparation still needs to be taken.
 ...
 ",
 
-"...over the course of its evolution humanity developed a wide variety of conception aids. When trying to safely prevent conception, the simplest and most obvious solution are condoms, which simply physically prevent the male's semen to reach the female's womb. Alternatively the female can choose to use contraception pills in order to ensure ovulation never happens, that way nullifying any chance of fertilization. In some cultures there is also the option of long term contraception patches.
-...
+"...over the course of its evolution humanity developed a wide variety of conception aids. When trying to safely prevent conception, the simplest and most obvious solution are condoms which simply physically prevent the male's semen to reach the female's womb. Alternatively the female can choose to use contraception pills in order to ensure ovulation never happens, that way nullifying any chance of fertilization. In some cultures there is also the option of long-term contraception patches or clinical sterilization.    ...
 ",
 
-"...on the other hand there are means for increasing the odds of successful conception too, should you aim for founding a family. The most commonly spread one is the common, cheaply available fertility pill which simply increases a female's fertilization chance should the remaining criterias be met. For more severe cases of a low fertilization rate the hyper fertility pill was invented as well, which forcibly raises the fertilization chance to 100% for a short time.
+"...on the other hand there are means for increasing the odds of successful conception too, should you aim for founding a family. The most widely spread one is the common, cheaply available fertility pill which simply increases a female's fertilization chance should the remaining criterias be met. For more severe cases of low fertilization rates a stronger version of the fertility pill was invented as well, which forcibly raises the fertilization chance to 100% for a short time.
 ",
 
-"^orange;Note:^reset; Due to the extreme effect of the hyper fertility pill it is strongly advised to consult your doctor before using it, keep the usage to a minimum and treat any side effects immediately.
+"^orange;Note:^reset; Due to the extreme effect of this stronger fertility pill it is strongly advised to consult your doctor before using it, keep the usage to a minimum and treat any side effects immediately.
 
 ^orange;Note:^reset; Keep in mind that raising the fertility chance to 100% does not immediately guarantee conception, as it has no effect on the other conditions.
 
@@ -47,7 +52,7 @@
 "...when trying to determine the outcome of your last sexual intercourse, ironically keeping calm and waiting is the best approach. The easily visible changes to a female's body during pregnancy only become apparent roughly halfway into the pregnancy - a time where it might already be too late. When clearly wanting to confirm your pregnancy state, using a licensed pregnancy test is the most accurate option.
 ",
 
-"^orange;Note:^reset; Keep in mind that the actual fertilization may happen a notable amount of time after climax occured. During that time, even the pregnancy test cannot detect your pregnancy as it has not yet actually happened. During regular checks during the following day is a must ensure the result is accurate.
+"^orange;Note:^reset; Keep in mind that the actual fertilization may happen a notable amount of time after climax occured. During that time, even the pregnancy test cannot detect your pregnancy as it has not yet actually happened. Doing regular checks during the following day is a must to ensure the result is accurate.
 
 ...
 "

@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_invisible",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 300,
   "effectConfig"    : {},
   "scripts"         : [ "sexbound_invisible.lua" ]

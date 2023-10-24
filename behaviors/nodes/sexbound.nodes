@@ -174,5 +174,72 @@
     "category": "sexbound",
     "script": "/scripts/actions/sexbound.lua",
     "output": {}
+  },
+  
+  "sortSexnodes": {
+    "type": "action",
+    "name": "sortSexnodes",
+    "title": "",
+    "properties": {
+        "list": {"type": "list", "key": null}
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+        "list": {"type": "list", "key": null},
+		"data": {"type": "list", "key": null},
+        "entity": {"type": "entity", "key": null}
+    }
+  },
+  
+  "debugBehaviour": {
+    "type": "action",
+    "name": "debugBehaviour",
+    "title": "",
+    "properties": {
+        "list": {"type": "list", "key": null}
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {}
+  },
+  
+  "reverseTimer": {
+    "type": "action",
+    "name": "reverseTimer",
+    "title": "",
+    "properties": {
+      "time": {"type": "number", "value": 1}
+    },
+    "category": "time",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "ratio": {"type": "number", "key": null}
+    }
+  },
+  
+  "getNodeRestrictions": {
+	"type": "action",
+	"name": "getNodeRestrictions",
+	"title": "",
+	"properties": {},
+	"category": "sexbound",
+	"script": "/scripts/actions/sexbound.lua",
+	"output": {
+	  "banned": {"type": "list", "key": null}
+	}
+  },
+  
+  "setNodeRestrictions": {
+	"type": "action",
+	"name": "setNodeRestrictions",
+	"title": "",
+	"properties": {
+	  "data": {"type": "list", "key": null},
+	  "entity": {"type": "entity", "key": null}
+	},
+	"category": "sexbound",
+	"script": "/scripts/actions/sexbound.lua",
+	"output": {}
   }
 }

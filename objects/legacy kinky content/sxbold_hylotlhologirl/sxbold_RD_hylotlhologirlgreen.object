@@ -1,0 +1,57 @@
+{
+  "objectName" : "sxbold_RD_hylotlhologirlgreen",
+  "colonyTags" : ["Prism", "hylotl"],
+  "rarity" : "Common",
+  "category" : "light",
+  "lightColor" : [111, 226, 53],  
+  "price" : 250,
+  "printable" : false,
+  "description" : "A green Hylotl holographic Dancer.",
+  "shortdescription" : "Hylotl Dancer green",
+  "race" : "generic",
+
+  "apexDescription" : "This technology could be put to better use.",
+  "avianDescription" : "Hylotl sure love their holograms.",
+  "floranDescription" : "Isss thisss one real? Floran can never tell.",
+  "glitchDescription" : "Perplexed. They have always been an interesting bunch.",
+  "humanDescription" : "I'm not gonna stare at a fish stripper. ...Right?",
+  "hylotlDescription" : "You'll usually find these in more seedy hylotl clubs.",
+  "novakidDescription" : "Ain't no fun dancing with a fake girl.",
+  
+  "inventoryIcon" : "RD_hylotlhologirlgreen_icon.png",
+  "orientations" : 
+	[
+    		{
+      		"image" : "RD_hylotlhologirlgreen.png:<color>.<frame>",
+	  		"flipImages" : false,
+      		"imagePosition" : [-10, 0],
+      		"frames" : 18,
+      		"animationCycle" : 1.8,
+      		"spaceScan" : 0.1,
+      		"anchors" : [ "bottom" ],
+	  		"direction" : "left"
+    		},
+    		{
+      		"image" : "RD_hylotlhologirlgreen.png:<color>.<frame>",
+	  		"flipImages" : true,
+      		"imagePosition" : [-10, 0],
+      		"frames" : 18,
+      		"animationCycle" : 1.8,
+      		"spaceScan" : 0.1,
+     			 "anchors" : [ "bottom" ],
+	  		"direction" : "right"
+    		}
+  	],
+"animation" : "RD_hylotlhologirl.animation",
+  "animationParts" : {
+    "bg" : "RD_hylotlhologirlgreen.png",
+    "fg" : "hologirllit.png"
+  },
+  "animationPosition" : [-10, 0],
+
+"scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ],
+  "interactive" : false
+}

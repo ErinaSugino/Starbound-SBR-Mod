@@ -1,13 +1,18 @@
 [
-	{
-		"name": "Erina Sugino",
-		"role": "Developer, Creator",
-		"link": "https://ko-fi.com/erinasugino"
-	},
+    {
+        "name": "Erina Sugino",
+        "role": "Developer, Creator",
+        "link": "https://ko-fi.com/erinasugino"
+    },
     {
         "name": "Locuturus & Co.",
         "role": "Original Author",
         "link": "https://www.loverslab.com/files/file/4337-sexbound/"
+    },
+    {
+        "name": "Sir Bumpleton",
+        "role": "Original Lustbound Author",
+        "link": "https://www.loverslab.com/files/file/14030-lustbound/"
     },
     {
         "name": "Red3dred",
@@ -16,6 +21,11 @@
     },
     {
         "name": "Rylasasin",
+        "role": "Contributor",
+        "link": ""
+    },
+    {
+        "name": "XspeedPL",
         "role": "Contributor",
         "link": ""
     }

@@ -1,0 +1,10 @@
+{
+  "input" : [
+    { "item" : "commonrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_dildo_v2",
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoycommon" ]
+}

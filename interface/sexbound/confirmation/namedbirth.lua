@@ -5,6 +5,7 @@ function init()
     self.babyGender = config.getParameter("config.babyGender", "male")
     self.babyGenderText = " boy"
     self.babyId = config.getParameter("config.babyId")
+    self.pregnancyId = config.getParameter("config.pregnancyId")
     if self.babyGender == "female" then self.babyGenderText = " girl"
     elseif self.babyGender ~= "male" then self.babyGenderText = "" end
     
@@ -16,7 +17,7 @@ function update(dt)
 end
 
 function uninit()
-    local result = {id=self.babyId,name=self.chosenName}
+    local result = {pIndex=self.pregnancyId,bIndex=self.babyId,name=self.chosenName}
     world.sendEntityMessage(pane.sourceEntity(), "Sexbound:Pregnant:BirthNamed", result)
 end
 

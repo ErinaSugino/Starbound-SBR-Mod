@@ -1,0 +1,20 @@
+{
+  "input" : [
+    { "item" : "commonrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_fleshlight_v2",
+	"parameters" : {
+		"description" : "A male masturbator made from translucent colorful plastic.",
+		"shortdescription" : "Black Fleshlight",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 0,
+		"saturationValue" : -100,
+		"brightnessValue" : -66,
+		"inventoryIcon" : "fleshlighticon.png?hueshift=0;?saturation=-100;?brightness=-66"
+	},
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoycommon" ]
+}

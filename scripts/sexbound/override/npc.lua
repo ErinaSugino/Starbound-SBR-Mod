@@ -54,7 +54,10 @@ function Sexbound.NPC.new()
         _loungeTimer       = 0,
         _mindControl       = { damageSourceKind = "sexbound_mind_control" },
         _states            = { "defaultState", "havingBirthdayState", "havingSexState" },
-        _isClimaxing       = false
+        _isClimaxing       = false,
+        _isKid             = false,
+        _kidTimer          = 0,
+        _behaviorData      = {excludedNodes = {}}
     }, Sexbound.NPC_mt)
 
     self:init(self, "npc") -- init defined in common.lua
@@ -72,6 +75,7 @@ function Sexbound.NPC.new()
     
     self._hasInited = true
     self:updateTraitEffects()
+    self:updateKidStatus()
     
     return self
 end
@@ -82,6 +86,22 @@ function Sexbound.NPC:update(dt)
 
     -- Always update arousal
     self:getArousal():update(dt)
+    
+    -- Tick kid status if active
+    if self._kidTimer > 0 then self._kidTimer = self._kidTimer - dt end
+    if self._isKid and self._kidTimer <= 0 then
+        local worldTime = world.time()
+        local kidTime = status.statusProperty('kid', 0)
+        if kidTime <= worldTime then self:updateKidStatus() end
+        
+        if self._isKid then self._kidTimer = 10 end -- Only check every 10 seconds
+    end
+    
+    -- Progress time on temporarily excluded sexnodes for behavior script
+    for c,d in pairs(self._behaviorData.excludedNodes) do
+        d.time = (d.time or 0) - dt
+        if d.time <= 0 then self._behaviorData.excludedNodes[c] = nil end
+    end
 end
 
 function Sexbound.NPC:updateLoungeTimer(dt, callback)
@@ -137,6 +157,9 @@ function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Pregnant:HazardAbortion", function(_, _, args)
         return self:hazardAbortion()
     end)
+    message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
+        self:updateFertility(args)
+    end)
     
     --- Debug stuff
     message.setHandler("Sexbound:Debug:GetHitbox", function(_, _, args)
@@ -157,6 +180,19 @@ function Sexbound.NPC:initSubmodules()
     self._statistics = Sexbound.NPC.Statistics:new(self)
     self._transform = Sexbound.NPC.Transform:new(self)
     self._identity = Sexbound.NPC.Identity:new(self)
+end
+
+function Sexbound.NPC:updateKidStatus()
+    local worldTime = world.time()
+    local kidTime = status.statusProperty('kid', 0)
+    
+    if kidTime <= worldTime then
+        status.removeEphemeralEffect('sexbound_kid')
+        self._isKid = false
+    else
+        status.addEphemeralEffect('sexbound_kid', math.huge)
+        self._isKid = true
+    end
 end
 
 function Sexbound.NPC:handleEnterIdleState(args)
@@ -201,6 +237,8 @@ function Sexbound.NPC:handleRetrieveStorage(args)
 end
 
 function Sexbound.NPC:handleSyncStorage(args)
+    if self._idKid then return end
+    
     args = self:fixPregnancyData(args)
     self:mergeStorage(args)
 end
@@ -274,6 +312,8 @@ function Sexbound.NPC:restore(skipArousal)
 end
 
 function Sexbound.NPC:setup(entityId, params)
+    if self._isKid then npc.resetLounging() return false end
+    
     if not entityId then return end
     params = params or {}
     self._isHavingSex = true
@@ -328,6 +368,8 @@ end
 -- Getters/Setters
 
 function Sexbound.NPC:getActorData()
+    if self._isKid then npc.resetLounging() return nil end
+    
     local gender = npc.gender()
 
     local identity = self:getIdentity():build()
@@ -350,7 +392,9 @@ function Sexbound.NPC:getActorData()
         nippleswear = self:getApparel():prepareNippleswear(gender),
         type = npc.npcType(),
         seed = npc.seed(),
-        storage = storage
+        storage = storage,
+        generationFertility = status.statusProperty("generationFertility", 1.0),
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
 end
 
@@ -417,7 +461,7 @@ function Sexbound.NPC:defineStateDefaultState()
                 self._isHavingBirthday = true
             end
 
-            if npc.isLounging() and status.statusProperty("sexbound_sex") == true then
+            if not self._isKid and npc.isLounging() and status.statusProperty("sexbound_sex") == true then
                 self._isHavingSex = true
             end
 
@@ -475,7 +519,7 @@ end
 function Sexbound.NPC:defineStateHavingSexState()
     return {
         enter = function()
-            if self._isHavingSex then
+            if not self._idKid and self._isHavingSex then
                 return {
                     isLounging = npc.isLounging(),
                     loungeId = npc.loungingIn()
@@ -535,4 +579,15 @@ end
 
 function Sexbound.NPC:getSpecies()
     return npc.species()
+end
+
+function Sexbound.NPC:getCompatibilityData()
+    return {
+        species = npc.species(),
+        speciesType = self._speciesType,
+        gender = npc.gender(),
+        bodyTraits = self._bodyTraits,
+        motherUuid = status.statusProperty("motherUuid", nil),
+        fatherUuid = status.statusProperty("fatherUuid", nil)
+    }
 end

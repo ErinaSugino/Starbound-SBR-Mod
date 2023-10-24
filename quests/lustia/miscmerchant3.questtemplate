@@ -1,0 +1,59 @@
+{
+  "id" : "miscmerchant3",
+  "prerequisites" : [ "miscmerchant2" ],
+  "title" : "^green;The Tube Lads Need Their Grease",
+  "text" : "With the ever-increasing amount of sexual relations in this town, lubrificants are in high demand, and I am running low on the materials. Please get me some ^orange;Healing Water, Oil, Slime and Coconut Milk^reset;. ^green;(Deliver 5 Healing Water Units, 10 Oil Units, 3 Liquid Slime Units and 1 Coconut Milk Unit.)^reset;",
+  "completionText" : "Alright, time to cook up some lube.",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_miscshopportrait.png"} ],
+        "title" : "Sister Kailia"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kailia, misc. merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "liquidhealing",
+        "count" : 5,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "liquidoil",
+        "count" : 10,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "liquidslime",
+        "count" : 3,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "liquidmilk",
+        "count" : 1,
+        "consume" : true
+      }
+    ]
+  }
+}

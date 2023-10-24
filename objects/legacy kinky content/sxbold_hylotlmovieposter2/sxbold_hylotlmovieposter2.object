@@ -1,0 +1,33 @@
+{
+  "objectName" : "sxbold_hylotlmovieposter2",
+  "colonyTags" : ["hylotl","hylotloceancity","pretty"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 70,
+
+  "shortdescription" : "Warrior Movie Poster",
+  "description" : "A framed poster from the movie \"Fiery Blade Crusader\".",
+  "race" : "hylotl",
+
+  "apexDescription" : "This looks like one of those 'bloody quest for vengeance' movies.",
+  "avianDescription" : "It looks like the sort of story with a sad ending...",
+  "floranDescription" : "This is a movie Floran might like.",
+  "glitchDescription" : "Curious. I wonder what the crusader is crusading against with his fiery blade?",
+  "humanDescription" : "It's very reminiscent of an old samurai movie I once watched...",
+  "hylotlDescription" : "Despite its cliche title, \"Fiery Blade Crusader\" is a truly beautiful film.",
+  "novakidDescription" : "Looks like a movie about a lone warrior... I'd be up for watchin' this.",
+
+  "inventoryIcon" : "hylotlmovieposter2icon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlmovieposter2.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

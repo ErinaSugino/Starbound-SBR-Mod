@@ -1,0 +1,54 @@
+{
+  "objectName" : "sexbound_runicassembler",
+  
+  "colonyTags" : ["crafting"],
+
+  "rarity" : "Legendary",
+  "printable" : false,
+  "category" : "crafting",
+  "price" : 6900,
+  "description" : "A cryptic machine that does something.",
+  "shortdescription" : "Runic Assembler",
+  "race" : "generic",
+
+  "objectType" : "container",
+  
+  "openSounds" : [ "/sfx/objects/stonedoor_open_fast.ogg" ],
+  "closeSounds" : [ "/sfx/objects/stonedoor_close_fast.ogg" ],
+  "slotCount" : 2,
+  "uiConfig" : "/interface/sexbound_runicassembler/sexbound_runicassemblerui.config",
+  "frameCooldown" : 5,
+  "autoCloseCooldown" : 3600,  
+
+  "apexDescription"    : "A machine designed with the sole purpose of unlocking runic crates.",
+  "avianDescription"   : "A machine designed with the sole purpose of unlocking runic crates.",
+  "floranDescription"  : "A machine designed with the sole purpose of unlocking runic crates.",
+  "glitchDescription"  : "A machine designed with the sole purpose of unlocking runic crates.",
+  "humanDescription"   : "A machine designed with the sole purpose of unlocking runic crates.",
+  "hylotlDescription"  : "A machine designed with the sole purpose of unlocking runic crates.",
+  "novakidDescription" : "A machine designed with the sole purpose of unlocking runic crates.",
+
+  "inventoryIcon" : "sexbound_runicassemblericon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sexbound_runicassembler.png:<color>.1",
+
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+  
+  "animation" : "sexbound_runicassembler.animation",
+  
+  "animationParts" : {
+    "bow"    : "parts/aphroditesbow.png",
+    "empty"  : "parts/empty.png",
+    "string" : "parts/aphroditesbowstring.png"
+  },
+  
+  "scripts" : ["sexbound_runicassembler.lua"]
+}

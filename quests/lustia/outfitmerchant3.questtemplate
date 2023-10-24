@@ -1,0 +1,59 @@
+{
+  "id" : "outfitmerchant3",
+  "prerequisites" : [ "outfitmerchant2" ],
+  "title" : "^green;Dye Hard",
+  "text" : "My thread lacks a certain je ne sais quoi, I bet some color could fix that right up! Using ^orange;Red, Blue, Yellow Dye and Dye Remover^reset;, I could seriously improve my works of art. ^green;(Deliver 3 Red Dyes, 3 Blue Dyes, 3 Yellow Dyes and 5 Dye Removers.)^reset;",
+  "completionText" : "Those are perfect, time to paint!",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_outfitshopportrait.png"} ],
+        "title" : "Sister Kaylyn"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Kayluyn, outfit merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "dyeremover",
+        "count" : 5,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "reddye",
+        "count" : 3,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "bluedye",
+        "count" : 3,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "yellowdye",
+        "count" : 3,
+        "consume" : true
+      }
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_abortion",
+  "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1,
   "effectConfig"    : {},
   "scripts"         : [ "sexbound_abortion.lua" ]

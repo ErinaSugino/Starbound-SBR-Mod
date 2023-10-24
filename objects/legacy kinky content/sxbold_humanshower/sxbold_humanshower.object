@@ -1,0 +1,46 @@
+{
+  "objectName" : "sxbold_humanshower",
+  "colonyTags" : ["science"],
+  "rarity" : "Uncommon",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "A sexy human cleaning herself.",
+  "shortdescription" : "Showering Female Human",
+  "race" : "generic",
+
+  "apexDescription" : "A sexy human cleaning herself.",
+  "avianDescription" : "A sexy human cleaning herself.",
+  "floranDescription" : "A sexy human cleaning herself.",
+  "glitchDescription" : "Horny. A sexy human cleaning herself.",
+  "humanDescription" : "A sexy human cleaning herself.",
+  "hylotlDescription" : "A sexy human cleaning herself.",
+  "novakidDescription" : "A sexy human cleaning herself.",
+
+  "inventoryIcon" : "Humanshowericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "humanshower.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 6,
+      "animationCycle" : 1.5,
+      "direction" : "right", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    },
+    {
+      "imageLayers" : [ { "image" : "humanshower.png:<color>.<frame>", "fullbright" : false } ],
+      "imagePosition" : [-16, -16],
+      "frames" : 6,
+      "animationCycle" : 1.5,
+	  "flipImages" : true,
+      "direction" : "left", 
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "objectName" : "sexbound_lube",
+  "colonyTags" : ["sexbound", "sex"],
+  "printable" : false,
+  "price" : 200,
+  "rarity" : "Common",
+  "description" : "Allegedly harvested from the most fertile young dragons.",
+  "shortdescription" : "Personal Lubricant",
+  "race" : "generic",
+
+  "apexDescription" : "New and improved formula!",
+  "avianDescription" : "Slimy and slippery, just like a Hylotl.",
+  "floranDescription" : "Tasssty beverage, goes well with meat.",
+  "glitchDescription" : "Confused. I didn't know organic life forms needed to lubricate their joints too.",
+  "humanDescription" : "Looks like semen!",
+  "hylotlDescription" : "It's water based, so it wouldn't under the sea.",
+  "novakidDescription" : "I could fill so much of this inside my holes...",
+
+  "category" : "decoration",
+
+  "inventoryIcon" : "sexbound_lubeicon.png",
+  
+  "orientations" : [
+    {
+      "image" : "sexbound_lube.png:<color>.<frame>",
+      "imagePosition" : [-12, 0],
+      
+      "direction" : "left",
+      "flipImages" : true,
+      
+      "animationPosition" : [-12, 0],
+      "animationParts" : {
+        "bg" : "sexbound_lube.png",
+        "fg" : "sexbound_lube.png"
+      },
+
+      "projectileDirection" : [0, -1],
+      "projectilePosition" : [0, 0],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "sexbound_lube.png:<color>.<frame>",
+      "imagePosition" : [-12, 0],
+	  
+      "direction" : "right",
+      
+      "animationPosition" : [-12, 0],
+      "animationParts" : {
+        "bg" : "sexbound_lube.png",
+        "fg" : "sexbound_lube.png"
+      },
+
+      "projectileDirection" : [0, -1],
+      "projectilePosition" : [0, 0],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "scripts" : [ "/objects/wired/projectiletrap/projectiletrap.lua" ],
+  "scriptDelta" : 2,
+
+  "animation" : "/objects/wired/projectiletrap/projectiletrap.animation",
+  "animationCustom" : {
+    "sounds" : {
+      "shoot" : [ ],
+      "on" : [ ],
+      "off" : [ ]
+    }
+  },
+  
+  "inputNodes" : [ [0, 0] ],
+
+  "inactiveLightColor" : [0, 0, 0], // light color to emit when the object is 'off'
+  "activeLightColor" : [0, 0, 0], // light color to emit when the object is 'on'
+
+  "fireTime" : 3.0, // rate of fire
+  "fireTimeVariance" : 0.0, // variation in rate of fire
+  "projectile" : "lubeprojectile", // name of projectile (required)
+
+  "smashOnBreak" : false
+}

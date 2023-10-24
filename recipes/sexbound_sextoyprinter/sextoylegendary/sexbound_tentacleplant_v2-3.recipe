@@ -1,0 +1,18 @@
+{
+  "input" : [
+    { "item" : "legendaryrewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_tentacleplant_v2",
+	"parameters" : {
+		"description" : "A docile tentacle plant that knows when to heck.",
+		"shortdescription" : "Rooted Tentacle Plant",
+		"cleanObject" : false,
+		"scriptStorage" : { "uniqueId" :null},
+		"hueshiftValue" : 108,
+		"inventoryIcon" : "tentacleplanticon.png?hueshift=108"
+	},
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoylegendary" ]
+}

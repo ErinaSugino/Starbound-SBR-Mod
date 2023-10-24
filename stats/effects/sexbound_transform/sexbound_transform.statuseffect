@@ -1,5 +1,6 @@
 {
   "name"            : "sexbound_transform",
+  "blockingStat"    : "sexboundImmunity",
   "animationConfig" : "sexbound_transform.animation",
   "defaultDuration" : 1,
   "effectConfig"    : { "soundEffects" : [ "/sfx/sexbound/success.ogg" ] },

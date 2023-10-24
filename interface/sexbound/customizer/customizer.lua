@@ -31,7 +31,7 @@ function Customizer:init()
     end
   end
   
-  self.configPromise = world.sendEntityMessage(pane.sourceEntity(), "Sexbound:CustomizerUI:GetData")
+  self.configPromise = world.sendEntityMessage(player.id(), "Sexbound:CustomizerUI:GetData")
 end
 
 function Customizer:update(dt)

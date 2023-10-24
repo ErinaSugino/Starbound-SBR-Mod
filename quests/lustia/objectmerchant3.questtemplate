@@ -1,0 +1,59 @@
+{
+  "id" : "objectmerchant3",
+  "prerequisites" : [ "objectmerchant2" ],
+  "title" : "^green;Someone's Gotta Make 'Em",
+  "text" : "Perfect! Now, all I need is some ^orange;very basic materials^reset; so I can make every other thing I have for sale. ^green;(Deliver 50 Logs, 50 Cobblestones, 25 Iron Bars and 25 Glass.)^reset;",
+  "completionText" : "Thank you lots, partner. I'll remember it.",
+  "moneyRange" : [500, 1000],
+  "ephemeral" : false,
+  "rewards" : [
+    [ [ "sexbound_recommendationletter", 1 ] ]
+  ],
+
+  "updateDelta" : 10,
+  "script" : "/quests/scripts/main.lua",
+  "scriptConfig" : {
+    "portraits" : {
+      "questStarted" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questComplete" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      },
+      "questFailed" : {
+        "portrait" : [ {"image" : "/objects/miscellaneous/sexscapeshops/sexbound_objectshopportrait.png"} ],
+        "title" : "Sister Konani"
+      }
+    },
+    "requireTurnIn" : true,
+	"turnInDescription" : "Return to ^orange;Sister Konani, object merchant^reset; in ^orange;Lustia^reset;",
+    "conditions" : [
+      {
+        "type" : "gatherItem",
+        "itemName" : "logblock",
+        "count" : 50,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "cobblestonematerial",
+        "count" : 50,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "ironbar",
+        "count" : 25,
+        "consume" : true
+      },
+	  {
+        "type" : "gatherItem",
+        "itemName" : "glass",
+        "count" : 25,
+        "consume" : true
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "objectName" : "sexbound_monstershop",
+  "shortdescription" : "Monster Sex Shop",
+  "description" : "A merchant that sells sex enabled monsters.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A merchant that sells sex enabled monsters.",
+  "avianDescription"   : "A merchant that sells sex enabled monsters.",
+  "floranDescription"  : "A merchant that sells sex enabled monsters.",
+  "glitchDescription"  : "A merchant that sells sex enabled monsters.",
+  "humanDescription"   : "A merchant that sells sex enabled monsters.",
+  "hylotlDescription"  : "A merchant that sells sex enabled monsters.",
+  "novakidDescription" : "A merchant that sells sex enabled monsters.",
+
+  "inventoryIcon" : "sexbound_sexshopicon.png",
+  
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+  
+  "offeredQuests" : [
+    "monstermerchant1", "monstermerchant2", "monstermerchant3"
+  ],
+  "turnInQuests" : [
+    "monstermerchant1", "monstermerchant2", "monstermerchant3"
+  ],
+
+  "uniqueId" : "monstershop",
+  
+  "interactAction" : "OpenMerchantInterface",
+  "interactData" : {
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Sex Enabled Monsters",
+        "subtitle" : "Get feral with horny monsters."
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
+	  {"item" : { "name" : "sexbound_sexbox"}}
+	]
+  },
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_monstershopflip.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_monstershop.png:<color>.<frame>" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 20,
+      "animationCycle" : 2.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "objectName" : "sexbound_milkingmachine_mk2",
+  "shortdescription" : "Milking Machine Mark II",
+  "description" : "A machine that milks out any genital's bodily fluids.",
+  "colonyTags" : ["sexbound", "sex"],
+  "category" : "other",
+  "rarity" : "Legendary",
+  "race" : "generic",
+  "printable" : false,
+  "price" : 25000,
+  "level" : 0,
+  
+  "itemTags" : ["sexbound", "sex"],
+  
+  "apexDescription"    : "Might come in handy.",
+  "avianDescription"   : "Might come in handy.",
+  "floranDescription"  : "Might come in handy.",
+  "glitchDescription"  : "Might come in handy.",
+  "humanDescription"   : "Might come in handy.",
+  "hylotlDescription"  : "Might come in handy.",
+  "novakidDescription" : "Might come in handy.",
+  
+  "sitStatusEffects" : ["sexbound_sex",	"sexbound_milkmode"],
+  
+  "interactive" : true,
+  
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+  "sitPosition" : [0, 20],
+  "sitOrientation" : "lay",
+  "sitAngle" : 0,
+  
+  "smashable" : false,
+  
+  "inventoryIcon" : "milkingmachine_mk2icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "milkingmachine_mk2.png:idle.1",
+
+      "imagePosition" : [-6, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "right"
+    },
+	{
+      "dualImage" : "milkingmachine_mk2.png:idle.1?flipx",
+
+      "imagePosition" : [-6, 0],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+	  "direction" : "left"
+    }
+  ],
+  
+  "scripts" : ["/objects/sextoylegendary/sexbound_milkingmachine_mk2/milkingmachine_mk2.lua"],
+  
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
+  
+  "sexboundConfig" : {
+    "requiredVersion" : ">=3.x.x",
+
+	"modName" : "Milking Machine Mark II",
+    
+    "position" : {
+      "sex" : [ "standing_milkingmachine_mk2_actor2" ]
+    },
+	"idlePosition": "idle_toy2",
+    
+    "sex" : {
+      "allowSwitchRoles" : false
+    },
+    
+    "sitPositions"  : [ [0, 20], [0, 20] ]
+  },
+  
+  "animationCustom" : {
+    "animatedParts" : {
+      "stateTypes" : {
+        "actors" : {
+          "states" : {
+            "idle" : {
+              "frames" : 1
+            }
+          }
+        }
+      },
+      
+      "parts" : {
+        "actor1-climax-male-spawn" : {
+          "partStates" : {
+            "actors" : {
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [3.25, 1.375]
+                }
+              }
+            }
+          }
+        },
+		
+		"actor2-body" : {
+		  "properties": {
+		  	"anchorPart": "actor2",
+			"centered": true,
+			"image": "<part-actor2-body>.<frame><actor2-bodyDirectives>",
+			"transformationGroups": [
+	 		  "actor2Body"
+			],
+			"zLevel": 0
+		  }
+		},
+		
+		"actor2-arm-back" : {
+		  "properties": {
+			"centered": true
+		  },
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [0.0, 0.0]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0.0, 0.0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [0.0, 0.0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [0.0, 0.0]
+                }
+              }
+            }
+          }
+        },
+		"actor1" : {
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              }
+            }
+          }
+        },
+		"actor2" : {
+		  "properties": {
+			"centered": true
+		  },
+          "partStates" : {
+            "actors" : {              
+              "position1" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              }, 
+              "position1-climax" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              },
+			  "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              },
+              "position1-reset" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              }
+            }
+          }
+        },
+      
+        "bed" : {
+          "properties" : {
+            "centered" : false,
+            "offset" : [-0.5, 0.0],
+            "zLevel" : -1
+          }
+        },
+
+        "actors" : {
+          "properties" : {
+            "anchorPart" : "bed",
+            "offset" : [0.0, 0.0]
+          }
+        }
+      }
+    }
+  }
+}

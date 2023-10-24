@@ -38,11 +38,16 @@ end
 
 function Sexbound.Player.Pregnant:addPlayerMessageHandlers()
     message.setHandler("Sexbound:Pregnant:BirthNamed", function(_, _, args)
-        return self:giveBirthNamed(args)
+        local pIndex, bIndex, name = args.pIndex, args.bIndex, args.name
+        return self:doBirthingLoop(pIndex, bIndex, name)
     end)
     
     message.setHandler("Sexbound:Pregnant:DebugNamedBirth", function(_, _, args)
         return self:openBabyNamingWindow(args)
+    end)
+    
+    message.setHandler("Sexbound:Pregnant:BirthingPill", function(_, _, args)
+        return self:speedupBirth()
     end)
 end
 
@@ -98,6 +103,23 @@ function Sexbound.Player.Pregnant:updatePeriodCycle(dt)
     end
 end
 
+function Sexbound.Player.Pregnant:speedupBirth()
+    local babyIndex = nil
+    local birthTime = math.huge
+    
+    for i,p in ipairs(storage.sexbound.pregnant) do
+        if (p.delay or 0) <= 0 then
+            if p.birthWorldTime < birthTime then
+                babyIndex = i
+                birthTime = p.birthWorldTime
+            end
+        end
+    end
+    
+    if babyIndex == nil then return nil end
+    return self:handleGiveBirth(babyIndex)
+end
+
 
 function Sexbound.Player.Pregnant:canOvulate()
     if self:getConfig().enableFreeForAll == true then
@@ -118,18 +140,10 @@ function Sexbound.Player.Pregnant:abortPregnancy()
     self:notifyPlayerAboutAbortionViaRadioMessage()
 end
 
---- Loads notifications configuration from file
-function Sexbound.Player.Pregnant:loadNotificationDialog()
-    local notifications = self:getParent():getNotifications() or {}
-    notifications.plugins = notifications.plugins or {}
-    notifications.plugins.pregnant = notifications.plugins.pregnant or {}
-
-    return notifications.plugins.pregnant
-end
-
-function Sexbound.Player.Pregnant:triggerActualPregnancy(baby)
+function Sexbound.Player.Pregnant:triggerActualPregnancy(pregnancy)
     local config = self:getConfig()
-    local dayCount = baby.dayCount
+    local dayCount = pregnancy.dayCount
+    local baby = pregnancy.babies[1]
     local dialog = self:loadNotificationDialog()
     local daystring = "day"
     if dayCount > 1 then daystring = "days" end
@@ -144,7 +158,7 @@ function Sexbound.Player.Pregnant:triggerActualPregnancy(baby)
         else message = message .. (dialog.pregnant or "") end
 
         message = util.replaceTag(message, "name", "^green;" .. baby.fatherName .. "^reset;")
-        message = util.replaceTag(message, "daycount", "^red;" .. baby.dayCount .. "^reset;")
+        message = util.replaceTag(message, "daycount", "^red;" .. pregnancy.dayCount .. "^reset;")
         message = util.replaceTag(message, "daystring", daystring)
         
         if message ~= "" then
@@ -162,7 +176,7 @@ function Sexbound.Player.Pregnant:triggerActualPregnancy(baby)
         message = message .. (dialog.remotePregnant or "")
 
         message = util.replaceTag(message, "name", "^green;" .. world.entityName(player.id()) .. "^reset;")
-        message = util.replaceTag(message, "daycount", "^red;" .. baby.dayCount .. "^reset;")
+        message = util.replaceTag(message, "daycount", "^red;" .. pregnancy.dayCount .. "^reset;")
         message = util.replaceTag(message, "daystring", daystring)
 
         if message ~= "" then
@@ -222,40 +236,111 @@ function Sexbound.Player.Pregnant:handleGiveBirth(index)
     self._isGivingBirth = true
 
     promises:add(player.confirm(self:loadGiveBirthConfirmationConfig()), function(choice)
-        self._isGivingBirth = false
+        --self._isGivingBirth = false
 
-        local babyConfig = storage.sexbound.pregnant[index]
+        local pregnancyConfig = storage.sexbound.pregnant[index]
 
         if choice then
-            --self:giveBirth(babyConfig)
-            --table.remove(storage.sexbound.pregnant, index)
-            --self:refreshStatusEffects()
-            self:openBabyNamingWindow(index)
+            --self:openBabyNamingWindow(index)
+            self:startBirthing(index)
+        else
+            pregnancyConfig.birthWorldTime = pregnancyConfig.birthWorldTime + 840
+            pregnancyConfig.birthOSTime = os.time() + 3600
+            self._isGivingBirth = false
         end
-
-        babyConfig.birthWorldTime = babyConfig.birthWorldTime + 840
-        babyConfig.birthOSTime = os.time() + 3600
     end)
 end
 
-function Sexbound.Player.Pregnant:openBabyNamingWindow(babyId)
-    if babyId == nil or not storage.sexbound.pregnant then return end
-    local baby = storage.sexbound.pregnant[babyId]
-    if not baby or (baby.delay or 0) > 0 then return end
+function Sexbound.Player.Pregnant:startBirthing(index)
+    local oldCanTransform = self._parent._transform._canTransform
+    self._parent._transform:setCanTransform(true)
+    if self._parent._transform:handleTransform({
+        responseRequired = false,
+        sexboundConfig = {position = {sex = {"birthing"}, force = 1, forceJoin = 1, noSync = 1}},
+        timeout = 600,
+        spawnOptions = {
+            noEffect = true
+        }
+    }) then
+        status.addEphemeralEffect("sexbound_invisible", 600)
+        sb.logInfo("Player birthing transform request succeeded - controllerId = "..tostring(self._parent._transform._controllerId))
+    else sb.logInfo("Player birthing transform request failed") end
+    status.addEphemeralEffect("sexbound_birthing", 600)
+    self._parent._transform:setCanTransform(oldCanTransform)
+    
+    local bIndex, babyConfig = next(storage.sexbound.pregnant[index].babies)
+    if bIndex == nil or babyConfig == nil then
+        sb.logInfo("No baby data for pregnancy. Aborting birthing, removing data.")
+        self:endBirthing(index)
+        return
+    end
+    self:openBabyNamingWindow(index, bIndex)
+end
+
+function Sexbound.Player.Pregnant:doBirthingLoop(index, babyId, name)
+    name = name or nil
+    local babyConfig = storage.sexbound.pregnant[index].babies[babyId]
+    if babyConfig == nil then
+        sb.logInfo("Trying to give birth to a baby whose data does not exist. Aborting, removing data.")
+        self:endBirthing(index)
+        return
+    end
+    
+    babyConfig.pregnancyType = storage.sexbound.pregnant[index].pregnancyType
+    self:giveBirth(babyConfig, name, storage.sexbound.pregnant[index].incestLevel)
+    table.remove(storage.sexbound.pregnant[index].babies, babyId)
+    local bIndex, bConfig = next(storage.sexbound.pregnant[index].babies)
+    
+    if bIndex == nil or bConfig == nil then
+        sb.logInfo("No next baby data for pregnancy. Ending birthing, removing data.")
+        self:endBirthing(index)
+        return
+    end
+    
+    self:openBabyNamingWindow(index, bIndex)
+end
+
+function Sexbound.Player.Pregnant:endBirthing(index)
+    status.removeEphemeralEffect("sexbound_birthing")
+    status.removeEphemeralEffect("sexbound_invisible")
+    self._parent._transform:smashSexNode()
+    
+    if index ~= nil then table.remove(storage.sexbound.pregnant, index) end
+    self:refreshStatusEffects()
+    self._isGivingBirth = false
+end
+
+function Sexbound.Player.Pregnant:openBabyNamingWindow(pregnancyId, babyId)
+    if pregnancyId == nil or not storage.sexbound.pregnant then return end
+    local pregnancy = storage.sexbound.pregnant[pregnancyId]
+    if not pregnancy or (pregnancy.delay or 0) > 0 then
+        sb.logInfo("Attempting to birth invalid pregnancy - aborting.")
+        self:endBirthing()
+        return
+    end
+    local babyConfig = storage.sexbound.pregnant[pregnancyId].babies[babyId]
+    if babyConfig == nil then
+        sb.logInfo("Attempting to birth invalid babyData - aborting, removing data.")
+        self:endBirthing(index)
+        return
+    end
     
     -- Check if player.interact is a function because some previous version of starbound did not implement it
     if "function" ~= type(player.interact) then
-        self:giveBirth(baby)
-        table.remove(storage.sexbound.pregnant, babyId)
-        self:refreshStatusEffects()
+        babyConfig.pregnancyType = pregnancy.pregnancyType
+        --self:giveBirth(babyConfig)
+        --table.remove(storage.sexbound.pregnant, babyId)
+        --self:refreshStatusEffects()
+        self:doBirthingLoop(pregnancyId, babyId)
+        return
     end
     
-    local babyGender = baby.birthGender or "male"
-    local babySpecies = baby.birthSpecies or "human"
+    local babyGender = babyConfig.birthGender or "male"
+    local babySpecies = babyConfig.birthSpecies or "human"
     local nameGenerator = "/species/humannamegen.config:names"
     local speciesConfig, genderId
     
-    if baby.birthEntityGroup == "humanoid" then
+    if babyConfig.birthEntityGroup == "humanoid" then
         -- Attempt to read configuration from species config file.
         if not pcall(function()
             speciesConfig = root.assetJson("/species/" .. babySpecies .. ".species")
@@ -264,10 +349,11 @@ function Sexbound.Player.Pregnant:openBabyNamingWindow(babyId)
         end) then
             sb.logWarn("SxB: Could not find species config file for baby: "..tostring(babySpecies))
         end
-    elseif baby.birthEntityGroup == "monster" then nameGenerator = "/quests/generated/petnames.config:names" end
+    elseif babyConfig.birthEntityGroup == "monster" then nameGenerator = "/quests/generated/petnames.config:names" end
     
     xpcall(function()
         local _loadedConfig = self:loadNamedBirthConfig()
+        _loadedConfig.config.pregnancyId = pregnancyId
         _loadedConfig.config.babyId = babyId
         _loadedConfig.config.babyGender = babyGender
         _loadedConfig.config.babySpecies = babySpecies
@@ -276,24 +362,11 @@ function Sexbound.Player.Pregnant:openBabyNamingWindow(babyId)
     end, function(err)
         sb.logError("Unable to load named birth config - using normal un-named birth.")
         sb.logError(err)
-        self:giveBirth(baby)
-        table.remove(storage.sexbound.pregnant, babyId)
-        self:refreshStatusEffects()
+        --self:giveBirth(baby)
+        --table.remove(storage.sexbound.pregnant, babyId)
+        --self:refreshStatusEffects()
+        self:doBirthingLoop(pregnancyId, babyId)
     end)
-end
-
-function Sexbound.Player.Pregnant:findTargetNamegenerator(speciesConfig)
-    
-end
-
-function Sexbound.Player.Pregnant:giveBirthNamed(args)
-    local babyId = args.id
-    local babyName = args.name
-    
-    if self._parent:canLog("debug") then sb.logInfo("Attempted to give birth to "..tostring(babyId)..": "..tostring(babyName)) end
-    self:giveBirth(storage.sexbound.pregnant[babyId])
-    table.remove(storage.sexbound.pregnant, babyId)
-    self:refreshStatusEffects()
 end
 
 function Sexbound.Player.Pregnant:dump(o)

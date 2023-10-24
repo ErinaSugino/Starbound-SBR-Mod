@@ -1,0 +1,10 @@
+{
+  "input" : [
+    { "item" : "rarerewardticket", "count" : 1 }
+  ],
+  "output" : {
+    "item" : "sexbound_fleshlight_floran",
+    "count" : 1
+  },
+  "groups" : [ "sextoyspecial", "sextoyrare" ]
+}
