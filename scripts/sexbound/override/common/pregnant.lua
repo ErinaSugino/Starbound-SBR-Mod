@@ -300,14 +300,16 @@ function Sexbound.Common.Pregnant:notifyOfStillborn(baby, name)
     message = util.replaceTag(message, "name", motherName)
     message = util.replaceTag(message, "babyname", name)
     message = util.replaceTag(message, "babygender", babyGender)
-
-    for _, playerId in ipairs(world.players()) do
-        if world.entityUniqueId(playerId) ~= baby.motherUuid then
-            world.sendEntityMessage(playerId, "queueRadioMessage", {
-                messageId = "Sexbound_Event:Stillborn",
-                unique = false,
-                text = message
-            })
+    
+    if world.players then
+        for _, playerId in ipairs(world.players()) do
+            if world.entityUniqueId(playerId) ~= baby.motherUuid then
+                world.sendEntityMessage(playerId, "queueRadioMessage", {
+                    messageId = "Sexbound_Event:Stillborn",
+                    unique = false,
+                    text = message
+                })
+            end
         end
     end
 end

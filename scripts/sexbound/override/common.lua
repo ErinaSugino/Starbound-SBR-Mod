@@ -174,13 +174,15 @@ function Sexbound.Common:announceBirth()
     message = util.replaceTag(message, "babyname", babyName)
     message = util.replaceTag(message, "babygender", babyGender)
 
-    for _, playerId in ipairs(world.players()) do
-        if world.entityUniqueId(playerId) ~= motherUuid then
-            world.sendEntityMessage(playerId, "queueRadioMessage", {
-                messageId = "Sexbound_Event:Birth",
-                unique = false,
-                text = message
-            })
+    if world.players then
+        for _, playerId in ipairs(world.players()) do
+            if world.entityUniqueId(playerId) ~= motherUuid then
+                world.sendEntityMessage(playerId, "queueRadioMessage", {
+                    messageId = "Sexbound_Event:Birth",
+                    unique = false,
+                    text = message
+                })
+            end
         end
     end
 
