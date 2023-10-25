@@ -38,10 +38,13 @@ end
 -- param dialog
 -- param entity
 -- param tags
+local org_sayToEntity = sayToEntity
 function sayToEntity(args, board)
+  if not self.sb_npc and not self.sb_monster then return org_sayToEntity(args, board) end
+  
   local isKid = not not (self.sb_npc or self.sb_monster)._isKid
   local dialogType = isKid and "dialog.kid" or args.dialogType
-  --[[if (self.sb_npc or self.sb_monster):canLog("behavior") then]] sb.logInfo("BEHAVIOUR: Triggering Sexbound dialog. Type: "..tostring(dialogType)) --end
+  if (self.sb_npc or self.sb_monster):canLog("behavior") then sb.logInfo("BEHAVIOUR: Triggering Sexbound dialog. Type: "..tostring(dialogType)) end
   
   local dialog = nil
   local isParent, parentType = checkParent(args.entity)
