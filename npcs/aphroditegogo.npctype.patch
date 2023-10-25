@@ -1,0 +1,7 @@
+[
+  {
+    "op": "replace",
+    "path": "/identity/hairDirectives",
+    "value": "?replace;d9c189=f1d992;a38d59=daba5e;735e3a=b59a4d"
+  }
+]

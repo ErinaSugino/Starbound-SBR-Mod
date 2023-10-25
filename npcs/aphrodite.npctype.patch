@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/identity/bodyDirectives",
+    "value": "?replace;ffe2c5=fff6f6;ffc181=f7d5d3;d39c6c=d1aaa1;c7815b=a27f70"
+  },
+  {
+    "op": "replace",
+    "path": "/identity/emoteDirectives",
+    "value": "?replace;ffe2c5=fff6f6;ffc181=f7d5d3;d39c6c=d1aaa1;c7815b=a27f70"
+  },
+  {
+    "op": "replace",
+    "path": "/identity/hairDirectives",
+    "value": "?replace;d9c189=f1d992;a38d59=daba5e;735e3a=b59a4d"
+  }
+]
