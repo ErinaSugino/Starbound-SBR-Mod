@@ -440,11 +440,13 @@ function Sexbound.Actor:setup(actorConfig)
     self:setAnimationState(self:getParent():getStateMachine():stateDesc())
     
     self:setRole(self:getActorNumber())
-
-    world.sendEntityMessage(self:getEntityId(), "Sexbound:Statistics:Add", {
-        name = "haveSexCount",
-        amount = 1
-    })
+    
+    if not self._parent._config.position.noStats then
+        world.sendEntityMessage(self:getEntityId(), "Sexbound:Statistics:Add", {
+            name = "haveSexCount",
+            amount = 1
+        })
+    end
 
     if actorConfig.entityType == "npc" or actorConfig.entityType == "player" then
         -- Initialize hair identities.
