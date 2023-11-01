@@ -1,6 +1,12 @@
 {
+  "1.1_r1" : [
+	"» 1.1 REVISON 1 «",
+	"- Upgraded arousal behavior navigation to be more responsive"
+	"- Upgraded baby color genetics to account for alpha channel, old syntax and more failsafety",
+	"- Fixed arousal behavior to account for transformation nodes (defeat, AB primary attack)"
+  ],
   "1.1" : [
-    "» FOUNDING FAMILY «",
+	"» FOUNDING FAMILY «",
 	"- Integrated Lustbound Base",
 	"- Reworked pregnancies - cross-species, multi-babies, incest, color genetics, true kids, ...",
 	"- Reworked NPC behavior - smarter arousal, special dialog for families, no perma-stuck pathfinding",
@@ -10,12 +16,12 @@
 	"- Details, full changelog and modding information in download"
   ],
   "1.0_r1" : [
-	"» REVISON 1 «",
+	"» 1.0 REVISON 1 «",
 	"- Included \"Sexbound Extended Dialogues\" with author permission",
 	"- Various bugfixes"
   ],
   "1.0" : [
-    "» INITIAL RELEASE «",
+	"» INITIAL RELEASE «",
 	"- Revamped, immersive pregnancy system",
 	"- Reworked modular body trait system (was futa plugin)",
 	"- Reworked position and actor order management system",
