@@ -198,16 +198,60 @@ Sexbound.Util.listToUpper = function(l)
 end
 
 ---Returns rgb array from hex string
--- @param hexString
+-- @param hexString(3|4|6|8)
 -- @return rgb
 Sexbound.Util.hexToRgb = function(hex)
-    return tonumber(hex:sub(1,2), 16), tonumber(hex:sub(3,4), 16), tonumber(hex:sub(5,6), 16)
+    local l = string.len(hex)
+    if l==3 or l==4 then
+        local r,g,b = hex:sub(1,1),hex:sub(2,2),hex:sub(3,3)
+        local rv,gv,bv = tonumber(r,16) or 0,tonumber(g,16) or 0,tonumber(b,16) or 0
+        return rv*16+rv, gv*16+gv, bv*16+bv
+    else
+        local r1,r2,g1,g2,b1,b2 = hex:sub(1,1),hex:sub(2,2),hex:sub(3,3),hex:sub(4,4),hex:sub(5,5),hex:sub(6,6)
+        return (tonumber(r1,16) or 0)*16+(tonumber(r2,16) or 0), (tonumber(g1,16) or 0)*16+(tonumber(g2,16) or 0), (tonumber(b1,16) or 0)*16+(tonumber(b2,16) or 0)
+    end
+end
+
+---Returns rgba array from hex string
+-- @param hexString(3|4|6|8)
+-- @return rgba
+Sexbound.Util.hexToRgba = function(hex)
+    local l = string.len(hex)
+    if l==3 or l==4 then
+        local r,g,b,a = hex:sub(1,1),hex:sub(2,2),hex:sub(3,3),hex:sub(4,4)
+        local rv,gv,bv,av = tonumber(r,16) or 0,tonumber(g,16) or 0,tonumber(b,16) or 0,255
+        if av~="" then av = tonumber(a,16) or 0 end
+        return rv*16+rv, gv*16+gv, bv*16+bv, av*16+av
+    else
+        local r1,r2,g1,g2,b1,b2,a1,a2 = hex:sub(1,1),hex:sub(2,2),hex:sub(3,3),hex:sub(4,4),hex:sub(5,5),hex:sub(6,6),hex:sub(7,7),hex:sub(8,8)
+        if a1=="" then a1 = "F" end
+        if a2=="" then a2 = "F" end
+        return (tonumber(r1,16) or 0)*16+(tonumber(r2,16) or 0), (tonumber(g1,16) or 0)*16+(tonumber(g2,16) or 0), (tonumber(b1,16) or 0)*16+(tonumber(b2,16) or 0), (tonumber(a1,16) or 0)*16+(tonumber(a2,16) or 0)
+    end
 end
 
 ---Returns hex string from rgb array
 -- @param rgb
--- @return hexString
+-- @return hexString(6)
 Sexbound.Util.rgbToHex = function(rgb)
-    local r,g,b = rgb[1],rgb[2],rgb[3]
+    local r,g,b = rgb[1] or 0,rgb[2] or 0,rgb[3] or 0
     return string.format("%.2x",r)..string.format("%.2x",g)..string.format("%.2x",b)
+end
+
+---Returns hex string from rgba array
+-- @param rgba
+-- @return hexString(8)
+Sexbound.Util.rgbaToHex = function(rgba)
+    local r,g,b,a = rgba[1] or 0,rgba[2] or 0,rgba[3] or 0,rgba[4] or 255
+    return string.format("%.2x",r)..string.format("%.2x",g)..string.format("%.2x",b)..string.format("%.2x", a)
+end
+
+---Returns hex string from rgba array with alpha channel only when not 255
+-- @param rgba
+-- @return hexString(6|8)
+Sexbound.Util.rgbaToHex6 = function(rgba)
+    local r,g,b,a = rgba[1] or 0,rgba[2] or 0,rgba[3] or 0,rgba[4] or 255
+    local res = string.format("%.2x",r)..string.format("%.2x",g)..string.format("%.2x",b)
+    if a ~= 255 then res = res..string.format("%.2x", a) end
+    return res
 end

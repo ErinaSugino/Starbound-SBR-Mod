@@ -1260,7 +1260,7 @@ end
 function Sexbound.Actor:getGenePool()
     local g = self:getIdentity() or {}
     g = g.genetics or {}
-    return g.bodyColorPool, g.bodyColorPoolAverage, g.undyColorPool, g.undyColorPoolAverage, g.hairColorPool, g.hairColorPoolAverage
+    return g.bodyColorPool, g.bodyColorPoolAverage, g.bodyAllowBlending, g.undyColorPool, g.undyColorPoolAverage, g.undyAllowBlending, g.hairColorPool, g.hairColorPoolAverage, g.hairAllowBlending
 end
 
 function Sexbound.Actor:isPregnant()

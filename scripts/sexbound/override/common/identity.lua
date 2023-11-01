@@ -51,54 +51,75 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
     identity.genetics = {}
     identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
     identity.genetics.bodyColorPoolAverage = {}
+    identity.genetics.bodyAllowBlending = true
     identity.genetics.undyColorPool = speciesConfig.undyColor or {}
     identity.genetics.undyColorPoolAverage = {}
+    identity.genetics.undyAllowBlending = true
     identity.genetics.hairColorPool = speciesConfig.hairColor or {}
     identity.genetics.hairColorPoolAverage = {}
+    identity.genetics.hairAllowBlending = true
     
-    -- Pre calculate color palette averages
-    for i,r in ipairs(identity.genetics.bodyColorPool) do
-        if type(r) ~= "table" then break end
-        local x = 0
-        local avg = {0,0,0}
-        local dist = 0
-        -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
-            x = x + 1
-            local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+    local res,err = pcall(function() 
+        -- Pre calculate color palette averages
+        for i,r in ipairs(identity.genetics.bodyColorPool) do
+            if type(r) ~= "table" then break end
+            local x = 0
+            local avg = {0,0,0}
+            local valid = true
+            -- Get average color of current checked palette from list
+            for j,v in pairs(r) do
+                local l = string.len(v)
+                if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+                x = x + 1
+                
+                local r,g,b,a = Sexbound.Util.hexToRgba(v)
+                if a == 0 then identity.genetics.bodyAllowBlending = false end
+                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            end
+            if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
+            else avg[1],avg[2],avg[3] = -1,-1,-1 end
+            table.insert(identity.genetics.bodyColorPoolAverage, avg)
         end
-        avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        table.insert(identity.genetics.bodyColorPoolAverage, avg)
-    end
-    for i,r in ipairs(identity.genetics.undyColorPool) do
-        if type(r) ~= "table" then break end
-        local x = 0
-        local avg = {0,0,0}
-        local dist = 0
-        -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
-            x = x + 1
-            local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+        for i,r in ipairs(identity.genetics.undyColorPool) do
+            if type(r) ~= "table" then break end
+            local x = 0
+            local avg = {0,0,0}
+            local valid = true
+            -- Get average color of current checked palette from list
+            for j,v in pairs(r) do
+                local l = string.len(v)
+                if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+                x = x + 1
+                
+                local r,g,b,a = Sexbound.Util.hexToRgba(v)
+                if a == 0 then identity.genetics.undyAllowBlending = false end
+                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            end
+            if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
+            else avg[1],avg[2],avg[3] = -1,-1,-1 end
+            table.insert(identity.genetics.bodyColorPoolAverage, avg)
         end
-        avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        table.insert(identity.genetics.undyColorPoolAverage, avg)
-    end
-    for i,r in ipairs(identity.genetics.hairColorPool) do
-        if type(r) ~= "table" then break end
-        local x = 0
-        local avg = {0,0,0}
-        local dist = 0
-        -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
-            x = x + 1
-            local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+        for i,r in ipairs(identity.genetics.hairColorPool) do
+            if type(r) ~= "table" then break end
+            local x = 0
+            local avg = {0,0,0}
+            local valid = true
+            -- Get average color of current checked palette from list
+            for j,v in pairs(r) do
+                local l = string.len(v)
+                if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+                x = x + 1
+                
+                local r,g,b,a = Sexbound.Util.hexToRgba(v)
+                if a == 0 then identity.genetics.hairAllowBlending = false end
+                avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            end
+            if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
+            else avg[1],avg[2],avg[3] = -1,-1,-1 end
+            table.insert(identity.genetics.hairColorPoolAverage, avg)
         end
-        avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        table.insert(identity.genetics.hairColorPoolAverage, avg)
-    end
+    end)
+    if not res and self._parent:canLog("warn") then sb.logWarn("[SxB | GENE] - Couldn't fetch species color averages! Species "..tostring(identity.species).." has no color averages!") sb.logWarn(err) end
 
     return identity
 end

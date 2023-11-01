@@ -147,7 +147,7 @@ function BabyFactory:findClosestColorGene(list, target, threshhold)
     -- Get average color of target palette in RGB
     for i,v in pairs(target) do
         x = x + 1
-        local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
+        local r,g,b = Sexbound.Util.hexToRgb(v)
         targetColor[1] = targetColor[1] + r
         targetColor[2] = targetColor[2] + g
         targetColor[3] = targetColor[3] + b
@@ -165,7 +165,7 @@ function BabyFactory:findClosestColorGene(list, target, threshhold)
         -- Get average color of current checked palette from list
         for j,v in pairs(r) do
             x = x + 1
-            local r,g,b = tonumber(v:sub(1,2), 16), tonumber(v:sub(3,4), 16), tonumber(v:sub(5,6), 16)
+            local r,g,b = Sexbound.Util.hexToRgb(v)
             compColor[1] = compColor[1] + r
             compColor[2] = compColor[2] + g
             compColor[3] = compColor[3] + b
