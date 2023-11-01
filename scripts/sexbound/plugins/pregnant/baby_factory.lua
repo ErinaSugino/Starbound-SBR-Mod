@@ -28,7 +28,7 @@ function BabyFactory:make(actor, daddy)
     local geneticTable = self._config.geneticTable or {}
     local pregnancyTypes = self._config.pregnancyType or {}
     
-    local pregnancyType = (pregnancyTypes[motherSpecies] or {})[fatherSpecies] or "baby"
+    local pregnancyType = (pregnancyTypes[motherSpecies] or {})[fatherSpecies] or (pregnancyTypes[motherSpecies] or {})["all"] or "baby"
     
     -- Try loading baby class
     local r,err = pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")

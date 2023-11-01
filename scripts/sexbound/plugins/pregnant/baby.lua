@@ -243,7 +243,10 @@ function Baby:reconcileEntityGroups(mother, father)
     local geneticTable = self._config.geneticTable or {}
     local species = mother:getSpecies()
     local otherSpecies = father:getSpecies()
-    if geneticTable[species] and geneticTable[species][otherSpecies] then return geneticTable[species][otherSpecies][2], geneticTable[species][otherSpecies][1] end -- Defined cross-breed species.
+    if geneticTable[species] then
+        if geneticTable[species][otherSpecies] then return geneticTable[species][otherSpecies][2], geneticTable[species][otherSpecies][1] end -- Defined cross-breed species.
+        if geneticTable[species]["all"] then return geneticTable[species]["all"][2], geneticTable[species]["all"][1] end -- Defined catch-all cross-breed species.
+    end
     
     if mother:getEntityGroup() == "humanoid" and father:getEntityGroup() == "humanoid" then
         return "humanoid", self:generateBirthSpecies(mother, father)
