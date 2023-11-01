@@ -218,6 +218,30 @@
     }
   },
   
+  "abortingMoveToPosition": {
+    "type": "action",
+    "name": "abortingMoveToPosition",
+    "title": "moveToPosition",
+    "properties": {
+      "avoidLiquid": {"type": "bool", "value": true},
+      "groundPosition": {"type": "bool", "value": true},
+      "maxGround": {"type": "number", "value": 5},
+      "minGround": {"type": "number", "value": -5},
+      "closeDoors": {"type": "bool", "value": true},
+      "pathOptions": {"type": "json", "value": {}},
+      "position": {"type": "position", "value": "target"},
+      "run": {"type": "bool", "value": false},
+      "runSpeed": {"type": "number", "value": null},
+	  "timeout": {"type": "number", "value": 30}
+    },
+    "category": "movement",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "direction": {"type": "number", "key": null},
+      "pathfinding": {"type": "bool", "key": null}
+    }
+  },
+  
   "getNodeRestrictions": {
 	"type": "action",
 	"name": "getNodeRestrictions",

@@ -256,7 +256,7 @@ function Sexbound.Player.Pregnant:startBirthing(index)
     self._parent._transform:setCanTransform(true)
     if self._parent._transform:handleTransform({
         responseRequired = false,
-        sexboundConfig = {position = {sex = {"birthing"}, force = 1, forceJoin = 1, noSync = 1, noStats = 1}},
+        sexboundConfig = {position = {sex = {"birthing"}, force = 1, forceJoin = 1, noSync = 1, noStats = 1, noCompatibility = 1}},
         timeout = 600,
         spawnOptions = {
             noEffect = true

@@ -322,9 +322,125 @@ function reverseTimer(args, board, _, dt)
     dt = coroutine.yield(nil, {ratio = (max - timer) / max})
   end
   
-  self.nodeTimeout = true
+  self._nodeTimeout = true
 
   return false, {ratio = 1.0}
+end
+
+-- param position
+-- param run
+-- param runSpeed
+-- param groundPosition
+-- param minGround
+-- param maxGround
+-- param avoidLiquid
+-- output direction
+-- output pathfinding
+function abortingMoveToPosition(args, board, node, dt)
+  self._nodeTimeout = false
+  
+  if args.position == nil then return false end
+
+  if entity.entityType() == "npc" then npc.resetLounging() end
+  local pathOptions = applyDefaults(args.pathOptions or {}, {
+    returnBest = false,
+    mustEndOnGround = mcontroller.baseParameters().gravityEnabled,
+    maxDistance = 200,
+    swimCost = 5,
+    dropCost = 5,
+    boundBox = mcontroller.boundBox(),
+    droppingBoundBox = rect.pad(mcontroller.boundBox(), {0.2, 0}), --Wider bound box for dropping
+    standingBoundBox = rect.pad(mcontroller.boundBox(), {-0.7, 0}), --Thinner bound box for standing and landing
+    smallJumpMultiplier = 1 / math.sqrt(2), -- 0.5 multiplier to jump height
+    jumpDropXMultiplier = 1,
+    enableWalkSpeedJumps = true,
+    enableVerticalJumpAirControl = false,
+    maxFScore = 400,
+    maxNodesToSearch = 70000,
+    maxLandingVelocity = -10.0,
+    liquidJumpCost = 15
+  })
+  
+  local timeout = args.timeout
+  local timeoutMax = timeout
+
+  local lastPosition = false
+  local targetPosition = {args.position[1], args.position[2]}
+
+  local updateTarget = function()
+    lastPosition = {args.position[1], args.position[2]}
+    if args.groundPosition then
+      targetPosition = findGroundPosition(lastPosition, args.minGround, args.maxGround, args.avoidLiquid)
+    else
+      targetPosition = lastPosition
+    end
+  end
+
+  updateTarget()
+  if not targetPosition then
+    self._nodeTimeout = true
+    return false
+  end
+  
+  local ourLastPos = entity.position()
+  local stuckFrames = 0
+  local closestDistance = math.huge
+  
+  local result = mcontroller.controlPathMove(targetPosition, args.run, pathOptions)
+  while true do
+    if not lastPosition or world.magnitude(args.position, lastPosition) > 2 then
+      updateTarget()
+      if not targetPosition then
+        self._nodeTimeout = true
+        return false
+      end
+    end
+
+    if result == false or result == true then
+      self._nodeTimeout = result
+      return result
+    end
+    result = mcontroller.controlPathMove(targetPosition, args.run)
+    if not self.setFacingDirection then 
+      if not mcontroller.groundMovement() then
+        controlFace(mcontroller.velocity()[1])
+      elseif mcontroller.running() or mcontroller.walking() then
+        controlFace(mcontroller.movingDirection())
+      end
+    end
+
+    if entity.entityType() == "npc" then
+      if args.closeDoors then
+        closeDoorsBehind()
+      end
+    end
+    
+    local ourCurPos = entity.position()
+    if ourCurPos[1] == ourLastPos[1] and ourCurPos[2] == ourLastPos[2] then
+      stuckFrames = stuckFrames + 1
+    else
+      stuckFrames = 0
+      ourLastPos = ourCurPos
+    end
+    
+    if stuckFrames >= 10 then self._nodeTimeout = true return false end -- Abort if no actual movement for 10 steps (1 second-ish - nodes seem to not run every tick, which makes sense)
+    
+    if timeout ~= -1 then -- Timeout of -1 means infinite
+      local curDistance = world.magnitude(ourCurPos, targetPosition)
+      -- If we work with a timeout, reset it when we actually got closer to our target
+      if curDistance < closestDistance then
+        closestDistance = curDistance
+        timeout = timeoutMax
+      end
+      
+      timeout = timeout - dt
+      if timeout <= 0 then self._nodeTimeout = true return false end -- Abort if no new progress for the duration of the defined timeout
+    end
+
+    coroutine.yield(nil, {pathfinding = mcontroller.pathfinding(), direction = mcontroller.facingDirection()})
+  end
+
+  return true
 end
 
 function getNodeRestrictions(args, board)
@@ -336,7 +452,7 @@ function getNodeRestrictions(args, board)
     local storedRestrictions = (sxb._behaviorData or {}).excludedNodes
     if storedRestrictions then
         for c,d in pairs(storedRestrictions) do
-            if d.count >= 3 then
+            if d.count >= 1 then
                 for _,n in ipairs((d.nodes or {})) do
                     table.insert(restrictions, n)
                 end
@@ -350,7 +466,7 @@ function getNodeRestrictions(args, board)
 end
 
 function setNodeRestrictions(args, board)
-    if not self.nodeTimeout then return false end
+    if not self._nodeTimeout then return false end
     
     local target = args.entity
     if not target then return false end
@@ -376,7 +492,7 @@ function setNodeRestrictions(args, board)
         storedRestrictions[cid] = {count=1,time=60,nodes={target}}
     end
     sxb._behaviorData.excludedNodes = storedRestrictions
-    self.nodeTimeout = false
+    self._nodeTimeout = false
     
     if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Node #"..target.." couldn't be reached. Excluding #"..cid.." (times: "..storedRestrictions[cid].count..")") end
     

@@ -1220,6 +1220,8 @@ function Sexbound:stopSexMusicForEntity(entityId)
 end
 
 function Sexbound:checkNodeCompatibility(args)
+    if self._config.position.noCompatibility then return 0 end --If the "noCompatibility" flag is set (like on the birthing node for players), always return 0 to disable NPCs from targeting this.
+    
     local mothderUuid = args.motherUuid or nil
     local fatherUuid = args.fatherUuid or nil
     local multiplier = self._config.behaviour or {}

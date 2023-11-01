@@ -160,21 +160,22 @@
 				  }
 				}
 			  },
-			  {
-				"title": "Backup Timeout",
-				"type": "action",
-				"name": "reverseTimer",
-				"parameters": {
-				  "time": {"value": 10}
-				}
-			  },
+			  //{
+				//"title": "Backup Timeout",
+				//"type": "action",
+				//"name": "reverseTimer",
+				//"parameters": {
+				//  "time": {"value": 10}
+				//}
+			  //},
 			  {
 				"title": "",
 				"type": "action",
-				"name": "moveToPosition",
+				"name": "abortingMoveToPosition",
 				"parameters": {
 				  "groundPosition": { "value": true },
-				  "position": { "key": "chair" }
+				  "position": { "key": "chair" },
+				  "timeout": { "value": 30 }
 				}
 			  }
 			]
