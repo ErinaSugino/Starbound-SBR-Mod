@@ -1,7 +1,7 @@
 {
   "1.1_r1" : [
 	"» 1.1 REVISON 1 «",
-	"- Upgraded arousal behavior navigation to be more responsive"
+	"- Upgraded arousal behavior navigation to be more responsive",
 	"- Upgraded baby color genetics to account for alpha channel, old syntax and more failsafety",
 	"- Fixed arousal behavior to account for transformation nodes (defeat, AB primary attack)"
   ],
