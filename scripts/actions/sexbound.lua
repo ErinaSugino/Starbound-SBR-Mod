@@ -481,7 +481,7 @@ function setNodeRestrictions(args, board)
     
     local cid = data.nodeToController[target] or 0
     if storedRestrictions[cid] then
-        storedRestrictions[cid].count = storedRestrictions.count + 1
+        storedRestrictions[cid].count = storedRestrictions[cid].count + 1
         storedRestrictions[cid].time = 60
         local isIn = false
         for _,n in ipairs(storedRestrictions[cid].nodes) do

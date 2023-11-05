@@ -432,6 +432,8 @@ end
 -- @param sitPosition
 function Sexbound:becomeNode(sitPosition)
     table.insert(self._nodes, Sexbound.Node.new(self, {0, 0}, sitPosition, false))
+    
+    if not _ENV["returnControllerId"] then _ENV["returnControllerId"] = function() return entity.id() end end --If we become a node ourselves, try to insert controller ID retrieval function for behavior script.
 end
 
 --- Uninitializes each instance of Node in the nodes table.

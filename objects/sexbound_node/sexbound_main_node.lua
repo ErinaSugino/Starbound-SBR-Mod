@@ -138,7 +138,3 @@ end
 function uninit()
     self.node:uninit()
 end
-
-function returnControllerId()
-    return entity.id()
-end
