@@ -79,7 +79,7 @@ function Baby:create(mother, father)
     local hairColorLambda = Sexbound.Util.normalDist()
     
     local babyBodyColor = nil
-    if bodyColorPool[motherBodyIndex] ~= "" then
+    if bodyColorPool[motherBodyIndex] ~= "" and bodyColorPool[motherBodyIndex] ~= nil then
         babyBodyColor = {}
         for i,v in pairs(bodyColorPool[motherBodyIndex]) do
             local r
@@ -92,7 +92,7 @@ function Baby:create(mother, father)
         end
     end
     local babyUndyColor = nil
-    if undyColorPool[motherUndyIndex] ~= "" then
+    if undyColorPool[motherUndyIndex] ~= "" and bodyColorPool[motherBodyIndex] ~= nil then
         babyUndyColor = {}
         for i,v in pairs(undyColorPool[motherUndyIndex]) do
             local r
@@ -105,7 +105,7 @@ function Baby:create(mother, father)
         end
     end
     local babyHairColor = nil
-    if hairColorPool[motherHairIndex] ~= "" then
+    if hairColorPool[motherHairIndex] ~= "" and bodyColorPool[motherBodyIndex] ~= nil then
         babyHairColor = {}
         for i,v in pairs(hairColorPool[motherHairIndex]) do
             local r
