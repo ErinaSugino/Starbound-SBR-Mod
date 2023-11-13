@@ -79,7 +79,7 @@ function Baby:create(mother, father)
     local hairColorLambda = Sexbound.Util.normalDist()
     
     local function verifyIndex(colorPool, index)
-        return colorPool[index] or '' ~= ''
+        return colorPool and (colorPool[index] or '' ~= '')
     end
 
     local function generateColor(motherIndex, fatherIndex, colorPool, allowBlending, colorLambda)
