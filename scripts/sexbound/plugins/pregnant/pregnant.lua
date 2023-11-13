@@ -171,16 +171,16 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
         if directInsertion then
             if canImpregnate then
                 if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
-                    local chances = self:getConfig().pregnancyHazards or { ["default"] = {} }
-                    local chance = chances[thatSpecies] or chances["default"] or 0
+                    local allChances = self:getConfig().pregnancyHazards or { ["default"] = {} }
+                    local thatChances = allChances[thatSpecies] or allChances["default"]
+                    local thisChance = thatChances[thisSpecies] or thisSpecies["default"] or 0
 
-                    if chance > 0 then
+                    if thisChance > 0 then
                         local roll = self:generateRandomNumber() / 100
 
-                        self:getLog():debug("Pregnancy hazzard roll: " ..
-                            thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. chance)
+                        self:getLog():debug("Pregnancy hazzard roll: " .. thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. thisChance)
 
-                        if roll <= chance then
+                        if roll <= thisChance then
                             self:hazardAbortion()
                             self:tryToNotifyThisActorOfHazardAbortion(actor)
                             self:tryToNotifyOtherActorOfHazardAbortion(actor)
