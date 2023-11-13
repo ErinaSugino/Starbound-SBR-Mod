@@ -30,7 +30,7 @@ function init()
       species          = "sexbound_tentacleplant_v2",
       gender           = "male",
       role             = 1,
-      offspringType    = "monsters",
+      offspringGroup   = "monsters",
       offspringSpecies = "monopus",
       bodyDirectives   = colorvaluefinal
     }
