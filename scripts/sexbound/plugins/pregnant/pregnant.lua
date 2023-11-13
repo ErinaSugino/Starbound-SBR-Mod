@@ -173,7 +173,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
                 if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
                     local allChances = self:getConfig().pregnancyHazards or { ["default"] = {} }
                     local thatChances = allChances[thatSpecies] or allChances["default"]
-                    local thisChance = thatChances[thisSpecies] or thisSpecies["default"] or 0
+                    local thisChance = thatChances[thisSpecies] or thatChances["default"] or 0
 
                     if thisChance > 0 then
                         local roll = self:generateRandomNumber() / 100
