@@ -78,7 +78,7 @@ function Sexbound.Actor.Apparel.Abstract:loadApparel(index, apparel, role, speci
   directives = apparel.directives or ""
   directives = directives .. Sexbound.Util.colorMapToReplaceDirective(apparel.colors)
 
-  if not self:getParent():getParent():isPregnant() or not self:getParent():getParent():isEnabledPregnancyFetish() then
+    if not self:getParent():getParent():isVisiblyPregnant() or not self:getParent():getParent():isInflated() or not self:getParent():getParent():isEnabledPregnancyFetish() then
       return index, image, directives, mask
   end
 
