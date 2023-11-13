@@ -164,17 +164,15 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
     local thatActor = nil
 
     for _, actor in ipairs(impregnators) do
-        thatSpecies = actor:getSpecies()
+        local thatSpecies = actor:getSpecies()
         directInsertion = self:canImpregnate(actor)
         canImpregnate = self:otherActorHasRoleInPositionWhichCanImpregnate(actor)
         -- If the checked two actors don't even fuck directly or the penetrator isn't penetrating the vagina, no need to continue. Neither pregnancy nor hazzard can occur
         if directInsertion then
             if canImpregnate then
                 if self:getConfig().enablePregnancyHazards and self:isPregnant() and thisSpecies ~= thatSpecies then
-                    local chance = 0
                     local chances = self:getConfig().pregnancyHazards or { ["default"] = {} }
-                    chance = chances[thatSpecies] or chances["default"]
-                    chance = chance[thisSpecies] or chance["default"] or 0
+                    local chance = chances[thatSpecies] or chances["default"] or 0
 
                     if chance > 0 then
                         local roll = self:generateRandomNumber() / 100
@@ -448,10 +446,14 @@ end
 --- Returns whether or not the other actor is a compatible species
 function Sexbound.Actor.Pregnant:otherActorIsCompatibleSpecies(otherActor)
     local actor = self:getParent()
-    self:getLog():debug("Species check: "..actor:getSpecies().." on "..otherActor:getSpecies())
+    local ownSpecies = actor:getOffspringSpecies()
+    local otherSpecies = otherActor:getOffspringSpecies()
+
+    self:getLog():debug("Species check: " .. ownSpecies .. " on " .. otherSpecies)
     -- Check if conditions immediately bypass this check
-    if self:getConfig().enableFreeForAll == true or self:getConfig().enableCompatibleSpeciesOnly == false or
-        actor:getSpecies() == otherActor:getSpecies() then
+    if ownSpecies == "" or otherSpecies == "" then
+        return false
+    elseif self:getConfig().enableFreeForAll == true or self:getConfig().enableCompatibleSpeciesOnly == false or ownSpecies == otherSpecies then
         return true
     end
     
@@ -460,9 +462,8 @@ function Sexbound.Actor.Pregnant:otherActorIsCompatibleSpecies(otherActor)
     if thisSpeciesType == "universal" or thatSpeciesType == "universal" or (thisSpeciesType == thatSpeciesType and thisSpeciesType ~= nil) then return true end -- "nil" (aka. not set) is treated as universal incompatibility, so nil x nil == incompatible
     
     -- Alternatively check if whitelist exists for species
-    local speciesList = self:getConfig().compatibleSpecies[otherActor:getSpecies()]
+    local speciesList = self:getConfig().compatibleSpecies[otherSpecies]
     if speciesList == "all" then return true end
-    local ownSpecies = actor:getSpecies()
     for _, species in ipairs(speciesList or {}) do
         if ownSpecies == species then
             return true

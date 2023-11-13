@@ -1203,6 +1203,21 @@ function Sexbound.Actor:getSpecies()
     return self:getIdentity().species
 end
 
+function Sexbound.Actor:getOffspringGroup()
+    local result = self:getIdentity().offspringGroup
+    if result then return result end
+    result = self:getEntityGroup()
+    if result ~= "objects" then return result end
+    return ""
+end
+
+function Sexbound.Actor:getOffspringSpecies()
+    local alt = self:getIdentity().offspringSpecies
+    if alt then return alt end
+    if self:getEntityGroup() ~= "objects" then return self:getSpecies() end
+    return ""
+end
+
 function Sexbound.Actor:getSprite(animState, partName, tags)
     local defaultArtwork = self:getDefaultArtwork(partName)
     local filename = animState:getSprite(partName, defaultArtwork)

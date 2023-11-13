@@ -137,6 +137,8 @@ end
 
 ---Same as findClosestColorGene, but takes precalculated color averages for each palette
 function BabyFactory:findClosestColorAverageGene(list, targetColor, threshold)
+    if not list or not targetColor then return -1 end
+
     threshold       = (threshold or 5) ^ 2
     local totalDist = 0
     local index     = 1
