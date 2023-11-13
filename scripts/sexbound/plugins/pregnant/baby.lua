@@ -107,8 +107,8 @@ function Baby:create(mother, father)
     end
 
     baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda)
-    baby.undyColor = generateColor(motherBodyIndex, fatherBodyIndex, undyColorPool, undyAllowBlending, undyColorLambda)
-    baby.hairColor = generateColor(motherBodyIndex, fatherBodyIndex, hairColorPool, hairAllowBlending, hairColorLambda)
+    baby.undyColor = generateColor(motherUndyIndex, fatherUndyIndex, undyColorPool, undyAllowBlending, undyColorLambda)
+    baby.hairColor = generateColor(motherHairIndex, fatherHairIndex, hairColorPool, hairAllowBlending, hairColorLambda)
     
     sb.logInfo("Generated baby colors:")
     sb.logInfo("Body " .. motherBodyIndex .. " x " .. fatherBodyIndex .. " - " .. Sexbound.Util.dump(baby.bodyColor))
