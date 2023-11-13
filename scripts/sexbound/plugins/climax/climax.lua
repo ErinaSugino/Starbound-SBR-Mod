@@ -607,6 +607,11 @@ function Sexbound.Actor.Climax:getInflationThreshold()
     return self._config.inflationThreshold or 7.5
 end
 
+--- Returns the forced dripping threshold
+function Sexbound.Actor.Climax:getForcedDripThreshold()
+    return self._config.forcedDripThreshold or 8.5
+end
+
 ---Returns the inflation drip rate
 function Sexbound.Actor.Climax:getDripRate()
     return self._config.dripRate or {0.2, 0.3}
@@ -617,9 +622,18 @@ function Sexbound.Actor.Climax:getDripSpeed()
     return self._config.dripSpeed or 1.5
 end
 
+--- Returns the current inflation level offsetted by pregnancy
+function Sexbound.Actor.Climax:getAdjustedInflation()
+    local val = self._inflation
+    if self:getParent():isVisiblyPregnant() then
+        val = val + self:getInflationThreshold()
+    end
+    return val
+end
+
 --- Returns whether or not dripping can currently occur
 function Sexbound.Actor.Climax:canDrip()
-    return not self._parent:hasInteractionType("direct")
+    return not self._parent:hasInteractionType("direct") or self:getAdjustedInflation() > self:getForcedDripThreshold()
 end
 
 --- Returns whether or not this actor is currently inflated
