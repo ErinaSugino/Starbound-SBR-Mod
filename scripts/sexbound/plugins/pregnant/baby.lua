@@ -6,7 +6,7 @@ Baby = {}
 Baby_mt = { __index = Baby }
 
 function Baby:new(parent, config)
-  input = input or {}
+    config = config or {}
 
   return setmetatable({
     _parent = parent,
@@ -65,12 +65,12 @@ function Baby:create(mother, father)
     end
     
     -- Map parent color themes to target space
-    local motherBodyIndex, d11 = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, motherBodyColorAverage)
-    local fatherBodyIndex, d21 = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, fatherBodyColorAverage)
-    local motherUndyIndex, d12 = self._parent:findClosestColorAverageGene(undyColorPoolAverage, motherUndyColorAverage)
-    local fatherUndyIndex, d22 = self._parent:findClosestColorAverageGene(undyColorPoolAverage, fatherUndyColorAverage)
-    local motherHairIndex, d13 = self._parent:findClosestColorAverageGene(hairColorPoolAverage, motherHairColorAverage)
-    local fatherHairIndex, d23 = self._parent:findClosestColorAverageGene(hairColorPoolAverage, fatherHairColorAverage)
+    local motherBodyIndex = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, motherBodyColorAverage)
+    local fatherBodyIndex = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, fatherBodyColorAverage)
+    local motherUndyIndex = self._parent:findClosestColorAverageGene(undyColorPoolAverage, motherUndyColorAverage)
+    local fatherUndyIndex = self._parent:findClosestColorAverageGene(undyColorPoolAverage, fatherUndyColorAverage)
+    local motherHairIndex = self._parent:findClosestColorAverageGene(hairColorPoolAverage, motherHairColorAverage)
+    local fatherHairIndex = self._parent:findClosestColorAverageGene(hairColorPoolAverage, fatherHairColorAverage)
     
     -- Generate crossed colors for baby
     math.randomseed(os.time())
@@ -78,54 +78,42 @@ function Baby:create(mother, father)
     local undyColorLambda = Sexbound.Util.normalDist()
     local hairColorLambda = Sexbound.Util.normalDist()
     
-    local babyBodyColor = nil
-    if bodyColorPool[motherBodyIndex] ~= "" then
-        babyBodyColor = {}
-        for i,v in pairs(bodyColorPool[motherBodyIndex]) do
-            local r
-            if bodyAllowBlending then
-                r = self._parent:crossfade({Sexbound.Util.hexToRgb(v)}, {Sexbound.Util.hexToRgba(bodyColorPool[fatherBodyIndex][i])}, bodyColorLambda)
-            else
-                r = util.randomChoice({v, bodyColorPool[fatherBodyIndex][i]})
-            end
-            babyBodyColor[i] = Sexbound.Util.rgbaToHex6(r)
-        end
+    local function verifyIndex(colorPool, index)
+        return colorPool and (colorPool[index] or '' ~= '')
     end
-    local babyUndyColor = nil
-    if undyColorPool[motherUndyIndex] ~= "" then
-        babyUndyColor = {}
-        for i,v in pairs(undyColorPool[motherUndyIndex]) do
+
+    local function generateColor(motherIndex, fatherIndex, colorPool, allowBlending, colorLambda)
+        local color = nil
+        if verifyIndex(colorPool, motherIndex) then
+            color = {}
+
+            if verifyIndex(colorPool, fatherIndex) then
+                for i, v in pairs(colorPool[motherIndex]) do
             local r
-            if undyAllowBlending then
-                r = self._parent:crossfade({Sexbound.Util.hexToRgba(v)}, {Sexbound.Util.hexToRgba(undyColorPool[fatherUndyIndex][i])}, undyColorLambda)
+                    if allowBlending then
+                        r = self._parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(colorPool[fatherIndex][i]) }, colorLambda)
             else
-                r = util.randomChoice({v, undyColorPool[fatherUndyIndex][i]})
+                        r = util.randomChoice({ v, colorPool[fatherIndex][i] })
             end
-            babyUndyColor[i] = Sexbound.Util.rgbaToHex6(r)
+                    color[i] = Sexbound.Util.rgbaToHex6(r)
         end
-    end
-    local babyHairColor = nil
-    if hairColorPool[motherHairIndex] ~= "" then
-        babyHairColor = {}
-        for i,v in pairs(hairColorPool[motherHairIndex]) do
-            local r
-            if hairAllowBlending then
-                r = self._parent:crossfade({Sexbound.Util.hexToRgba(v)}, {Sexbound.Util.hexToRgba(hairColorPool[fatherHairIndex][i])}, hairColorLambda)
             else
-                r = util.randomChoice({v, hairColorPool[fatherHairIndex][i]})
+                for i, v in pairs(colorPool[motherIndex]) do
+                    color[i] = Sexbound.Util.rgbaToHex6(v)
+                end
             end
-            babyHairColor[i] = Sexbound.Util.rgbaToHex6(r)
         end
+        return color
     end
-    
-    baby.bodyColor = babyBodyColor
-    baby.undyColor = babyUndyColor
-    baby.hairColor = babyHairColor
+
+    baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda)
+    baby.undyColor = generateColor(motherUndyIndex, fatherUndyIndex, undyColorPool, undyAllowBlending, undyColorLambda)
+    baby.hairColor = generateColor(motherHairIndex, fatherHairIndex, hairColorPool, hairAllowBlending, hairColorLambda)
     
     sb.logInfo("Generated baby colors:")
-    sb.logInfo("Body "..motherBodyIndex.." x "..fatherBodyIndex.." - "..Sexbound.Util.dump(baby.bodyColor))
-    sb.logInfo("Undy "..motherUndyIndex.." x "..fatherUndyIndex.." - "..Sexbound.Util.dump(baby.undyColor))
-    sb.logInfo("Hair "..motherHairIndex.." x "..fatherHairIndex.." - "..Sexbound.Util.dump(baby.hairColor))
+    sb.logInfo("Body " .. motherBodyIndex .. " x " .. fatherBodyIndex .. " - " .. Sexbound.Util.dump(baby.bodyColor))
+    sb.logInfo("Undy " .. motherUndyIndex .. " x " .. fatherUndyIndex .. " - " .. Sexbound.Util.dump(baby.undyColor))
+    sb.logInfo("Hair " .. motherHairIndex .. " x " .. fatherHairIndex .. " - " .. Sexbound.Util.dump(baby.hairColor))
     
     return baby
 end
@@ -156,72 +144,92 @@ function Baby:fetchGenes(species)
         return -- No species file. Abort further genetics.
     end
     
-    bodyColorPool = speciesConfig.bodyColor or {}
-    bodyColorPoolAverage = {}
-    bodyAllowBlending = true
-    undyColorPool = speciesConfig.undyColor or {}
-    undyColorPoolAverage = {}
-    undyAllowBlending = true
-    hairColorPool = speciesConfig.hairColor or {}
-    hairColorPoolAverage = {}
-    hairAllowBlending = true
+    local bodyColorPool = speciesConfig.bodyColor or {}
+    local bodyColorPoolAverage = {}
+    local bodyAllowBlending = true
+    local undyColorPool = speciesConfig.undyColor or {}
+    local undyColorPoolAverage = {}
+    local undyAllowBlending = true
+    local hairColorPool = speciesConfig.hairColor or {}
+    local hairColorPoolAverage = {}
+    local hairAllowBlending = true
     
     -- Pre calculate color palette averages
-    for i,r in ipairs(bodyColorPool) do
+    for i, r in ipairs(bodyColorPool) do
         if type(r) ~= "table" then break end
         local x = 0
-        local avg = {0,0,0}
+        local avg = { 0, 0, 0 }
         local valid = true
         -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
+        for j, v in pairs(r) do
             local l = string.len(v)
-            if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+            if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                valid = false
+                break
+            end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
             
-            local r,g,b,a = Sexbound.Util.hexToRgba(v)
+            local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then bodyAllowBlending = false end
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
         end
-        if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        else avg[1],avg[2],avg[3] = -1,-1,-1 end
+        if valid then
+            avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+        else
+            avg[1], avg[2], avg[3] = -1, -1, -1
+        end
         table.insert(bodyColorPoolAverage, avg)
     end
-    for i,r in ipairs(undyColorPool) do
+
+    for i, r in ipairs(undyColorPool) do
         if type(r) ~= "table" then break end
         local x = 0
-        local avg = {0,0,0}
+        local avg = { 0, 0, 0 }
         local valid = true
         -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
+        for j, v in pairs(r) do
             local l = string.len(v)
-            if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+            if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                valid = false
+                break
+            end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
             
-            local r,g,b,a = Sexbound.Util.hexToRgba(v)
+            local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then undyAllowBlending = false end
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
         end
-        if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        else avg[1],avg[2],avg[3] = -1,-1,-1 end
-        table.insert(bodyColorPoolAverage, avg)
+        if valid then
+            avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+        else
+            avg[1], avg[2], avg[3] = -1, -1, -1
+        end
+        table.insert(undyColorPoolAverage, avg)
     end
-    for i,r in ipairs(hairColorPool) do
+
+    for i, r in ipairs(hairColorPool) do
         if type(r) ~= "table" then break end
         local x = 0
-        local avg = {0,0,0}
+        local avg = { 0, 0, 0 }
         local valid = true
         -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
+        for j, v in pairs(r) do
             local l = string.len(v)
-            if l~=3 and l~=4 and l~=6 and l~=8 then valid = false break end -- If not length 3,4,6 or 8 it's invalid - ignore
+            if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                valid = false
+                break
+            end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
             
-            local r,g,b,a = Sexbound.Util.hexToRgba(v)
+            local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then hairAllowBlending = false end
-            avg[1],avg[2],avg[3] = avg[1]+r,avg[2]+g,avg[3]+b
+            avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
         end
-        if valid then avg[1],avg[2],avg[3] = math.floor(avg[1]/x),math.floor(avg[2]/x),math.floor(avg[3]/x)
-        else avg[1],avg[2],avg[3] = -1,-1,-1 end
+        if valid then
+            avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+        else
+            avg[1], avg[2], avg[3] = -1, -1, -1
+        end
         table.insert(hairColorPoolAverage, avg)
     end
     

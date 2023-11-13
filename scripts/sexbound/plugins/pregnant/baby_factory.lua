@@ -132,71 +132,25 @@ end
 --- Returns a random time representing the delay between the climax and the actual impregnation happening
 -- @return delay
 function BabyFactory:createImpregnationDelay()
-    return util.randomInRange({60, 180})
-end
-
---- Returns the index in a given list of color palette where there is a the smallest color distance to a target palette
--- @param list
--- @param target
--- @optional threshhold
--- @return index, totalDistance
-function BabyFactory:findClosestColorGene(list, target, threshhold)
-    threshhold = threshhold or 5
-    local targetColor = {0,0,0}
-    local x = 0
-    -- Get average color of target palette in RGB
-    for i,v in pairs(target) do
-        x = x + 1
-        local r,g,b = Sexbound.Util.hexToRgb(v)
-        targetColor[1] = targetColor[1] + r
-        targetColor[2] = targetColor[2] + g
-        targetColor[3] = targetColor[3] + b
-    end
-    targetColor[1] = math.floor(targetColor[1] / x)
-    targetColor[2] = math.floor(targetColor[2] / x)
-    targetColor[3] = math.floor(targetColor[3] / x)
-    
-    local totalDist = 0
-    local index = 1
-    for i,r in ipairs(list) do
-        x = 0
-        local compColor = {0,0,0}
-        local dist = 0
-        -- Get average color of current checked palette from list
-        for j,v in pairs(r) do
-            x = x + 1
-            local r,g,b = Sexbound.Util.hexToRgb(v)
-            compColor[1] = compColor[1] + r
-            compColor[2] = compColor[2] + g
-            compColor[3] = compColor[3] + b
-        end
-        compColor[1] = math.floor(compColor[1] / x)
-        compColor[2] = math.floor(compColor[2] / x)
-        compColor[3] = math.floor(compColor[3] / x)
-        
-        -- Determine RGB color distance between target average and current average
-        -- Store smallest distance index
-        dist = math.sqrt((targetColor[1]-compColor[1])^2 + (targetColor[2]-compColor[2])^2 + (targetColor[3]-compColor[3])^2)
-        if dist <= threshhold then return i, dist end -- Early termination condition for more than accurate enough hits
-        if dist < totalDist or totalDist == 0 then totalDist = dist index = i end
-    end
-    return index, totalDist
+    return util.randomInRange({ 60, 180 })
 end
 
 ---Same as findClosestColorGene, but takes precalculated color averages for each palette
-function BabyFactory:findClosestColorAverageGene(list, targetColor, threshhold)
-    threshhold = threshhold or 5
-    
+function BabyFactory:findClosestColorAverageGene(list, targetColor, threshold)
+    threshold       = (threshold or 5) ^ 2
     local totalDist = 0
-    local index = 1
-    for i,compColor in ipairs(list) do
+    local index     = 1
+    for i, compColor in ipairs(list) do
         -- Determine RGB color distance between target average and current average
         -- Store smallest distance index
-        local dist = math.sqrt((targetColor[1]-compColor[1])^2 + (targetColor[2]-compColor[2])^2 + (targetColor[3]-compColor[3])^2)
-        if dist <= threshhold then return i, dist end -- Early termination condition for more than accurate enough hits
-        if dist < totalDist or totalDist == 0 then totalDist = dist index = i end
+        local dist = (targetColor[1] - compColor[1]) ^ 2 + (targetColor[2] - compColor[2]) ^ 2 + (targetColor[3] - compColor[3]) ^ 2
+        if dist <= threshold then return i, dist end -- Early termination condition for more than accurate enough hits
+        if dist < totalDist or totalDist == 0 then
+            totalDist = dist
+            index = i
+        end
     end
-    return index, totalDist
+    return index
 end
 
 --- Returns a list of numbers where every value has been mixed between input list a and b with Lambda coefficient l
