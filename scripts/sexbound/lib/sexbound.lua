@@ -1224,8 +1224,9 @@ end
 function Sexbound:checkNodeCompatibility(args)
     if self._config.position.noCompatibility then return 0 end --If the "noCompatibility" flag is set (like on the birthing node for players), always return 0 to disable NPCs from targeting this.
     
-    local mothderUuid = args.motherUuid or nil
+    local motherUuid = args.motherUuid or nil
     local fatherUuid = args.fatherUuid or nil
+    local otherUuid = args.uuid or nil
     local multiplier = self._config.behaviour or {}
     multiplier = multiplier.multiplier or {
         incest=-1,
@@ -1245,12 +1246,12 @@ function Sexbound:checkNodeCompatibility(args)
         local identity = a:getIdentity()
         local uuid = a._config.uniqueId
         local incestLevel = -1
-        if args.motherUuid ~= nil or args.fatherUuid ~= nil then
-            if (identity.motherUuid == nil and identity.fatherUuid == nil) or (otherIdentity.motherUuid and otherIdentity.fatherUuid) then incestLevel = 0 end -- Orphan, can't have (known) incest
-            if identity.motherUuid == otherUuid or identity.fatherUuid == otherUuid or otherIdentity.motherUuid == uuid or otherIdentity.fatherUuid == uuid then incestLevel = 3 end -- Level 3 incest - sex with your parent
+        if motherUuid ~= nil or fatherUuid ~= nil then
+            if (identity.motherUuid == nil and identity.fatherUuid == nil) or (motherUuid == nil and fatherUuid == nil) then incestLevel = 0 end -- Orphan, can't have (known) incest
+            if identity.motherUuid == otherUuid or identity.fatherUuid == otherUuid or motherUuid == uuid or fatherUuid == uuid then incestLevel = 3 end -- Level 3 incest - sex with your parent
             if incestLevel == -1 then
                 local thisPair = {identity.motherUuid, identity.fatherUuid}
-                local thatPair = {args.motherUuid, args.fatherUuid}
+                local thatPair = {motherUuid, fatherUuid}
                 local matches = 0
                 for _,v1 in ipairs(thisPair) do
                     for _,v2 in ipairs(thatPair) do
