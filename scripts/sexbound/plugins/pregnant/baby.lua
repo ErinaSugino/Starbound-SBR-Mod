@@ -249,39 +249,41 @@ end
 --- Reconciles differences between this actor and the other actor
 function Baby:reconcileEntityGroups(mother, father)
     local geneticTable = self._config.geneticTable or {}
-    local species = mother:getSpecies()
-    local otherSpecies = father:getSpecies()
+    local species = mother:getOffspringSpecies()
+    local otherSpecies = father:getOffspringSpecies()
+    local group = mother:getOffspringGroup()
+    local otherGroup = father:getOffspringGroup()
+
     if geneticTable[species] then
         if geneticTable[species][otherSpecies] then return geneticTable[species][otherSpecies][2], geneticTable[species][otherSpecies][1] end -- Defined cross-breed species.
-        if geneticTable[species]["all"] then return geneticTable[species]["all"][2], geneticTable[species]["all"][1] end -- Defined catch-all cross-breed species.
+        if geneticTable[species]["all"] then return geneticTable[species]["all"][2], geneticTable[species]["all"][1] end                      -- Defined catch-all cross-breed species.
     end
     
-    if mother:getEntityGroup() == "humanoid" and father:getEntityGroup() == "humanoid" then
+    if group == "humanoid" and otherGroup == "humanoid" then
         return "humanoid", self:generateBirthSpecies(mother, father)
     end
 
-    if mother:getEntityGroup() == "monsters" and father:getEntityGroup() == "monsters" then
+    if group == "monsters" and otherGroup == "monsters" then
         return "monsters", self:generateBirthSpecies(mother, father)
     end
 
-    if mother:getEntityGroup() == "monsters" then
+    if group == "monsters" then
         return "monsters", species
     end
 
-    if father:getEntityGroup() == "monsters" then
+    if otherGroup == "monsters" then
         return "monsters", otherSpecies
     end
     
     -- Backup: Just copy mother
-    return mother:getEntityGroup(), mother:getSpecies()
+    return group, species
 end
 
 -- Returns a random species name based on the species of the parents
 function Baby:generateBirthSpecies(mother, father)
     local actor1Species = mother:getSpecies() or "human"
     local actor2Species = father:getSpecies() or actor1Species
-    if actor2Species == "sexbound_tentacleplant_v2" then return actor1Species end
-    return util.randomChoice({actor1Species, actor2Species})
+    return util.randomChoice({ actor1Species, actor2Species })
 end
 
 -- HELPER FUNCTIONS --
