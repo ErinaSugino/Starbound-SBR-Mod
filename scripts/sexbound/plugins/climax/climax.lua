@@ -557,11 +557,29 @@ function Sexbound.Actor.Climax:tryAutoClimax()
         return
     end
 
-    if self._config.currentPoints >= self:getThreshold() then
+    if self:getCurrentPoints() >= self:getThreshold() then
         self:beginClimax()
-
         self:refreshClimaxThreshold()
+
+        if math.random() <= self:getClimaxChainChance() then
+            self:getLog():debug("Actor " .. self:getParent():getActorNumber() .. " trying to trigger climax chain")
+
+            for _, actor in ipairs(self:getParent():getParent():getActors()) do
+                if actor:getActorNumber() ~= self:getParent():getActorNumber() then
+                    local plug = actor:getPlugins("climax")
+                    if plug and plug:getCurrentPoints() >= (plug:getThreshold() * 0.8) then
+                        plug:beginClimax()
+                        plug:refreshClimaxThreshold()
+                    end
+                end
+            end
+        end
     end
+end
+
+--- Returns the simultaneous climax chance
+function Sexbound.Actor.Climax:getClimaxChainChance()
+    return self._config.nonPlayerClimaxChainChance or 0.33
 end
 
 --- Returns a reference to the cooldown.
