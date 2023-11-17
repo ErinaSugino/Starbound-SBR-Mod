@@ -565,7 +565,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
             self:getLog():debug("Actor " .. self:getParent():getActorNumber() .. " trying to trigger climax chain")
 
             for _, actor in ipairs(self:getParent():getParent():getActors()) do
-                if actor:getActorNumber() ~= self:getParent():getActorNumber() then
+                if actor:getActorNumber() ~= self:getParent():getActorNumber() and actor:getEntityType() ~= "player" then
                     local plug = actor:getPlugins("climax")
                     if plug and plug:getCurrentPoints() >= (plug:getThreshold() * 0.8) then
                         plug:beginClimax()
