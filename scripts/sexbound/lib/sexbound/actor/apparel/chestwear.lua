@@ -98,10 +98,7 @@ function Sexbound.Actor.Apparel.Chestwear:loadChestwear(name, role, species, gen
       mask = self._defaultMask
   end
 
-  if
-        not self:getParent():getParent():isVisiblyPregnant() or
-        not self:getParent():getParent():isInflated() or
-  not self:getParent():getParent():isEnabledPregnancyFetish() then
+  if not self:getParent():getParent():isVisiblyPregnant() or not self:getParent():getParent():isInflated() or not self:getParent():getParent():isEnabledPregnancyFetish() then
       return index, part, directives, mask
   end
 

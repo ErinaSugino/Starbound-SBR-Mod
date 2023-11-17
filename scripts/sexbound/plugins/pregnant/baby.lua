@@ -89,14 +89,14 @@ function Baby:create(mother, father)
 
             if verifyIndex(colorPool, fatherIndex) then
                 for i, v in pairs(colorPool[motherIndex]) do
-            local r
+                    local r
                     if allowBlending then
                         r = self._parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(colorPool[fatherIndex][i]) }, colorLambda)
-            else
+                    else
                         r = util.randomChoice({ v, colorPool[fatherIndex][i] })
-            end
+                    end
                     color[i] = Sexbound.Util.rgbaToHex6(r)
-        end
+                end
             else
                 for i, v in pairs(colorPool[motherIndex]) do
                     color[i] = Sexbound.Util.rgbaToHex6(v)
