@@ -247,6 +247,15 @@ function Sexbound.Actor:loadEmotePart(animState, entityGroup, role, species)
     if entityGroup == "monsters" then
         return "/artwork/defaults/default_image.png"
     end
+    if entityGroup == "objects" then
+        local path = "/artwork/<entityGroup>/<role>/<species>/emote.png"
+        
+        path = util.replaceTag(path, "entityGroup", entityGroup or "humanoid")
+        path = util.replaceTag(path, "role", role or "default")
+        path = util.replaceTag(path, "species", species or "default")
+        
+        return path
+    end
     return self:getSprite(animState, "emote", {
         entityGroup = entityGroup,
         role = role,
