@@ -20,7 +20,10 @@
 			=> Climax System
 				-> Added cum inflation (Thanks to XSpeedPL)
 					--> Multiple climaxes into the same actor trigger the pregnant belly sprite (configurable).
+					--> Respects pregnancies for calculation
+					--> Affects compatible clothing sprites
 				-> Re-added option for NPCs to auto-climax regardless of player presence.
+				-> Added option to allow NPCs to synchronize climaxing. (Thanks to XSpeedPL)
 			=> Pregnancy System
 				-> Re-added baby color genetics
 					--> Babies will now try to match colors close to those of their parents.
@@ -74,6 +77,8 @@
 						---> This value will change every time I change something about the pregnancy data structure.
 				-> Added cross-breeding mechanic
 					--> Config table "geneticTable" controls which mother and father species create which third-species baby. Only child species should add these configs, as non-existant baby species will abort the whole process.
+				-> Actor identity supports parameter "offspringGroup" and "offspringSpecies" (Thanks to XSpeedPL)
+					--> This allows object type actors to define a different set of data used for pregnancies. Since objects cannot be spawnable baby species.
 	1 . 0
 		[Player affecting changes]
 			=> General

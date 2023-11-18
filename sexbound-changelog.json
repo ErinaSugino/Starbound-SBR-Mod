@@ -1,4 +1,12 @@
 {
+  "1.1_r2" : [
+	"» 1.1 REVISON 2 «",
+	"Further upgraded color genetics to be even more compatible with various species",
+	"Added new checks and mechanics to the cumflation mechanic",
+	"Added NPC climax chain mechanic",
+	"Cleaned up obsolete and duplicate files from Lustbound",
+	"Several bugfixes"
+  ],
   "1.1_r1" : [
 	"» 1.1 REVISON 1 «",
 	"- Upgraded arousal behavior navigation to be more responsive",
