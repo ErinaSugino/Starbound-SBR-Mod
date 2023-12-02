@@ -47,6 +47,24 @@ function uninit()
     end, sb.logError)
 end
 
+--- Override of core companion behavior to keep family relation status on crewmembers.
+-- WARNING: Can cause issues with other mods changing the same function!
+function recruitSpawner:respawnRecruit(uuid, recruit)
+  self.followers[uuid] = nil
+  self.shipCrew[uuid] = recruit
+
+  recruit.uniqueId = nil
+  local properties = recruit.status and recruit.status.properties or nil
+  recruit.status = nil
+  if properties then recruit.status = {properties = properties} end
+  recruit.persistent = true
+  recruit.storage = recruit.storage or {}
+  recruit.storage.followingOwner = false
+  recruit.storage.behaviorFollowing = false
+  
+  recruit:spawn()
+end
+
 function Sexbound.Player.new()
     local self = setmetatable({
         _controllerId = nil,

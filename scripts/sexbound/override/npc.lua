@@ -45,6 +45,44 @@ function uninit()
     end, sb.logError)
 end
 
+--- Overloading of crewmember related functions to make sexbound storage data persistent, and make kids unrecruitable
+local Sexbound_Old_PreservedStorage = preservedStorage
+function preservedStorage()
+    local data = Sexbound_Old_PreservedStorage()
+    data.sexbound = storage.sexbound
+    return data
+end
+
+local Sexbound_Old_RecruitableInteract = recruitable.interact
+function recruitable.interact()
+    if self.sb_npc and self.sb_npc._isKid then return nil end
+    return Sexbound_Old_RecruitableInteract()
+end
+
+local Sexbound_Old_GetCurrentStatus = getCurrentStatus
+function getCurrentStatus()
+    local data = Sexbound_Old_GetCurrentStatus()
+    data.properties = {
+        motherUuid = status.statusProperty("motherUuid", nil),
+        fatherUuid = status.statusProperty("fatherUuid", nil),
+        motherName = status.statusProperty("motherName", nil),
+        fatherName = status.statusProperty("fatherName", nil),
+        sexbound_previous_storage = status.statusProperty("sexbound_previous_storage", {}),
+        generationFertility = status.statusProperty("generationFertility", 1),
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1),
+        kid = status.statusProperty("kid", nil)
+    }
+    return data
+end
+
+local Sexbound_Old_SetCurrentStatus = setCurrentStatus
+function setCurrentStatus(statusSummary, statEffectCategory)
+    Sexbound_Old_SetCurrentStatus(statusSummary, statEffectCategory)
+    for prop,val in pairs(statusSummary.properties or {}) do
+        status.setStatusProperty(prop,val)
+    end
+end
+
 function Sexbound.NPC.new()
     local self = setmetatable({
         _enableLoungeTimer = true,
