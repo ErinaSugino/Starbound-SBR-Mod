@@ -67,6 +67,7 @@
       {"item" : {"name" : "sxb_pregnancytestbox"}},
       {"item" : {"name" : "lox_fertilitypill"}},
       {"item" : {"name" : "lox_hyperfertilitypill"}},
+      {"item" : {"name" : "lox_birthcontrolpill"}},
       {"item" : {"name" : "lox_abortionpill"}},
       {"item" : {"name" : "sexbound_birthingpill"}},
       {"item" : {"name" : "lox_gagball"}},
