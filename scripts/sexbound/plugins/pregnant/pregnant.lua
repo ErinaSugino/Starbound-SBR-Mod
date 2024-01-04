@@ -389,12 +389,17 @@ end
 
 --- Returns whether or not this actor has enough fertility to become pregnant
 function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
-    if self:getParent():status():hasStatus("sexbound_custom_hyper_fertility") or otherActor:status():hasStatus("sexbound_custom_hyper_fertility") then
+    local status = self:getParent():status()
+    local otherStatus = otherActor:status()
+    
+    if status:hasStatus("sexbound_custom_hyper_fertility") or otherStatus:hasStatus("sexbound_custom_hyper_fertility") then
         self:getLog():debug("Guaranteed impregnation due to hyper fertility pill effect")
         return true
     end
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
+    
+    if status:hasOneOf({"sexbound_aroused_strong", "sexbound_aroused_heat"}) then fertility = fertility * 1.1 end -- Strong arousal buff and in heat buff give 10% higher base fertility
 
     local bonusCount = self:getCurrentInseminations(otherActor)
     local bonusMax = self:getConfig().fertilityBonusMax or 0.6
@@ -405,7 +410,7 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     end
 
     local multiplier = self:getConfig().fertilityMult or 1.0
-    if self:getParent():status():hasStatus("sexbound_custom_fertility") or otherActor:status():hasStatus("sexbound_custom_fertility") then 
+    if status:hasStatus("sexbound_custom_fertility") or otherStatus:hasStatus("sexbound_custom_fertility") then 
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
@@ -665,6 +670,7 @@ function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
     end)
     
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Common:UpdateFertility", self:getParent()._config.fertilityPenalty)
+    world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Pregnant:Pregnancy", pregnancy)
 end
 
 --- Adds "whichGendersCanOvulate" and "whichGendersCanProduceSperm" to own config from main config

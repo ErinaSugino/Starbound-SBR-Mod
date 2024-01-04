@@ -1,0 +1,9 @@
+{
+  "name"            : "sexbound_arousal_debuff2",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 999,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/arousal1.png",
+  "label"           : "Horny",
+  "scripts"         : [ "sexbound_arousal_debuff1.lua" ]
+}

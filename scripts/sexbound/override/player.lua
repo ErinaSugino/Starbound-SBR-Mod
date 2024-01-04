@@ -486,6 +486,9 @@ function Sexbound.Player:getActorData()
         isFertile = status.statusProperty("sexbound_custom_fertility", false),
         isHyperFertile = status.statusProperty("sexbound_custom_hyper_fertility", false),
         isOvulating = status.statusProperty("sexbound_custom_ovulating", false),
+        aroused = status.statusProperty("sexbound_aroused", false),
+        arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
+        inHeat = status.statusProperty("sexbound_aroused_heat", false),
         isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)

@@ -110,6 +110,8 @@ function Sexbound.Common:fetchCoreIdentity()
     if self._speciesDefaultStatuses and type(self._speciesDefaultStatuses) ~= "table" then self._speciesDefaultStatuses = {self._speciesDefaultStatuses} end
     
     self._speciesType = speciesConfig.sxbSpeciesType or nil
+    
+    self._usesHeat = (speciesConfig.sxbUsesHeat or false) and (self._config.sex.enableHeatMechanic or false)
 end
 
 function Sexbound.Common:buildBodyTraits(gender)

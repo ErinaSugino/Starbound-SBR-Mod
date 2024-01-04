@@ -478,6 +478,9 @@ function Sexbound.Actor:setup(actorConfig)
     if actorConfig.isFertile then actorStatus:addStatus("sexbound_custom_fertility") end
     if actorConfig.isHyperFertile then actorStatus:addStatus("sexbound_custom_hyper_fertility") end
     if actorConfig.isOvulating then actorStatus:addStatus("sexbound_custom_ovulating") end
+    if actorConfig.aroused then actorStatus:addStatus("sexbound_aroused") end
+    if actorConfig.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
+    if actorConfig.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
     if actorConfig.isDefeated then actorStatus:addStatus("sexbound_defeated") end
     
     if self._config.identity.sxbNaturalStatus then
