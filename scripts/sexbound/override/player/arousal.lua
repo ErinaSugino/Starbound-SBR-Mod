@@ -85,7 +85,7 @@ function Sexbound.Player.Arousal:updateArousalStatus()
     local addList = {}
     
     if not self._config.playerArousalEffects then
-        removeList = {"sexbound_arousal_heat", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
+        removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
         self._arousalState = -1
     else
         if self._usesHeat then
@@ -97,14 +97,14 @@ function Sexbound.Player.Arousal:updateArousalStatus()
             local percent = cur / max
             
             if percent < 0.5 then
-                removeList = {"sexbound_arousal_heat", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
+                removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
                 self._arousalState = 0
             elseif percent < 0.9 then
-                removeList = {"sexbound_arousal_heat", "sexbound_arousal_debuff2"}
+                removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff2"}
                 addList = {"sexbound_arousal_debuff1"}
                 self._arousalState = 1
             else
-                removeList = {"sexbound_arousal_heat", "sexbound_arousal_debuff1"}
+                removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff1"}
                 addList = {"sexbound_arousal_debuff2"}
                 self._arousalState = 2
             end
@@ -122,6 +122,7 @@ end
 function Sexbound.Common.Arousal:initPlayerMessageHandlers()
     message.setHandler("Sexbound:Pregnant:Pregnancy", function(_, _, args)
         status.removeEphemeralEffect("sexbound_arousal_heat")
+        status.removeEphemeralEffect("sexbound_arousal_heat_weak")
     end)
     message.setHandler("Sexbound:Arousal:GetMoans", function(_, _, args)
         return self._moanConfig
