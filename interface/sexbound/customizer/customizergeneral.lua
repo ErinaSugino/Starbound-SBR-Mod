@@ -94,7 +94,7 @@ function Customizer.General:applySubGender()
     
     self.currentSubGender = target
     if target == "None" then target = nil end
-    world.sendEntityMessage(pane.sourceEntity(), "Sexbound:SubGender:Change", target)
+    world.sendEntityMessage(player.id(), "Sexbound:SubGender:Change", target)
     widget.setVisible("generalTab.subGenderConfirm", false)
     widget.setButtonEnabled("generalTab.subGenderConfirm", false)
     widget.setVisible("generalTab.subGenderPriceIcon", false)
@@ -132,10 +132,10 @@ function Customizer.General:sterilize()
     
     if self.sterilized then
         widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are not^reset;^shadow; sterilized.")
-        world.sendEntityMessage(pane.sourceEntity(), "Sexbound:Status:RemoveStatus", "sterilized")
+        world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "sterilized")
     else
         widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are^reset;^shadow; sterilized.")
-        world.sendEntityMessage(pane.sourceEntity(), "Sexbound:Status:AddStatus", "sterilized")
+        world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "sterilized")
     end
     self.sterilized = not self.sterilized
 end
