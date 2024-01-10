@@ -16,7 +16,6 @@ if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/compatibility.lua")
     require("/scripts/sexbound/lib/sexbound/log.lua")
     require("/scripts/sexbound/lib/sexbound/messenger.lua")
-    require("/scripts/sexbound/lib/sexbound/event.lua")
     require("/scripts/sexbound/lib/sexbound/object/SmashObjectController.lua")
     require("/scripts/sexbound/lib/sexbound/transformations/AdjustActorsPositionController.lua")
     require("/scripts/sexbound/lib/sexbound/transformations/AdjustActorsRotationController.lua")
@@ -93,8 +92,6 @@ function Sexbound.new(maxActors)
     self._UI = Sexbound.UI.new(self)
 
     self:getLog():info("Initialized.")
-
-    self._event = Sexbound.Event.new(self)
 
     self._timers = {
         emitAnimationRateEvent = 0
@@ -308,11 +305,6 @@ function Sexbound:addActor(actorConfig, store)
     if #self._actors >= self._maxAllowedActors then
         return false
     end
-
-    Sexbound.Messenger.get("main"):broadcast(self, "Sexbound:Event:Create", {
-        eventName = "ACTOR_ADD",
-        eventArgs = actorConfig
-    })
     
     self._globalActorId = self._globalActorId + 1 -- Loc, an ID should be universally unique, and not redundant crap.
     --actor:setId(self._globalActorId)
@@ -803,14 +795,6 @@ function Sexbound:updateAnimationRate(stateName, dt)
 
     if self._timers.emitAnimationRateEvent >= 0.5 then
         self._timers.emitAnimationRateEvent = 0
-
-        --[[Sexbound.Messenger.get("main"):broadcast(self, "Sexbound:Event:Create", {
-            eventName = "ANIMATION_RATE",
-            eventArgs = {
-                actors = actors,
-                animation_rate = self._animationRate
-            }
-        })]]--
     end
 
     if (self._animationRate >= _maxTempo) then

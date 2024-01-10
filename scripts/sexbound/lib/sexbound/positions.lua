@@ -262,14 +262,6 @@ function Sexbound.Positions:switchPosition(index)
         })
     end
 
-    Sexbound.Messenger.get("main"):broadcast(self, "Sexbound:Event:Create", {
-        eventName = "POSITION_SWITCHED",
-        eventArgs = {
-            actors = actors,
-            position_name = self:getCurrentPosition():getConfig().name
-        }
-    })
-
     local stateMachine = self:getParent():getStateMachine()
     local stateName = stateMachine:stateDesc()
 
