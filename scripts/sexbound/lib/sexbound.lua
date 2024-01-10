@@ -1391,7 +1391,12 @@ end
 
 --- Returns a reference to the current default langauge.
 function Sexbound:getLanguage()
-    return self:getConfig().sex.defaultLanguage
+    return self:getConfig().sex.defaultLanguage or "english"
+end
+
+--- Returns the language code of the currently selected language.
+function Sexbound:getLanguageCode()
+    return (self:getLanguageSettings() or {}).languageCode or "en"
 end
 
 --- Returns a reference to the current language settings.

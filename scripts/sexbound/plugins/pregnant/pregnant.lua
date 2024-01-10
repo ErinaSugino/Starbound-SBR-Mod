@@ -305,6 +305,7 @@ end
 --- Loads notifications configuration from file
 function Sexbound.Actor.Pregnant:loadNotificationDialog()
     local filePath = self:getConfig().notifications
+    filePath = util.replaceTag(filePath, "langcode", self._parent._parent:getLanguageCode())
     local config = root.assetJson(filePath)
     local plugins = config.plugins or {}
 

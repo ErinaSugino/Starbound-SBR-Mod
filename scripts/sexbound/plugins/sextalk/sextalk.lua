@@ -186,7 +186,7 @@ function Sexbound.Actor.SexTalk:loadDialog(species)
 
     -- Change to always use the 'en' language code because too much can go wrong
     -- when trying to dynamically load config file for other languages.
-    filename = util.replaceTag(filename, "langcode", "en")
+    filename = util.replaceTag(filename, "langcode", self._parent._parent:getLanguageCode())
 
     local dialog
 
