@@ -6,5 +6,5 @@
   "icon"            : "/interface/statuses/heat_weak.png",
   "label"           : "In Heat (Medicated)",
   "scripts"         : [ "sexbound_arousal_heat_weak.lua" ],
-  "animationConfig" : "sexbound_arousal_heat_weak.animation",
+  "animationConfig" : "sexbound_arousal_heat_weak.animation"
 }

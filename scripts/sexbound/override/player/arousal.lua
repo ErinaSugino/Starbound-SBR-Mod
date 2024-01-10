@@ -64,7 +64,7 @@ function Sexbound.Player.Arousal:update(dt)
 end
 
 function Sexbound.Player.Arousal:loadMoanConfig()
-    local plugins = self:getParent():getConfig().sex.actor.plugins or {}
+    local plugins = self:getParent():getConfig().actor.plugins or {}
     local plugin = plugins["moan"] or {}
     
     local loadedConfig = {}

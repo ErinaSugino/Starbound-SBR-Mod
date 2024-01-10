@@ -1,5 +1,5 @@
 {
-  "name"            : "sexbound_arousal_debuff2",
+  "name"            : "sexbound_arousal_debuff1",
   "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 999,
   "effectConfig"    : {},

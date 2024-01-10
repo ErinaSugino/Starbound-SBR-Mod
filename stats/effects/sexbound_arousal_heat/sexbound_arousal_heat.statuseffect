@@ -6,5 +6,5 @@
   "icon"            : "/interface/statuses/heat.png",
   "label"           : "In Heat",
   "scripts"         : [ "sexbound_arousal_heat.lua" ],
-  "animationConfig" : "sexbound_arousal_heat.animation",
+  "animationConfig" : "sexbound_arousal_heat.animation"
 }
