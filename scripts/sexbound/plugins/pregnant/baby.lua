@@ -21,6 +21,7 @@ end
 function Baby:create(mother, father)
     local baby = {
         birthGender = self._parent:createRandomBirthGender(),
+        subGender = nil,
         motherName = mother:getName(),
         motherId = mother:getEntityId(),
         motherUuid = mother:getUniqueId(),
@@ -33,6 +34,16 @@ function Baby:create(mother, father)
         fatherSpecies = father:getSpecies(),
         generationFertility = mother._config.generationFertility
     }
+    
+    local subgenderPlugin = self._parent._parent._parent:getPlugins("subgender")
+    
+    if math.random() <= self._config.subGenderChance then baby.subGender = self._parent:createRandomSubGender(baby.birthGender) end
+    if subgenderPlugin then
+        -- Roll for a chance to copy the parent's sub-gender
+        if not baby.subGender and subgenderPlugin:passesGenderRestriction(mother:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = mother:getSubGender() end
+        if not baby.subGender and subgenderPlugin:passesGenderRestriction(father:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = father:getSubGender() end
+        
+    end
     
     if baby.motherType == "npc" and baby.fatherType == "npc" then
         local choices = {mother:getType(), father:getType()}
@@ -307,6 +318,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     local params = {}
     params.scriptConfig = {}
     params.scriptConfig.uniqueId = sb.makeUuid()
+    params.scriptConfig.subGender = babyConfig.subGender
     params.statusControllerSettings = {}
     params.statusControllerSettings.statusProperties = {
         sexbound_birthday = babyConfig,

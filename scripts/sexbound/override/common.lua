@@ -16,11 +16,14 @@ function Sexbound.Common:new()
     return setmetatable({
         _configFilePath = "/sexbound.config",
         _notificationsFilePath = "/dialog/sexbound/<langcode>/notifications.config",
-        _hasInited = false
+        _hasInited = false,
+        _firstInit = false
     }, Sexbound.Common_mt)
 end
 
 function Sexbound.Common:init(parent, entityType)
+    if not storage.sexbound then self._firstInit = true end
+    
     storage.sexbound = storage.sexbound or {}
     storage.sexbound.identity = storage.sexbound.identity or {}
 

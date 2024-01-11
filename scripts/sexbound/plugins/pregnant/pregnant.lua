@@ -357,11 +357,6 @@ function Sexbound.Actor.Pregnant:thisActorCanOvulate()
         return true
     end
 
-    --[[local targetGender = thisActor:getSubGender() or thisActor:getGender()
-    for _, gender in ipairs(self:getConfig().whichGendersCanOvulate) do
-        if (gender == targetGender) then return true end
-    end]]
-
     return thisActor:canOvulate()
 end
 
@@ -435,11 +430,6 @@ function Sexbound.Actor.Pregnant:otherActorCanProduceSperm(otherActor)
     if self:getConfig().enableFreeForAll == true or otherActor:getIdentity().sxbCanProduceSperm == true then
         return true
     end
-
-    --[[local targetGender = otherActor:getSubGender() or otherActor:getGender()
-    for _, gender in ipairs(self:getConfig().whichGendersCanProduceSperm) do
-        if (gender == targetGender) then return true end
-    end]]
 
     return otherActor:canProduceSperm()
 end
@@ -674,13 +664,13 @@ function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Pregnant:Pregnancy", pregnancy)
 end
 
---- Adds "whichGendersCanOvulate" and "whichGendersCanProduceSperm" to own config from main config
+--- Fetches pregnancy-relevant settings from main config file
 function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     if not mainConfig then return end
     
-    self._config.whichGendersCanOvulate = mainConfig.sex.whichGendersCanOvulate or {"female"}
-    self._config.whichGendersCanProduceSperm = mainConfig.sex.whichGendersCanProduceSperm or {"male"}
     self._config.immersionLevel = mainConfig.immersionLevel or 1
+    self._config.subGenderList = mainConfig.sex.subGenderList or {}
+    self._config.subGenderChance = mainConfig.sex.subGenderChance or 0.01
 end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
@@ -815,6 +805,40 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validatePregnancyLength(self._config.pregnancyLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
     self:validateIncestPenalty(self._config.incestPenalty)
+    self:validateImmersionLevel(self._config.immersionLevel)
+    self:validateSubGenderList(self._config.subGenderList)
+    self:validateSubGenderChance(self._config.subGenderChance)
+end
+
+--- Ensures immersionLevel is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateImmersionLevel(value)
+    if type(value) ~= "number" then
+        self._config.immersionLevel = 1
+        return
+    end
+    self._config.immersionLevel = util.clamp(value, 0, 2)
+end
+
+--- Ensures subGenderList is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateSubGenderList(value)
+    if type(value) ~= "table" then
+        self._config.subGenderList = {}
+        return
+    end
+
+    self._config.subGenderList = value
+end
+
+--- Ensures subGenderChance is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateSubGenderChance(value)
+    if type(value) ~= "number" then
+        self._config.subGenderChance = 0.01
+        return
+    end
+    self._config.subGenderChance = util.clamp(value, 0, 1)
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
@@ -1025,36 +1049,6 @@ function Sexbound.Actor.Pregnant:validatePregnancyLength(value)
     self._config.pregnancyLength = {}
     self._config.pregnancyLength[1] = 6
     self._config.pregnancyLength[2] = 9
-end
-
---- Ensures whichGendersCanOvulate is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateWhichGendersCanOvulate(value)
-    if type(value) ~= "table" then
-        self._config.whichGendersCanOvulate = {"female"}
-        return
-    end
-    self._config.whichGendersCanOvulate = {}
-    for _, v in ipairs(value) do
-        if type(v) == "string" then
-            table.insert(self._config.whichGendersCanOvulate, v)
-        end
-    end
-end
-
---- Ensures whichGendersCanProduceSperm is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateWhichGendersCanProduceSperm(value)
-    if type(value) ~= "table" then
-        self._config.whichGendersCanProduceSperm = {"male"}
-        return
-    end
-    self._config.whichGendersCanProduceSperm = {}
-    for _, v in ipairs(value) do
-        if type(v) == "string" then
-            table.insert(self._config.whichGendersCanProduceSperm, v)
-        end
-    end
 end
 
 --- Ensures useOSTimeForPregnancies is set to an allowed value

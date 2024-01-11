@@ -102,6 +102,18 @@ function Sexbound.NPC.new()
     self:initMessageHandlers()
     self:restorePreviousStorage()
     self:initSubmodules()
+    
+    if self._firstInit then
+        local birthSubGender = config.getParameter("subGender", nil)
+        if birthSubGender then
+            if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying birth gender to new npc #"..entity.id()..": "..tostring(birthSubGender)) end
+            self._subGender:handleSxbSubGenderChange(birthSubGender) -- handle because that method respects gender requirements
+        end
+        if not storage.sexbound.identity.sxbSubGender and math.random() <= (self._config.sex.subGenderChance or 0.01) then
+            if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying random gender to new npc #"..entity.id()) end
+            self._subGender:setSxbSubGender(self._subGender:createRandomSubGender(npc.gender()))
+        end
+    end
 
     -- ensure this entity has a unique Id
     if not entity.uniqueId() then
