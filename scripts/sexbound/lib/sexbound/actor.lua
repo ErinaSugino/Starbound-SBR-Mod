@@ -411,11 +411,16 @@ end
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
     prefix = prefix or "actor" .. self:getActorNumber()
+    local offsets = self:getActorOffset(self:getPosition().getName())
+    self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
     for _, partName in ipairs({"Body", "Head"}) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
+            local partNameLower = partName.lower()
+            animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
+            self:getLog():debug("Actor "..self:getActorNumber().." applies offset for "..partNameLower..": "..sb.print(offsets[partNameLower] or {0,0}))
         end
     end
 end
@@ -457,7 +462,7 @@ function Sexbound.Actor:setup(actorConfig)
         })
     end
 
-    if actorConfig.entityType == "npc" or actorConfig.entityType == "player" then
+    if self._config.entityType == "npc" or self._config.entityType == "player" then
         -- Initialize hair identities.
         self._config.identity.hairFolder = self:getHairFolder()
         self._config.identity.hairType = self:getHairType()
@@ -475,13 +480,13 @@ function Sexbound.Actor:setup(actorConfig)
     self:buildSubGenderList()
 
     local actorStatus = self:getStatus()
-    if actorConfig.isFertile then actorStatus:addStatus("sexbound_custom_fertility") end
-    if actorConfig.isHyperFertile then actorStatus:addStatus("sexbound_custom_hyper_fertility") end
-    if actorConfig.isOvulating then actorStatus:addStatus("sexbound_custom_ovulating") end
-    if actorConfig.aroused then actorStatus:addStatus("sexbound_aroused") end
-    if actorConfig.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
-    if actorConfig.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
-    if actorConfig.isDefeated then actorStatus:addStatus("sexbound_defeated") end
+    if self._config.isFertile then actorStatus:addStatus("sexbound_custom_fertility") end
+    if self._config.isHyperFertile then actorStatus:addStatus("sexbound_custom_hyper_fertility") end
+    if self._config.isOvulating then actorStatus:addStatus("sexbound_custom_ovulating") end
+    if self._config.aroused then actorStatus:addStatus("sexbound_aroused") end
+    if self._config.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
+    if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
+    if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
@@ -489,7 +494,7 @@ function Sexbound.Actor:setup(actorConfig)
         end
     end
     
-    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(actorConfig.isFertile).." - hyperFertile "..tostring(actorConfig.isHyperFertile).." - ovulating "..tostring(actorConfig.isOvulating).." - defeated "..tostring(actorConfig.isDefeated))
+    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated))
     
     self:initPlugins()
     self:getApparel():sync() -- initial fetching of apparel to determine initial gender
@@ -1417,6 +1422,12 @@ function Sexbound.Actor:getUIData(args)
     end
     
     return data
+end
+
+--- Returns the offset applied to this actor for a given position
+function Sexbound.Actor:getActorOffset(position)
+    local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
+    return offsets[position] or offsets[default] or {head = {0,0}, body = {0,0}}
 end
 
 --- Legacy

@@ -43,6 +43,8 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
     if genderConfig.sxbCanProduceSperm ~= nil then
         identity.sxbCanProduceSperm = genderConfig.sxbCanProduceSperm
     end
+    
+    identity.actorOffset = speciesConfig.actorOffset or nil
 
     identity.motherUuid = status.statusProperty("motherUuid", nil)
     identity.fatherUuid = status.statusProperty("fatherUuid", nil)
