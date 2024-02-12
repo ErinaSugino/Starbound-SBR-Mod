@@ -15,13 +15,22 @@
   },
 
   {
-		"op"    : "add",
-		"path"  : "/outpost_mission1/actions/-",
-		"value" : {
-			"type" : "placeDungeon",
-			"dungeonId" : "outpost_alluringtoysco",
-			"targetInstance" : "outpost",
-			"targetPosition" : [367, 647]
-		}
-	}
+    "op"    : "add",
+    "path"  : "/outpost_mission1/actions/-",
+    "value" : {
+      "type" : "placeDungeon",
+      "dungeonId" : "outpost_alluringtoysco",
+      "targetInstance" : "outpost",
+      "targetPosition" : [367, 647]
+    }
+  },
+  
+  [
+    {"op": "test", "path": "/anomsOutpostOverhaul"},
+    {
+      "op": "replace",
+      "path": "/outpost_mission1/actions/-/targetPosition",
+      "value": [443,584]
+    }
+  ]
 ]
