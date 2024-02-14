@@ -1,29 +1,31 @@
 [
-  {
-    "op": "add",
-    "path": "/sexbound_installed",
-    "value": {
-      "actions": [
-        {
-          "type": "placeDungeon",
-          "dungeonId": "sexbound_sandbox_addons",
-          "targetInstance": "sexbound_sandbox",
-          "targetPosition": [1, 1000]
-        }
-      ]
+  [
+    {
+      "op": "add",
+      "path": "/sexbound_installed",
+      "value": {
+        "actions": [
+          {
+            "type": "placeDungeon",
+            "dungeonId": "sexbound_sandbox_addons",
+            "targetInstance": "sexbound_sandbox",
+            "targetPosition": [1, 1000]
+          }
+        ]
+      }
+    },
+  
+    {
+      "op"    : "add",
+      "path"  : "/outpost_mission1/actions/-",
+      "value" : {
+        "type" : "placeDungeon",
+        "dungeonId" : "outpost_alluringtoysco",
+        "targetInstance" : "outpost",
+        "targetPosition" : [367, 647]
+      }
     }
-  },
-
-  {
-    "op"    : "add",
-    "path"  : "/outpost_mission1/actions/-",
-    "value" : {
-      "type" : "placeDungeon",
-      "dungeonId" : "outpost_alluringtoysco",
-      "targetInstance" : "outpost",
-      "targetPosition" : [367, 647]
-    }
-  },
+  ],
   
   [
     {"op": "test", "path": "/anomsOutpostOverhaul"},
