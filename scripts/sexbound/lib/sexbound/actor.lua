@@ -151,6 +151,8 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     parts.hair = self:loadHairPart(entityGroup, species, directives)
     parts.head = self:loadHeadPart(entityGroup, role, species, gender, directives)
     parts.emote = self:loadEmotePart(animState, entityGroup, role, species)
+    parts.ears = self:loadEarsPart(animState, entityGroup, role, species, gender)
+    parts.tail = self:loadTailPart(animState, entityGroup, role, species, gender)
 
     parts.groin, directives.groin, directives.groinMask = self:loadGroin(entityGroup, role, species, gender)
 
@@ -208,6 +210,10 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
 
     -- Reset nipples separately
     self:getNipples():resetParts(entityGroup, role, species, gender)
+    
+    -- Apply ears and tail sprites, if used
+    if parts.ears then animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears) end
+    if parts.tail then animator.setGlobalTag("part-" .. slot .. "-tail", parts.tail) end
 end
 
 function Sexbound.Actor:getFrameName(animState)
@@ -236,6 +242,26 @@ end
 
 function Sexbound.Actor:loadBodyPart(animState, entityGroup, role, species, gender)
     return self:getSprite(animState, "body", {
+        entityGroup = entityGroup,
+        gender = gender,
+        role = role,
+        species = species
+    }) .. ":" .. self:getFrameName(animState)
+end
+
+function Sexbound.Actor:loadEarsPart(animState, entityGroup, role, species, gender)
+    if not self:getIdentity("sxbUseAnimatedEars") then return nil end
+    return self:getSprite(animState, "ears", {
+        entityGroup = entityGroup,
+        gender = gender,
+        role = role,
+        species = species
+    }) .. ":" .. self:getFrameName(animState)
+end
+
+function Sexbound.Actor:loadTailPart(animState, entityGroup, role, species, gender)
+    if not self:getIdentity("sxbUseAnimatedTail") then return nil end
+    return self:getSprite(animState, "tail", {
         entityGroup = entityGroup,
         gender = gender,
         role = role,
@@ -395,7 +421,7 @@ end
 function Sexbound.Actor:resetAnimatorParts(prefix)
     -- Reset each actor part
     for _, part in ipairs({"arm-back", "arm-front", "body", "climax", "head", "hair", "facial-hair", "facial-mask",
-                           "groin"}) do
+                           "groin", "ears", "tail"}) do
         animator.setGlobalTag("part-" .. prefix .. "-" .. part, self:getDefaultPartImage())
     end
 
@@ -411,14 +437,14 @@ end
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
     prefix = prefix or "actor" .. self:getActorNumber()
-    local offsets = self:getActorOffset(self:getPosition().getName())
+    local offsets = self:getActorOffset(self:getPosition():getName())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
     for _, partName in ipairs({"Body", "Head"}) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
-            local partNameLower = partName.lower()
+            local partNameLower = partName:lower()
             animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
             self:getLog():debug("Actor "..self:getActorNumber().." applies offset for "..partNameLower..": "..sb.print(offsets[partNameLower] or {0,0}))
         end

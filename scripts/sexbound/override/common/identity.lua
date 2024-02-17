@@ -35,6 +35,8 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
     identity.sxbBodyType = genderConfig.sxbBodyType or nil
     identity.sxbSpeciesType = speciesConfig.sxbSpeciesType or nil
     identity.sxbNaturalStatus = genderConfig.sxbNaturalStatus or {}
+    identity.sxbUseAnimatedEars = speciesConfig.sxbUseAnimatedEars or nil
+    identity.sxbUseAnimatedTail = speciesConfig.sxbUseAnimatedTail or nil
 
     if genderConfig.sxbCanOvulate ~= nil then
         identity.sxbCanOvulate = genderConfig.sxbCanOvulate
