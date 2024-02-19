@@ -247,6 +247,22 @@
 					"centered": true,
 					"image": "<part-actor2-facial-hair><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 27
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 43}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 43}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 43}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 43}
+						}
+					}
 				}
 			},
 			"actor2-facial-mask": {
@@ -255,6 +271,22 @@
 					"centered": true,
 					"image": "<part-actor2-facial-mask><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 28
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 44}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 44}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 44}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 44}
+						}
+					}
 				}
 			},
 			"actor2-hair": {
@@ -263,6 +295,22 @@
 					"centered": true,
 					"image": "<part-actor2-hair><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 26
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 42}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 42}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 42}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 42}
+						}
+					}
 				}
 			},
 			"actor2-ears": {
@@ -561,6 +609,22 @@
 					"centered": true,
 					"image": "<part-actor3-facial-hair><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 43
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 27}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 27}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 27}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 27}
+						}
+					}
 				}
 			},
 			"actor3-facial-mask": {
@@ -569,6 +633,22 @@
 					"centered": true,
 					"image": "<part-actor3-facial-mask><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 44
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 28}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 28}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 28}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 28}
+						}
+					}
 				}
 			},
 			"actor3-hair": {
@@ -577,6 +657,22 @@
 					"centered": true,
 					"image": "<part-actor3-hair><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 42
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 26}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 26}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 26}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 26}
+						}
+					}
 				}
 			},
 			"actor3-ears": {
@@ -3584,6 +3680,22 @@
 					"centered": true,
 					"image": "<part-actor2-nipple2>.1<actor2-nipple2>",
 					"zLevel": 33
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 49}
+						}
+					}
 				}
 			},
 			"actor2-nippleswear1": {
@@ -3593,6 +3705,22 @@
 					"image": "<part-actor2-nippleswear1>.1",
 					"zLevel": 35,
 					"transformationGroups": ["actor2Nippleswear1"]
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 51}
+						}
+					}
 				}
 			},
 			"actor2-nippleswear2": {
@@ -3602,6 +3730,22 @@
 					"image": "<part-actor2-nippleswear2>.1",
 					"zLevel": 35,
 					"transformationGroups": ["actor2Nippleswear2"]
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 51}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 51}
+						}
+					}
 				}
 			},
 			"actor1": {
@@ -6903,6 +7047,22 @@
 					"image": "/artwork/defaults/default_image.png:default.1",
 					"zLevel": 50,
 					"transformationGroups": ["actor3Groinwear1"]
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 34}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 34}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 34}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 34}
+						}
+					}
 				}
 			},
 			"actor3-groin-inner": {
@@ -7899,6 +8059,22 @@
 					"centered": true,
 					"image": "<part-actor3-nipple1>.1<actor3-nipple1>",
 					"zLevel": 49
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 33}
+						}
+					}
 				}
 			},
 			"actor3-nipple2": {
@@ -8112,6 +8288,22 @@
 					"image": "<part-actor3-nippleswear1>.1",
 					"zLevel": 51,
 					"transformationGroups": ["actor3Nippleswear1"]
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 35}
+						}
+					}
 				}
 			},
 			"actor3-nipple2-inner": {
@@ -8120,6 +8312,22 @@
 					"centered": true,
 					"image": "<part-actor3-nipple2>.1<actor3-nipple2>",
 					"zLevel": 49
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 33}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 33}
+						}
+					}
 				}
 			},
 			"actor3-nippleswear2": {
@@ -8129,6 +8337,22 @@
 					"image": "<part-actor3-nippleswear2>.1",
 					"zLevel": 51,
 					"transformationGroups": ["actor3Nippleswear2"]
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 35}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 35}
+						}
+					}
 				}
 			},
 			"actors-overlay1": {
