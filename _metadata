@@ -2,13 +2,15 @@
 	"name": "lox_sexbound",
 	"version": "1.1_r2",
 	"author": "Erina Sugino",
-	"description": "^orange;Sexbound Reborn^reset; is the continuation of the old Sexbound API by Locuturus and Co., enabling sexual interactions in Starbound. It was forked from SxB version 5.12.1.\n\n\n\n^red;»^reset; CREDITS:\n\n^orange;Erina Sugino - Developer & Creator^reset;\n^blue;https://ko-fi.com/erinasugino^reset;\n\n^orange;* Locuturus and Co. - Original Author^reset;\n^blue;https://www.loverslab.com/files/file/4337-sexbound/^reset;\n\n^orange;* Sir Bumpleton - Lustbound Creator^reset;\n^blue;https://www.loverslab.com/files/file/14030-lustbound/^reset;\n\n^orange;* Red3dred - Contributor^reset;\n^blue;https://www.patreon.com/user?u=27199103^reset;\n\n^orange;* Rylasasin - Contributor^reset;\n^blue;^reset;\n\n^orange;XspeedPL - Contributor^reset;\n^blue;^reset;\n\n\n\n^red;IF YOU HAVE THIS MOD FROM STEAM, YOU HAVE AN UNAUTHORIZED STOLEN COPY.^reset;",
+	"description": "^orange;Sexbound Reborn^reset; is the continuation of the old Sexbound API by Locuturus and Co., enabling sexual interactions in Starbound. It was forked from SxB version 5.12.1.\n\n\n\n^red;»^reset; CREDITS:\n\n^orange;Erina Sugino - Developer & Creator^reset;\n^blue;https://ko-fi.com/erinasugino^reset;\n\n^orange;* Locuturus and Co. - Original Author^reset;\n^blue;https://www.loverslab.com/files/file/4337-sexbound/^reset;\n\n^orange;* Sir Bumpleton - Lustbound Creator^reset;\n^blue;https://www.loverslab.com/files/file/14030-lustbound/^reset;\n\n^orange;* Red3dred - Contributor^reset;\n^blue;https://www.patreon.com/user?u=27199103^reset;\n\n^orange;* Rylasasin - Contributor^reset;\n^blue;^reset;\n\n^orange;XspeedPL - Contributor^reset;\n^blue;^reset;\n\n^orange;Hyperjuni - Contributor^reset;\n^blue;^reset;\n\n\n\n^red;IF YOU HAVE THIS MOD FROM STEAM, YOU HAVE AN UNAUTHORIZED STOLEN COPY.^reset;",
 	"friendlyName": "Sexbound Reborn",
 	"priority": -69,
 	"link": "https://github.com/ErinaSugino/Starbound-SBR-Mod",
 	"includes": [
 		"QuickbarMini",
 		"StardustLib",
-		"Npc_Drops_Gear"
+		"Npc_Drops_Gear",
+		"AnomsOutpostOverhual",
+		"AnomsOutpostOverhaul"
 	]
 }
