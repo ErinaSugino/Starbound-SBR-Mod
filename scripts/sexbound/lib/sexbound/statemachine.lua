@@ -24,7 +24,8 @@ function Sexbound.StateMachine.new(parent)
         },
         _positionTimer = 0,
         _positionTimeout = 10,
-        _positionTimeoutRange = {30, 50}
+        _positionTimeoutRange = {30, 50},
+        _delayedIdleTrigger = false
     }, Sexbound.StateMachine_mt)
 
     Sexbound.Messenger.get("main"):addBroadcastRecipient(self)
@@ -102,7 +103,7 @@ function Sexbound.StateMachine.new(parent)
                 end
                 
                 if not self:getParent():getContainsPlayer() and self:getParent()._config.sex.npcStartSex then
-                    self:getParent():getPositions():switchRandomSexPosition(true)
+                    self._delayedIdleTrigger = true
                 end
             end,
 
@@ -121,9 +122,15 @@ function Sexbound.StateMachine.new(parent)
                 if self:isHavingSex() then return true end
                 --- Idling is now it's own mechanic
 
-                for _, actor in ipairs(stateData.actors) do
-                    actor:onUpdateAnyState(dt)
-                    actor:onUpdateIdleState(dt)
+                if self._delayedIdleTrigger and self._stateMachine:stateDesc() == "idleState" then
+                    self:getParent():getPositions():switchRandomSexPosition(true)
+                    self._delayedIdleTrigger = false
+                else
+                    -- Skip update if we switch anyway
+                    for _, actor in ipairs(stateData.actors) do
+                        actor:onUpdateAnyState(dt)
+                        actor:onUpdateIdleState(dt)
+                    end
                 end
             end,
 
