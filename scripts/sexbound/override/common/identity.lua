@@ -22,12 +22,6 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
     identity.facialHairGroup = genderConfig.facialHairGroup or ""
     identity.facialMaskGroup = genderConfig.facialMaskGroup or ""
     identity.sxbFertility = genderConfig.sxbFertility or nil
-    identity.sxbMoanPitch = genderConfig.sxbMoanPitch or {1.0, 1.0}
-    identity.sxbMoanInterval = genderConfig.sxbMoanInterval or {2.0, 4.0}
-    identity.sxbMoanSounds = genderConfig.sxbMoanSounds or nil
-    identity.sxbOrgasmPitch = genderConfig.sxbOrgasmPitch or {1.0, 1.0}
-    identity.sxbOrgasmInterval = genderConfig.sxbOrgasmInterval or {2.0, 4.0}
-    identity.sxbOrgasmSounds = genderConfig.sxbOrgasmSounds or nil
     identity.sxbSubGender = genderConfig.sxbSubGender or nil
     identity.sxbSubGenderMultiplier = genderConfig.sxbSubGenderMultiplier or 1
     identity.sxbShowNipples = genderConfig.sxbShowNipples or false
