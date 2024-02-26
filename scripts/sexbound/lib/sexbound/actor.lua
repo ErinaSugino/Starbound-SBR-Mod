@@ -1031,7 +1031,7 @@ function Sexbound.Actor:getGenderFutasafe(diffNum)
     local actGender = id.gender
     if id.sxbSubGender == "futanari" or id.sxbSubGender == "cuntboy" then
        if actNum == 1 then actGender = "male" else actGender = "female" end
-       local positionRelation = self:getPosition():getConfig().actorRelation or {}
+       local positionRelation = self:getPosition():getActorRelation() or {}
        local thisFucks = positionRelation[actNum] or 0
        local thatFucks = positionRelation[diffNum] or 0
        if thisFucks ~= 0 and thisFucks == diffNum then actGender = "male"
@@ -1160,7 +1160,7 @@ end
 function Sexbound.Actor:getOtherActorPositionsafe(prioSub)
     prioSub = prioSub or false
     local actNum = self:getActorNumber()
-    local positionTable = self:getPosition():getConfig().actorRelation or {}
+    local positionTable = self:getPosition():getActorRelation() or {}
     local thisFucks = positionTable[actNum] or 0
     local thatFucks = 0
     for i, target in ipairs(positionTable) do 
@@ -1186,7 +1186,7 @@ end
 --- Returns list of all actors fucking this actor.
 function Sexbound.Actor:getImpregnatorList()
     local list = {}
-    local relations = self:getPosition():getConfig().actorRelation
+    local relations = self:getPosition():getActorRelation()
     local actorNum = self:getActorNumber()
     
     for i, target in ipairs(relations) do

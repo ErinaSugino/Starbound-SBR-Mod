@@ -52,6 +52,8 @@ function Sexbound.StateMachine.new(parent)
                 end) then
                     self:getLog():error("The animator could not enter the 'none' animation state.")
                 end
+                
+                self:getParent():getSextalk():onEnterNullState()
             end,
 
             update = function(dt, stateData)
@@ -101,6 +103,7 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterIdleState()
                 end
+                self:getParent():getSextalk():onEnterIdleState()
                 
                 if not self:getParent():getContainsPlayer() and self:getParent()._config.sex.npcStartSex then
                     self._delayedIdleTrigger = true
@@ -199,6 +202,7 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterSexState()
                 end
+                self:getParent():getSextalk():onEnterSexState()
             end,
 
             update = function(dt, stateData)
@@ -289,6 +293,7 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterClimaxState()
                 end
+                self:getParent():getSextalk():onEnterClimaxState()
             end,
 
             update = function(dt, stateData)
@@ -355,6 +360,7 @@ function Sexbound.StateMachine.new(parent)
                 for _, actor in ipairs(stateData.actors) do
                     actor:onEnterAnyState()
                 end
+                self:getParent():getSextalk():onEnterPostClimaxState()
                 
                 self._postclimaxTimer = 0
             end,
@@ -428,6 +434,7 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterExitState()
                 end
+                self:getParent():getSextalk():onEnterExitState()
             end,
 
             update = function(dt, stateData)

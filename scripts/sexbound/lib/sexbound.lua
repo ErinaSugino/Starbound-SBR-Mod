@@ -24,6 +24,7 @@ if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/positions.lua")
     require("/scripts/sexbound/lib/sexbound/statemachine.lua")
     require("/scripts/sexbound/lib/sexbound/ui.lua")
+    require("/scripts/sexbound/lib/sexbound/sextalk.lua")
 end
 
 --- Returns a reference to a new instance of Sexbound.
@@ -77,6 +78,9 @@ function Sexbound.new(maxActors)
 
     -- Initialize new instance of StateMachine.
     self._stateMachine = Sexbound.StateMachine.new(self)
+    
+    -- Initialize new instance of the global sextalk manager
+    self._sextalk = Sexbound.Sextalk:new(self)
 
     -- Initialize the Facing Direction of this instance.
     self:initFacingDirection()
@@ -92,10 +96,6 @@ function Sexbound.new(maxActors)
     self._UI = Sexbound.UI.new(self)
 
     self:getLog():info("Initialized.")
-
-    self._timers = {
-        emitAnimationRateEvent = 0
-    }
     
     self:loadSubscripts()
 
@@ -281,6 +281,7 @@ function Sexbound:update(dt)
 
     if self._compatibility:isCompatible() then
         self:getStateMachine():update(dt)
+        self:getSextalk():update(dt)
 
         Sexbound.Messenger.get("main"):dispatch()
 
@@ -761,16 +762,6 @@ end
 -- @param stateName
 -- @param dt The delta time
 function Sexbound:updateAnimationRate(stateName, dt)
-    --[[self._temp = self._temp or 0
-    self._temp = self._temp + dt
-    self._temp2 = self._temp2 or 0.1
-    if self._temp > 5 then
-        self._temp2 = self._temp2 * 10
-        if self._temp2 > 1 then self._temp2 = 0.1 end
-        self._temp = 0
-    end
-    animator.setAnimationRate(self._temp2)
-    return]]
     local _animState = self:getPositions():getCurrentPosition():getAnimationState(stateName)
 
     local _minTempo = self._overrideMinTempo or _animState:getMinTempo()
@@ -789,12 +780,6 @@ function Sexbound:updateAnimationRate(stateName, dt)
             name = actor:getName(),
             uniqueId = actor:getUniqueId()
         })
-    end
-
-    self._timers.emitAnimationRateEvent = self._timers.emitAnimationRateEvent + dt
-
-    if self._timers.emitAnimationRateEvent >= 0.5 then
-        self._timers.emitAnimationRateEvent = 0
     end
 
     if (self._animationRate >= _maxTempo) then
@@ -1470,7 +1455,7 @@ function Sexbound:getUI()
     return self._UI
 end
 
---- Returns the store UUID
+--- Returns the stored UUID
 function Sexbound:getUniqueId()
     return storage.uniqueId
 end
@@ -1483,6 +1468,11 @@ end
 --- Returns if the node currently contains a player actor
 function Sexbound:getContainsPlayer()
     return self._containsPlayer
+end
+
+--- Returns a reference to this instance's sextalk manager
+function Sexbound:getSextalk()
+    return self._sextalk
 end
 
 
