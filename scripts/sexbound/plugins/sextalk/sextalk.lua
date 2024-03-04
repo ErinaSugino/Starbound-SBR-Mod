@@ -119,7 +119,8 @@ function Sexbound.Actor.SexTalk:helper_fetchBase(source)
     -- Recursively check deeper base layers
     if type(base.base) == "string" then base = self:helper_fetchBase(base) end
     
-    base = self:helper_mergeTableOverrideText(base, source)
+    local add = not not source.add
+    if add then base = util:mergeTable(base, source) else base = self:helper_mergeTableOverrideText(base, source) end
     
     return base
 end
@@ -211,13 +212,15 @@ end
 
 function Sexbound.Actor.SexTalk:helper_getActorStatuses(actor)
     local status = actor:getStatus()
-    local list = {}
+    local list, lookup = {}, {}
     
-    if status:findStatus("pregnant") then table.insert(list, "pregnant") end
-    if status:findStatus("sexbound_arousal_heat") then table.insert(list, "heat") end
-    if status:findStatus("sexbound_defeated") then table.insert(list, "defeated") end
+    if status:findStatus("pregnant") then table.insert(list, "pregnant") lookup["pregnant"] = true end
+    if status:findStatus("sexbound_arousal_heat") then table.insert(list, "heat") lookup["heat"] = true end
+    if status:findStatus("sexbound_defeated") then table.insert(list, "defeated") lookup["defeated"] = true end
+    if actor._config.identity.body.hasPenis then table.insert(list, "hasPenis") lookup["hasPenis"] = true end
+    if actor._config.identity.body.hasVagina then table.insert(list, "hasVagina") lookup["hasVagina"] = true end
     
-    return list
+    return list, lookup
 end
 
 function Sexbound.Actor.SexTalk:processIsActive(stateName)
@@ -284,20 +287,28 @@ function Sexbound.Actor.SexTalk:sayRandom()
     local defaultConfig = lastLevel["default"] or {}
     
     local finalConfig
-    if not specificConfig.override then finalConfig = self:helper_mergeTableMergeTextNoStatus() else finalConfig = specificConfig end
+    if not specificConfig.override then finalConfig = self:helper_mergeTableMergeTextNoStatus(defaultConfig, specificConfig) else finalConfig = specificConfig end
     
     dialogPool = finalConfig.text or {}
     
-    local statuses = self:helper_getActorStatuses(actor)
-    local otherStatuses = self:helper_getActorStatuses(target)
+    local statuses, statusLookup = self:helper_getActorStatuses(actor)
+    local otherStatuses, otherStatusLookup = self:helper_getActorStatuses(target)
     local statusModules = finalConfig.status or {}
-    local otherStatusModules = finalConfig.otherstatus or {}
+    local otherStatusModules = finalConfig.otherStatus or {}
+    local bothStatusModules = finalConfig.bothStatus or {}
+    local bothStatusBlock = {}
     local finalModules = {}
     for _,s in ipairs(statuses) do
-        if statusModules[s] then table.insert(finalModules, statusModules[s]) end
+        -- Check for both matching
+        if otherStatusLookup[s] and bothStatusModules[s] then
+            table.insert(finalModules, bothStatusModules[s])
+            if bothStatusModules[s].overrideSoloStatus then bothStatusBlock[s] = true end -- Mark as blocked for solo status modules
+        end
+        
+        if statusModules[s] and not bothStatusBlock[s] then table.insert(finalModules, statusModules[s]) end
     end
     for _,s in ipairs(otherStatuses) do
-        if otherStatusModules[s] then table.insert(finalModules, otherStatusModules[s]) end
+        if otherStatusModules[s] and not bothStatusBlock[s] then table.insert(finalModules, otherStatusModules[s]) end
     end
     table.sort(finalModules, function(a,b) return (a.priority or 0) > (b.priority or 0) end)
     for _,m in ipairs(finalModules) do
