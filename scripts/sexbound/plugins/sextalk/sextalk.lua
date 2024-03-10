@@ -84,6 +84,9 @@ function Sexbound.Actor.SexTalk:loadDialog()
 
     local filename = self:getPosition():getDialog(species, nil)
 
+    if not filename and self._config.useDefaultDialog then
+        filename = self:getPosition():getDialog("default", nil)
+    end
     if not filename then
         return
     end
@@ -176,10 +179,10 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
 end
 
 function Sexbound.Actor.SexTalk:helper_interactionTypeToName(actor, otherActor, types, receiving)
-    local t = types[actor:getActorNumber()]
+    local t = receiving and types[otherActor:getActorNumber()] or types[actor:getActorNumber()]
     local res
     if t == "direct" then
-        if otherActor:hasVagina() then res = "vaginal" else res = "anal" end
+        if (receiving and actor:hasVagina()) or (not receiving and otherActor:hasVagina()) then res = "vaginal" else res = "anal" end
     elseif t == "toy_dick" then
         if actor:hasVagina() then return "toy_in_vagina" else return "toy_in_ass" end
     elseif t == "toy_vagina" then
