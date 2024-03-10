@@ -163,16 +163,27 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     local interactionTypesList = position:getInteractionType()
     local actors = self._parent._parent:getActors()
     
-    local potentialTargets = {actors[actorRelation[actorNum]] or actor}
-    local interactionTypes = {self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum]] or actor, interactionTypesList, false)}
+    local potentialTargets = {}
+    local interactionTypes = {}
+    if actorRelation[actorNum] ~= 0 then
+        -- Only add the one targeted by this actor if this actor actually targets anyone.
+        table.insert(potentialTargets, actors[actorRelation[actorNum]] or actor)
+        table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum] or actor, interactionTypesList, false]))
+    end
     
     for i,a in ipairs(actorRelation) do
         if i ~= actorNum then
             if a == actorNum then
                 table.insert(potentialTargets, actors[i])
-                table.insert(interactionTypes, self:helper_interactionTypeToName(actory[i], actor, interactionTypesList, true))
+                table.insert(interactionTypes, self:helper_interactionTypeToName(actors[i], actor, interactionTypesList, true))
             end
         end
+    end
+    
+    if #potentialTargets == 0 then
+        -- This actor is neither interacting with nor interacted with by any other actor. Assume toy/solo action and self reference with interactionType
+        potentialTargets = {actor}
+        interactionTypes = {self:helper_interactionTypeToName(actor, actor, interactionTypesList, false)}
     end
     
     return potentialTargets, interactionTypes
