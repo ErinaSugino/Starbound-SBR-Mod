@@ -85,7 +85,7 @@ function Sexbound.Actor.Pregnant:isDripBlocked()
     --    end
     --end
     --return false
-    return self._parent:hasInteractionType("direct")
+    return self._parent:hasInteractionType({"direct", "toy_dick"})
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time

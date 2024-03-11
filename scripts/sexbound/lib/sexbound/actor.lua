@@ -1401,13 +1401,18 @@ function Sexbound.Actor:hasTraits(traits)
     return true
 end
 
---- Checks if the actor is currently in a role in the current position that has the interaction type given
-function Sexbound.Actor:hasInteractionType(type)
+--- Checks if the actor is currently in a role in the current position that has the interaction type(s) given
+function Sexbound.Actor:hasInteractionType(targetType)
     local interactionTypes = self:getPosition()._config.interactionType
     local actorList = self:getImpregnatorList()
     for i,a in ipairs(actorList) do
         local actorNum = a._actorNumber
-        if interactionTypes[actorNum] == type then return true end
+        if type(targetType) == "string" and interactionTypes[actorNum] == targetType then return true
+        elseif type(targetType) == "table" then
+            for _,t in ipairs(targetType) do
+                if interactionTypes[actorNum] == t then return true end
+            end
+        end
     end
     return false
 end
