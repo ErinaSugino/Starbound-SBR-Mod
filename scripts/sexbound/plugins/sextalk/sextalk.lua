@@ -205,7 +205,8 @@ function Sexbound.Actor.SexTalk:helper_interactionTypeToName(actor, otherActor, 
     elseif t == "oral" then
         res = "oral"
     elseif t == "cunnilingus" then
-        res = "cunnilingus"
+        if receiving then return "r_cunnilingus" end
+        if actor:hasVagina() then return "cunnilingus_vagina" else return "cunnilingus_ass" end
     elseif t == "boobjob" then
         res = "boobjob"
     else return "default" end
