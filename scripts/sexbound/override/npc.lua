@@ -54,9 +54,9 @@ function preservedStorage()
 end
 
 local Sexbound_Old_RecruitableInteract = recruitable.interact
-function recruitable.interact()
+function recruitable.interact(sourceEntityId)
     if self.sb_npc and self.sb_npc._isKid then return nil end
-    return Sexbound_Old_RecruitableInteract()
+    return Sexbound_Old_RecruitableInteract(sourceEntityId)
 end
 
 local Sexbound_Old_GetCurrentStatus = getCurrentStatus
