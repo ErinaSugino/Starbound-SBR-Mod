@@ -143,18 +143,19 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     local parts = {}
     local role = self:getRole()
     local slot = "actor" .. self:getActorNumber()
-    parts.armBack = self:loadArmBackPart(animState, entityGroup, role, species)
-    parts.armFront = self:loadArmFrontPart(animState, entityGroup, role, species)
-    parts.body = self:loadBodyPart(animState, entityGroup, role, species, gender)
-    parts.facialHair = self:loadFacialHairPart(entityGroup, species, directives)
-    parts.facialMask = self:loadFacialMaskPart(entityGroup, species, directives)
-    parts.hair = self:loadHairPart(entityGroup, species, directives)
-    parts.head = self:loadHeadPart(entityGroup, role, species, gender, directives)
-    parts.emote = self:loadEmotePart(animState, entityGroup, role, species)
-    parts.ears = self:loadEarsPart(animState, entityGroup, role, species, gender)
-    parts.tail = self:loadTailPart(animState, entityGroup, role, species, gender)
+    parts.armBack = Sexbound.Util.fixPath(self:loadArmBackPart(animState, entityGroup, role, species))
+    parts.armFront = Sexbound.Util.fixPath(self:loadArmFrontPart(animState, entityGroup, role, species))
+    parts.body = Sexbound.Util.fixPath(self:loadBodyPart(animState, entityGroup, role, species, gender))
+    parts.facialHair = Sexbound.Util.fixPath(self:loadFacialHairPart(entityGroup, species, directives))
+    parts.facialMask = Sexbound.Util.fixPath(self:loadFacialMaskPart(entityGroup, species, directives))
+    parts.hair = Sexbound.Util.fixPath(self:loadHairPart(entityGroup, species, directives))
+    parts.head = Sexbound.Util.fixPath(self:loadHeadPart(entityGroup, role, species, gender, directives))
+    parts.emote = Sexbound.Util.fixPath(self:loadEmotePart(animState, entityGroup, role, species))
+    parts.ears = Sexbound.Util.fixPath(self:loadEarsPart(animState, entityGroup, role, species, gender))
+    parts.tail = Sexbound.Util.fixPath(self:loadTailPart(animState, entityGroup, role, species, gender))
 
     parts.groin, directives.groin, directives.groinMask = self:loadGroin(entityGroup, role, species, gender)
+    parts.groin = Sexbound.Util.fixPath(parts.groin)
 
     parts.overlay1 = self:loadOverlayPart(animState, 1) -- Load Overlay 1
     parts.overlay2 = self:loadOverlayPart(animState, 2) -- Load Overlay 2
@@ -475,8 +476,6 @@ function Sexbound.Actor:setup(actorConfig)
     self._config.storage = self._config.storage or {}
     self._config.storage.sexbound = self._config.storage.sexbound or {}
 
-    -- local index = self:getParent():getActorCount()
-
     self:setAnimationState(self:getParent():getStateMachine():stateDesc())
     
     self:setRole(self:getActorNumber())
@@ -489,18 +488,125 @@ function Sexbound.Actor:setup(actorConfig)
     end
 
     if self._config.entityType == "npc" or self._config.entityType == "player" then
+        local identity = self._config.identity
+        
         -- Initialize hair identities.
-        self._config.identity.hairFolder = self:getHairFolder()
-        self._config.identity.hairType = self:getHairType()
+        identity.hairFolder = self:getHairFolder()
+        identity.hairType = self:getHairType()
 
         -- Initialize facial hair identities.
-        self._config.identity.facialHairFolder = self:getFacialHairFolder()
-        self._config.identity.facialHairType = self:getFacialHairType()
+        identity.facialHairFolder = self:getFacialHairFolder()
+        identity.facialHairType = self:getFacialHairType()
 
         -- Initialize facial mask identities.
-        self._config.identity.facialMaskFolder = self:getFacialMaskFolder()
-        self._config.identity.facialMaskType = self:getFacialMaskType()
+        identity.facialMaskFolder = self:getFacialMaskFolder()
+        identity.facialMaskType = self:getFacialMaskType()
+        
+        -- Build color genetics. Doing so on the actor ensures no entity messaging bullshittery happens to the data
+        -- Load species file
+        local speciesConfig = root.assetJson("/species/"..identity.species..".species") or {}
+        
+        -- Cache species genetic templates
+        identity.genetics = {}
+        identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
+        identity.genetics.bodyColorPoolAverage = {}
+        identity.genetics.bodyAllowBlending = true
+        identity.genetics.undyColorPool = speciesConfig.undyColor or {}
+        identity.genetics.undyColorPoolAverage = {}
+        identity.genetics.undyAllowBlending = true
+        identity.genetics.hairColorPool = speciesConfig.hairColor or {}
+        identity.genetics.hairColorPoolAverage = {}
+        identity.genetics.hairAllowBlending = true
+        
+        local res, err = pcall(function()
+            -- Pre calculate color palette averages
+            for i, r in ipairs(identity.genetics.bodyColorPool) do
+                if type(r) ~= "table" then break end
+                local x = 0
+                local avg = { 0, 0, 0 }
+                local valid = true
+                -- Get average color of current checked palette from list
+                for j, v in pairs(r) do
+                    local l = string.len(v)
+                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                        valid = false
+                        break
+                    end     -- If not length 3,4,6 or 8 it's invalid - ignore
+                    x = x + 1
+                    
+                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
+                    if a == 0 then identity.genetics.bodyAllowBlending = false end
+                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
+                end
+                if valid then
+                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+                else
+                    avg[1], avg[2], avg[3] = -1, -1, -1
+                end
+                table.insert(identity.genetics.bodyColorPoolAverage, avg)
+            end
+            for i, r in ipairs(identity.genetics.undyColorPool) do
+                if type(r) ~= "table" then break end
+                local x = 0
+                local avg = { 0, 0, 0 }
+                local valid = true
+                -- Get average color of current checked palette from list
+                for j, v in pairs(r) do
+                    local l = string.len(v)
+                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                        valid = false
+                        break
+                    end -- If not length 3,4,6 or 8 it's invalid - ignore
+                    x = x + 1
+                    
+                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
+                    if a == 0 then identity.genetics.undyAllowBlending = false end
+                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
+                end
+                if valid then
+                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+                else
+                    avg[1], avg[2], avg[3] = -1, -1, -1
+                end
+                table.insert(identity.genetics.undyColorPoolAverage, avg)
+            end
+            for i, r in ipairs(identity.genetics.hairColorPool) do
+                if type(r) ~= "table" then break end
+                local x = 0
+                local avg = { 0, 0, 0 }
+                local valid = true
+                -- Get average color of current checked palette from list
+                for j, v in pairs(r) do
+                    local l = string.len(v)
+                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
+                        valid = false
+                        break
+                    end -- If not length 3,4,6 or 8 it's invalid - ignore
+                    x = x + 1
+                    
+                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
+                    if a == 0 then identity.genetics.hairAllowBlending = false end
+                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
+                end
+                if valid then
+                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
+                else
+                    avg[1], avg[2], avg[3] = -1, -1, -1
+                end
+                table.insert(identity.genetics.hairColorPoolAverage, avg)
+            end
+        end)
+
+        if not res then
+            self:getLog().warn("Couldn't fetch species color averages! Species " .. tostring(identity.species) .. " has no color averages!")
+            self:getLog().warn(err)
+        end
     end
+    
+    -- Decode entity color directives
+    self._config.identity.genetics.bodyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.bodyColor)
+    self._config.identity.genetics.undyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.undyColor)
+    self._config.identity.genetics.hairColor = Sexbound.Util.messageDecode(self._config.identity.genetics.hairColor)
     
     self._config.identity.body = {canOvulate=false, canProduceSperm=true, hasPenis=true, hasVagina=false} -- init default male body traits
     self:buildSubGenderList()

@@ -141,7 +141,7 @@ function Sexbound.NPC:update(dt)
     if self._kidTimer > 0 then self._kidTimer = self._kidTimer - dt end
     if self._isKid and self._kidTimer <= 0 then
         local worldTime = world.time()
-        local kidTime = status.statusProperty('kid', 0)
+        local kidTime = status.statusProperty('kid', -math.huge)
         if kidTime <= worldTime then self:updateKidStatus() end
         
         if self._isKid then self._kidTimer = 10 end -- Only check every 10 seconds
@@ -234,10 +234,11 @@ end
 
 function Sexbound.NPC:updateKidStatus()
     local worldTime = world.time()
-    local kidTime = status.statusProperty('kid', 0)
+    local kidTime = status.statusProperty('kid', -math.huge)
     
     if kidTime <= worldTime then
         status.removeEphemeralEffect('sexbound_kid')
+        status.setStatusProperty('kid', nil)
         self._isKid = false
     else
         status.addEphemeralEffect('sexbound_kid', math.huge)
