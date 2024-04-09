@@ -22,7 +22,8 @@ function Sexbound.Actor.SexTalk:new(parent, config)
         _config = config,
         _dialogPool = {},
         _lastMessage = 0,
-        _isActive = true
+        _isActive = true,
+        _isTalking = false
     }, Sexbound.Actor.SexTalk_mt)
 
     _self:init(parent, _self._logPrefix, function() end)
@@ -74,7 +75,7 @@ function Sexbound.Actor.SexTalk:onUpdateAnyState(dt)
         return
     end
 
-    if self:getParent()._isTalking then
+    if self._isTalking then
         self:getParent():getMouth():applyPosition()
     end
 end
@@ -144,7 +145,7 @@ function Sexbound.Actor.SexTalk:helper_mergeTableMergeTextNoStatus(t1, t2, isSta
   for k, v in pairs(t2) do
     if k == "text" then --Merge "text" list
       util.appendLists(t1[k], v)
-    elseif k == "status" and type(v) == "table" and type(t1[k]) == "table" then --For "status" block, switch to full replacement mode
+    elseif (k == "status" or k == "otherStatus" or k == "bothStatus") and type(v) == "table" and type(t1[k]) == "table" then --For "status" block, switch to full replacement mode
       self:helper_mergeTableMergeTextNoStatus(t1[k] or {}, v, true)
     elseif not isStatus and type(v) == "table" and type(t1[k]) == "table" then
       self:helper_mergeTableMergeTextNoStatus(t1[k] or {}, v, isStatus)
@@ -168,15 +169,13 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     if actorRelation[actorNum] ~= 0 then
         -- Only add the one targeted by this actor if this actor actually targets anyone.
         table.insert(potentialTargets, actors[actorRelation[actorNum]] or actor)
-        table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum] or actor, interactionTypesList, false]))
+        table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum]] or actor, interactionTypesList, false))
     end
     
     for i,a in ipairs(actorRelation) do
-        if i ~= actorNum then
-            if a == actorNum then
-                table.insert(potentialTargets, actors[i])
-                table.insert(interactionTypes, self:helper_interactionTypeToName(actors[i], actor, interactionTypesList, true))
-            end
+        if i ~= actorNum and a == actorNum and actors[i] then
+            table.insert(potentialTargets, actors[i])
+            table.insert(interactionTypes, self:helper_interactionTypeToName(actors[i], actor, interactionTypesList, true))
         end
     end
     
@@ -220,7 +219,7 @@ function Sexbound.Actor.SexTalk:helper_getActorState(actor)
     local status = actor:getStatus()
     
     if status:findStatus("preclimaxing") then return "preclimax"
-    elseif status:findStatus("climaxing") then return "climaxing"
+    elseif status:findStatus("climaxing") then return "climax"
     elseif state == "postclimaxState" then return "postclimax"
     else return "sex" end
 end
@@ -330,9 +329,14 @@ function Sexbound.Actor.SexTalk:sayRandom()
         if m.override then dialogPool = m.text or {} else util.appendLists(dialogPool, m.text or {}) end
     end
     
-    local dialog = util.randomChoice(dialogPool)
+    local dialog = #dialogPool > 0 and util.randomChoice(dialogPool) or ""
 
     if "string" and type(dialog) and dialog ~= "" then
+        if self._config.useNames then
+            local name = self._parent:getName()
+            if name and name ~= "" then dialog = name..": "..dialog end
+        end
+        
         local emote = self:getParent():getPlugins("emote")
         local emoticon
 
@@ -343,8 +347,6 @@ function Sexbound.Actor.SexTalk:sayRandom()
         if object then
             object.say(dialog)
         end
-
-        actor._isTalking = true
 
         self:getLog():debug("Actor "..actor:getActorNumber().." triggered dialogue")
 

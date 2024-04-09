@@ -26,7 +26,6 @@
 					--> Reaching the looping point of the universe should not turn every NPC in existence into kids anymore.
 					--> The intro mission janitor got his brain back!
 						---> Never realized anything was wrong? Cool! Well, he does only have about 2 lines of dialog and one interaction anyway...
-				
 			=> Pregnancy System
 				-> Sub-gender support for babies!
 					--> Every baby that is created has a config-based chance to roll a suitable sub-gender!
@@ -37,6 +36,7 @@
 					--> Actors now take proper turns to talk and don't half talk over eachother.
 					--> Dialog for many, many, *many* more scenarios has become available!
 					--> Dialog files are now *human*-readable, so you, too, can now easily write all the dirty RP talk you want!
+					--> You can enable in the plugin's config that the names of actors are shown in the dialog!
 		[Modding affecting changes]
 			=> General
 				-> A race can now be declared as using animalistic "heat" cycles.
@@ -44,7 +44,8 @@
 				-> A race can now be declared to use an addional render layer for ears and one for tails on the actor
 					--> Turn "sxbUsesAnimatedEars" and "sxbUsesAnimatedTail" to "true" respectively
 					--> This, in turn, enables the use of an "ears.png" and "tail.png" spritesheet from where all other normal actor parts are.
-					--> Ears layer on top of the hair and use hairDirectives.
+					--> Ears layer on top of the hair and use either hairDirectives or bodyDirectives.
+						---> This is determined by new "sxbEarsUseBodyColors" setting in species file.
 					--> Tail layers behind the backwear layer and uses bodyDirectives.
 				-> Translations can now properly affect notifications and sextalk!
 					--> These files now properly load from a folder with the current language's code, allowing proper dynamic translations.

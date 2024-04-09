@@ -213,7 +213,10 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     self:getNipples():resetParts(entityGroup, role, species, gender)
     
     -- Apply ears and tail sprites, if used
-    if parts.ears then animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears) end
+    if parts.ears then
+        animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears)
+        if self:getIdentity("sxbEarsUseBodyColors") then animator.setGlobalTag(slot .. "-earsDirectives", directives.body) else animator.setGlobalTag(slot .. "-earsDirectives", directives.head) end
+    end
     if parts.tail then animator.setGlobalTag("part-" .. slot .. "-tail", parts.tail) end
 end
 
@@ -507,7 +510,7 @@ function Sexbound.Actor:setup(actorConfig)
         local speciesConfig = root.assetJson("/species/"..identity.species..".species") or {}
         
         -- Cache species genetic templates
-        identity.genetics = {}
+        identity.genetics = identity.genetics or {}
         identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
         identity.genetics.bodyColorPoolAverage = {}
         identity.genetics.bodyAllowBlending = true
@@ -601,12 +604,12 @@ function Sexbound.Actor:setup(actorConfig)
             self:getLog().warn("Couldn't fetch species color averages! Species " .. tostring(identity.species) .. " has no color averages!")
             self:getLog().warn(err)
         end
+        
+        -- Decode entity color directives
+        self._config.identity.genetics.bodyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.bodyColor)
+        self._config.identity.genetics.undyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.undyColor)
+        self._config.identity.genetics.hairColor = Sexbound.Util.messageDecode(self._config.identity.genetics.hairColor)
     end
-    
-    -- Decode entity color directives
-    self._config.identity.genetics.bodyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.bodyColor)
-    self._config.identity.genetics.undyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.undyColor)
-    self._config.identity.genetics.hairColor = Sexbound.Util.messageDecode(self._config.identity.genetics.hairColor)
     
     self._config.identity.body = {canOvulate=false, canProduceSperm=true, hasPenis=true, hasVagina=false} -- init default male body traits
     self:buildSubGenderList()

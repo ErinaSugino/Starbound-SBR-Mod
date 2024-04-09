@@ -29,8 +29,9 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
     identity.sxbBodyType = genderConfig.sxbBodyType or nil
     identity.sxbSpeciesType = speciesConfig.sxbSpeciesType or nil
     identity.sxbNaturalStatus = genderConfig.sxbNaturalStatus or {}
-    identity.sxbUseAnimatedEars = speciesConfig.sxbUseAnimatedEars or nil
-    identity.sxbUseAnimatedTail = speciesConfig.sxbUseAnimatedTail or nil
+    identity.sxbUseAnimatedEars = speciesConfig.sxbUseAnimatedEars or false
+    identity.sxbEarsUseBodyColors = speciesConfig.sxbEarsUseBodyColors or false
+    identity.sxbUseAnimatedTail = speciesConfig.sxbUseAnimatedTail or false
 
     if genderConfig.sxbCanOvulate ~= nil then
         identity.sxbCanOvulate = genderConfig.sxbCanOvulate
@@ -44,6 +45,8 @@ function Sexbound.Common.Identity:addCustomProperties(identity, speciesConfig)
 
     identity.motherUuid = status.statusProperty("motherUuid", nil)
     identity.fatherUuid = status.statusProperty("fatherUuid", nil)
+    
+    identity.genetics = {}
 
     return identity
 end

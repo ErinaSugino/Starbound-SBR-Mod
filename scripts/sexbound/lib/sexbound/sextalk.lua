@@ -23,7 +23,7 @@ function Sexbound.Sextalk.new(parent)
     
     self._log = Sexbound.Log:new(self._logPrefix, self._parent:getConfig())
     
-    self._isEnabled, self._config = self.loadSextalkConfig()
+    self._isEnabled, self._config = self:loadSextalkConfig()
     
     return self
 end
@@ -77,8 +77,8 @@ function Sexbound.Sextalk:onEnterExitState()
 end
 
 function Sexbound.Sextalk:loadSextalkConfig()
-    local pluginConfig = self:getParent():getConfig().plugins.sextalk or {}
-    local isEnabled = not not pluginConfig.enabled
+    local pluginConfig = self:getParent():getConfig().actor.plugins.sextalk or {}
+    local isEnabled = not not pluginConfig.enable
     local toLoad = pluginConfig.config or {}
     local loadedConfig = {}
 
@@ -96,22 +96,30 @@ end
 --- Function to choose a random available 
 function Sexbound.Sextalk:triggerTalk()
     local viableActors = {}
-    for _,a in ipairs() do
+    for _,a in ipairs(self._parent:getActors()) do
         local sxt = a:getPlugins("sextalk")
         if sxt then
-            if sxt._active then table.insert(viableActors, a) end
+            sxt._isTalking = false -- Reset talking status of all actors.
+            if sxt._isActive then table.insert(viableActors, a) end
         end
     end
     
-    local l = #sxt
+    local l = #viableActors
     if l <= 0 then self._lastActor = 0 return end
-    if l == 1 then self._lastActor = 0 sxt[1]:getPlugins("sextalk"):sayRandom()
+    if l == 1 then self._lastActor = 0 viableActors[1]:getPlugins("sextalk"):sayRandom()
     else
         local i, j = self._lastActor, 0
         while i == self._lastActor and j < 10 do
             i = math.random(l)
+            j = j + 1
         end
         self._lastActor = i
-        sxt[i]:getPlugins("sextalk"):sayRandom()
+        local s = viableActors[i]:getPlugins("sextalk")
+        s._isTalking = true -- Set talking status of chosen actor. This updates the mouth position.
+        s:sayRandom()
     end
+end
+
+function Sexbound.Sextalk:getParent()
+    return self._parent
 end

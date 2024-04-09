@@ -49,6 +49,7 @@
 		"actor2-headDirectives": "",
 		"actor2-emoteDirectives": "",
 		"actor2-hairDirectives": "",
+		"actor2-earsDirectives": "",
 		"actor2-hairFolder": "hair",
 		"actor2-hairType": "fem1",
 		"actor2-facialHairFolder": "facialhair",
@@ -102,6 +103,7 @@
 		"actor1-headDirectives": "",
 		"actor1-emoteDirectives": "",
 		"actor1-hairDirectives": "",
+		"actor1-earsDirectives": "",
 		"actor1-hairFolder": "hair",
 		"actor1-hairType": "fem1",
 		"actor1-facialHairFolder": "facialhair",
@@ -155,6 +157,7 @@
 		"actor3-headDirectives": "",
 		"actor3-emoteDirectives": "",
 		"actor3-hairDirectives": "",
+		"actor3-earsDirectives": "",
 		"actor3-hairFolder": "hair",
 		"actor3-hairType": "fem1",
 		"actor3-facialHairFolder": "facialhair",
@@ -339,7 +342,7 @@
 				"properties": {
 					"anchorPart": "actor2-head-inner",
 					"centered": false,
-					"image": "<part-actor2-ears><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"image": "<part-actor2-ears>.<frame><actor2-earsDirectives><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 29
 				},
 				"partStates": {
@@ -501,7 +504,7 @@
 				"properties": {
 					"anchorPart": "actor1-head-inner",
 					"centered": false,
-					"image": "<part-actor1-ears><actor1-headwearMask><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
+					"image": "<part-actor1-ears>.<frame><actor1-earsDirectives><actor1-headwearMask><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
 					"zLevel": 13
 				},
 				"partStates": {
@@ -703,7 +706,7 @@
 				"properties": {
 					"anchorPart": "actor3-head-inner",
 					"centered": false,
-					"image": "<part-actor3-ears><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"image": "<part-actor3-ears>.<frame><actor3-earsDirectives><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 45
 				},
 				"partStates": {

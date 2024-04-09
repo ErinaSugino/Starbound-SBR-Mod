@@ -69,7 +69,7 @@ function Sexbound.NPC.Identity:build()
             
             for k,v in string.gmatch(identity.bodyDirectives, "%?replace=(%w+)=(%w+);?") do
                 local compare = string.upper(k)
-                if ref[compare] then identity.genetics.bodyColor[.."X"] = v end
+                if ref[compare] then identity.genetics.bodyColor[compare.."X"] = v end
                 if altOptionAsUndyColor and ref2[compare] then identity.genetics.undyColor[compare.."X"] = v end
             end
         end

@@ -259,7 +259,7 @@ end
 ---Returns path string with dangerous // removed
 -- @param string
 -- @return string without //
-Sexbound.Util.fixPath(s)
+Sexbound.Util.fixPath = function(s)
     if type(s) ~= "string" then return s end
     
     local i = 1
