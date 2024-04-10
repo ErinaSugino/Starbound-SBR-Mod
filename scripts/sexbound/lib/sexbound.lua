@@ -80,7 +80,7 @@ function Sexbound.new(maxActors)
     self._stateMachine = Sexbound.StateMachine.new(self)
     
     -- Initialize new instance of the global sextalk manager
-    self._sextalk = Sexbound.Sextalk:new(self)
+    self._sextalk = Sexbound.Sextalk.new(self)
 
     -- Initialize the Facing Direction of this instance.
     self:initFacingDirection()
