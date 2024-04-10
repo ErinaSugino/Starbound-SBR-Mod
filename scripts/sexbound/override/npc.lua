@@ -234,9 +234,9 @@ end
 
 function Sexbound.NPC:updateKidStatus()
     local worldTime = world.time()
-    local kidTime = status.statusProperty('kid', -math.huge)
+    local kidTime = status.statusProperty('kid')
     
-    if kidTime <= worldTime then
+    if kidTime == nil or kidTime <= worldTime then
         status.removeEphemeralEffect('sexbound_kid')
         status.setStatusProperty('kid', nil)
         self._isKid = false
