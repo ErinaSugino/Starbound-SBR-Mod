@@ -13,6 +13,7 @@
 		"part-actor2-climax": "/artwork/defaults/default_image.png:default",
 		"part-actor2-emote": "/artwork/defaults/default_image.png:default",
 		"part-actor2-ears": "/artwork/defaults/default_image.png:default",
+		"part-actor2-ears-body": "/artwork/defaults/default_image.png:default",
 		"part-actor2-facial-hair": "/artwork/defaults/default_image.png:default",
 		"part-actor2-facial-mask": "/artwork/defaults/default_image.png:default",
 		"part-actor2-fsleeve": "/artwork/defaults/default_image.png:default",
@@ -67,6 +68,7 @@
 		"part-actor1-climax": "/artwork/defaults/default_image.png:default",
 		"part-actor1-emote": "/artwork/defaults/default_image.png:default",
 		"part-actor1-ears": "/artwork/defaults/default_image.png:default",
+		"part-actor1-ears-body": "/artwork/defaults/default_image.png:default",
 		"part-actor1-facial-hair": "/artwork/defaults/default_image.png:default",
 		"part-actor1-facial-mask": "/artwork/defaults/default_image.png:default",
 		"part-actor1-fsleeve": "/artwork/defaults/default_image.png:default",
@@ -121,6 +123,7 @@
 		"part-actor3-climax": "/artwork/defaults/default_image.png:default",
 		"part-actor3-emote": "/artwork/defaults/default_image.png:default",
 		"part-actor3-ears": "/artwork/defaults/default_image.png:default",
+		"part-actor3-ears-body": "/artwork/defaults/default_image.png:default",
 		"part-actor3-facial-hair": "/artwork/defaults/default_image.png:default",
 		"part-actor3-facial-mask": "/artwork/defaults/default_image.png:default",
 		"part-actor3-fsleeve": "/artwork/defaults/default_image.png:default",
@@ -1471,6 +1474,70 @@
 								"offset": [0,0]
 							}
 						}
+					}
+				}
+			},
+			"actor2-ears-body": {
+				"properties": {
+					"anchorPart": "actor2-body",
+					"centered": false,
+					"image": "<part-actor2-ears-body>.<frame><actor2-earsDirectives><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"zLevel": 31,
+					"transformationGroups": ["actor2Head"]
+				},
+				"partStates": {
+					"actors": {
+						"idle_laying": {},
+						"idle": {},
+						"position1": {},
+						"position1-climax": {},
+						"position1-postclimax": {},
+						"position1-reset": {},
+						"position2": {},
+						"position2-climax": {},
+						"position2-postclimax": {},
+						"position2-reset": {},
+						"position3": {},
+						"position3-climax": {},
+						"position3-postclimax": {},
+						"position3-reset": {},
+						"position4": {
+							"properties": {"zLevel": 47}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 47}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 47}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 47}
+						},
+						"position4_1": {},
+						"position4_1-climax": {},
+						"position4_1-postclimax": {},
+						"position4_1-reset": {},
+						"position4_2": {},
+						"position4_2-climax": {},
+						"position4_2-postclimax": {},
+						"position4_2-reset": {},
+						"position5": {},
+						"position5-climax": {},
+						"position5-postclimax": {},
+						"position5-reset": {},
+						"position6": {},
+						"position6-climax": {},
+						"position6-postclimax": {},
+						"position6-reset": {},
+						"position7": {},
+						"position7-climax": {},
+						"position7-postclimax": {},
+						"position7-reset": {},
+						"position8": {},
+						"position8-climax": {},
+						"position8-postclimax": {},
+						"position8-reset": {},
+						"position-birthing": {}
 					}
 				}
 			},
@@ -4704,6 +4771,62 @@
 					}
 				}
 			},
+			"actor1-ears-body": {
+				"properties": {
+					"anchorPart": "actor1-body",
+					"centered": false,
+					"image": "<part-actor1-ears-body>.<frame><actor1-earsDirectives><actor1-headwearMask><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
+					"zLevel": 15,
+					"transformationGroups": ["actor1Head"]
+				},
+				"partStates": {
+					"actors": {
+						"idle_laying": {},
+						"idle": {},
+						"position1": {},
+						"position1-climax": {},
+						"position1-postclimax": {},
+						"position1-reset": {},
+						"position2": {},
+						"position2-climax": {},
+						"position2-postclimax": {},
+						"position2-reset": {},
+						"position3": {},
+						"position3-climax": {},
+						"position3-postclimax": {},
+						"position3-reset": {},
+						"position4": {},
+						"position4-climax": {},
+						"position4-postclimax": {},
+						"position4-reset": {},
+						"position4_1": {},
+						"position4_1-climax": {},
+						"position4_1-postclimax": {},
+						"position4_1-reset": {},
+						"position4_2": {},
+						"position4_2-climax": {},
+						"position4_2-postclimax": {},
+						"position4_2-reset": {},
+						"position5": {},
+						"position5-climax": {},
+						"position5-postclimax": {},
+						"position5-reset": {},
+						"position6": {},
+						"position6-climax": {},
+						"position6-postclimax": {},
+						"position6-reset": {},
+						"position7": {},
+						"position7-climax": {},
+						"position7-postclimax": {},
+						"position7-reset": {},
+						"position8": {},
+						"position8-climax": {},
+						"position8-postclimax": {},
+						"position8-reset": {},
+						"position-birthing": {}
+					}
+				}
+			},
 			"actor1-climax-female-spawn": {
 				"properties": {
 					"anchorPart": "actor1-body",
@@ -7114,6 +7237,70 @@
 								"offset": [0,0]
 							}
 						}
+					}
+				}
+			},
+			"actor3-ears-body": {
+				"properties": {
+					"anchorPart": "actor3-body",
+					"centered": false,
+					"image": "<part-actor3-ears-body>.<frame><actor3-earsDirectives><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"zLevel": 47,
+					"transformationGroups": ["actor3Head"]
+				},
+				"partStates": {
+					"actors": {
+						"idle_laying": {},
+						"idle": {},
+						"position1": {},
+						"position1-climax": {},
+						"position1-postclimax": {},
+						"position1-reset": {},
+						"position2": {},
+						"position2-climax": {},
+						"position2-postclimax": {},
+						"position2-reset": {},
+						"position3": {},
+						"position3-climax": {},
+						"position3-postclimax": {},
+						"position3-reset": {},
+						"position4": {
+							"properties": {"zLevel": 31}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 31}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 31}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 31}
+						},
+						"position4_1": {},
+						"position4_1-climax": {},
+						"position4_1-postclimax": {},
+						"position4_1-reset": {},
+						"position4_2": {},
+						"position4_2-climax": {},
+						"position4_2-postclimax": {},
+						"position4_2-reset": {},
+						"position5": {},
+						"position5-climax": {},
+						"position5-postclimax": {},
+						"position5-reset": {},
+						"position6": {},
+						"position6-climax": {},
+						"position6-postclimax": {},
+						"position6-reset": {},
+						"position7": {},
+						"position7-climax": {},
+						"position7-postclimax": {},
+						"position7-reset": {},
+						"position8": {},
+						"position8-climax": {},
+						"position8-postclimax": {},
+						"position8-reset": {},
+						"position-birthing": {}
 					}
 				}
 			},

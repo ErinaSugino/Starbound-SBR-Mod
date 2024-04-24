@@ -214,7 +214,8 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     
     -- Apply ears and tail sprites, if used
     if parts.ears then
-        animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears)
+        if self:getIdentity("sxbEarsOnBodyLayer") then animator.setGlobalTag("part-" .. slot .. "-ears-body", parts.ears)
+        else animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears) end
         if self:getIdentity("sxbEarsUseBodyColors") then animator.setGlobalTag(slot .. "-earsDirectives", directives.body) else animator.setGlobalTag(slot .. "-earsDirectives", directives.head) end
     end
     if parts.tail then animator.setGlobalTag("part-" .. slot .. "-tail", parts.tail) end
@@ -425,7 +426,7 @@ end
 function Sexbound.Actor:resetAnimatorParts(prefix)
     -- Reset each actor part
     for _, part in ipairs({"arm-back", "arm-front", "body", "climax", "head", "hair", "facial-hair", "facial-mask",
-                           "groin", "ears", "tail"}) do
+                           "groin", "ears", "ears-body", "tail"}) do
         animator.setGlobalTag("part-" .. prefix .. "-" .. part, self:getDefaultPartImage())
     end
 

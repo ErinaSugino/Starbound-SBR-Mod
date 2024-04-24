@@ -103,11 +103,11 @@
             }
           }
         },
-		
-		"actor2" : {
-		  "properties": {
-			"centered": true
-		  },
+        
+        "actor2" : {
+          "properties": {
+            "centered": true
+          },
           "partStates" : {
             "actors" : {              
               "position1" : {
@@ -120,6 +120,11 @@
                   "offset" : [-0.375, 0.0]
                 }
               },
+              "position1-postclimax" : {
+                "properties" : {
+                  "offset" : [-0.375, 0.0]
+                }
+              },
               "position1-reset" : {
                 "properties" : {
                   "offset" : [-0.375, 0.0]
@@ -128,7 +133,7 @@
             }
           }
         },
-		"actor1" : {
+        "actor1" : {
           "partStates" : {
             "actors" : {              
               "position1" : {
@@ -137,6 +142,11 @@
                 }
               }, 
               "position1-climax" : {
+                "properties" : {
+                  "offset" : [0.25, 0.0]
+                }
+              },
+              "position1-postclimax" : {
                 "properties" : {
                   "offset" : [0.25, 0.0]
                 }

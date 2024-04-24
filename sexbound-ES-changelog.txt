@@ -44,8 +44,11 @@
 				-> A race can now be declared to use an addional render layer for ears and one for tails on the actor
 					--> Turn "sxbUsesAnimatedEars" and "sxbUsesAnimatedTail" to "true" respectively
 					--> This, in turn, enables the use of an "ears.png" and "tail.png" spritesheet from where all other normal actor parts are.
-					--> Ears layer on top of the hair and use either hairDirectives or bodyDirectives.
-						---> This is determined by new "sxbEarsUseBodyColors" setting in species file.
+					--> Ears layer either on top of the hair, attached to the head, or on top of the body, attached to the body.
+						---> This is determined by the new "sxbEarsOnBodyLayer" setting in the species file.
+						---> The latter is an option to closely mimic the only vanilla Starbound way to have animated ears on characters - and to make spriting easier.
+					--> Ears use either hairDirectives or bodyDirectives.
+						---> This is determined by the new "sxbEarsUseBodyColors" setting in species file.
 					--> Tail layers behind the backwear layer and uses bodyDirectives.
 				-> Translations can now properly affect notifications and sextalk!
 					--> These files now properly load from a folder with the current language's code, allowing proper dynamic translations.
