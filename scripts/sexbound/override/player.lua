@@ -162,6 +162,9 @@ function Sexbound.Player:update(dt)
 
     -- Only the Player needs to update pregnancy via script. NPCs and Monsters update via AI.
     self._pregnant:update(dt)
+    
+    -- Update the player's arousal module, as they, too, now can get horny
+    self._arousal:update(dt)
 end
 
 function Sexbound.Player:handleEnterClimaxState(args)
