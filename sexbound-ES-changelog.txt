@@ -47,6 +47,7 @@
 					--> Ears layer either on top of the hair, attached to the head, or on top of the body, attached to the body.
 						---> This is determined by the new "sxbEarsOnBodyLayer" setting in the species file.
 						---> The latter is an option to closely mimic the only vanilla Starbound way to have animated ears on characters - and to make spriting easier.
+						---> In the latter case, an additional file "ears_flipped.png" is used to accomodate for when the head is flipped seperately.
 					--> Ears use either hairDirectives or bodyDirectives.
 						---> This is determined by the new "sxbEarsUseBodyColors" setting in species file.
 					--> Tail layers behind the backwear layer and uses bodyDirectives.

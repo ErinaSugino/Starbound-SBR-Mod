@@ -256,7 +256,9 @@ end
 
 function Sexbound.Actor:loadEarsPart(animState, entityGroup, role, species, gender)
     if not self:getIdentity("sxbUseAnimatedEars") then return nil end
-    return self:getSprite(animState, "ears", {
+    local part = "ears"
+    if self:getIdentity("sxbEarsOnBodyLayer") and self:getAnimationState():getFlipHead(self:getActorNumber()) then part = "earsFlipped" end
+    return self:getSprite(animState, part, {
         entityGroup = entityGroup,
         gender = gender,
         role = role,
