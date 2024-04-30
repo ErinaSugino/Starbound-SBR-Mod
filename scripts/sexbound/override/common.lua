@@ -114,7 +114,7 @@ function Sexbound.Common:fetchCoreIdentity()
     
     self._speciesType = speciesConfig.sxbSpeciesType or nil
     
-    self._usesHeat = (speciesConfig.sxbUsesHeat or false) and (self._config.sex.enableHeatMechanic or false)
+    self._usesHeat = (speciesConfig.sxbUseHeat or false) and (self._config.sex.enableHeatMechanic or false)
 end
 
 function Sexbound.Common:buildBodyTraits(gender)

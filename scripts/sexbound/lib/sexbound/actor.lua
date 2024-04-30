@@ -104,7 +104,7 @@ function Sexbound.Actor:reset(stateName)
 
     -- Apply flip to head directives
     if self:getAnimationState():getFlipHead(actorNumber) then
-        self:flipPart("Head")
+        self:flipPart("HeadFlip")
     end
 
     -- Apply flip to body directives
@@ -447,12 +447,18 @@ function Sexbound.Actor:resetTransformations(prefix)
     local offsets = self:getActorOffset(self:getPosition():getName())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
+    local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber)
+    
     for _, partName in ipairs({"Body", "Head"}) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
             local partNameLower = partName:lower()
-            animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
+            if partNameLower == "head" and headFlipped then
+                animator.translateTransformationGroup(transformationGroupName, (offsets["headFlipped"] or offsets["head"] or {0,0}))
+            else
+                animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
+            end
             self:getLog():debug("Actor "..self:getActorNumber().." applies offset for "..partNameLower..": "..sb.print(offsets[partNameLower] or {0,0}))
         end
     end
