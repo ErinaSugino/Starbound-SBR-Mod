@@ -104,7 +104,7 @@ function Sexbound.Actor:reset(stateName)
 
     -- Apply flip to head directives
     if self:getAnimationState():getFlipHead(actorNumber) then
-        self:flipPart("HeadFlip")
+        self:flipPart("Head")
     end
 
     -- Apply flip to body directives
@@ -447,15 +447,26 @@ function Sexbound.Actor:resetTransformations(prefix)
     local offsets = self:getActorOffset(self:getPosition():getName())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
-    local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber)
+    local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber())
+    local toReset = {"Body", "Head", "Ears"}
+    local toOffset = {"Body", "Head"}
     
-    for _, partName in ipairs({"Body", "Head"}) do
+    for _, partName in ipairs(toReset) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
+        end
+    end
+    
+    for _, partName in ipairs(toOffset) do
+        local transformationGroupName = prefix .. partName
+        if animator.hasTransformationGroup(transformationGroupName) then
             local partNameLower = partName:lower()
             if partNameLower == "head" and headFlipped then
-                animator.translateTransformationGroup(transformationGroupName, (offsets["headFlipped"] or offsets["head"] or {0,0}))
+                local offset = (offsets["headFlipped"] or offsets["head"] or {0,0})
+                local flipOffset = headFlipped and {offset[1] * -1, offset[2]} or offset
+                animator.translateTransformationGroup(transformationGroupName, offset)
+                animator.translateTransformationGroup(prefix.."Ears", flipOffset)
             else
                 animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
             end
@@ -1578,7 +1589,7 @@ end
 --- Returns the offset applied to this actor for a given position
 function Sexbound.Actor:getActorOffset(position)
     local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
-    return offsets[position] or offsets[default] or {head = {0,0}, body = {0,0}}
+    return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
 end
 
 --- Legacy

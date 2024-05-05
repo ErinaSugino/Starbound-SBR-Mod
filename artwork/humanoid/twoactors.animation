@@ -1186,7 +1186,7 @@
 				"properties": {
 					"anchorPart": "actor2-body",
 					"centered": false,
-					"image": "<part-actor2-tail>.<frame>",
+					"image": "<part-actor2-tail>.<frame><actor2-bodyDirectives>",
 					"zLevel": 23
 				},
 				"partStates": {
@@ -1483,7 +1483,7 @@
 					"centered": false,
 					"image": "<part-actor2-ears-body>.<frame><actor2-earsDirectives><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 31,
-					"transformationGroups": ["actor2Head"]
+					"transformationGroups": ["actor2Ears"]
 				},
 				"partStates": {
 					"actors": {
@@ -3101,7 +3101,7 @@
 					"centered": false,
 					"image": "<part-actor2-head><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 24,
-					"transformationGroups": ["actor2Head", "actor2HeadFlip"]
+					"transformationGroups": ["actor2Head"]
 				},
 				"partStates": {
 					"actors": {
@@ -4437,7 +4437,7 @@
 				"properties": {
 					"anchorPart": "actor1-body",
 					"centered": false,
-					"image": "<part-actor1-tail>.<frame>",
+					"image": "<part-actor1-tail>.<frame><actor1-bodyDirectives>",
 					"zLevel": 7
 				},
 				"partStates": {
@@ -4777,7 +4777,7 @@
 					"centered": false,
 					"image": "<part-actor1-ears-body>.<frame><actor1-earsDirectives><actor1-headwearMask><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
 					"zLevel": 15,
-					"transformationGroups": ["actor1Head"]
+					"transformationGroups": ["actor1Ears"]
 				},
 				"partStates": {
 					"actors": {
@@ -6080,7 +6080,7 @@
 					"centered": false,
 					"image": "<part-actor1-head><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
 					"zLevel": 8,
-					"transformationGroups": ["actor1Head", "actor1HeadFlip"]
+					"transformationGroups": ["actor1Head"]
 				},
 				"partStates": {
 					"actors": {
@@ -6965,7 +6965,7 @@
 				"properties": {
 					"anchorPart": "actor3-body",
 					"centered": false,
-					"image": "<part-actor3-tail>.<frame>",
+					"image": "<part-actor3-tail>.<frame><actor3-bodyDirectives>",
 					"zLevel": 39
 				},
 				"partStates": {
@@ -7246,7 +7246,7 @@
 					"centered": false,
 					"image": "<part-actor3-ears-body>.<frame><actor3-earsDirectives><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 47,
-					"transformationGroups": ["actor3Head"]
+					"transformationGroups": ["actor3Ears"]
 				},
 				"partStates": {
 					"actors": {
@@ -8794,7 +8794,7 @@
 					"centered": false,
 					"image": "<part-actor3-head><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
 					"zLevel": 40,
-					"transformationGroups": ["actor3Head", "actor3HeadFlip"]
+					"transformationGroups": ["actor3Head"]
 				},
 				"partStates": {
 					"actors": {
@@ -11206,19 +11206,19 @@
 		"actor2Body": {"interpolated": true},
 		"actor2Groinwear1": {"interpolated": true},
 		"actor2Head": {"interpolated": true},
-		"actor2HeadFlip": {"interpolated": true},
+		"actor2Ears": {"interpolated": true},
 		"actor2Nippleswear1": {"interpolated": true},
 		"actor2Nippleswear2": {"interpolated": true},
 		"actor1Body": {"interpolated": true},
 		"actor1Groinwear1": {"interpolated": true},
 		"actor1Head": {"interpolated": true},
-		"actor1HeadFlip": {"interpolated": true},
+		"actor1Ears": {"interpolated": true},
 		"actor1Nippleswear1": {"interpolated": true},
 		"actor1Nippleswear2": {"interpolated": true},
 		"actor3Body": {"interpolated": true},
 		"actor3Groinwear1": {"interpolated": true},
 		"actor3Head": {"interpolated": true},
-		"actor3HeadFlip": {"interpolated": true},
+		"actor3Ears": {"interpolated": true},
 		"actor3Nippleswear1": {"interpolated": true},
 		"actor3Nippleswear2": {"interpolated": true}
 	},
