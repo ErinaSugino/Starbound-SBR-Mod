@@ -77,7 +77,10 @@ function Sexbound.Player.Arousal:loadMoanConfig()
         end)
     end
     
-    self._moanConfig = loadedConfig[player.species()] or loadedConfig["default"] or {}
+    self._moanConfig = loadedConfig["moan"] or {}
+    self._moanConfig = self._moanConfig["soundConfig"] or {}
+    self._moanConfig = self._moanConfig[player.species()] or self._moanConfig["default"] or {}
+    self._moanConfig = self._moanConfig[player.gender()] or {}
 end
 
 function Sexbound.Player.Arousal:updateArousalStatus()
