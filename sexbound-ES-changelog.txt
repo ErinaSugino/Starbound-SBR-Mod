@@ -56,7 +56,8 @@
 					--> In old SxB, this was hardcoded to always use "en" for... reasons?
 				-> Actor offsets are here! Well, somewhat.
 					--> By defining "actorOffset" in the species file you can move a given species' head and/or body depending on position.
-					--> "actorOffset": {"default": {"head": {0,0}, "body": {0,0}}}
+					--> "actorOffset": {"default": {"head": {0,0}, "body": {0,0}, "headFlipped": {0,0}}}
+						---> Different offsets for flipped heads are possible.
 					--> Once this feature is actively used and tested, functionality will surely expand.
 				-> Additional POV data
 					--> The "facialType" and "facialID" properties are now available to the POV modules by default.
