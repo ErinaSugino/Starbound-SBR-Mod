@@ -95,7 +95,9 @@ function Sexbound.NPC.new()
         _isClimaxing       = false,
         _isKid             = false,
         _kidTimer          = 0,
-        _behaviorData      = {excludedNodes = {}}
+        _behaviorData      = {excludedNodes = {}},
+        _isShipWorld       = (world.type() == "unknown"),
+        _pregnancyDelay    = 5
     }, Sexbound.NPC_mt)
 
     self:init(self, "npc") -- init defined in common.lua
@@ -152,6 +154,8 @@ function Sexbound.NPC:update(dt)
         d.time = (d.time or 0) - dt
         if d.time <= 0 then self._behaviorData.excludedNodes[c] = nil end
     end
+    
+    if self._pregnancyDelay > 0 then self._pregnancyDelay = self._pregnancyDelay - dt end
 end
 
 function Sexbound.NPC:updateLoungeTimer(dt, callback)
