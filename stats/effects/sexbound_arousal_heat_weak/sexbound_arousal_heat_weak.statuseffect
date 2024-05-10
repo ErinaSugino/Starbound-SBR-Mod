@@ -1,0 +1,10 @@
+{
+  "name"            : "sexbound_arousal_heat_weak",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 900,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/heat_weak.png",
+  "label"           : "In Heat (Medicated)",
+  "scripts"         : [ "sexbound_arousal_heat_weak.lua" ],
+  "animationConfig" : "sexbound_arousal_heat_weak.animation"
+}

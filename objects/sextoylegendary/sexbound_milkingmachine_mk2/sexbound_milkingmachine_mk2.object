@@ -118,7 +118,8 @@
 		
 		"actor2-arm-back" : {
 		  "properties": {
-			"centered": true
+			"centered": true,
+			"zLevel": 17
 		  },
           "partStates" : {
             "actors" : {              
@@ -132,7 +133,7 @@
                   "offset" : [0.0, 0.0]
                 }
               },
-			  "position1-postclimax" : {
+              "position1-postclimax" : {
                 "properties" : {
                   "offset" : [0.0, 0.0]
                 }
@@ -158,7 +159,7 @@
                   "offset" : [0.25, 0.0]
                 }
               },
-			  "position1-postclimax" : {
+              "position1-postclimax" : {
                 "properties" : {
                   "offset" : [0.25, 0.0]
                 }

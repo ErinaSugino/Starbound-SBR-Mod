@@ -78,24 +78,23 @@ function Sexbound.Actor.Moan:initMoanSoundConfig()
     end
 
     local name = "moan"
-    local identity = self:getParent():getIdentity()
 
     local definedSoundConfig = self:getDefinedSoundConfigFromConfigFile(name) or {}
     local defaultSoundConfig = self:getDefaultSoundConfigFromConfigFile(name) or {}
 
-    local sxbMoanInterval = identity.sxbMoanInterval or definedSoundConfig.interval
+    local sxbMoanInterval = definedSoundConfig.interval
     sxbMoanInterval = self:convertToTable(sxbMoanInterval) or {}
     if isEmpty(sxbMoanInterval) then
         sxbMoanInterval = defaultSoundConfig.sxbMoanInterval or {2.0, 3.0}
     end
 
-    local sxbMoanPitch = identity.sxbMoanPitch or definedSoundConfig.pitch
+    local sxbMoanPitch = definedSoundConfig.pitch
     sxbMoanPitch = self:convertToTable(sxbMoanPitch) or {}
     if isEmpty(sxbMoanPitch or {}) then
         sxbMoanPitch = defaultSoundConfig.sxbMoanPitch or {1.0, 1.0}
     end
 
-    local sxbMoanSounds = identity.sxbMoanSounds or definedSoundConfig.soundEffects
+    local sxbMoanSounds = definedSoundConfig.soundEffects
     if isEmpty(sxbMoanSounds or {}) then
         sxbMoanSounds = defaultSoundConfig.sxbMoanSounds or {}
     end
@@ -117,24 +116,23 @@ function Sexbound.Actor.Moan:initOrgasmSoundConfig()
     end
 
     local name = "orgasm"
-    local identity = self:getParent():getIdentity()
 
     local definedSoundConfig = self:getDefinedSoundConfigFromConfigFile(name) or {}
     local defaultSoundConfig = self:getDefaultSoundConfigFromConfigFile(name) or {}
 
-    local sxbOrgasmInterval = identity.sxbOrgasmInterval or definedSoundConfig.interval
+    local sxbOrgasmInterval = definedSoundConfig.interval
     sxbOrgasmInterval = self:convertToTable(sxbOrgasmInterval) or {}
     if isEmpty(sxbOrgasmInterval or {}) then
         sxbOrgasmInterval = defaultSoundConfig.sxbOrgasmInterval or {2.0, 3.0}
     end
 
-    local sxbOrgasmPitch = identity.sxbOrgasmPitch or definedSoundConfig.pitch
+    local sxbOrgasmPitch = definedSoundConfig.pitch
     sxbOrgasmPitch = self:convertToTable(sxbOrgasmPitch) or {}
     if isEmpty(sxbOrgasmPitch or {}) then
         sxbOrgasmPitch = defaultSoundConfig.sxbOrgasmPitch or {1.0, 1.0}
     end
 
-    local sxbOrgasmSounds = identity.sxbOrgasmSounds or definedSoundConfig.soundEffects
+    local sxbOrgasmSounds = definedSoundConfig.soundEffects
     if isEmpty(sxbOrgasmSounds or {}) then
         sxbOrgasmSounds = defaultSoundConfig.sxbOrgasmSounds or {}
     end

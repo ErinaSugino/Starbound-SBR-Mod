@@ -1,4 +1,76 @@
 =====CHANGELOG=====
+	1 . 2
+		[Player affecting changes]
+			=> General
+				-> Crewmembers no longer reset when doing crewmember things!
+					--> Their pregnancy, family relation data and other status effects now stay upon porting around!
+				-> Removed the dependency for "KawaiiStuff+" to run SBR, which was inherited from merging Lustbound.
+				-> Cleaned up shops
+					--> The items across the Sexbound and Lustbound vending machines are now grouped and sorted more logically
+					--> The outfit shop in Lustia now doesn't sell you a sneaky duplicate!
+					--> The "Birthcontrol Pill" is now actually purchasable!
+				-> Player horniness is now a thing!
+					--> Get buffs and debuffs when you are pent up!
+					--> Get rid of them by simply getting some sweet relieve!
+					--> Certain races can instead go "into heat". Which is like arousal but much stronger, and only goes away when you successfully make a baby!
+					--> Additionally, for our heated friends there is a new pill available that shortens and weakens (but not fully removes) the effects of being in heat!
+				-> NPC sub-genders in the wild!
+					--> Every NEW NPC - not randomly everyone in the universe - has a config-based chance to spawn with a suitable sub-gender!
+					--> Same goes for babies - more on that in the Pregnancy System section.
+				-> Actors have been relayered and enhanced!
+					--> This technically doesn't mean much *yet*, but it should look better overall, allows for the future support of non-humanoid races like Arachne, and the addition of animated tails and ears!
+				-> Fixed common bugs and incompatibilities
+					--> Patched into "Anom's Outpost Overhaul" to correctly place the condom dispenser in their altered outpost layout.
+					--> Circumvented Starbound's greatest sin. Something something data loss on entity messaging. Tl;dr: Vulpes babies don't explode anymore, and neither should any other species!
+					--> Cutebound Avians should not crash your game anymore.
+					--> Reaching the looping point of the universe should not turn every NPC in existence into kids anymore.
+					--> The intro mission janitor got his brain back!
+						---> Never realized anything was wrong? Cool! Well, he does only have about 2 lines of dialog and one interaction anyway...
+			=> Pregnancy System
+				-> Sub-gender support for babies!
+					--> Every baby that is created has a config-based chance to roll a suitable sub-gender!
+					--> Babies roll this chance **three times** - once for copying the mother's sub-gender, once for the father's sub-gender, and once for a random mutation.
+			=> Sextalk System
+				-> Is now atleast 20% better!
+					--> You might not immediately realize much - but the underlying system is much more robust.
+					--> Actors now take proper turns to talk and don't half talk over eachother.
+					--> Dialog for many, many, *many* more scenarios has become available!
+					--> Dialog files are now *human*-readable, so you, too, can now easily write all the dirty RP talk you want!
+					--> You can enable in the plugin's config that the names of actors are shown in the dialog!
+		[Modding affecting changes]
+			=> General
+				-> A race can now be declared as using animalistic "heat" cycles.
+					--> Turn "sxbUseHeat" in the species file to "true"
+				-> A race can now be declared to use an addional render layer for ears and one for tails on the actor
+					--> Turn "sxbUseAnimatedEars" and "sxbUseAnimatedTail" to "true" respectively
+					--> This, in turn, enables the use of an "ears.png" and "tail.png" spritesheet from where all other normal actor parts are.
+					--> Ears layer either on top of the hair, attached to the head, or on top of the body, attached to the body.
+						---> This is determined by the new "sxbEarsOnBodyLayer" setting in the species file.
+						---> The latter is an option to closely mimic the only vanilla Starbound way to have animated ears on characters - and to make spriting easier.
+						---> In the latter case, an additional file "ears_flipped.png" is used to accomodate for when the head is flipped seperately.
+					--> Ears use either hairDirectives or bodyDirectives.
+						---> This is determined by the new "sxbEarsUseBodyColors" setting in species file.
+					--> Tail layers behind the backwear layer and uses bodyDirectives.
+				-> Translations can now properly affect notifications and sextalk!
+					--> These files now properly load from a folder with the current language's code, allowing proper dynamic translations.
+					--> In old SxB, this was hardcoded to always use "en" for... reasons?
+				-> Actor offsets are here! Well, somewhat.
+					--> By defining "actorOffset" in the species file you can move a given species' head and/or body depending on position.
+					--> "actorOffset": {"default": {"head": {0,0}, "body": {0,0}, "headFlipped": {0,0}}}
+						---> Different offsets for flipped heads are possible.
+					--> Once this feature is actively used and tested, functionality will surely expand.
+				-> Additional POV data
+					--> The "facialType" and "facialID" properties are now available to the POV modules by default.
+				-> [IMPORTANT] Full actor relayering!
+					--> Implementing an updated version of Red's "Relayer" project, all actors are now properly layered.
+					--> Every object that has custom animation properties regarding layer changes now needs to be updated to account for this!
+					--> Error due to Starbound limitations makes it so the emote layer gets lost when layer shifting actors. Shouldn't happen too often though.
+			=> Sextalk System
+				-> [IMPORTANT] Completely reworked dialog file structure
+					--> All current and future race supports that bring their own dialog will have to update accordingly!
+					--> On the bright side - it's much easier now!
+					--> Modding guide on the new file structure and its effects in the wiki.
+					--> Also, available states and interaction types are checked with their own functions, allowing for easy, safe overloading to add custom conditions for dialog!
 	1 . 1
 		[Player affecting changes]
 			=> General
@@ -179,7 +251,7 @@
 					--> For entity specific overrides, use entity identity storage
 
 	P E N D I N G		
-		=> [CORE] Add StarExtension Dependency [V1.1]
+		=> [CORE] Add StarGlue Modules [V1.3]
 			=> Enables varying thrust sound effects for sex
 			=> Enables new immersion layer, replacing SAIL radio messages with chat messages
 			=> Enables proper scaling for kid NPCs
@@ -187,9 +259,8 @@
 		=> [GENERAL] Rework animation speed logic to be actor dependant not position dependant [I]
 		=> [GENERAL] Add race specific speed, arousal and other modifiers [I]
 		=> [GENERAL] Add proper NPC logic (logical way NPCs choose which sex node to join based on who is in it, who they prefer fucking with, ...) [50%] [I]
-		=> [GENERAL] Add general support for NPC (x NPC or x Player) relationships affection sex preferences [Yep, not anytime soon] [I]
+		=> [GENERAL] Add general support for NPC (x NPC or x Player) relationships affecting sex preferences [Yep, not anytime soon] [I]
 		=> [GENERAL] Support for non-humanoid species [B]
-		=> [GENERAL] __Rework persistent sub-gender system (again?) [I]__
 		=> [GENERAL] Add commands [C]
 		=> [GENERAL] Add humping variety to sex animation [Probably impossible] [I]
 		=> [CLIMAX] Make condoms degrading (climax with condom -> used condom -> broken condom) [S]
@@ -201,12 +272,8 @@
 		=> [PREGNANCY] Add possibility for condoms to break [S]
 		=> [PREGNANCY] Add maximum complexity logic (lingering cum, washing) [L]
 		=> [PREGNANCY] NPC realistic pregnancy logic [L]/[F]?
-		=> [PREGNANCY] Finish implementing incest logic
-		=> [SEXTALK] Rework dialogue structure to be dynamic [B]
 		=> [MODDING] Assimilate "Sexbound Defeat" if allowed [C]
 		=> [MODDING] Update default animation depth to the level of Red's "Relayer" project? [I]
-		=> [MODDING] Make sextalk loading and states modular and hookable?
-		=> [MODDING] Rework animation structure to accomodate for non-humanoid actor [B]
 		
 		=> [IDEA] Rework of climax system
 			==> Climax available at 100

@@ -1,0 +1,10 @@
+{
+  "name"            : "sexbound_arousal_heat",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 1800,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/heat.png",
+  "label"           : "In Heat",
+  "scripts"         : [ "sexbound_arousal_heat.lua" ],
+  "animationConfig" : "sexbound_arousal_heat.animation"
+}

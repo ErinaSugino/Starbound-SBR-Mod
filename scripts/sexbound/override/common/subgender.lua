@@ -174,6 +174,16 @@ function Sexbound.Common.SubGender:removeSxbSubGender(subgender)
     self:getParent():buildBodyTraits(self._currentGender) -- trigger rebuild of entity body traits
 end
 
+--- Returns a random sub-gender for the given main gender
+function Sexbound.Common.SubGender:createRandomSubGender(gender)
+    local possibleSubGenders = {}
+    for _,g in ipairs(self._parent._config.sex.subGenderList) do
+        if self:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) end
+    end
+    
+    return util.randomChoice(possibleSubGenders)
+end
+
 --- Returns the subgender set for a status effect name - or nil if non set
 function Sexbound.Common.SubGender:getDefinedGender(statusName)
     return self._config.statuseffects[statusName]
