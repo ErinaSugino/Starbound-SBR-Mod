@@ -1,7 +1,0 @@
-{
-  "name"            : "sexbound_antiheat",
-  "blockingStat"    : "sexboundImmunity",
-  "defaultDuration" : 1,
-  "effectConfig"    : {},
-  "scripts"         : [ "sexbound_antiheat.lua" ]
-}

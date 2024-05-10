@@ -1,6 +1,118 @@
 [
   {
     "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/avian/avianmoanmale01.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale02.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale03.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale04.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale05.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale06.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale07.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale08.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale09.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanmale10.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/avian/avianmoanfemale01.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale02.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale03.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale04.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale05.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale06.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale07.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale08.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale09.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale10.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale11.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale12.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale13.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale14.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale15.ogg",
+      "/sfx/sexbound/moans/avian/avianmoanfemale16.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/avian/avianorgasmmale01.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmmale02.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmmale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale03.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale04.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale05.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale06.ogg",
+      "/sfx/sexbound/orgasms/avian/avianorgasmfemale07.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
     "path": "/genders/0/sxbShowNipples",
     "value": false
   },

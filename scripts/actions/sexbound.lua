@@ -22,10 +22,6 @@ function checkPregnancy(args, board)
     if not targetEntity then
         return false
     end
-    
-    if (targetEntity._pregnancyDelay or 0) > 0 then
-        return false
-    end
 
     local babyIndex = targetEntity:getPregnant():findReadyBabyIndex()
     if babyIndex == nil then

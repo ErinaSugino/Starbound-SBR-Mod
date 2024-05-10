@@ -1,6 +1,92 @@
 [
   {
     "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale01.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale02.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale03.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale04.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale05.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale06.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale07.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale08.ogg",
+      "/sfx/sexbound/moans/novakid/novakidmoanfemale09.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/novakid/novakidorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/novakid/novakidorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/novakid/novakidorgasmfemale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
     "path": "/genders/0/sxbShowNipples",
     "value": false
   },

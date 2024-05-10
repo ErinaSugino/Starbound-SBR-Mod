@@ -1,6 +1,102 @@
 [
   {
     "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale01.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale02.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale03.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale04.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale05.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale06.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale07.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale08.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale09.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale10.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale11.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale12.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale13.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale14.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale15.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale16.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale17.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale18.ogg",
+      "/sfx/sexbound/moans/hylotl/hylotlmoanfemale19.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": []
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/hylotl/hylotlorgasmfemale03.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
     "path": "/genders/0/sxbShowNipples",
     "value": false
   },

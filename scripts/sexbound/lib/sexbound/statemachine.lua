@@ -24,8 +24,7 @@ function Sexbound.StateMachine.new(parent)
         },
         _positionTimer = 0,
         _positionTimeout = 10,
-        _positionTimeoutRange = {30, 50},
-        _delayedIdleTrigger = false
+        _positionTimeoutRange = {30, 50}
     }, Sexbound.StateMachine_mt)
 
     Sexbound.Messenger.get("main"):addBroadcastRecipient(self)
@@ -52,8 +51,6 @@ function Sexbound.StateMachine.new(parent)
                 end) then
                     self:getLog():error("The animator could not enter the 'none' animation state.")
                 end
-                
-                self:getParent():getSextalk():onEnterNullState()
             end,
 
             update = function(dt, stateData)
@@ -103,10 +100,9 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterIdleState()
                 end
-                self:getParent():getSextalk():onEnterIdleState()
                 
                 if not self:getParent():getContainsPlayer() and self:getParent()._config.sex.npcStartSex then
-                    self._delayedIdleTrigger = true
+                    self:getParent():getPositions():switchRandomSexPosition(true)
                 end
             end,
 
@@ -125,15 +121,9 @@ function Sexbound.StateMachine.new(parent)
                 if self:isHavingSex() then return true end
                 --- Idling is now it's own mechanic
 
-                if self._delayedIdleTrigger and self._stateMachine:stateDesc() == "idleState" then
-                    self:getParent():getPositions():switchRandomSexPosition(true)
-                    self._delayedIdleTrigger = false
-                else
-                    -- Skip update if we switch anyway
-                    for _, actor in ipairs(stateData.actors) do
-                        actor:onUpdateAnyState(dt)
-                        actor:onUpdateIdleState(dt)
-                    end
+                for _, actor in ipairs(stateData.actors) do
+                    actor:onUpdateAnyState(dt)
+                    actor:onUpdateIdleState(dt)
                 end
             end,
 
@@ -202,7 +192,6 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterSexState()
                 end
-                self:getParent():getSextalk():onEnterSexState()
             end,
 
             update = function(dt, stateData)
@@ -293,7 +282,6 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterClimaxState()
                 end
-                self:getParent():getSextalk():onEnterClimaxState()
             end,
 
             update = function(dt, stateData)
@@ -360,7 +348,6 @@ function Sexbound.StateMachine.new(parent)
                 for _, actor in ipairs(stateData.actors) do
                     actor:onEnterAnyState()
                 end
-                self:getParent():getSextalk():onEnterPostClimaxState()
                 
                 self._postclimaxTimer = 0
             end,
@@ -434,7 +421,6 @@ function Sexbound.StateMachine.new(parent)
                     actor:onEnterAnyState()
                     actor:onEnterExitState()
                 end
-                self:getParent():getSextalk():onEnterExitState()
             end,
 
             update = function(dt, stateData)

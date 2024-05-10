@@ -12,7 +12,6 @@ end
 -- @param parent
 function Sexbound.Common.Arousal:init(parent, seed)
     self._parent = parent
-    self._usesHeat = parent._usesHeat or false
     seed = seed or os.time()
     arousalRate = parent:getConfig().sex.naturalHorninessRate
     if type(arousalRate) == "table" then
@@ -28,12 +27,6 @@ function Sexbound.Common.Arousal:init(parent, seed)
     self._maxAmount = status.stat("maxArousal") or 100
     self._regenRate = self._config.regenRates.default
     if self._parent:canLog("debug") then sb.logInfo("Entity #"..entity.id().."'s current arousal gain is "..tostring(self._regenRate)) end
-    
-    local parentConfig = self._parent._config or {}
-    local sexConfig = parentConfig.sex or {}
-    self._config.playerArousalEffects = sexConfig.playerArousalEffects or false
-    self._config.heatCycleLength = sexConfig.heatCycleLength or {10,30}
-    
     self:initMessageHandlers()
 end
 

@@ -143,19 +143,16 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     local parts = {}
     local role = self:getRole()
     local slot = "actor" .. self:getActorNumber()
-    parts.armBack = Sexbound.Util.fixPath(self:loadArmBackPart(animState, entityGroup, role, species))
-    parts.armFront = Sexbound.Util.fixPath(self:loadArmFrontPart(animState, entityGroup, role, species))
-    parts.body = Sexbound.Util.fixPath(self:loadBodyPart(animState, entityGroup, role, species, gender))
-    parts.facialHair = Sexbound.Util.fixPath(self:loadFacialHairPart(entityGroup, species, directives))
-    parts.facialMask = Sexbound.Util.fixPath(self:loadFacialMaskPart(entityGroup, species, directives))
-    parts.hair = Sexbound.Util.fixPath(self:loadHairPart(entityGroup, species, directives))
-    parts.head = Sexbound.Util.fixPath(self:loadHeadPart(entityGroup, role, species, gender, directives))
-    parts.emote = Sexbound.Util.fixPath(self:loadEmotePart(animState, entityGroup, role, species))
-    parts.ears = Sexbound.Util.fixPath(self:loadEarsPart(animState, entityGroup, role, species, gender))
-    parts.tail = Sexbound.Util.fixPath(self:loadTailPart(animState, entityGroup, role, species, gender))
+    parts.armBack = self:loadArmBackPart(animState, entityGroup, role, species)
+    parts.armFront = self:loadArmFrontPart(animState, entityGroup, role, species)
+    parts.body = self:loadBodyPart(animState, entityGroup, role, species, gender)
+    parts.facialHair = self:loadFacialHairPart(entityGroup, species, directives)
+    parts.facialMask = self:loadFacialMaskPart(entityGroup, species, directives)
+    parts.hair = self:loadHairPart(entityGroup, species, directives)
+    parts.head = self:loadHeadPart(entityGroup, role, species, gender, directives)
+    parts.emote = self:loadEmotePart(animState, entityGroup, role, species)
 
     parts.groin, directives.groin, directives.groinMask = self:loadGroin(entityGroup, role, species, gender)
-    parts.groin = Sexbound.Util.fixPath(parts.groin)
 
     parts.overlay1 = self:loadOverlayPart(animState, 1) -- Load Overlay 1
     parts.overlay2 = self:loadOverlayPart(animState, 2) -- Load Overlay 2
@@ -211,14 +208,6 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
 
     -- Reset nipples separately
     self:getNipples():resetParts(entityGroup, role, species, gender)
-    
-    -- Apply ears and tail sprites, if used
-    if parts.ears then
-        if self:getIdentity("sxbEarsOnBodyLayer") then animator.setGlobalTag("part-" .. slot .. "-ears-body", parts.ears)
-        else animator.setGlobalTag("part-" .. slot .. "-ears", parts.ears) end
-        if self:getIdentity("sxbEarsUseBodyColors") then animator.setGlobalTag(slot .. "-earsDirectives", directives.body) else animator.setGlobalTag(slot .. "-earsDirectives", directives.head) end
-    end
-    if parts.tail then animator.setGlobalTag("part-" .. slot .. "-tail", parts.tail) end
 end
 
 function Sexbound.Actor:getFrameName(animState)
@@ -247,28 +236,6 @@ end
 
 function Sexbound.Actor:loadBodyPart(animState, entityGroup, role, species, gender)
     return self:getSprite(animState, "body", {
-        entityGroup = entityGroup,
-        gender = gender,
-        role = role,
-        species = species
-    }) .. ":" .. self:getFrameName(animState)
-end
-
-function Sexbound.Actor:loadEarsPart(animState, entityGroup, role, species, gender)
-    if not self:getIdentity("sxbUseAnimatedEars") then return nil end
-    local part = "ears"
-    if self:getIdentity("sxbEarsOnBodyLayer") and self:getAnimationState():getFlipHead(self:getActorNumber()) then part = "earsFlipped" end
-    return self:getSprite(animState, part, {
-        entityGroup = entityGroup,
-        gender = gender,
-        role = role,
-        species = species
-    }) .. ":" .. self:getFrameName(animState)
-end
-
-function Sexbound.Actor:loadTailPart(animState, entityGroup, role, species, gender)
-    if not self:getIdentity("sxbUseAnimatedTail") then return nil end
-    return self:getSprite(animState, "tail", {
         entityGroup = entityGroup,
         gender = gender,
         role = role,
@@ -428,7 +395,7 @@ end
 function Sexbound.Actor:resetAnimatorParts(prefix)
     -- Reset each actor part
     for _, part in ipairs({"arm-back", "arm-front", "body", "climax", "head", "hair", "facial-hair", "facial-mask",
-                           "groin", "ears", "ears-body", "tail"}) do
+                           "groin"}) do
         animator.setGlobalTag("part-" .. prefix .. "-" .. part, self:getDefaultPartImage())
     end
 
@@ -444,33 +411,11 @@ end
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
     prefix = prefix or "actor" .. self:getActorNumber()
-    local offsets = self:getActorOffset(self:getPosition():getName())
-    self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
-    local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber())
-    local toReset = {"Body", "Head", "Ears"}
-    local toOffset = {"Body", "Head"}
-    
-    for _, partName in ipairs(toReset) do
+    for _, partName in ipairs({"Body", "Head"}) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
-        end
-    end
-    
-    for _, partName in ipairs(toOffset) do
-        local transformationGroupName = prefix .. partName
-        if animator.hasTransformationGroup(transformationGroupName) then
-            local partNameLower = partName:lower()
-            if partNameLower == "head" and headFlipped then
-                local offset = (offsets["headFlipped"] or offsets["head"] or {0,0})
-                local flipOffset = headFlipped and {offset[1] * -1, offset[2]} or offset
-                animator.translateTransformationGroup(transformationGroupName, offset)
-                animator.translateTransformationGroup(prefix.."Ears", flipOffset)
-            else
-                animator.translateTransformationGroup(transformationGroupName, (offsets[partNameLower] or {0,0}))
-            end
-            self:getLog():debug("Actor "..self:getActorNumber().." applies offset for "..partNameLower..": "..sb.print(offsets[partNameLower] or {0,0}))
         end
     end
 end
@@ -499,6 +444,8 @@ function Sexbound.Actor:setup(actorConfig)
     self._config.storage = self._config.storage or {}
     self._config.storage.sexbound = self._config.storage.sexbound or {}
 
+    -- local index = self:getParent():getActorCount()
+
     self:setAnimationState(self:getParent():getStateMachine():stateDesc())
     
     self:setRole(self:getActorNumber())
@@ -510,138 +457,28 @@ function Sexbound.Actor:setup(actorConfig)
         })
     end
 
-    if self._config.entityType == "npc" or self._config.entityType == "player" then
-        local identity = self._config.identity
-        
+    if actorConfig.entityType == "npc" or actorConfig.entityType == "player" then
         -- Initialize hair identities.
-        identity.hairFolder = self:getHairFolder()
-        identity.hairType = self:getHairType()
+        self._config.identity.hairFolder = self:getHairFolder()
+        self._config.identity.hairType = self:getHairType()
 
         -- Initialize facial hair identities.
-        identity.facialHairFolder = self:getFacialHairFolder()
-        identity.facialHairType = self:getFacialHairType()
+        self._config.identity.facialHairFolder = self:getFacialHairFolder()
+        self._config.identity.facialHairType = self:getFacialHairType()
 
         -- Initialize facial mask identities.
-        identity.facialMaskFolder = self:getFacialMaskFolder()
-        identity.facialMaskType = self:getFacialMaskType()
-        
-        -- Build color genetics. Doing so on the actor ensures no entity messaging bullshittery happens to the data
-        -- Load species file
-        local speciesConfig = root.assetJson("/species/"..identity.species..".species") or {}
-        
-        -- Cache species genetic templates
-        identity.genetics = identity.genetics or {}
-        identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
-        identity.genetics.bodyColorPoolAverage = {}
-        identity.genetics.bodyAllowBlending = true
-        identity.genetics.undyColorPool = speciesConfig.undyColor or {}
-        identity.genetics.undyColorPoolAverage = {}
-        identity.genetics.undyAllowBlending = true
-        identity.genetics.hairColorPool = speciesConfig.hairColor or {}
-        identity.genetics.hairColorPoolAverage = {}
-        identity.genetics.hairAllowBlending = true
-        
-        local res, err = pcall(function()
-            -- Pre calculate color palette averages
-            for i, r in ipairs(identity.genetics.bodyColorPool) do
-                if type(r) ~= "table" then break end
-                local x = 0
-                local avg = { 0, 0, 0 }
-                local valid = true
-                -- Get average color of current checked palette from list
-                for j, v in pairs(r) do
-                    local l = string.len(v)
-                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
-                        valid = false
-                        break
-                    end     -- If not length 3,4,6 or 8 it's invalid - ignore
-                    x = x + 1
-                    
-                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
-                    if a == 0 then identity.genetics.bodyAllowBlending = false end
-                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
-                end
-                if valid then
-                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
-                else
-                    avg[1], avg[2], avg[3] = -1, -1, -1
-                end
-                table.insert(identity.genetics.bodyColorPoolAverage, avg)
-            end
-            for i, r in ipairs(identity.genetics.undyColorPool) do
-                if type(r) ~= "table" then break end
-                local x = 0
-                local avg = { 0, 0, 0 }
-                local valid = true
-                -- Get average color of current checked palette from list
-                for j, v in pairs(r) do
-                    local l = string.len(v)
-                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
-                        valid = false
-                        break
-                    end -- If not length 3,4,6 or 8 it's invalid - ignore
-                    x = x + 1
-                    
-                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
-                    if a == 0 then identity.genetics.undyAllowBlending = false end
-                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
-                end
-                if valid then
-                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
-                else
-                    avg[1], avg[2], avg[3] = -1, -1, -1
-                end
-                table.insert(identity.genetics.undyColorPoolAverage, avg)
-            end
-            for i, r in ipairs(identity.genetics.hairColorPool) do
-                if type(r) ~= "table" then break end
-                local x = 0
-                local avg = { 0, 0, 0 }
-                local valid = true
-                -- Get average color of current checked palette from list
-                for j, v in pairs(r) do
-                    local l = string.len(v)
-                    if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
-                        valid = false
-                        break
-                    end -- If not length 3,4,6 or 8 it's invalid - ignore
-                    x = x + 1
-                    
-                    local r, g, b, a = Sexbound.Util.hexToRgba(v)
-                    if a == 0 then identity.genetics.hairAllowBlending = false end
-                    avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
-                end
-                if valid then
-                    avg[1], avg[2], avg[3] = math.floor(avg[1] / x), math.floor(avg[2] / x), math.floor(avg[3] / x)
-                else
-                    avg[1], avg[2], avg[3] = -1, -1, -1
-                end
-                table.insert(identity.genetics.hairColorPoolAverage, avg)
-            end
-        end)
-
-        if not res then
-            self:getLog().warn("Couldn't fetch species color averages! Species " .. tostring(identity.species) .. " has no color averages!")
-            self:getLog().warn(err)
-        end
-        
-        -- Decode entity color directives
-        self._config.identity.genetics.bodyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.bodyColor)
-        self._config.identity.genetics.undyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.undyColor)
-        self._config.identity.genetics.hairColor = Sexbound.Util.messageDecode(self._config.identity.genetics.hairColor)
+        self._config.identity.facialMaskFolder = self:getFacialMaskFolder()
+        self._config.identity.facialMaskType = self:getFacialMaskType()
     end
     
     self._config.identity.body = {canOvulate=false, canProduceSperm=true, hasPenis=true, hasVagina=false} -- init default male body traits
     self:buildSubGenderList()
 
     local actorStatus = self:getStatus()
-    if self._config.isFertile then actorStatus:addStatus("sexbound_custom_fertility") end
-    if self._config.isHyperFertile then actorStatus:addStatus("sexbound_custom_hyper_fertility") end
-    if self._config.isOvulating then actorStatus:addStatus("sexbound_custom_ovulating") end
-    if self._config.aroused then actorStatus:addStatus("sexbound_aroused") end
-    if self._config.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
-    if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
-    if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
+    if actorConfig.isFertile then actorStatus:addStatus("sexbound_custom_fertility") end
+    if actorConfig.isHyperFertile then actorStatus:addStatus("sexbound_custom_hyper_fertility") end
+    if actorConfig.isOvulating then actorStatus:addStatus("sexbound_custom_ovulating") end
+    if actorConfig.isDefeated then actorStatus:addStatus("sexbound_defeated") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
@@ -649,7 +486,7 @@ function Sexbound.Actor:setup(actorConfig)
         end
     end
     
-    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated))
+    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(actorConfig.isFertile).." - hyperFertile "..tostring(actorConfig.isHyperFertile).." - ovulating "..tostring(actorConfig.isOvulating).." - defeated "..tostring(actorConfig.isDefeated))
     
     self:initPlugins()
     self:getApparel():sync() -- initial fetching of apparel to determine initial gender
@@ -1160,7 +997,7 @@ function Sexbound.Actor:getGenderFutasafe(diffNum)
     local actGender = id.gender
     if id.sxbSubGender == "futanari" or id.sxbSubGender == "cuntboy" then
        if actNum == 1 then actGender = "male" else actGender = "female" end
-       local positionRelation = self:getPosition():getActorRelation() or {}
+       local positionRelation = self:getPosition():getConfig().actorRelation or {}
        local thisFucks = positionRelation[actNum] or 0
        local thatFucks = positionRelation[diffNum] or 0
        if thisFucks ~= 0 and thisFucks == diffNum then actGender = "male"
@@ -1289,7 +1126,7 @@ end
 function Sexbound.Actor:getOtherActorPositionsafe(prioSub)
     prioSub = prioSub or false
     local actNum = self:getActorNumber()
-    local positionTable = self:getPosition():getActorRelation() or {}
+    local positionTable = self:getPosition():getConfig().actorRelation or {}
     local thisFucks = positionTable[actNum] or 0
     local thatFucks = 0
     for i, target in ipairs(positionTable) do 
@@ -1315,7 +1152,7 @@ end
 --- Returns list of all actors fucking this actor.
 function Sexbound.Actor:getImpregnatorList()
     local list = {}
-    local relations = self:getPosition():getActorRelation()
+    local relations = self:getPosition():getConfig().actorRelation
     local actorNum = self:getActorNumber()
     
     for i, target in ipairs(relations) do
@@ -1530,18 +1367,13 @@ function Sexbound.Actor:hasTraits(traits)
     return true
 end
 
---- Checks if the actor is currently in a role in the current position that has the interaction type(s) given
-function Sexbound.Actor:hasInteractionType(targetType)
+--- Checks if the actor is currently in a role in the current position that has the interaction type given
+function Sexbound.Actor:hasInteractionType(type)
     local interactionTypes = self:getPosition()._config.interactionType
     local actorList = self:getImpregnatorList()
     for i,a in ipairs(actorList) do
         local actorNum = a._actorNumber
-        if type(targetType) == "string" and interactionTypes[actorNum] == targetType then return true
-        elseif type(targetType) == "table" then
-            for _,t in ipairs(targetType) do
-                if interactionTypes[actorNum] == t then return true end
-            end
-        end
+        if interactionTypes[actorNum] == type then return true end
     end
     return false
 end
@@ -1552,10 +1384,8 @@ function Sexbound.Actor:getUIData(args)
         actorSlot       = "actor" .. self:getActorNumber(),
         bodyDirectives  = self:getIdentity("bodyDirectives"),
         bodyType        = self:getBodyType(),
-        hairID          = self:getIdentity("hairType"),              -- Data used by PoV for hairs/facial details.
+        hairID          = self:getIdentity("hairType"),
         hairDirectives  = self:getIdentity("hairDirectives"),
-        facialType      = self:getIdentity("facialMaskGroup") or "",
-        facialID        = self:getIdentity("facialMaskType") or "",
         showBackwear    = self:getApparel():getIsVisible("backwear"),
         showChestwear   = self:getApparel():getIsVisible("chestwear"),
         showHeadwear    = self:getApparel():getIsVisible("headwear"),
@@ -1584,12 +1414,6 @@ function Sexbound.Actor:getUIData(args)
     end
     
     return data
-end
-
---- Returns the offset applied to this actor for a given position
-function Sexbound.Actor:getActorOffset(position)
-    local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
-    return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
 end
 
 --- Legacy
