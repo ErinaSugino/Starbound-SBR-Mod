@@ -102,9 +102,9 @@ function Sexbound.Player.Identity:build(target, portraitData)
             local l = #bodyColors
             if l > 0 then
                 -- If nothing extracted - no color can be retrieved
-                for k,v in string.gmatch(bodyColors[1], "(%w+)=(%w+);?") do identity.genetics.bodyColor[string.upper(k)] = v end
+                for k,v in string.gmatch(bodyColors[1], "(%w+)=(%w+);?") do identity.genetics.bodyColor[string.upper(k).."X"] = v end
                 -- Undy color only exists if altOptionAsUndyColor is true, and should be at the end of the body directives
-                if altOptionAsUndyColor and l > 1 then for k,v in string.gmatch(bodyColors[l], "(%w+)=(%w+);?") do identity.genetics.undyColor[string.upper(k)] = v end end -- If length < 2 we only have body colors
+                if altOptionAsUndyColor and l > 1 then for k,v in string.gmatch(bodyColors[l], "(%w+)=(%w+);?") do identity.genetics.undyColor[string.upper(k).."X"] = v end end -- If length < 2 we only have body colors
             end
         elseif string.match(identity.bodyDirectives, "^%?replace=") then
             -- Expecting old Starbound Syntax where every value has it's own replace
@@ -123,8 +123,8 @@ function Sexbound.Player.Identity:build(target, portraitData)
             
             for k,v in string.gmatch(identity.bodyDirectives, "%?replace=(%w+)=(%w+);?") do
                 local compare = string.upper(k)
-                if ref[compare] then identity.genetics.bodyColor[compare] = v end
-                if altOptionAsUndyColor and ref2[compare] then identity.genetics.undyColor[compare] = v end
+                if ref[compare] then identity.genetics.bodyColor[compare.."X"] = v end
+                if altOptionAsUndyColor and ref2[compare] then identity.genetics.undyColor[compare.."X"] = v end
             end
         end
         -- Hair colors only exist if headOptionAsHairColor is true
@@ -135,7 +135,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
                 local l = #hairColors
                 if l > 0 then
                     -- If nothing extracted - no color can be retrieved
-                    for k,v in string.gmatch(hairColors[1], "(%w+)=(%w+);?") do identity.genetics.hairColor[string.upper(k)] = v end
+                    for k,v in string.gmatch(hairColors[1], "(%w+)=(%w+);?") do identity.genetics.hairColor[string.upper(k).."X"] = v end
                 end
             elseif string.match(identity.hairDirectives, "^%?replace=") then
                 local ref
@@ -148,7 +148,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
                 
                 for k,v in string.gmatch(identity.hairDirectives, "%?replace=(%w+)=(%w+);?") do
                     local compare = string.upper(k)
-                    if ref[compare] then identity.genetics.hairColor[compare] = v end
+                    if ref[compare] then identity.genetics.hairColor[compare.."X"] = v end
                 end
             end
         end

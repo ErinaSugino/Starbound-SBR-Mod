@@ -47,6 +47,24 @@ function uninit()
     end, sb.logError)
 end
 
+--- Override of core companion behavior to keep family relation status on crewmembers.
+-- WARNING: Can cause issues with other mods changing the same function!
+function recruitSpawner:respawnRecruit(uuid, recruit)
+  self.followers[uuid] = nil
+  self.shipCrew[uuid] = recruit
+
+  recruit.uniqueId = nil
+  local properties = recruit.status and recruit.status.properties or nil
+  recruit.status = nil
+  if properties then recruit.status = {properties = properties} end
+  recruit.persistent = true
+  recruit.storage = recruit.storage or {}
+  recruit.storage.followingOwner = false
+  recruit.storage.behaviorFollowing = false
+  
+  recruit:spawn()
+end
+
 function Sexbound.Player.new()
     local self = setmetatable({
         _controllerId = nil,
@@ -144,6 +162,9 @@ function Sexbound.Player:update(dt)
 
     -- Only the Player needs to update pregnancy via script. NPCs and Monsters update via AI.
     self._pregnant:update(dt)
+    
+    -- Update the player's arousal module, as they, too, now can get horny
+    self._arousal:update(dt)
 end
 
 function Sexbound.Player:handleEnterClimaxState(args)
@@ -468,6 +489,9 @@ function Sexbound.Player:getActorData()
         isFertile = status.statusProperty("sexbound_custom_fertility", false),
         isHyperFertile = status.statusProperty("sexbound_custom_hyper_fertility", false),
         isOvulating = status.statusProperty("sexbound_custom_ovulating", false),
+        aroused = status.statusProperty("sexbound_aroused", false),
+        arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
+        inHeat = status.statusProperty("sexbound_aroused_heat", false),
         isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)

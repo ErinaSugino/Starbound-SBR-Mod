@@ -1,0 +1,14 @@
+{
+  "itemName" : "sxb_antiheatpill",
+  "price" : 250,
+  "rarity" : "Uncommon",
+  "category" : "medicine",
+  "inventoryIcon" : "sxb_antiheatpill.png",
+  "description" : "Take one to reduce the effects induced by mating season.",
+  "shortdescription" : "Anti-Heat Pill",
+  "effects" : [ 
+    [ "sexbound_antiheat" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

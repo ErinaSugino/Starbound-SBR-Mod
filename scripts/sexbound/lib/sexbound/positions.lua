@@ -251,31 +251,16 @@ end
 --- Switches to the specified position.
 -- @param index
 function Sexbound.Positions:switchPosition(index)
-    if index == -1 or self._positionCount == 0 then self._index = -1
-    else self._index = util.wrap(index, 1, self._positionCount) end
-
-    local actors = {}
-    for _, actor in ipairs(self._parent._actors) do
-        table.insert(actors, {
-            name = actor:getName(),
-            uniqueId = actor:getUniqueId()
-        })
-    end
-
-    Sexbound.Messenger.get("main"):broadcast(self, "Sexbound:Event:Create", {
-        eventName = "POSITION_SWITCHED",
-        eventArgs = {
-            actors = actors,
-            position_name = self:getCurrentPosition():getConfig().name
-        }
-    })
-
     local stateMachine = self:getParent():getStateMachine()
     local stateName = stateMachine:stateDesc()
 
     if not stateName or stateName == "nullState" then
+        self:getLog():debug("Aborted position switch due to null state.")
         return
     end
+    
+    if index == -1 or self._positionCount == 0 then self._index = -1
+    else self._index = util.wrap(index, 1, self._positionCount) end
 
     local animationState = self:getCurrentPosition():getAnimationState(stateName)
 
