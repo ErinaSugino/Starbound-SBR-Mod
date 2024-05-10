@@ -21,7 +21,6 @@ end
 function Baby:create(mother, father)
     local baby = {
         birthGender = self._parent:createRandomBirthGender(),
-        subGender = nil,
         motherName = mother:getName(),
         motherId = mother:getEntityId(),
         motherUuid = mother:getUniqueId(),
@@ -34,16 +33,6 @@ function Baby:create(mother, father)
         fatherSpecies = father:getSpecies(),
         generationFertility = mother._config.generationFertility
     }
-    
-    local subgenderPlugin = self._parent._parent._parent:getPlugins("subgender")
-    
-    if math.random() <= self._config.subGenderChance then baby.subGender = self._parent:createRandomSubGender(baby.birthGender) end
-    if subgenderPlugin then
-        -- Roll for a chance to copy the parent's sub-gender
-        if not baby.subGender and subgenderPlugin:passesGenderRestriction(mother:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = mother:getSubGender() end
-        if not baby.subGender and subgenderPlugin:passesGenderRestriction(father:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = father:getSubGender() end
-        
-    end
     
     if baby.motherType == "npc" and baby.fatherType == "npc" then
         local choices = {mother:getType(), father:getType()}
@@ -90,78 +79,41 @@ function Baby:create(mother, father)
     local hairColorLambda = Sexbound.Util.normalDist()
     
     local function verifyIndex(colorPool, index)
-        return colorPool and (colorPool[index] or '' ~= '') and type(colorPool[index]) == 'table' and next(colorPool[index])
-    end
-    
-    local function pickRandomPaletteIndex(colorPool, notIndex)
-        if type(notIndex) ~= "number" then notIndex = 0 end
-        local l = #colorPool
-        if l < 2 then return 1 end
-        local j, index = 0, notIndex
-        while j < 10 and index == notIndex do
-            index = math.random(l)
-            j = j + 1
-        end
-        return index
+        return colorPool and (colorPool[index] or '' ~= '')
     end
 
-    local function generateColor(motherIndex, fatherIndex, colorPool, allowBlending, colorLambda, loggingName)
-        loggingName = loggingName or "unknown"
+    local function generateColor(motherIndex, fatherIndex, colorPool, allowBlending, colorLambda)
         local color = nil
-        local failedPalettes = 0
-        -- If palettes are invalid, pick valid at random
-        if not verifyIndex(colorPool, motherIndex) then
-            failedPalettes = failedPalettes + 1
-            motherIndex = pickRandomPaletteIndex(colorPool, fatherIndex)
-        end
-        if not verifyIndex(colorPool, fatherIndex) then
-            failedPalettes = failedPalettes + 1
-            fatherIndex = pickRandomPaletteIndex(colorPool, motherIndex)
-        end
-        
-        if failedPalettes > 1 then
-            -- If both palettes had to be randomized - no point in doing Starbound's work. Abort to generate this color palette fully randomly.
-            self:getLog():warn("Baby color genetics aborted for palette "..tostring(loggingName).."! Both detected indices invalid!")
-            return
-        end
-        
-        local motherPalette = colorPool[motherIndex] or ''
-        local fatherPalette = colorPool[fatherIndex] or ''
-        if not verifyIndex(colorPool, motherIndex) or not verifyIndex(colorPool, fatherIndex) then
-            -- If still invalid, just abort.
-            self:getLog():warn("Baby color genetics aborted for palette "..tostring(loggingName).."! One index still invalid after random fill!")
-            return
-        end
-        
-        color = {}
+        if verifyIndex(colorPool, motherIndex) then
+            color = {}
 
-        for i, v in pairs(motherPalette) do
-            local r
-            local fv = fatherPalette[i]
-            if not v or not fv then
-                -- One of the individual color values is faulty. Abort.
-                self:getLog():warn("Baby color genetics aborted for palette "..tostring(loggingName).."! Missing color value in "..tostring(v).." - "..tostring(fv))
-                return
-            end
-            if allowBlending then
-                r = self._parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(fv) }, colorLambda)
+            if verifyIndex(colorPool, fatherIndex) then
+                for i, v in pairs(colorPool[motherIndex]) do
+                    local r
+                    if allowBlending then
+                        r = self._parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(colorPool[fatherIndex][i]) }, colorLambda)
+                    else
+                        r = util.randomChoice({ v, colorPool[fatherIndex][i] })
+                    end
+                    color[i] = Sexbound.Util.rgbaToHex6(r)
+                end
             else
-                r = util.randomChoice({ v, fv })
+                for i, v in pairs(colorPool[motherIndex]) do
+                    color[i] = Sexbound.Util.rgbaToHex6(v)
+                end
             end
-            color[i] = Sexbound.Util.rgbaToHex6(r)
         end
-        
         return color
     end
 
-    baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda, "bodyColor")
-    baby.undyColor = generateColor(motherUndyIndex, fatherUndyIndex, undyColorPool, undyAllowBlending, undyColorLambda, "undyColor")
-    baby.hairColor = generateColor(motherHairIndex, fatherHairIndex, hairColorPool, hairAllowBlending, hairColorLambda, "hairColor")
+    baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda)
+    baby.undyColor = generateColor(motherUndyIndex, fatherUndyIndex, undyColorPool, undyAllowBlending, undyColorLambda)
+    baby.hairColor = generateColor(motherHairIndex, fatherHairIndex, hairColorPool, hairAllowBlending, hairColorLambda)
     
-    self:getLog():debug("Generated baby colors:")
-    self:getLog():debug("Body " .. motherBodyIndex .. " x " .. fatherBodyIndex .. " - " .. Sexbound.Util.dump(baby.bodyColor))
-    self:getLog():debug("Undy " .. motherUndyIndex .. " x " .. fatherUndyIndex .. " - " .. Sexbound.Util.dump(baby.undyColor))
-    self:getLog():debug("Hair " .. motherHairIndex .. " x " .. fatherHairIndex .. " - " .. Sexbound.Util.dump(baby.hairColor))
+    sb.logInfo("Generated baby colors:")
+    sb.logInfo("Body " .. motherBodyIndex .. " x " .. fatherBodyIndex .. " - " .. Sexbound.Util.dump(baby.bodyColor))
+    sb.logInfo("Undy " .. motherUndyIndex .. " x " .. fatherUndyIndex .. " - " .. Sexbound.Util.dump(baby.undyColor))
+    sb.logInfo("Hair " .. motherHairIndex .. " x " .. fatherHairIndex .. " - " .. Sexbound.Util.dump(baby.hairColor))
     
     return baby
 end
@@ -355,7 +307,6 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     local params = {}
     params.scriptConfig = {}
     params.scriptConfig.uniqueId = sb.makeUuid()
-    params.scriptConfig.subGender = babyConfig.subGender
     params.statusControllerSettings = {}
     params.statusControllerSettings.statusProperties = {
         sexbound_birthday = babyConfig,
@@ -487,8 +438,4 @@ function Baby:_giveBirthToMonster(babyConfig)
         spawnableMonster.position,
         spawnableMonster.params
     )
-end
-
-function Baby:getLog()
-    return self._parent._parent:getLog()
 end

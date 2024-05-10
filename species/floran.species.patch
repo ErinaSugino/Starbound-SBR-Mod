@@ -1,6 +1,112 @@
 [
   {
     "op": "add",
+    "path": "/genders/0/sxbMoanInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmInterval",
+    "value": [2.0, 4.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmInterval",
+    "value": [2.0, 3.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmPitch",
+    "value": [1.0, 1.0]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/floran/floranmoanmale01.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale02.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale03.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale04.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale05.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale06.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale07.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale08.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale09.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale10.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale11.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale12.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale13.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanmale14.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbMoanSounds",
+    "value": [
+      "/sfx/sexbound/moans/floran/floranmoanfemale01.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale02.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale03.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale04.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale05.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale06.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale07.ogg",
+      "/sfx/sexbound/moans/floran/floranmoanfemale08.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/0/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/floran/floranorgasmmale01.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmmale02.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmmale03.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmmale04.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/genders/1/sxbOrgasmSounds",
+    "value": [
+      "/sfx/sexbound/orgasms/floran/floranorgasmfemale01.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmfemale02.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmfemale03.ogg",
+      "/sfx/sexbound/orgasms/floran/floranorgasmfemale04.ogg"
+    ]
+  },
+
+  {
+    "op": "add",
     "path": "/genders/0/sxbShowNipples",
     "value": false
   },

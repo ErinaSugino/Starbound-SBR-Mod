@@ -38,14 +38,6 @@
     "path": "/deploymentConfig/scripts/-",
     "value": "/scripts/sexbound/override/player_alt.lua"
   },
-  
-  {
-    "op" : "add",
-    "path" : "/statusControllerSettings/stats/maxArousal",
-    "value" : {
-      "baseValue" : 100.0
-    }
-  },
 
   {
     "op": "add",
@@ -64,16 +56,6 @@
     "path": "/statusControllerSettings/resources/climax",
     "value": {
       "maxStat": "maxClimax",
-      "deltaValue": 0.0,
-      "initialPercentage": 0.0
-    }
-  },
-  
-  {
-    "op": "add",
-    "path": "/statusControllerSettings/resources/arousal",
-    "value": {
-      "maxStat": "maxArousal",
       "deltaValue": 0.0,
       "initialPercentage": 0.0
     }

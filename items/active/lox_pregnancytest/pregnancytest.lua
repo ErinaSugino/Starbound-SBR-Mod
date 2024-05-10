@@ -11,20 +11,20 @@ function PregnancyTest:new()
   return setmetatable({
     entityId = activeItem.ownerEntityId(),
     animTimer = 0,
-    toConsume = false
+    toConsume = 0
   }, PregnancyTest_mt)
 end
 
 function PregnancyTest:update(dt)
   promises:update()
-  if self.toConsume then
+  if self.toConsume == 1 then
     self.animTimer = self.animTimer + dt
-    if self.animTimer >= 1 then self.toConsume = false self.animTimer = 0 item.consume(1) end
+    if self.animTimer >= 1 then self.toConsume = 0 self.animTimer = 0 item.consume(1) end
   end
 end
 
 function PregnancyTest:activate(fireMode, shiftHeld)
-  if self.toConsume then return false end -- If toConsume is 1, the test was used and is on "cooldown", just waiting for the animation to finish before removing item
+  if self.toConsume == 1 then return false end -- If toConsume is 1, the test was used and is on "cooldown", just waiting for the animation to finish before removing item
   promises:add(
     world.sendEntityMessage(self.entityId, "Sexbound:Pregnant:GetDataAndConfig"),
     function(data)
@@ -40,7 +40,7 @@ function PregnancyTest:handlePregnancyData(pregnancies, config)
   or not self:thisEntityHasAtLeastOnePregnancy(pregnancies)
   then self:notifyThisEntityTheyAreNotPregnant()
   else self:notifyThisEntityTheyArePregnant(pregnancies, config) end
-  if not config.legacyInfinitePregnancyTest then self.toConsume = true end
+  if not config.legacyInfinitePregnancyTest then self.toConsume = 1 end
 end
 
 function PregnancyTest:buildTimingMeridian(hour)

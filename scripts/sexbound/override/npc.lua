@@ -45,44 +45,6 @@ function uninit()
     end, sb.logError)
 end
 
---- Overloading of crewmember related functions to make sexbound storage data persistent, and make kids unrecruitable
-local Sexbound_Old_PreservedStorage = preservedStorage
-function preservedStorage()
-    local data = Sexbound_Old_PreservedStorage()
-    data.sexbound = storage.sexbound
-    return data
-end
-
-local Sexbound_Old_RecruitableInteract = recruitable.interact
-function recruitable.interact(sourceEntityId)
-    if self.sb_npc and self.sb_npc._isKid then return nil end
-    return Sexbound_Old_RecruitableInteract(sourceEntityId)
-end
-
-local Sexbound_Old_GetCurrentStatus = getCurrentStatus
-function getCurrentStatus()
-    local data = Sexbound_Old_GetCurrentStatus()
-    data.properties = {
-        motherUuid = status.statusProperty("motherUuid", nil),
-        fatherUuid = status.statusProperty("fatherUuid", nil),
-        motherName = status.statusProperty("motherName", nil),
-        fatherName = status.statusProperty("fatherName", nil),
-        sexbound_previous_storage = status.statusProperty("sexbound_previous_storage", {}),
-        generationFertility = status.statusProperty("generationFertility", 1),
-        fertilityPenalty = status.statusProperty("fertilityPenalty", 1),
-        kid = status.statusProperty("kid", nil)
-    }
-    return data
-end
-
-local Sexbound_Old_SetCurrentStatus = setCurrentStatus
-function setCurrentStatus(statusSummary, statEffectCategory)
-    Sexbound_Old_SetCurrentStatus(statusSummary, statEffectCategory)
-    for prop,val in pairs(statusSummary.properties or {}) do
-        status.setStatusProperty(prop,val)
-    end
-end
-
 function Sexbound.NPC.new()
     local self = setmetatable({
         _enableLoungeTimer = true,
@@ -95,27 +57,13 @@ function Sexbound.NPC.new()
         _isClimaxing       = false,
         _isKid             = false,
         _kidTimer          = 0,
-        _behaviorData      = {excludedNodes = {}},
-        _isShipWorld       = (world.type() == "unknown"),
-        _pregnancyDelay    = 5
+        _behaviorData      = {excludedNodes = {}}
     }, Sexbound.NPC_mt)
 
     self:init(self, "npc") -- init defined in common.lua
     self:initMessageHandlers()
     self:restorePreviousStorage()
     self:initSubmodules()
-    
-    if self._firstInit then
-        local birthSubGender = config.getParameter("subGender", nil)
-        if birthSubGender then
-            if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying birth gender to new npc #"..entity.id()..": "..tostring(birthSubGender)) end
-            self._subGender:handleSxbSubGenderChange(birthSubGender) -- handle because that method respects gender requirements
-        end
-        if not storage.sexbound.identity.sxbSubGender and math.random() <= (self._config.sex.subGenderChance or 0.01) then
-            if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying random gender to new npc #"..entity.id()) end
-            self._subGender:setSxbSubGender(self._subGender:createRandomSubGender(npc.gender()))
-        end
-    end
 
     -- ensure this entity has a unique Id
     if not entity.uniqueId() then
@@ -143,7 +91,7 @@ function Sexbound.NPC:update(dt)
     if self._kidTimer > 0 then self._kidTimer = self._kidTimer - dt end
     if self._isKid and self._kidTimer <= 0 then
         local worldTime = world.time()
-        local kidTime = status.statusProperty('kid', -math.huge)
+        local kidTime = status.statusProperty('kid', 0)
         if kidTime <= worldTime then self:updateKidStatus() end
         
         if self._isKid then self._kidTimer = 10 end -- Only check every 10 seconds
@@ -154,8 +102,6 @@ function Sexbound.NPC:update(dt)
         d.time = (d.time or 0) - dt
         if d.time <= 0 then self._behaviorData.excludedNodes[c] = nil end
     end
-    
-    if self._pregnancyDelay > 0 then self._pregnancyDelay = self._pregnancyDelay - dt end
 end
 
 function Sexbound.NPC:updateLoungeTimer(dt, callback)
@@ -238,11 +184,10 @@ end
 
 function Sexbound.NPC:updateKidStatus()
     local worldTime = world.time()
-    local kidTime = status.statusProperty('kid')
+    local kidTime = status.statusProperty('kid', 0)
     
-    if kidTime == nil or kidTime <= worldTime then
+    if kidTime <= worldTime then
         status.removeEphemeralEffect('sexbound_kid')
-        status.setStatusProperty('kid', nil)
         self._isKid = false
     else
         status.addEphemeralEffect('sexbound_kid', math.huge)

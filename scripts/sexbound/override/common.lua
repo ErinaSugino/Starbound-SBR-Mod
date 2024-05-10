@@ -16,14 +16,11 @@ function Sexbound.Common:new()
     return setmetatable({
         _configFilePath = "/sexbound.config",
         _notificationsFilePath = "/dialog/sexbound/<langcode>/notifications.config",
-        _hasInited = false,
-        _firstInit = false
+        _hasInited = false
     }, Sexbound.Common_mt)
 end
 
 function Sexbound.Common:init(parent, entityType)
-    if not storage.sexbound then self._firstInit = true end
-    
     storage.sexbound = storage.sexbound or {}
     storage.sexbound.identity = storage.sexbound.identity or {}
 
@@ -113,8 +110,6 @@ function Sexbound.Common:fetchCoreIdentity()
     if self._speciesDefaultStatuses and type(self._speciesDefaultStatuses) ~= "table" then self._speciesDefaultStatuses = {self._speciesDefaultStatuses} end
     
     self._speciesType = speciesConfig.sxbSpeciesType or nil
-    
-    self._usesHeat = (speciesConfig.sxbUseHeat or false) and (self._config.sex.enableHeatMechanic or false)
 end
 
 function Sexbound.Common:buildBodyTraits(gender)
@@ -206,7 +201,9 @@ function Sexbound.Common:loadConfig()
 end
 
 function Sexbound.Common:loadNotifications()
-    local _filePath = util.replaceTag(self._notificationsFilePath, "langcode", self:getLanguageCode())
+    -- local _supportedLanguages = self._config.supportedLanguages or {}
+    -- local _language = _supportedLanguages[self._config.defaultLanguage or "english"] or {}
+    local _filePath = util.replaceTag(self._notificationsFilePath, "langcode", "en")
 
     local _, _notifications = xpcall(function()
         return root.assetJson(_filePath)
@@ -281,11 +278,6 @@ end
 function Sexbound.Common:getSubGender()
     if self._subGender then return self._subGender._currentGender
     else return storage.sexbound.identity.sxbSubGender end
-end
-function Sexbound.Common:getLanguageCode()
-    local _supportedLanguages = self._config.supportedLanguages or {}
-    local _language = _supportedLanguages[self._config.defaultLanguage or "english"] or {}
-    return _language.languageCode or "en"
 end
 
 function Sexbound.Common:canLog(level)

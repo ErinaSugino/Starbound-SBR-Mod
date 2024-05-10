@@ -56,16 +56,16 @@
   
   "interactAction" : "OpenMerchantInterface",
   "interactData" : {
-	"config" : "/interface/windowconfig/vendingmachine.config",
-	"paneLayoutOverride" : {
-	  "windowtitle" : {
-		"title"    : "Alluring Toys Co. Super Extras",
-		"subtitle" : "Even more toys and trinkets!"
-	  }
-	},
-	"buyFactor"  : 1.0,
-	"sellFactor" : 0.2,
-	"items" : [
+    "config" : "/interface/windowconfig/vendingmachine.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title"    : "Alluring Toys Co. Super Extras",
+        "subtitle" : "Even more toys and trinkets!"
+      }
+    },
+    "buyFactor"  : 1.0,
+    "sellFactor" : 0.2,
+    "items" : [
 	  {"item" : { "name" : "sexbound_sexbox"}},
 	  {"item" : { "name" : "sexbound_sextoyprinter"}},
 	  {"item" : { "name" : "sexbound_dildo_v2", "parameters" : {
@@ -78,7 +78,7 @@
 		"brightnessValue" : -50,
 		"inventoryIcon" : "dildoicon.png?hueshift=325;?saturation=-33;?brightness=-50"
 	  }}},
-	  {"item" : { "name" : "sexbound_fleshlight_v2", "parameters" : {
+      {"item" : { "name" : "sexbound_fleshlight_v2", "parameters" : {
 		"description" : "A male masturbator made from translucent colorful plastic.",
 		"shortdescription" : "Generic Fleshlight",
 		"cleanObject" : false,
@@ -88,9 +88,10 @@
 		"brightnessValue" : -50,
 		"inventoryIcon" : "fleshlighticon.png?hueshift=325;?saturation=-33;?brightness=-50"
 	  }}},
-	  {"item" : { "name" : "sexbound_contraceptivepatch"}},
-	  {"item" : { "name" : "sexbound_futamode"}},
+      {"item" : { "name" : "sexbound_contraceptivepatch"}},
+      {"item" : { "name" : "sexbound_futamode"}},
+      {"item" : { "name" : "sexbound_birthingpill"}},
 	  {"item" : { "name" : "sexbound_onewaytickettolustia"}}
-	]
+    ]
   }
 }

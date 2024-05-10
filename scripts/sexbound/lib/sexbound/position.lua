@@ -148,16 +148,6 @@ function Sexbound.Position:getName()
     return self:getConfig().name
 end
 
---- Returns this position's actorRelation table
-function Sexbound.Position:getActorRelation()
-    return self:getConfig().actorRelation or {}
-end
-
---- Returns this position's actor-based interactionType table
-function Sexbound.Position:getInteractionType()
-    return self:getConfig().interactionType or {}
-end
-
 --- Returns the currently available actor compositions
 function Sexbound.Position:getAvailableRoles()
     return self._availableRoleIndex, self._availableRoles

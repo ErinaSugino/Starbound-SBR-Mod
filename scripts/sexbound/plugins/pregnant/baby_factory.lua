@@ -98,21 +98,9 @@ end
 --- Returns a random birth gender.
 -- @return birthGender
 function BabyFactory:createRandomBirthGender()
-    return util.randomChoice({"male", "female"})
-end
+    -- Futanari?
 
---- Returns a random sub-gender.
--- @param mainGender
--- @return subGender
-function BabyFactory:createRandomSubGender(gender)
-    local possibleSubGenders = {}
-    local subgenderPlugin = self._parent._parent:getPlugins("subgender")
-    if not subgenderPlugin then return nil end
-    for _,g in ipairs(self._config.subGenderList) do
-        if subgenderPlugin:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) end
-    end
-    
-    return util.randomChoice(possibleSubGenders)
+    return util.randomChoice({"male", "female"})
 end
 
 --- Returns a random birth date and day count.

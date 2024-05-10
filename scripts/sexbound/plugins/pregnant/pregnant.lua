@@ -85,7 +85,7 @@ function Sexbound.Actor.Pregnant:isDripBlocked()
     --    end
     --end
     --return false
-    return self._parent:hasInteractionType({"direct", "toy_dick"})
+    return self._parent:hasInteractionType("direct")
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
@@ -305,7 +305,6 @@ end
 --- Loads notifications configuration from file
 function Sexbound.Actor.Pregnant:loadNotificationDialog()
     local filePath = self:getConfig().notifications
-    filePath = util.replaceTag(filePath, "langcode", self._parent._parent:getLanguageCode())
     local config = root.assetJson(filePath)
     local plugins = config.plugins or {}
 
@@ -357,6 +356,11 @@ function Sexbound.Actor.Pregnant:thisActorCanOvulate()
         return true
     end
 
+    --[[local targetGender = thisActor:getSubGender() or thisActor:getGender()
+    for _, gender in ipairs(self:getConfig().whichGendersCanOvulate) do
+        if (gender == targetGender) then return true end
+    end]]
+
     return thisActor:canOvulate()
 end
 
@@ -385,17 +389,12 @@ end
 
 --- Returns whether or not this actor has enough fertility to become pregnant
 function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
-    local status = self:getParent():status()
-    local otherStatus = otherActor:status()
-    
-    if status:hasStatus("sexbound_custom_hyper_fertility") or otherStatus:hasStatus("sexbound_custom_hyper_fertility") then
+    if self:getParent():status():hasStatus("sexbound_custom_hyper_fertility") or otherActor:status():hasStatus("sexbound_custom_hyper_fertility") then
         self:getLog():debug("Guaranteed impregnation due to hyper fertility pill effect")
         return true
     end
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
-    
-    if status:hasOneOf({"sexbound_aroused_strong", "sexbound_aroused_heat"}) then fertility = fertility * 1.1 end -- Strong arousal buff and in heat buff give 10% higher base fertility
 
     local bonusCount = self:getCurrentInseminations(otherActor)
     local bonusMax = self:getConfig().fertilityBonusMax or 0.6
@@ -406,7 +405,7 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     end
 
     local multiplier = self:getConfig().fertilityMult or 1.0
-    if status:hasStatus("sexbound_custom_fertility") or otherStatus:hasStatus("sexbound_custom_fertility") then 
+    if self:getParent():status():hasStatus("sexbound_custom_fertility") or otherActor:status():hasStatus("sexbound_custom_fertility") then 
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
@@ -430,6 +429,11 @@ function Sexbound.Actor.Pregnant:otherActorCanProduceSperm(otherActor)
     if self:getConfig().enableFreeForAll == true or otherActor:getIdentity().sxbCanProduceSperm == true then
         return true
     end
+
+    --[[local targetGender = otherActor:getSubGender() or otherActor:getGender()
+    for _, gender in ipairs(self:getConfig().whichGendersCanProduceSperm) do
+        if (gender == targetGender) then return true end
+    end]]
 
     return otherActor:canProduceSperm()
 end
@@ -661,16 +665,15 @@ function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
     end)
     
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Common:UpdateFertility", self:getParent()._config.fertilityPenalty)
-    world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Pregnant:Pregnancy", pregnancy)
 end
 
---- Fetches pregnancy-relevant settings from main config file
+--- Adds "whichGendersCanOvulate" and "whichGendersCanProduceSperm" to own config from main config
 function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     if not mainConfig then return end
     
+    self._config.whichGendersCanOvulate = mainConfig.sex.whichGendersCanOvulate or {"female"}
+    self._config.whichGendersCanProduceSperm = mainConfig.sex.whichGendersCanProduceSperm or {"male"}
     self._config.immersionLevel = mainConfig.immersionLevel or 1
-    self._config.subGenderList = mainConfig.sex.subGenderList or {}
-    self._config.subGenderChance = mainConfig.sex.subGenderChance or 0.01
 end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
@@ -805,40 +808,6 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validatePregnancyLength(self._config.pregnancyLength)
     self:validateUseOSTimeForPregnancies(self._config.useOSTimeForPregnancies)
     self:validateIncestPenalty(self._config.incestPenalty)
-    self:validateImmersionLevel(self._config.immersionLevel)
-    self:validateSubGenderList(self._config.subGenderList)
-    self:validateSubGenderChance(self._config.subGenderChance)
-end
-
---- Ensures immersionLevel is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateImmersionLevel(value)
-    if type(value) ~= "number" then
-        self._config.immersionLevel = 1
-        return
-    end
-    self._config.immersionLevel = util.clamp(value, 0, 2)
-end
-
---- Ensures subGenderList is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateSubGenderList(value)
-    if type(value) ~= "table" then
-        self._config.subGenderList = {}
-        return
-    end
-
-    self._config.subGenderList = value
-end
-
---- Ensures subGenderChance is set to an allowed value
--- @param value
-function Sexbound.Actor.Pregnant:validateSubGenderChance(value)
-    if type(value) ~= "number" then
-        self._config.subGenderChance = 0.01
-        return
-    end
-    self._config.subGenderChance = util.clamp(value, 0, 1)
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
@@ -1049,6 +1018,36 @@ function Sexbound.Actor.Pregnant:validatePregnancyLength(value)
     self._config.pregnancyLength = {}
     self._config.pregnancyLength[1] = 6
     self._config.pregnancyLength[2] = 9
+end
+
+--- Ensures whichGendersCanOvulate is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateWhichGendersCanOvulate(value)
+    if type(value) ~= "table" then
+        self._config.whichGendersCanOvulate = {"female"}
+        return
+    end
+    self._config.whichGendersCanOvulate = {}
+    for _, v in ipairs(value) do
+        if type(v) == "string" then
+            table.insert(self._config.whichGendersCanOvulate, v)
+        end
+    end
+end
+
+--- Ensures whichGendersCanProduceSperm is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateWhichGendersCanProduceSperm(value)
+    if type(value) ~= "table" then
+        self._config.whichGendersCanProduceSperm = {"male"}
+        return
+    end
+    self._config.whichGendersCanProduceSperm = {}
+    for _, v in ipairs(value) do
+        if type(v) == "string" then
+            table.insert(self._config.whichGendersCanProduceSperm, v)
+        end
+    end
 end
 
 --- Ensures useOSTimeForPregnancies is set to an allowed value
