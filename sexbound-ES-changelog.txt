@@ -40,7 +40,7 @@
 		[Modding affecting changes]
 			=> General
 				-> A race can now be declared as using animalistic "heat" cycles.
-					--> Turn "sxbUsesHeat" in the species file to "true"
+					--> Turn "sxbUseHeat" in the species file to "true"
 				-> A race can now be declared to use an addional render layer for ears and one for tails on the actor
 					--> Turn "sxbUseAnimatedEars" and "sxbUseAnimatedTail" to "true" respectively
 					--> This, in turn, enables the use of an "ears.png" and "tail.png" spritesheet from where all other normal actor parts are.
