@@ -239,10 +239,10 @@
 							"properties": {"image": "<part-actor2-emote>:shout.<frame><actor2-emoteDirectives><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						},
 						"wink": {
-							"properties": {"image": "<part-actor2-emote>:wink.<frame><actor1-emoteDirectives><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>"}
+							"properties": {"image": "<part-actor2-emote>:wink.<frame><actor2-emoteDirectives><actor2-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						},
 						"winkEnd": {
-							"properties": {"image": "<part-actor2-emote>:wink.5<actor1-emoteDirectives><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>"}
+							"properties": {"image": "<part-actor2-emote>:wink.5<actor2-emoteDirectives><actor2-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						}
 					}
 				}
@@ -601,10 +601,10 @@
 							"properties": {"image": "<part-actor3-emote>:shout.<frame><actor3-emoteDirectives><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						},
 						"wink": {
-							"properties": {"image": "<part-actor3-emote>:wink.<frame><actor1-emoteDirectives><actor3-groinMask>.<frame><actor3-legswearMask>.<frame>"}
+							"properties": {"image": "<part-actor3-emote>:wink.<frame><actor3-emoteDirectives><actor3-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						},
 						"winkEnd": {
-							"properties": {"image": "<part-actor3-emote>:wink.5<actor1-emoteDirectives><actor3-groinMask>.<frame><actor3-legswearMask>.<frame>"}
+							"properties": {"image": "<part-actor3-emote>:wink.5<actor3-emoteDirectives><actor3-groinMask>.<frame><actor1-legswearMask>.<frame>"}
 						}
 					}
 				}
@@ -1274,7 +1274,7 @@
 				"properties": {
 					"anchorPart": "actor2-body",
 					"centered": true,
-					"image": "<part-actor2-ears-body>.<frame><actor2-earsDirectives><actor2-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"image": "<part-actor2-ears-body>.<frame><actor2-earsDirectives><actor2-headwearMask><actor1-legswearMask>.<frame>",
 					"zLevel": 31,
 					"transformationGroups": ["actor2Ears"]
 				},
@@ -4337,7 +4337,7 @@
 				"properties": {
 					"anchorPart": "actor1-body",
 					"centered": true,
-					"image": "<part-actor1-ears-body>.<frame><actor1-earsDirectives><actor1-headwearMask><actor2-groinMask>.<frame><actor2-legswearMask>.<frame>",
+					"image": "<part-actor1-ears-body>.<frame><actor1-earsDirectives><actor1-headwearMask><actor2-legswearMask>.<frame>",
 					"zLevel": 15,
 					"transformationGroups": ["actor1Ears"]
 				},
@@ -6716,7 +6716,7 @@
 				"properties": {
 					"anchorPart": "actor3-body",
 					"centered": true,
-					"image": "<part-actor3-ears-body>.<frame><actor3-earsDirectives><actor3-headwearMask><actor1-groinMask>.<frame><actor1-legswearMask>.<frame>",
+					"image": "<part-actor3-ears-body>.<frame><actor3-earsDirectives><actor3-headwearMask><actor1-legswearMask>.<frame>",
 					"zLevel": 47,
 					"transformationGroups": ["actor3Ears"]
 				},

@@ -56,17 +56,9 @@ end
 -- @param image
 function Sexbound.Common.Identity:filterReplace(image)
     if (string.find(image, "?addmask")) then
-        if (string.match(image, '^.*(%?replace.*%?replace.*)%?addmask.-$')) then
-            return string.match(image, '^.*(%?replace.*%?replace.*)%?addmask.-$')
-        else
-            return string.match(image, '^.*(%?replace.*)%?addmask.-$')
-        end
+        return string.match(image, '^.-(%?replace.*)%?addmask.-$')
     else
-        if (string.match(image, '^.*(%?replace.*%?replace.*)')) then
-            return string.match(image, '^.*(%?replace.*%?replace.*)')
-        else
-            return string.match(image, '^.*(%?replace.*)')
-        end
+        return string.match(image, '^.-(%?replace.*)')
     end
 end
 
