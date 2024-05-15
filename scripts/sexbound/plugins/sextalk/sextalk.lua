@@ -175,7 +175,7 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     for i,a in ipairs(actorRelation) do
         if i ~= actorNum and a == actorNum and actors[i] then
             table.insert(potentialTargets, actors[i])
-            table.insert(interactionTypes, self:helper_interactionTypeToName(actors[i], actor, interactionTypesList, true))
+            table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[i], interactionTypesList, true))
         end
     end
     
