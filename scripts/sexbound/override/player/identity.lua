@@ -178,10 +178,12 @@ function Sexbound.Player.Identity:build(target, portraitData)
     end
     identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = math.floor(identity.genetics.hairColorAverage[1]/x),math.floor(identity.genetics.hairColorAverage[2]/x),math.floor(identity.genetics.hairColorAverage[3]/x)
     
-    sb.logInfo("Entity colors:")
-    sb.logInfo(sb.print(identity.genetics.bodyColor))
-    sb.logInfo(sb.print(identity.genetics.undyColor))
-    sb.logInfo(sb.print(identity.genetics.hairColor))
+    if self._parent:canLog("debug") then
+        sb.logInfo("Entity colors:")
+        sb.logInfo(sb.print(identity.genetics.bodyColor))
+        sb.logInfo(sb.print(identity.genetics.undyColor))
+        sb.logInfo(sb.print(identity.genetics.hairColor))
+    end
 
     return identity
 end
