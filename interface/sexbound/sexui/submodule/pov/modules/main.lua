@@ -13,6 +13,7 @@ require "/interface/sexbound/sexui/submodule/pov/part.lua"
 function SexUI.POV.Modules.Main.new(parent, config)
     local self = setmetatable({
         _parent = parent,
+        _config = config,
         animationCycle = config.animationCycle or 1,
         animationTimer = 0,
         frameCount = config.frameCount or 5,
