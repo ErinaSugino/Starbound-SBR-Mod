@@ -298,7 +298,7 @@ function Sexbound.Actor.SexTalk:sayRandom()
     lastLevel = lastLevel[self:helper_getActorState(target)] or {}
     -- partner species
     local specificConfig = lastLevel[targetSpecies] or {}
-    local defaultConfig = lastLevel["default"] or {}
+    local defaultConfig = lastLevel["default"] or {text = {}} -- Fallback default should always have text to avoid merging errors when default doesn't exist.
     
     local finalConfig
     if not specificConfig.override then finalConfig = self:helper_mergeTableMergeTextNoStatus(defaultConfig, specificConfig) else finalConfig = specificConfig end
