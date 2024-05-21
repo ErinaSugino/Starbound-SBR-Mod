@@ -177,10 +177,13 @@ end
 --- Returns a random sub-gender for the given main gender
 function Sexbound.Common.SubGender:createRandomSubGender(gender)
     local possibleSubGenders = {}
+    local count = 0
     for _,g in ipairs(self._parent._config.sex.subGenderList) do
-        if self:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) end
+        if self:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) count = count + 1 end
     end
     
+    if count <= 0 then return nil end
+    if count == 1 then return possibleSubGenders[1] end
     return util.randomChoice(possibleSubGenders)
 end
 
