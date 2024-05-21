@@ -178,8 +178,8 @@ end
 function Sexbound.Common.SubGender:createRandomSubGender(gender)
     local possibleSubGenders = {}
     local count = 0
-    for _,g in ipairs(self._parent._config.sex.subGenderList) do
-        if self:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) count = count + 1 end
+    for _,g in ipairs(self:getAllSubGenders) do
+        if g.available then table.insert(possibleSubGenders, g.name) count = count + 1 end
     end
     
     if count <= 0 then return nil end
