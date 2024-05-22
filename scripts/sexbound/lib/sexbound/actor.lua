@@ -1554,8 +1554,8 @@ function Sexbound.Actor:getUIData(args)
         bodyType        = self:getBodyType(),
         hairID          = self:getIdentity("hairType"),              -- Data used by PoV for hairs/facial details.
         hairDirectives  = self:getIdentity("hairDirectives"),
-        facialType      = self:getIdentity("facialMaskGroup") or "",
-        facialID        = self:getIdentity("facialMaskType") or "",
+        facialType      = self:getIdentity("facialHairGroup") or "",
+        facialID        = self:getIdentity("facialHairType") or "",
         showBackwear    = self:getApparel():getIsVisible("backwear"),
         showChestwear   = self:getApparel():getIsVisible("chestwear"),
         showHeadwear    = self:getApparel():getIsVisible("headwear"),

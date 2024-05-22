@@ -178,7 +178,7 @@ end
 function Sexbound.Common.SubGender:createRandomSubGender(gender)
     local possibleSubGenders = {}
     local count = 0
-    for _,g in ipairs(self:getAllSubGenders) do
+    for _,g in ipairs(self:getAllSubGenders()) do
         if g.available then table.insert(possibleSubGenders, g.name) count = count + 1 end
     end
     
