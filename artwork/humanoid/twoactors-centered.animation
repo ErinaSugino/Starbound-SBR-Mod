@@ -862,7 +862,7 @@
 					"anchorPart": "actor2-body",
 					"centered": true,
 					"image": "<part-actor2-tail>.<frame><actor2-bodyDirectives>",
-					"zLevel": 23
+					"zLevel": 15
 				},
 				"partStates": {
 					"actors": {
