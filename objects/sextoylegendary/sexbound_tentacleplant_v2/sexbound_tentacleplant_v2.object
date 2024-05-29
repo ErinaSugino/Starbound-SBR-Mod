@@ -248,7 +248,7 @@
         },
 		"actor1-arm-front": {
 		  "properties": {
-			"zLevel": 43
+			"zLevel": 61
 			}
 		},
 		"actor2-groin" : {
