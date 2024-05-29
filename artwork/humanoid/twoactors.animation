@@ -1187,7 +1187,7 @@
 					"anchorPart": "actor2-body",
 					"centered": false,
 					"image": "<part-actor2-tail>.<frame><actor2-bodyDirectives>",
-					"zLevel": 15
+					"zLevel": 32
 				},
 				"partStates": {
 					"actors": {
@@ -1225,10 +1225,18 @@
 						"position4_2-climax": {},
 						"position4_2-postclimax": {},
 						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-postclimax": {},
-						"position5-reset": {},
+						"position5": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-climax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-postclimax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-reset": {
+							"properties": {"zLevel": 15}
+						},
 						"position6": {},
 						"position6-climax": {},
 						"position6-postclimax": {},
