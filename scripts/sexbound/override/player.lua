@@ -72,7 +72,8 @@ function Sexbound.Player.new()
         _startItemsList = {"sexbound1-codex", "sexboundcustomizer"},
         _loungeId = nil,
         _states = {"defaultState", "havingSexState"},
-        _isSterilized = false
+        _isSterilized = false,
+        _isInfertile = false
     }, Sexbound.Player_mt)
 
     self:init(self, "player")
@@ -123,6 +124,7 @@ function Sexbound.Player.new()
     self._stateMachine = self:helper_loadStateMachine()
     
     self._isSterilized = self._status:hasStatus("sterilized")
+    self._isInfertile = self._status:hasStatus("infertile")
     
     self._hasInited = true
     self:updateTraitEffects()
@@ -136,6 +138,8 @@ function Sexbound.Player.new()
     -- Setup event listeners to notify player about changes to the sterilization status
     self._status:addEventListener("add", function(data) self:notifySterilizationChange(data) end)
     self._status:addEventListener("remove", function(data) self:notifySterilizationChange(data) end)
+    self._status:addEventListener("add", function(data) self:notifyInfertileChange(data) end)
+    self._status:addEventListener("remove", function(data) self:notifyInfertileChange(data) end)
 
     return self
 end
@@ -213,10 +217,6 @@ function Sexbound.Player:showCustomizerUI(args)
     if "function" ~= type(player.interact) then return end
     xpcall(function()
         local _loadedConfig = root.assetJson("/interface/sexbound/customizer/customizer.config")
-        --_loadedConfig.config.statistics = self:getStatistics():getStatistics()
-        --_loadedConfig.config.currentGender = self._subGender._currentGender
-        --_loadedConfig.config.subGenders = self._subGender:getAllSubGenders()
-        --_loadedConfig.config.sterilized = self._status:hasStatus("sterilized")
         player.interact("ScriptPane", _loadedConfig, player.id())
     end, function(err)
         sb.logError("Unable to load Sexbound Customizer UI config.")
@@ -230,6 +230,7 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.currentGender = self._subGender._currentGender
     _loadedConfig.subGenders = self._subGender:getAllSubGenders()
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
+    _loadedConfig.infertile = self._status:hasStatus("infertile")
     return _loadedConfig
 end
 
@@ -305,6 +306,29 @@ function Sexbound.Player:notifySterilizationChange(data)
     
     self._isSterilized = sterilized
     if sterilized then status.removeEphemeralEffect("sexbound_custom_ovulating") end -- Remove ovulation cycle effect when sterilized
+end
+
+function Sexbound.Player:notifyInfertileChange(data)
+    if data.name ~= "infertile" then return end
+    
+    local notifications = self:getNotifications() or {}
+    notifications = notifications.events or {}
+    notifications = notifications.infertility or {}
+    
+    local infertile = data.query == "add"
+    infertile = tostring(infertile)
+    
+    local text = notifications[infertile]
+    if text then
+        world.sendEntityMessage(entity.id(), "queueRadioMessage", {
+            messageId = "sexbound_infertility",
+            unique = false,
+            text = text
+        })
+    end
+    
+    self._isInfertile = infertile
+    if infertile then status.removeEphemeralEffect("sexbound_custom_ovulating") end -- Remove ovulation cycle effect when infertile
 end
 
 function Sexbound.Player:handleSyncStorage(newData)

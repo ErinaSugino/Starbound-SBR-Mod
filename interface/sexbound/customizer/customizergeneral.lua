@@ -11,7 +11,8 @@ function Customizer.General:new(parent)
     currentSubGender = "None",
     currentSubGenderIndex = 1,
     subGenderList = {},
-    sterilized = false
+    sterilized = false,
+    infertile = false
   }, Customizer.General_mt)
 end
 
@@ -32,6 +33,11 @@ function Customizer.General:init()
   self.sterilized = self._parent.config.sterilized
   if self.sterilized == nil then self.sterilized = false end
   if self.sterilized then widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are^reset;^shadow; sterilized.") end
+  
+  self.infertile = self._parent.config.infertile
+  if self.infertile == nil then self.infertile = false end
+  if self.infertile then widget.setText("generalTab.infertileLabel", "^shadow;You currently ^orange;are^reset;^shadow; infertile.")
+  else widget.setButtonEnabled("generalTab.infertileConfirm", false) end
 end
 
 function Customizer.General:handleMessage(message)
@@ -126,8 +132,8 @@ end
 function Customizer.General:sterilize()
     local res = player.consumeCurrency("sexbux", 1000)
     if not res then
-      widget.playSound("/sfx/interface/clickon_error.ogg")
-      return false
+        widget.playSound("/sfx/interface/clickon_error.ogg")
+        return false
     end
     
     if self.sterilized then
@@ -138,4 +144,22 @@ function Customizer.General:sterilize()
         world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "sterilized")
     end
     self.sterilized = not self.sterilized
+end
+
+function Customizer.General:makeFertile()
+    if not self.infertile then
+        widget.playSound("/sfx/interface/clickon_error.ogg")
+        return false
+    end
+    
+    local res = player.consumeCurrency("sexbux", 2000)
+    if not res then
+        widget.playSound("/sfx/interface/clickon_error.ogg")
+        return false
+    end
+    
+    widget.setText("generalTab.infertileLabel", "^shadow;You currently ^orange;are not^reset;^shadow; infertile.")
+    world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "infertile")
+    
+    self.infertile = false
 end
