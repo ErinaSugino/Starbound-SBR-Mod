@@ -1187,13 +1187,24 @@
 					"anchorPart": "actor2-body",
 					"centered": false,
 					"image": "<part-actor2-tail>.<frame><actor2-bodyDirectives>",
-					"zLevel": 32
+					"zLevel": 23
 				},
 				"partStates": {
 					"actors": {
 						"idle_laying": {},
 						"idle": {},
-						"position1": {},
+						"position1": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-climax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-postclimax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-reset": {
+							"properties": {"zLevel": 15}
+						},
 						"position1-climax": {},
 						"position1-postclimax": {},
 						"position1-reset": {},
