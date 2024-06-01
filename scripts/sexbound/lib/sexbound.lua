@@ -43,7 +43,8 @@ function Sexbound.new(maxActors)
         _timers = {},
         _globalActorId = 0,
         _uiSyncTokens = {positions=0},
-        _containsPlayer = false
+        _containsPlayer = false,
+        _sexMusicListeners = {}
     }, Sexbound_mt)
 
     -- Store UUID of the entity running this instance of Sexbound.
@@ -270,6 +271,8 @@ function Sexbound:uninit()
 
     animator.setAnimationState("props", "none", true)
     animator.setAnimationState("actors", "none", true)
+    
+    self:forceStopSexMusic() --Stop sex music for all still listening actors
 
     return result1 and result2
 end
@@ -1169,12 +1172,32 @@ function Sexbound:startSexMusicForEntity(entityId)
     local songList = self._config.sex.sexMusicPool or {}
     local song = util.randomChoice(songList)
     world.sendEntityMessage(entityId, "playAltMusic", {song}, 1)
+    
+    -- Cache who is currently listening, but only once, so we can forcibly end the music on uninit
+    for _,id in ipairs(self._sexMusicListeners) do
+        if id == entityId then return end
+    end
+    
+    table.insert(self._sexMusicListeners, entityId)
 end
 
 function Sexbound:stopSexMusicForEntity(entityId)
     if self._config.noMusic then return end
     world.sendEntityMessage(entityId, "playAltMusic", {""}, 1) --Try to play a different, non existent song to reset progress of current song
     world.sendEntityMessage(entityId, "stopAltMusic", 1)
+    
+    -- Remove from cache
+    for i,id in ipairs(self._sexMusicListeners) do
+        if id == entityId then table.remove(self._sexMusicListeners, i) return end
+    end
+end
+
+function Sexbound:forceStopSexMusic()
+    if self._config.noMusic then return end
+    for _,id in ipairs(self._sexMusicListeners) do
+        world.sendEntityMessage(id, "playAltMusic", {""}, 1) --Try to play a different, non existent song to reset progress of current song
+        world.sendEntityMessage(id, "stopAltMusic", 1)
+    end
 end
 
 function Sexbound:checkNodeCompatibility(args)
