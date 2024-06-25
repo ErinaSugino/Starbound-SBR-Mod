@@ -750,7 +750,7 @@ function Sexbound.Actor.Pregnant:getPregnancyStage()
         elseif isPlayer == true then
             tempResult = 1 - (b.birthWorldTime / b.fullBirthWorldTime) -- Player world time calculation: reverse percentage of countdown
         else
-            tempResult = (world.day() + world.timeOfDay() - baby.fullBirthWorldTime) / (baby.birthWorldTime - baby.fullBirthWorldTime) -- Non-Player world time calculation: percentage diff time sinc start to total timespan
+            tempResult = (world.day() + world.timeOfDay() - b.fullBirthWorldTime) / (b.birthWorldTime - b.fullBirthWorldTime) -- Non-Player world time calculation: percentage diff time sinc start to total timespan
         end
         if tempResult > result then result = tempResult end
     end
