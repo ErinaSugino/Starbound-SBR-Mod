@@ -508,7 +508,16 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
         local oldAmount = self._inflation
         if oldAmount > 0 then
             local actor = self._parent
-            self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
+
+            local dripQuantity = math.min(util.randomInRange(self:getDripRate()) * dt, self._inflation)
+            self._inflation = self._inflation - dripQuantity
+
+            if self._config.enableSpawnLiquids then
+                local spawnPosition = actor:getClimaxSpawnPosition() or {0.0, 0.0}
+                local semenId = 157
+                world.spawnLiquid(spawnPosition, semenId, dripQuantity)
+            end
+
             self:getLog():debug("Actor "..actor:getActorNumber().." dripping. New amount: "..self._inflation)
             if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
                 actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
