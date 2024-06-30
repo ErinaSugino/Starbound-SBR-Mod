@@ -5,6 +5,7 @@
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
     require("/scripts/sexbound/plugins/climax/scriptedclimax/scenario1.lua")
+    require("/scripts/sexbound/plugins/climax/inflation.lua")
 end
 
 Sexbound.Actor.Climax = Sexbound.Actor.Plugin:new()
@@ -23,7 +24,7 @@ function Sexbound.Actor.Climax:new(parent, config)
         _scenarios = {},
         _soundEffects = {},
         _timer = {},
-        _inflation = 0,
+        _inflation = {},
         _dripTimer = 0
     }, Sexbound.Actor.Climax_mt)
 
@@ -46,6 +47,10 @@ function Sexbound.Actor.Climax:new(parent, config)
 
     if _self._config.enableClimaxSounds then
         _self:loadSoundEffects()
+    end
+
+    if _self._config.enableInflation then
+        _self._inflation = Inflation:new(_self, _self._config)
     end
 
     -- Load scripted climax scenarios
@@ -404,7 +409,11 @@ function Sexbound.Actor.Climax:shoot(...)
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
         if (interaction == "direct" or interaction == "toy_dick") and self._config.enableInflation then
-            Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate())
+            local genital = self._parent:getGenitalType()
+            local liquid = self._config.projectileLiquid[self._parent:getSpecies()] or self._config.projectileLiquid["default"]
+            liquid = liquid[genital]
+            Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self._inflation:generateLoad(liquid, self:getInflationRate()))
+
         end
     end
 end
@@ -488,15 +497,21 @@ function Sexbound.Actor.Climax:spawnItem(...)
 end
 
 --- Increases level of inflation
-function Sexbound.Actor.Climax:inflate(amount)
-    amount = amount or 0.1
-    local oldAmount = self._inflation
-    local actor = self._parent
-    self._inflation = self._inflation + amount
-    self:getLog():debug("Actor "..actor:getActorNumber().." gotten inflation request. New value: "..self._inflation)
-    if oldAmount < self:getInflationThreshold() and self._inflation >= self:getInflationThreshold() then
+function Sexbound.Actor.Climax:inflate(inflationLoad)
+    -- Regenerate received inflation load (fills in potential invalid values)
+    inflationLoad = self._inflation:generateLoad(inflationLoad.liquid, inflationLoad.quantity)
+    
+    -- Add new inflation load
+    local oldAmount = self._inflation:getTotalInflation()
+    self._inflation:addLoad(inflationLoad)
+    local newAmount = self._inflation:getTotalInflation()
+    
+    -- Handle case where total inflation passed the treshold
+    if oldAmount < self:getInflationThreshold() and newAmount >= self:getInflationThreshold() then
+        local actor = self._parent
         actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
-        self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to show inflated belly sprite.")
+        self:getLog():debug("Actor "..actor:getActorNumber().." ("..actor:getName()..") passed inflation threshold; "..
+                            "reseting actor to show inflated belly sprite.")
     end
 end
 
@@ -505,31 +520,62 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
     self._dripTimer = math.max(0, self._dripTimer - dt)
 
     if self._dripTimer == 0 then
-        local oldAmount = self._inflation
+        local oldAmount = self._inflation:getTotalInflation()
         if oldAmount > 0 then
             local actor = self._parent
+            self:getLog():debug("Actor "..actor:getActorNumber().." ("..actor:getName()..") dripping.")
 
-            local dripQuantity = math.min(util.randomInRange(self:getDripRate()) * dt, self._inflation)
-            self._inflation = self._inflation - dripQuantity
+            -- Remove drip quantity from inflation
+            local dripQuantity = math.min(util.randomInRange(self:getDripRate()) * dt, self._inflation:getTotalInflation())
+            local removedLiquids = self._inflation:removeQuantity(dripQuantity)
+            local newAmount = self._inflation:getTotalInflation()
 
-            if self._config.enableSpawnLiquids then
-                local spawnPosition = actor:getClimaxSpawnPosition() or {0.0, 0.0}
-                local semenId = 157
-                world.spawnLiquid(spawnPosition, semenId, dripQuantity)
-            end
-
-            self:getLog():debug("Actor "..actor:getActorNumber().." dripping. New amount: "..self._inflation)
-            if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
-                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
-                self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to hide inflated belly sprite.")
-            end
-            
+            -- Spawn particles if enabled
             if self._config.enableClimaxParticles then
                 animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
             end
+
+            -- Spawn liquid projectiles if enabled
+            if self._config.enableSpawnLiquids and removedLiquids then
+                local projectileName = "dripping"
+                local spawnPosition = actor:getClimaxSpawnPosition() or {0.0, 0.0}
+                local sourceEntityId = actor:getEntityId()
+                local spawnDirection = {0, -1}
+                local trackSourceEntity = false
+                local handler = {}
+
+                -- Generate liquid spawn action for projectile
+                local actionOnReap = {}
+                local actionCount = 0
+                for liquid, quantity in pairs(removedLiquids) do
+                    self:getLog():debug("Actor "..actor:getActorNumber().." dripping. Spawning "..quantity.." "..liquid..".")
+                    if liquid then
+                        actionCount = actionCount + 1
+                        actionOnReap[actionCount] = {
+                            action = "liquid",
+                            liquid = liquid,
+                            quantity = quantity
+                        }
+                    end
+                end
+                
+                -- Spawn projectile if at least one action was generated
+                if actionCount > 0 then
+                    self:getLog():debug("Actor "..actor:getActorNumber().." dripping. Creating projectile.")
+                    handler.actionOnReap = actionOnReap
+                    world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
+                end
+            end
+
+            -- Handle case where total inflation lowered under the treshold
+            if oldAmount >= self:getInflationThreshold() and newAmount < self:getInflationThreshold() then
+                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+                self:getLog():debug("Actor "..actor:getActorNumber().." ("..actor:getName()..") passed inflation threshold; "..
+                                    "reseting actor to hide inflated belly sprite.")
+            end
         end
         
-        self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
+        self._dripTimer = math.min(2, 1 / self._inflation:getTotalInflation() ^ self:getDripSpeed())
     end
 end
 
@@ -651,7 +697,7 @@ end
 
 --- Returns the current inflation level offsetted by pregnancy
 function Sexbound.Actor.Climax:getAdjustedInflation()
-    local val = self._inflation
+    local val = self._inflation:getTotalInflation()
     if self:getParent():isVisiblyPregnant() then
         val = val + self:getInflationThreshold()
     end
@@ -665,7 +711,7 @@ end
 
 --- Returns whether or not this actor is currently inflated
 function Sexbound.Actor.Climax:isInflated()
-    return self._inflation >= self:getInflationThreshold()
+    return self._inflation:getTotalInflation() >= self:getInflationThreshold()
 end
 
 --- Returns a sound effect by specifed name or the table of sound effects.

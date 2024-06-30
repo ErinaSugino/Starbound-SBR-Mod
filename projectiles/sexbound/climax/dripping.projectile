@@ -1,0 +1,19 @@
+{
+  "projectileName": "dripping",
+  "image": "climax.png",
+  "physics": "climax",
+  "animationCycle": 1,
+  "frameNumber": 1,
+  "speed": 5,
+  "damagePoly": [
+    [-0.25, -0.25],
+    [0.25, -0.25],
+    [0.25, 0.25],
+    [-0.25, 0.25]
+  ],
+  "damageKind": "hidden",
+  "onlyHitTerrain": true,
+  "hydrophobic": true,
+
+  "scripts": ["/projectiles/sexbound/climax/climaxprojectile.lua"]
+}
