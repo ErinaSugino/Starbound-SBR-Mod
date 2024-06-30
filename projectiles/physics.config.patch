@@ -18,7 +18,7 @@
       "ignorePlatformCollision": true,
 
       "airFriction": 0.0,
-      "liquidFriction": 50.0,
+      "liquidFriction": 0.0,
       "groundFriction": 20.0,
       "maximumCorrection": 0.75
     }
