@@ -43,7 +43,8 @@ function Sexbound.new(maxActors)
         _timers = {},
         _globalActorId = 0,
         _uiSyncTokens = {positions=0},
-        _containsPlayer = false
+        _containsPlayer = false,
+        _sexMusicListeners = {}
     }, Sexbound_mt)
 
     -- Store UUID of the entity running this instance of Sexbound.
@@ -270,6 +271,8 @@ function Sexbound:uninit()
 
     animator.setAnimationState("props", "none", true)
     animator.setAnimationState("actors", "none", true)
+    
+    self:forceStopSexMusic() --Stop sex music for all still listening actors
 
     return result1 and result2
 end
@@ -394,6 +397,8 @@ end
 
 --- Uninitializes each instance of Actor in the actors table.
 function Sexbound:uninitActors()
+    if not self._actors[1] then return true end -- No need to uninit anything if noone was here to begin with. Reduces log spam.
+    
     self:getLog():info("Uniniting Actors.")
 
     Sexbound.Messenger.get("main"):broadcast(self, "Sexbound:PrepareRemoveActor", {}, true)
@@ -408,6 +413,10 @@ function Sexbound:uninitActors()
 
     self._actors = {}
     self._actorsOrdered = {}
+    
+    self._positions:filterPositions() --Reset positions as this bypasses normal "actor leaves" check and we need to be in idle for when someone else joins
+    self._currentOrderId = 1
+    self._currentOrderIndex = ""
 
     return true
 end
@@ -619,25 +628,6 @@ end
 function Sexbound:helper_reassignAllRoles()
     if #self._actors == 0 then return end
     local sexConfig = self:getConfig().sex or {}
-
-    --[[if sexConfig.allowSwitchRoles and self:getActorCount() == 2 then
-        -- Switch actors when actor 1 is female and actor 2 is male when actor 1 is not wearing a strapon.
-        if not self._actors[1]:getStatus():hasStatus("equipped_strapon") and self._actors[1]:getGender() == "female" and
-            (self._actors[2]:getGender() == "male" or self._actors[2]:getSubGender() == "futanari") then
-            self:switchActorRoles()
-
-            -- An actor wearing a strapon should be switched to be actor 1.
-        elseif self._actors[2]:getStatus():hasStatus("equipped_strapon") then
-            self:switchActorRoles()
-        end
-    end
-
-    -- Check if any actor needs to have its role forced
-    self:forEachActor(function(index, actor)
-        if actor:getForceRole() > 0 and actor:getForceRole() ~= index then
-            self:helper_forceActorRole(actor, index)
-        end
-    end)]]
     
     local curIndices, curPerms = self._positions:getCurrentPosition():getAvailableRoles()
     if curPerms[self._currentOrderId] then
@@ -1182,12 +1172,32 @@ function Sexbound:startSexMusicForEntity(entityId)
     local songList = self._config.sex.sexMusicPool or {}
     local song = util.randomChoice(songList)
     world.sendEntityMessage(entityId, "playAltMusic", {song}, 1)
+    
+    -- Cache who is currently listening, but only once, so we can forcibly end the music on uninit
+    for _,id in ipairs(self._sexMusicListeners) do
+        if id == entityId then return end
+    end
+    
+    table.insert(self._sexMusicListeners, entityId)
 end
 
 function Sexbound:stopSexMusicForEntity(entityId)
     if self._config.noMusic then return end
     world.sendEntityMessage(entityId, "playAltMusic", {""}, 1) --Try to play a different, non existent song to reset progress of current song
     world.sendEntityMessage(entityId, "stopAltMusic", 1)
+    
+    -- Remove from cache
+    for i,id in ipairs(self._sexMusicListeners) do
+        if id == entityId then table.remove(self._sexMusicListeners, i) return end
+    end
+end
+
+function Sexbound:forceStopSexMusic()
+    if self._config.noMusic then return end
+    for _,id in ipairs(self._sexMusicListeners) do
+        world.sendEntityMessage(id, "playAltMusic", {""}, 1) --Try to play a different, non existent song to reset progress of current song
+        world.sendEntityMessage(id, "stopAltMusic", 1)
+    end
 end
 
 function Sexbound:checkNodeCompatibility(args)

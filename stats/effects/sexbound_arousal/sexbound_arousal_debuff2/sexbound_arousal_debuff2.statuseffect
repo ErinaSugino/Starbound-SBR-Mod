@@ -1,0 +1,10 @@
+{
+  "name"            : "sexbound_arousal_debuff2",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 999,
+  "effectConfig"    : {"default": {"strength": 0.9, "speed": 0.9, "speedInterval": 10, "speedChance": 0.1}},
+  "icon"            : "/interface/statuses/arousal2.png",
+  "label"           : "Pent up",
+  "scripts"         : [ "sexbound_arousal_debuff2.lua" ],
+  "animationConfig" : "sexbound_arousal_debuff2.animation"
+}

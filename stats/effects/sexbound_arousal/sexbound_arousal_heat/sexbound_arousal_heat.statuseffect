@@ -2,7 +2,7 @@
   "name"            : "sexbound_arousal_heat",
   "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 1800,
-  "effectConfig"    : {},
+  "effectConfig"    : {"default": {"strength": 0.9, "speed": 0.9, "speedInterval": 10, "speedChance": 0.15}},
   "icon"            : "/interface/statuses/heat.png",
   "label"           : "In Heat",
   "scripts"         : [ "sexbound_arousal_heat.lua" ],

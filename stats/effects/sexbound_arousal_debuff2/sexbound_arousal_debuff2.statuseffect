@@ -1,9 +1,0 @@
-{
-  "name"            : "sexbound_arousal_debuff2",
-  "blockingStat"    : "sexboundImmunity",
-  "defaultDuration" : 999,
-  "effectConfig"    : {},
-  "icon"            : "/interface/statuses/arousal2.png",
-  "label"           : "Pent up",
-  "scripts"         : [ "sexbound_arousal_debuff2.lua" ]
-}

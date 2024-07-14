@@ -1,4 +1,11 @@
 {
+  "1.2_r1": [
+	"» 1.2 Revision 1 «",
+	"- Added option to make an infertile character fertile again to customizer",
+	"- Fixed pregnancies for e.g. Sergal",
+	"- Fixed sex music not stopping when node gets destroyed",
+	"- More layer fixes, e.g. for the tentacleplant"
+  ],
   "1.2" : [
 	"» BIG TALK «",
 	"- Completely reworked Sextalk. It's better, trust me",
@@ -24,7 +31,7 @@
   ],
   "1.1" : [
 	"» FOUNDING FAMILY «",
-	"- Integrated Lustbound Base",
+	"- Integrated \"Lustbound Base\"",
 	"- Reworked pregnancies - cross-species, multi-babies, incest, color genetics, true kids, ...",
 	"- Reworked NPC behavior - smarter arousal, special dialog for families, no perma-stuck pathfinding",
 	"- Optional cumflation logic",

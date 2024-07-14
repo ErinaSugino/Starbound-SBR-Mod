@@ -2,7 +2,7 @@
   "name"            : "sexbound_arousal_heat_weak",
   "blockingStat"    : "sexboundImmunity",
   "defaultDuration" : 900,
-  "effectConfig"    : {},
+  "effectConfig"    : {"default": {"strength": 0.95, "speed": 0.95, "speedInterval": 10, "speedChance": 0.1}},
   "icon"            : "/interface/statuses/heat_weak.png",
   "label"           : "In Heat (Medicated)",
   "scripts"         : [ "sexbound_arousal_heat_weak.lua" ],

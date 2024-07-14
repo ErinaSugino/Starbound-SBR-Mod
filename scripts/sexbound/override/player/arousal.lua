@@ -42,7 +42,7 @@ function Sexbound.Player.Arousal:update(dt)
             storage.sexbound.heatCycle = heatTimer
             if heatTimer <= 0 then
                 -- Trigger heat
-                status.addEphemeralEffect("sexbound_arousal_heat")
+                status.addEphemeralEffect("sexbound_arousal_heat", self._parent._heatDuration or 1800)
             end
         end
     else

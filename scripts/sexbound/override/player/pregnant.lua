@@ -80,7 +80,7 @@ function Sexbound.Player.Pregnant:updatePeriodCycle(dt)
     if not enabled then return end
     
     -- Player cannot ovulate in the first place - ignore
-    if not self:canOvulate() or self:getParent()._isSterilized then return end
+    if not self:canOvulate() or self:getParent()._isSterilized or self:getParent()._isInfertile then return end
     
     local ovulating = status.statusProperty("sexbound_custom_ovulating", false)
     -- Currently active ovulation effect - ignore

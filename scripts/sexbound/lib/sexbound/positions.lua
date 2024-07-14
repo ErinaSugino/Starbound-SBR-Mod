@@ -321,7 +321,7 @@ end
 --- Returns a reference to the Current Position.
 function Sexbound.Positions:getCurrentPosition()
     if self._index == -1 then return self._idlePosition end
-    return self._availablePositions[self._index]
+    return self._availablePositions[self._index] or self._idlePosition
 end
 
 function Sexbound.Positions:getParent()
