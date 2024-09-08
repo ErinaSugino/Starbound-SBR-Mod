@@ -1550,6 +1550,8 @@ end
 function Sexbound.Actor:getUIData(args)
     local data = {
         actorSlot       = "actor" .. self:getActorNumber(),
+        isPlayer        = self:getEntityType() == "player",
+        entityId        = self:getEntityId(),
         bodyDirectives  = self:getIdentity("bodyDirectives"),
         bodyType        = self:getBodyType(),
         hairID          = self:getIdentity("hairType"),              -- Data used by PoV for hairs/facial details.

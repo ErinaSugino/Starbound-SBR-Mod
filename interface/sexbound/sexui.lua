@@ -42,7 +42,8 @@ function SexUI.new()
             sync = config.getParameter("config.syncTimeout", 0.1)
         },
         _sexPositionsPage = 1,
-        _updateTokens = {["positions"]=0}
+        _updateTokens = {["positions"]=0},
+        _ownerId = config.getParameter("config.ownerId", -65537)
     }, SexUI_mt)
 
     _self:resetTimers()
@@ -224,14 +225,17 @@ function SexUI:syncUI()
         self._subModules.climax:updateProgressBars(result.actors)
 
         for _, actor in ipairs(result.actors) do
+            local enabled = true
+            if actor.isPlayer then enabled = actor.entityId == self._ownerId end
+            
             self._buttons.commands["commands_togglebackwear_" .. actor.actorSlot].config.value = actor.showBackwear
-            self._buttons.commands["commands_togglebackwear_" .. actor.actorSlot].config.enabled = true
+            self._buttons.commands["commands_togglebackwear_" .. actor.actorSlot].config.enabled = enabled
             self._buttons.commands["commands_togglechestwear_" .. actor.actorSlot].config.value = actor.showChestwear
-            self._buttons.commands["commands_togglechestwear_" .. actor.actorSlot].config.enabled = true
+            self._buttons.commands["commands_togglechestwear_" .. actor.actorSlot].config.enabled = enabled
             self._buttons.commands["commands_toggleheadwear_" .. actor.actorSlot].config.value = actor.showHeadwear
-            self._buttons.commands["commands_toggleheadwear_" .. actor.actorSlot].config.enabled = true
+            self._buttons.commands["commands_toggleheadwear_" .. actor.actorSlot].config.enabled = enabled
             self._buttons.commands["commands_togglelegswear_" .. actor.actorSlot].config.value = actor.showLegswear
-            self._buttons.commands["commands_togglelegswear_" .. actor.actorSlot].config.enabled = true
+            self._buttons.commands["commands_togglelegswear_" .. actor.actorSlot].config.enabled = enabled
         end
         
         if result.positions then

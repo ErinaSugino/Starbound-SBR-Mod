@@ -112,6 +112,11 @@ function SexUI.Climax:updateProgressBars(actors)
         if actor and actor.climax and actor.climax.currentPoints ~= 0 then
             self._progressBars[i].amount = actor.climax.currentPoints / actor.climax.maxPoints
         end
+        
+        local enabled = true
+        if actor.isPlayer then enabled = actor.entityId == self._parent._ownerId end
+        local button = (self._parent.buttons[self._buttonPrefix] or self._parent.buttons["main"] or {})["climax_climax_"..actor.actorSlot]
+        if button then button:setEnabled(enabled) end
     end
 end
 

@@ -248,6 +248,7 @@ function Sexbound.Player:showUI(config)
     local uiSettings = storage.sexbound or {}
     uiSettings = uiSettings.uiLayers or {}
     config.config.layersEnabled = uiSettings
+    config.config.ownerId = player.id()
     player.interact("ScriptPane", config, config.config.controllerId or player.id())
 end
 
