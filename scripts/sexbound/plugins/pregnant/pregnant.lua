@@ -821,6 +821,8 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateImmersionLevel(self._config.immersionLevel)
     self:validateSubGenderList(self._config.subGenderList)
     self:validateSubGenderChance(self._config.subGenderChance)
+    self:validateEnableKidStage(self._config.enableKidStage)
+    self:validateKidDayCount(self._config.kidDayCount)
 end
 
 --- Ensures immersionLevel is set to an allowed value
@@ -1082,4 +1084,25 @@ function Sexbound.Actor.Pregnant:validateIncestPenalty(value)
         return
     end
     self._config.incestPenalty = value
+end
+
+
+--- Ensures enableKidStage is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateEnableKidStage(value)
+    if type(value) ~= "boolean" then
+        self._config.enableKidStage = true
+        return
+    end
+    self._config.enableKidStage = value
+end
+
+--- Ensures kidDayCount is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateKidDayCount(value)
+    if type(value) == "number" then
+        self._config.kidDayCount = util.clamp(value, 1, value)
+        return
+    end
+    self._config.kidDayCount = 5
 end
