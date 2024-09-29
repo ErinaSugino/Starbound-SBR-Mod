@@ -95,5 +95,11 @@
       "deltaValue" : 0.0,
       "initialPercentage" : 0.0
     }
+  },
+
+  {
+    "op" : "add",
+    "path" : "/statusControllerSettings/primaryScriptSources/-",
+    "value" : "/stats/sexbound/npc_primary.lua"
   }
 ]
