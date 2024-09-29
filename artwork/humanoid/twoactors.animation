@@ -1193,10 +1193,18 @@
 					"actors": {
 						"idle_laying": {},
 						"idle": {},
-						"position1": {},
-						"position1-climax": {},
-						"position1-postclimax": {},
-						"position1-reset": {},
+						"position1": {
+							"properties": {"zLevel": 15}
+						},
+						"position1-climax": {
+							"properties": {"zLevel": 15}
+						},
+						"position1-postclimax": {
+							"properties": {"zLevel": 15}
+						},
+						"position1-reset": {
+							"properties": {"zLevel": 15}
+						},
 						"position2": {},
 						"position2-climax": {},
 						"position2-postclimax": {},
@@ -1225,10 +1233,18 @@
 						"position4_2-climax": {},
 						"position4_2-postclimax": {},
 						"position4_2-reset": {},
-						"position5": {},
-						"position5-climax": {},
-						"position5-postclimax": {},
-						"position5-reset": {},
+						"position5": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-climax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-postclimax": {
+							"properties": {"zLevel": 15}
+						},
+						"position5-reset": {
+							"properties": {"zLevel": 15}
+						},
 						"position6": {},
 						"position6-climax": {},
 						"position6-postclimax": {},

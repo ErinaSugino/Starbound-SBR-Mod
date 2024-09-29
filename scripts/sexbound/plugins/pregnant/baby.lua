@@ -151,7 +151,7 @@ function Baby:create(mother, father)
             color[i] = Sexbound.Util.rgbaToHex6(r)
         end
         
-        return color
+        return Sexbound.Util.messageEncode(color) --Encode color data cause Starbound sucks ass with Lua <-> JSON conversion
     end
 
     baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda, "bodyColor")
@@ -367,9 +367,11 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         fatherUuid = babyConfig.fatherUuid,
         fatherName = babyConfig.fatherName,
         generationFertility = babyConfig.generationFertility,
-        fertilityPenalty = babyConfig.generationFertility,
-        kid = world.time() + 840*5 --5 days of being a kid
+        fertilityPenalty = babyConfig.generationFertility
     }
+    if self._parent._parent._config.enableKidStage then
+        params.statusControllerSettings.statusProperties.kid = world.time() + 840*(self._parent._parent._config.kidDayCount or 5) --Config based days of being a kid
+    end
     params.identity = {}
     params.identity.gender = babyConfig.birthGender
     if babyName and babyName ~= "" then params.identity.name = babyName end
@@ -399,18 +401,30 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         local altColorAsFacialMaskSubColor = not not speciesConfig.altColorAsFacialMaskSubColor
         
         if babyConfig.bodyColor then
+            local c = babyConfig.bodyColor
+            local ci, cv = next(c)
+            local cl = string.len(tostring(ci))
+            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             bodyColorPalette = "?replace"
-            for k,v in pairs(babyConfig.bodyColor) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
+            for k,v in pairs(c) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
         end
         
         if babyConfig.hairColor then
+            local c = babyConfig.hairColor
+            local ci, cv = next(c)
+            local cl = string.len(tostring(ci))
+            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             hairColorPalette = "?replace"
-            for k,v in pairs(babyConfig.hairColor) do hairColorPalette = hairColorPalette..";"..k.."="..v end
+            for k,v in pairs(c) do hairColorPalette = hairColorPalette..";"..k.."="..v end
         end
         
         if babyConfig.undyColor then
+            local c = babyConfig.undyColor
+            local ci, cv = next(c)
+            local cl = string.len(tostring(ci))
+            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             undyColorPalette = "?replace"
-            for k,v in pairs(babyConfig.undyColor) do undyColorPalette = undyColorPalette..";"..k.."="..v end
+            for k,v in pairs(c) do undyColorPalette = undyColorPalette..";"..k.."="..v end
         end
         
         -- Build directives like Starbound does

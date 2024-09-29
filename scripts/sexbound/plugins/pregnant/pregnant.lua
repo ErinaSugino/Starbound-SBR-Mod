@@ -395,7 +395,18 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
     
-    if status:hasOneOf({"sexbound_aroused_strong", "sexbound_aroused_heat"}) then fertility = fertility * 1.1 end -- Strong arousal buff and in heat buff give 10% higher base fertility
+    -- Apply fertility buff from current arousal/heat level based on config
+    local arousalBuff = 1
+    if ((self._config.arousal.heat or {}).fertilityBonus or 0) > 0 and status:hasStatus("sexbound_aroused_heat") then -- Heat max priority
+        arousalBuff = self._config.arousal.heat.fertilityBonus
+    elseif ((self._config.arousal.heatWeak or {}).fertilityBonus or 0) > 0 and status:hasStatus("sexbound_aroused_heat_weak") then -- Heat weak should be exclusive to heat. Heat > arousal
+        arousalBuff = self._config.arousal.heatWeak.fertilityBonus
+    elseif ((self._config.arousal.strong or {}).fertilityBonus or 0) > 0 and status:hasStatus("sexbound_aroused_strong") then -- Strong arousal > arousal
+        arousalBuff = self._config.arousal.strong.fertilityBonus
+    elseif ((self._config.arousal.weak or {}).fertilityBonus or 0) > 0 and status:hasStatus("sexbound_aroused") then
+        arousalBuff = self._config.arousal.weak.fertilityBonus
+    end
+    fertility = fertility * arousalBuff
 
     local bonusCount = self:getCurrentInseminations(otherActor)
     local bonusMax = self:getConfig().fertilityBonusMax or 0.6
@@ -671,6 +682,8 @@ function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     self._config.immersionLevel = mainConfig.immersionLevel or 1
     self._config.subGenderList = mainConfig.sex.subGenderList or {}
     self._config.subGenderChance = mainConfig.sex.subGenderChance or 0.01
+    
+    self._config.arousal = mainConfig.arousal or {}
 end
 
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
@@ -750,7 +763,7 @@ function Sexbound.Actor.Pregnant:getPregnancyStage()
         elseif isPlayer == true then
             tempResult = 1 - (b.birthWorldTime / b.fullBirthWorldTime) -- Player world time calculation: reverse percentage of countdown
         else
-            tempResult = (world.day() + world.timeOfDay() - baby.fullBirthWorldTime) / (baby.birthWorldTime - baby.fullBirthWorldTime) -- Non-Player world time calculation: percentage diff time sinc start to total timespan
+            tempResult = (world.day() + world.timeOfDay() - b.fullBirthWorldTime) / (b.birthWorldTime - b.fullBirthWorldTime) -- Non-Player world time calculation: percentage diff time sinc start to total timespan
         end
         if tempResult > result then result = tempResult end
     end
@@ -808,6 +821,8 @@ function Sexbound.Actor.Pregnant:validateConfig()
     self:validateImmersionLevel(self._config.immersionLevel)
     self:validateSubGenderList(self._config.subGenderList)
     self:validateSubGenderChance(self._config.subGenderChance)
+    self:validateEnableKidStage(self._config.enableKidStage)
+    self:validateKidDayCount(self._config.kidDayCount)
 end
 
 --- Ensures immersionLevel is set to an allowed value
@@ -1069,4 +1084,25 @@ function Sexbound.Actor.Pregnant:validateIncestPenalty(value)
         return
     end
     self._config.incestPenalty = value
+end
+
+
+--- Ensures enableKidStage is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateEnableKidStage(value)
+    if type(value) ~= "boolean" then
+        self._config.enableKidStage = true
+        return
+    end
+    self._config.enableKidStage = value
+end
+
+--- Ensures kidDayCount is set to an allowed value
+-- @param value
+function Sexbound.Actor.Pregnant:validateKidDayCount(value)
+    if type(value) == "number" then
+        self._config.kidDayCount = util.clamp(value, 1, value)
+        return
+    end
+    self._config.kidDayCount = 5
 end

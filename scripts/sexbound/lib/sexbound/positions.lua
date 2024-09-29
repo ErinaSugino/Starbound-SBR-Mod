@@ -253,25 +253,9 @@ end
 function Sexbound.Positions:switchPosition(index)
     local stateMachine = self:getParent():getStateMachine()
     local stateName = stateMachine:stateDesc()
-
-    if not stateName or stateName == "nullState" then
-        self:getLog():debug("Aborted position switch due to null state.")
-        return
-    end
     
     if index == -1 or self._positionCount == 0 then self._index = -1
     else self._index = util.wrap(index, 1, self._positionCount) end
-
-    local animationState = self:getCurrentPosition():getAnimationState(stateName)
-
-    stateName = animationState:getStateName()
-
-    -- Set new animation state to match the position.
-    animator.setAnimationState("props", stateName, true)
-    animator.setAnimationState("actors", stateName, true)
-
-    self:getParent():helper_reassignAllRoles()
-    self:getParent():resetAllActors()
 
     -- Send undelayed broadcast
     Sexbound.Messenger.get("main"):broadcast(
@@ -281,9 +265,23 @@ function Sexbound.Positions:switchPosition(index)
         false
     )
     
+    self:getParent():helper_reassignAllRoles()
+    
     local isSex = self._index ~= -1
     stateMachine:setStatus("havingSex", isSex)
     self._lastPositionName = self:getCurrentPosition():getName()
+    
+    if stateName and stateName ~= "nullState" then
+        local animationState = self:getCurrentPosition():getAnimationState(stateName)
+        
+        stateName = animationState:getStateName()
+        
+        -- Set new animation state to match the position.
+        animator.setAnimationState("props", stateName, true)
+        animator.setAnimationState("actors", stateName, true)
+        
+        self:getParent():resetAllActors()
+    else self:getLog():info("Soft position switch due to nullState.") end
     
     self:getLog():debug("Switching positions. New position: "..self._index.." - sexState: "..tostring(isSex))
 end
@@ -321,7 +319,7 @@ end
 --- Returns a reference to the Current Position.
 function Sexbound.Positions:getCurrentPosition()
     if self._index == -1 then return self._idlePosition end
-    return self._availablePositions[self._index]
+    return self._availablePositions[self._index] or self._idlePosition
 end
 
 function Sexbound.Positions:getParent()
