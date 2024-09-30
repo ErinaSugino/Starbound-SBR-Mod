@@ -37,6 +37,9 @@ function SexboundDefeat:new(entityType)
 	-- Set the default timeout as configured in the settings
 	_self:_initTimeout()
 
+	-- Set "Can use sexbound UI while defeated." state as a status for use with other scripts
+	status.setStatusProperty("can_use_sex_ui_defeated", _self._config.defeatedPlayersCanUseSexUI) 
+
 	return _self
 end
 
@@ -50,15 +53,15 @@ end
 function SexboundDefeat:update(dt, oldUpdate)
 	self._promises:update()
 
-  if self:isTransformed() then
-    self._timer = self._timer + dt
-    -- Untransform the NPC when the timer runs out
-    if self._timer >= self._timeout or not self:isStunned() then
-      self:setIsDefeated(false)
-			self:setIsTransformed(false)
-			self:setTimer(0)
-      self:untransform()
-    end
+	if self:isTransformed() then
+    	self._timer = self._timer + dt
+    	-- Untransform the NPC when the timer runs out
+    	if self._timer >= self._timeout or not self:isStunned() then
+        	self:setIsDefeated(false)
+	    	self:setIsTransformed(false)
+	    	self:setTimer(0)
+        	self:untransform()
+    	end
 	end
 
 	-- Return when is defeated to prevent the default update loop from running
@@ -174,18 +177,15 @@ function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig)
 	self:transform(sexboundConfig, function(result)
 		result = result or {}
 		if result.uniqueId == nil then
-			self:setIsDefeated(false)
-			self:tryToDie()
-			return
+			return self:handleTransformFailed()
 		end
 		return self:handleTransformSuccess(result.uniqueId)
 	end, function()
 		return self:handleTransformFailed()
-	end)
+	end )
 end
 
 function SexboundDefeat:handleRetrieveSexboundConfigFailure()
-	self:setIsDefeated(true)
 	self:tryToDie()
 end
 
@@ -206,26 +206,19 @@ function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallba
 end
 
 function SexboundDefeat:handleTransformFailed()
-	self:setIsDefeated(false)
-	self:setIsTransformed(false)
 	self:tryToDie()
 	return false
 end
 
 function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 	self._sexNodeId = nodeUniqueId
-	self:setIsDefeated(true)
 	self:setIsTransformed(true)
 	self:setTimer(0)
 	self:outputDefeatedDialog()
+	self:_initTimeout()
 	if self:isPlayer() then
-		if self._config.defeatedPlayersCanUseSexUI then
-			self._promises:add(world.sendEntityMessage(self._sexNodeId, "Sexbound:Retrieve:UIConfig"), function(config)
-				world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = config})
-			end)
-		else
-			world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = self:loadUIConfig()})
-		end
+		-- Check config for using invisible "UI" that allows escape with ESC key
+		--world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = self:loadUIConfig()})
 		status.addEphemeralEffect("dontstarve",    self._timeout)
 		status.addEphemeralEffect("regeneration4", self._timeout)
 	end
@@ -244,24 +237,26 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 end
 
 function SexboundDefeat:loadUIConfig()
-  local _,_config = xpcall(function()
-    return root.assetJson(self._uiConfigFilePath)
-  end, function(error)
-      sb.logError("Unable to load config file for the Sexbound Defeat!")
-  end)
+	local _,_config = xpcall(function()
+    	return root.assetJson(self._uiConfigFilePath)
+	end, function(error)
+    	sb.logError("Unable to load config file for the Sexbound Defeat!")
+	end)
 	_config.config.nodeUniqueId = self._sexNodeId
-  return _config or {}
+	return _config or {}
 end
 
 function SexboundDefeat:tryToDie()
-  if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then
-    local species = self:findSpecies()
+  self:setIsDefeated(false)
+  self:setIsTransformed(false)
+	if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then
+    	local species = self:findSpecies()
 		local pregnantDialog = self._config.pregnantDialog[species] or self._config.pregnantDialog.default
-    world.sendEntityMessage(self._entityId, "Sexbound:Actor:Say", {message = util.randomChoice(pregnantDialog)})
-    status.setResourcePercentage("health", 1.0)
-  else
-    status.setResourcePercentage("health", 0)
-  end
+    	world.sendEntityMessage(self._entityId, "Sexbound:Actor:Say", {message = util.randomChoice(pregnantDialog)})
+    	status.setResourcePercentage("health", 1.0)
+	else
+		status.setResourcePercentage("health", 0)
+	end
 end
 
 function SexboundDefeat:smashSexNode(storage)
@@ -328,11 +323,11 @@ function SexboundDefeat:isPlayer()
 end
 
 function SexboundDefeat:isPregnant()
-  return status.statusProperty("sexbound_pregnant")
+	return status.statusProperty("sexbound_pregnant")
 end
 
 function SexboundDefeat:isStunned()
-  return status.statusProperty("sexbound_stun")
+	return status.statusProperty("sexbound_stun")
 end
 
 function SexboundDefeat:isSuicide()
@@ -345,6 +340,8 @@ end
 
 function SexboundDefeat:setIsDefeated(isDefeated)
 	self._isDefeated = isDefeated
+	status.setStatusProperty("sexbound_defeated", isDefeated)
+
 end
 
 function SexboundDefeat:setIsTransformed(isTransformed)

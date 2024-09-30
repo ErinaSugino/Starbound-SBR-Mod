@@ -46,14 +46,8 @@ function Sexbound.Player.Transform:handleTransform(args)
 end
 
 function Sexbound.Player.Transform:tryCreateNode(spawnOptions)
-    local position = self:findNearbyOpenSpace()
-    if self._parent:canLog("debug") then sb.logInfo("Looking for valid spawn position") end
-    if position == false then
-        return nil
-    end
-    if self._parent:canLog("debug") then sb.logInfo("Found valid position, attempting to place actual node") end
     -- Place Sexnode and store Unique ID
-    local uniqueId = self:placeSexNode(position, {
+    local uniqueId = self:placeSexNode({
         randomStartPosition = true,
         noEffect = spawnOptions.noEffect or false
     })

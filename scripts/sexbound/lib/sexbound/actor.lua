@@ -642,6 +642,7 @@ function Sexbound.Actor:setup(actorConfig)
     if self._config.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
     if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
     if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
+    if self._config.canUseSexUIDefeated then actorStatus:addStatus("sexbound_defeated_can_use_ui") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do

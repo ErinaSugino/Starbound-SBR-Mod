@@ -517,7 +517,8 @@ function Sexbound.Player:getActorData()
         aroused = status.statusProperty("sexbound_aroused", false),
         arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
         inHeat = status.statusProperty("sexbound_aroused_heat", false),
-        isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        canUseSexUIDefeated = status.statusProperty("can_use_sex_ui_defeated", false),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
