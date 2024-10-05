@@ -1,5 +1,6 @@
 function init()
-  if status.stat('specialStatusImmunity') > 0 then effect.expire() return end
+  self._aborted = status.stat('specialStatusImmunity') > 0
+  if self._aborted then effect.expire() return end
   
   effect.addStatModifierGroup({
     { stat = "invulnerable",           amount = 1 },
@@ -22,6 +23,7 @@ function update()
 end
 
 function uninit()
+  if self._aborted then return end
   if status.isResource("stunned") then status.setResource("stunned", 0) end
   status.setStatusProperty("sexbound_stun", false)
 end

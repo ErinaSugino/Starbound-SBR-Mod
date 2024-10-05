@@ -642,6 +642,7 @@ function Sexbound.Actor:setup(actorConfig)
     if self._config.arousedStrong then actorStatus:addStatus("sexbound_aroused_strong") end
     if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
     if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
+    if self._config.birthcontrol then actorStatus:addStatus("birthcontrol") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
@@ -649,7 +650,7 @@ function Sexbound.Actor:setup(actorConfig)
         end
     end
     
-    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated))
+    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated).." - birthcontrol "..tostring(self._config.birthcontrol))
     
     self:initPlugins()
     self:getApparel():sync() -- initial fetching of apparel to determine initial gender
