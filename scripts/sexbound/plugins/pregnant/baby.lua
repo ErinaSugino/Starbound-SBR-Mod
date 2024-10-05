@@ -367,9 +367,11 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         fatherUuid = babyConfig.fatherUuid,
         fatherName = babyConfig.fatherName,
         generationFertility = babyConfig.generationFertility,
-        fertilityPenalty = babyConfig.generationFertility,
-        kid = world.time() + 840*5 --5 days of being a kid
+        fertilityPenalty = babyConfig.generationFertility
     }
+    if self._config.enableKidStage then
+        params.statusControllerSettings.statusProperties.kid = world.time() + 840*(self._config.kidDayCount or 5) --Config based days of being a kid
+    end
     params.identity = {}
     params.identity.gender = babyConfig.birthGender
     if babyName and babyName ~= "" then params.identity.name = babyName end
@@ -402,7 +404,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             local c = babyConfig.bodyColor
             local ci, cv = next(c)
             local cl = string.len(tostring(ci))
-            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
+            if cl == 7 or cl == 9 then c = Sexbound.Util.messageDecode(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             bodyColorPalette = "?replace"
             for k,v in pairs(c) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
         end
@@ -411,7 +413,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             local c = babyConfig.hairColor
             local ci, cv = next(c)
             local cl = string.len(tostring(ci))
-            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
+            if cl == 7 or cl == 9 then c = Sexbound.Util.messageDecode(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             hairColorPalette = "?replace"
             for k,v in pairs(c) do hairColorPalette = hairColorPalette..";"..k.."="..v end
         end
@@ -420,7 +422,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             local c = babyConfig.undyColor
             local ci, cv = next(c)
             local cl = string.len(tostring(ci))
-            if cl == 7 or cl == 9 then c = Sexbound.Util.decodeMessage(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
+            if cl == 7 or cl == 9 then c = Sexbound.Util.messageDecode(c) end -- If color code is 7 (RGB+X) or 9 (RGBA+X) long, decode
             undyColorPalette = "?replace"
             for k,v in pairs(c) do undyColorPalette = undyColorPalette..";"..k.."="..v end
         end
