@@ -78,6 +78,12 @@
   },
   
   {
+    "op": "add",
+    "path": "/statusControllerSettings/stats/arousalMult",
+    "value": { "baseValue": 1.0 }
+  },
+  
+  {
     "op" : "add",
     "path" : "/statusControllerSettings/resources/arousal",
     "value" : {

@@ -107,7 +107,7 @@
          "object":"sexbound_cardshop_empty",
          "tilesetDirection":"right"
         },
-     "19":
+     "18":
         {
          "\/\/description":"An arcade sign. Sadly, it seems to be closed.",
          "\/\/name":"arcadesign_off",
@@ -293,7 +293,7 @@
          "object":"string",
          "tilesetDirection":"string"
         },
-     "19":
+     "18":
         {
          "\/\/description":"string",
          "\/\/name":"string",
@@ -445,7 +445,7 @@
          "imageheight":40,
          "imagewidth":56
         },
-     "19":
+     "18":
         {
          "image":"..\/..\/..\/objects\/miscellaneous\/sexscapeshops\/arcadesign_off.png",
          "imageheight":24,
