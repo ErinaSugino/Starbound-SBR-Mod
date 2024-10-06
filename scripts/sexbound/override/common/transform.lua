@@ -12,7 +12,8 @@ function Sexbound.Common.Transform:new()
     return setmetatable({
         _canTransform = false,
         _nodeName = "sexbound_main_node",
-        _timeout = 300
+        _timeout = 300,
+        _promises = PromiseKeeper.new()
     }, Sexbound.Common.Transform_mt)
 end
 
@@ -24,45 +25,47 @@ function Sexbound.Common.Transform:init(parent)
 end
 
 --- Returns 5 nearby positions within 10 blocks underneath the entity.
-function Sexbound.Common.Transform:findNearbyOpenSpace()
+function Sexbound.Common.Transform:findNearbyOpenSpace(startPosition)
     local yOffset = 0.5
-
-    local startPosition = entity.position()
+    local distance = 6
+    local positive = true
+    local positions = {}
+    local counter = 0
+    local position = nil
+    startPosition = startPosition or entity.position()
     startPosition[2] = (startPosition[2] - self._feetOffset) + yOffset
-
     local endPosition = vec2.add(startPosition, {0, -10})
+    for i=0,distance * 2 do
+        position = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
+        table.insert(positions, position)
+        counter = counter + 1
+        if positive then
+            startPosition[1] = startPosition[1] + counter
+            endPosition[1] = endPosition[1] + counter
+            positive = false
+        else
+            startPosition[1] = startPosition[1] - counter
+            endPosition[1] = endPosition[1] - counter
+            positive = true
+        end
 
-    local position = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
-    startPosition[1] = startPosition[1] - 1
-    local positionL = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
-    startPosition[1] = startPosition[1] - 1
-    local positionLL = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
-    startPosition[1] = startPosition[1] + 3
-    local positionR = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
-    startPosition[1] = startPosition[1] + 1
-    local positionRR = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
-
-    if position == nil and positionL == nil and positionLL == nil and positionR == nil and positionRR == nil then
-        return false, false, false, false, false
     end
 
-    position = vec2.floor(position)
-    positionL = vec2.floor(positionL)
-    positionLL = vec2.floor(positionLL)
-    positionR = vec2.floor(positionR)
-    positionRR = vec2.floor(positionRR)
+    if positions == {} then
+        return false
+    end
 
-
-    return position, positionL, positionLL, positionR, positionRR
+    return positions
 end
 
 --- Attempts to place a sex node beneath an entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:placeSexNode(spawnOptions)
-    local result = self:helper_SpawnSexNode(spawnOptions)
-
-    return result
+function Sexbound.Common.Transform:placeSexNode(spawnOptions, position, actorData)
+    local dungeonId = Sexbound.Util.tileProtectionDisable(position or entity.position())
+    local uniqueId = self:helper_SpawnSexNode(spawnOptions, position or nil, actorData or nil)
+    Sexbound.Util.tileProtectionEnable(dungeonId)
+    return uniqueId
 end
 
 --- This function may never actually work while the NPC is stunned
@@ -87,32 +90,23 @@ end
 -- [Helper] Handles the process of spawning a sex node in a tile beneath the entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions)
-
-    local position, positionL, positionLL, positionR, positionRR = self:findNearbyOpenSpace()
-
-    local targetTiles = {
-        [1] = position,
-        [2] = positionL,
-        [3] = positionR,
-        [4] = positionLL,
-        [5] = positionRR
-    }
-
-    spawnOptions = spawnOptions or {}
-
+function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, actorData)
+    local positions = self:findNearbyOpenSpace(position)
     local params = {
         mindControl = {
             timeout = self._timeout -- 5 minutes by default unless overrided
         },
         respawner = storage.respawner,
         sexboundConfig = self:getSexboundConfig(),
-        storedActor = self:getParent():getActorData(),
+        storedActor = actorData or nil,
         uniqueId = sb.makeUuid()
     }
 
+
+    spawnOptions = spawnOptions or {}
+
     -- Randomize the start position when true
-    params.sexboundConfig.randomStartPosition = spawnOptions.randomStartPosition
+    --params.sexboundConfig.randomStartPosition = spawnOptions.randomStartPosition
 
     local facingDirection = 1
 
@@ -122,18 +116,21 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions)
     end
 
     -- Iterate through list of scanned tile positions until node is placed.
-    for _, targetTile in ipairs(targetTiles) do
+    local uniqueId = params.uniqueId
+    for _, targetTile in ipairs(positions) do
         -- In the future, we'll need to handle tile protection on a different entity in case of a player being transformed
-        local dungeonId = Sexbound.Util.tileProtectionDisable(position)
-        if world.placeObject(self._nodeName, targetTile, facingDirection, params) then
-            self:setPosition(position[1], position[2] + self._feetOffset)
-    
+        local placed = world.placeObject(self._nodeName, targetTile, facingDirection, params)
+        if placed then
+            if actorData.entityType == "player" then 
+                world.sendEntityMessage(actorData.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
+            elseif mcontroller then
+                mcontroller.setPosition(targetTile[1], targetTile[2] + self._feetOffset)
+            end
             if not spawnOptions.noEffect then
-                world.sendEntityMessage(entity.id(), "applyStatusEffect", "sexbound_transform")
+                world.sendEntityMessage(actorData.entityId, "applyStatusEffect", "sexbound_transform")
             end
             return params.uniqueId
         end
-        Sexbound.Util.tileProtectionEnable(dungeonId)
     end
 
 

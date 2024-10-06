@@ -24,8 +24,11 @@ function SexboundDefeat:new(entityType)
 		_timeout           = 60,
 		_isDefeated        = false,
 		_isTransformed     = false,
-		_sexNodeId         = nil
+		_sexNodeId         = nil,
+		_actorData		   = nil
   }, SexboundDefeat_mt)
+
+  	_self:setIsDefeated(false)
 
 	-- Load the Sexbound Defeat config settings
 	_self._config = _self:loadConfig()
@@ -114,13 +117,31 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 	self:setTimer(0)
 
 	-- Attempt to transform this entity into a sexnode
-	self:retrieveSexboundConfig(function(result)
-		return self:handleRetrieveSexboundConfigSuccess(result)
-	end, function()
-		return self:handleRetrieveSexboundConfigFailure()
-	end)
+	self:retrieveActorData()
 
   return {}
+end
+
+function SexboundDefeat:retrieveActorData()
+	local entityId = self._entityId
+	self._promises:add(
+		world.sendEntityMessage(
+			entityId,
+			"Sexbound:Actor:GetActorData"
+		),
+		function(actorData)
+			self._actorData = actorData
+			self:retrieveSexboundConfig(function(result)
+				return self:handleRetrieveSexboundConfigSuccess(result)
+			end, function()
+				return self:handleRetrieveSexboundConfigFailure()
+			end,
+			actorData)
+		end,
+		function()
+			self:tryToDie()
+		end)
+
 end
 
 function SexboundDefeat:loadConfig()
@@ -182,23 +203,33 @@ function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig)
 		return self:handleTransformSuccess(result.uniqueId)
 	end, function()
 		return self:handleTransformFailed()
-	end )
+	end,
+	self._actorData
+	)
 end
 
 function SexboundDefeat:handleRetrieveSexboundConfigFailure()
 	self:tryToDie()
 end
 
-function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback)
+function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback, actorData)
+	local position = nil
+	local entityId = self._entityId
+	if self:isPlayer() then
+		position = entity.position()
+		entityId = self._hostileEntityId
+	end
 	self._promises:add(
 		world.sendEntityMessage(
-			self._entityId,
+			entityId,
 			"Sexbound:Transform",
 			{
 				responseRequired = true,
 				sexboundConfig = sexboundConfig,
-				timeout = 500
-			}
+				timeout = 500,
+				position = position
+			},
+			actorData or nil
 		),
 		successCallback,
 		failureCallback
@@ -218,9 +249,9 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 	self:_initTimeout()
 	if self:isPlayer() then
 		-- Check config for using invisible "UI" that allows escape with ESC key
-		--world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = self:loadUIConfig()})
+		if self._config.enableDefeatedPlayerEscape then world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = self:loadUIConfig()}) end
 		status.addEphemeralEffect("dontstarve",    self._timeout)
-		status.addEphemeralEffect("regeneration4", self._timeout)
+		status.addEphemeralEffect("sexbound_regen4", self._timeout)
 	end
 
 	status.addEphemeralEffect("sexbound_sex",  self._timeout)
@@ -278,7 +309,7 @@ function SexboundDefeat:untransform()
 	self._hostileEntityId = nil
 	self._hostileEntityType = nil
 	self._sexNodeId = nil
-	status.removeEphemeralEffect("regeneration4")
+	status.removeEphemeralEffect("sexbound_regen4")
 end
 
 -- Validate Configuration
@@ -291,6 +322,7 @@ function SexboundDefeat:validateConfig()
 	self:_validateEnableImmortalPregnantNPCs(self._config.enableImmortalPregnantNPCs, false)
 	self:_validateEnableStartDialogForNPCs(self._config.enableStartDialogForNPCs, true)
 	self:_validateEnableStartDialogForMonsters(self._config.enableStartDialogForMonsters, false)
+	self:_validateEnableDefeatedPlayerEscape(self._config.enableDefeatedPlayerEscape, false)
 end
 
 -- Getters / Setters
@@ -307,7 +339,7 @@ function SexboundDefeat:getTimeout()
 end
 
 function SexboundDefeat:isDefeated()
-	return self._isDefeated
+	return self._isDefeated or status.statusProperty("sexbound_defeated")
 end
 
 function SexboundDefeat:isMonster()
@@ -438,4 +470,10 @@ function SexboundDefeat:_validateEnableStartDialogForMonsters(value, defaultValu
 	if self:_isBoolean(value) then return end
 	self:_logWarnInvalidValueProvided("enableStartDialogForMonsters", defaultValue)
 	self._config.enableStartDialogForMonsters = defaultValue
+end
+
+function SexboundDefeat:_validateEnableDefeatedPlayerEscape(value, defaultValue)
+	if self:_isBoolean(value) then return end
+	self:_logWarnInvalidValueProvided("enableDefeatedPlayerEscape", defaultValue)
+	self._config.enableDefeatedPlayerEscape = defaultValue
 end

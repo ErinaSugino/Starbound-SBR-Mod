@@ -185,6 +185,9 @@ function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Actor:Say", function(_, _, args)
         return self:handleSay(args)
     end)
+    message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
+        return self:getActorData(), args
+    end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
     end)
@@ -266,7 +269,7 @@ function Sexbound.NPC:handleRestore(args)
 end
 
 function Sexbound.NPC:handleRetrieveConfig(args)
-    return config.getParameter("sexboundConfig")
+    return config.getParameter("sexboundConfig"), args
 end
 
 function Sexbound.NPC:handleSay(args)

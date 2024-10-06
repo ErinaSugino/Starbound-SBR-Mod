@@ -14,15 +14,15 @@ function Sexbound.Monster.Transform:new(parent)
 
     _self:setCanTransform(true);
 
-    message.setHandler("Sexbound:Transform", function(_, _, args)
-        return _self:handleTransform(args)
+    message.setHandler("Sexbound:Transform", function(_, _, args, actorData)
+        return _self:handleTransform(args, actorData)
     end)
 
     return _self
 end
 
-function Sexbound.Monster.Transform:handleTransform(args)
-    if self:getCanTransform() then
+function Sexbound.Monster.Transform:handleTransform(args, actorData)
+    if self:getCanTransform() or actorData ~= nil then
         self:setSexboundConfig(args.sexboundConfig)
 
         self:setTimeout(args.timeout)
@@ -30,7 +30,7 @@ function Sexbound.Monster.Transform:handleTransform(args)
         if not args.responseRequired then
             self:notifyTransform()
         else
-            local result = self:tryCreateNode()
+            local result = self:tryCreateNode(args.spawnOptions or {}, args.position or nil, actorData or nil)
 
             if result ~= nil and args.applyStatusEffects ~= nil then
                 for _, statusName in ipairs(args.applyStatusEffects) do
@@ -60,17 +60,11 @@ function Sexbound.Monster.Transform:handleTransform(args)
     return false
 end
 
-function Sexbound.Monster.Transform:tryCreateNode()
-    local position = self:findNearbyOpenSpace()
-
-    if position == false then
-        return nil
-    end
-
-    -- Place Sexnode and store Unique ID
-    local uniqueId = self:placeSexNode(position, {
-        randomStartPosition = true
-    })
+function Sexbound.Monster.Transform:tryCreateNode(spawnOptions, position, actorData)
+    local uniqueId = self:placeSexNode({
+        randomStartPosition = true,
+        noEffect = spawnOptions.noEffect or false
+    }, position or nil, actorData or nil)
 
     if uniqueId ~= nil then
         world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {

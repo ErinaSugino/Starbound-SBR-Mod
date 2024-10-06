@@ -8,6 +8,9 @@ function init()
   status.removeEphemeralEffect("sexbound_sex")
   status.removeEphemeralEffect("sexbound_stun")
   status.removeEphemeralEffect("regeneration4")
+  message.setHandler("Sexbound:Defeat:SetPosition", function(_, _, position)
+    mcontroller.setPosition(position)
+  end)
 end
 
 -- Override Update Hook

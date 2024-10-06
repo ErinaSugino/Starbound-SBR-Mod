@@ -275,7 +275,7 @@ function Sexbound.Player:restore()
 end
 
 function Sexbound.Player:handleRetrieveConfig(args)
-    return nil
+    return nil, args
 end
 
 function Sexbound.Player:handleRetrieveStorage(args)
@@ -363,6 +363,9 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Actor:Respawn", function(_, _, args)
         return self:handleRespawn(args)
+    end)
+    message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
+        return self:getActorData(), args
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)

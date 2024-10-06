@@ -31,7 +31,7 @@ function Sexbound.Player.Transform:handleTransform(args)
         
         self:setTimeout(args.timeout)
 
-        local result = self:tryCreateNode(args.spawnOptions or {})
+        local result = self:tryCreateNode(args.spawnOptions or {}, args.position or nil)
 
         if result ~= nil and args.applyStatusEffects ~= nil then
             for _, statusName in ipairs(args.applyStatusEffects) do
@@ -45,12 +45,12 @@ function Sexbound.Player.Transform:handleTransform(args)
     return false
 end
 
-function Sexbound.Player.Transform:tryCreateNode(spawnOptions)
+function Sexbound.Player.Transform:tryCreateNode(spawnOptions, position, data)
     -- Place Sexnode and store Unique ID
     local uniqueId = self:placeSexNode({
         randomStartPosition = true,
         noEffect = spawnOptions.noEffect or false
-    })
+    }, position or nil, data or nil)
     if self._parent:canLog("debug") then sb.logInfo("Placed node with UUID "..tostring(uniqueId)) end
     if uniqueId ~= nil then
         world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {

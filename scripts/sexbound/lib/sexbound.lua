@@ -342,17 +342,26 @@ function Sexbound:addActor(actorConfig, store)
     self._positions:filterPositions(self._actors)
     
     self._UI:refresh()
-
-    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
     
     if actor:getEntityType() == "player" then 
         self._containsPlayer = true 
         -- Open UI if not defeated or is allowed to while defeated.
-        if not actor:getStatus():hasStatus("sexbound_defeated") or actor:getStatus():hasStatus("sexbound_defeated_can_use_ui") then
+        if not actor:getStatus():hasStatus("sexbound_defeated") then
             actor:openUI()
             self._playerControl = true
+        else
+            if actor:getStatus():hasStatus("sexbound_defeated_can_use_ui") then
+                actor:openUI()
+            end
         end
     end
+    if self._containsDefeated then
+        -- Disable node interaction if an actor joins a defeat node
+        object.setInteractive(false)
+    end
+
+    -- Mark node as a defeat node.
+    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
 
     -- Resort actors based on changed environment
     self:helper_reassignAllRoles()
@@ -391,6 +400,7 @@ function Sexbound:removeActor(entityId)
             if a:getEntityType() == "player" then containsPlayer = true end
             if a:getStatus():hasStatus("sexbound_defeated") then containsDefeated = true end
         end
+        if not containsDefeated then object.setInteractive(true) end
         self._containsPlayer = containsPlayer
         self._containsDefeated = containsDefeated
         
