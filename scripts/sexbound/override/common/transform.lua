@@ -124,7 +124,7 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, a
             if actorData.entityType == "player" then 
                 world.sendEntityMessage(actorData.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
             elseif mcontroller then
-                mcontroller.setPosition(targetTile[1], targetTile[2] + self._feetOffset)
+                mcontroller.setPosition({targetTile[1], targetTile[2] + self._feetOffset})
             end
             if not spawnOptions.noEffect then
                 world.sendEntityMessage(actorData.entityId, "applyStatusEffect", "sexbound_transform")

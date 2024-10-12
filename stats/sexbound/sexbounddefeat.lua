@@ -25,7 +25,9 @@ function SexboundDefeat:new(entityType)
 		_isDefeated        = false,
 		_isTransformed     = false,
 		_sexNodeId         = nil,
-		_actorData		   = nil
+		_hostileEntities   = {},
+		_actorData		   = nil,
+		_sexboundConfig    = nil
   }, SexboundDefeat_mt)
 
   	_self:setIsDefeated(false)
@@ -41,7 +43,7 @@ function SexboundDefeat:new(entityType)
 	_self:_initTimeout()
 
 	-- Set "Can use sexbound UI while defeated." state as a status for use with other scripts
-	status.setStatusProperty("can_use_sex_ui_defeated", _self._config.defeatedPlayersCanUseSexUI) 
+	status.setStatusProperty("can_use_sex_ui_defeated", _self._config.defeatedPlayersCanUseSexUI)
 
 	return _self
 end
@@ -49,6 +51,36 @@ end
 function SexboundDefeat:initMessageHandlers()
 	message.setHandler("SexboundDefeat:Breakout", function(_,_,args)
 		self._timer = self._timeout
+	end)
+	message.setHandler("SexboundDefeat:TargetedBy", function(_,_,entityId)
+		sb.logInfo("being targetd by entity: "..entityId)
+		local found = false
+		for i, v in ipairs(self._hostileEntities) do
+			if v[1] == entityId then found = true end
+		end
+		if not found then
+			self:retrieveSexboundConfig(function(result)
+				world.sendEntityMessage(entityId, "SexboundDefeat:InCombatWith", self._entityId)
+				return self:handleRetrieveSexboundConfigSuccess(result,entityId)
+			end, function()
+				return
+			end,
+			entityId)
+		end
+	end)
+	message.setHandler("SexboundDefeat:InCombatWith", function(_,_,entityId)
+		local found = false
+		for i, v in ipairs(self._hostileEntities) do
+			if v[1] == entityId then found = true end
+		end
+		if not found then
+			self:retrieveSexboundConfig(function(result)
+				return self:handleRetrieveSexboundConfigSuccess(result,entityId)
+			end, function()
+				return
+			end,
+			entityId)
+		end
 	end)
 end
 
@@ -96,15 +128,20 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 	if status.resource("health") > 0 then return damage end
 
 	-- Store a reference to the hostile entity id that delivered the killing blow to this entity
-	self._hostileEntityId   = damageRequest.sourceEntityId
-	if self._hostileEntityId ~= nil then
-		self._hostileEntityType = world.entityType(self._hostileEntityId)
+	local hostileEntityId   = damageRequest.sourceEntityId
+	local hostileEntityType = nil
+	if hostileEntityId ~= nil then
+		hostileEntityType = world.entityType(hostileEntityId)
 	end
 
 	-- Handle the case that the entity has given itself a killing blow
 	if self:isSuicide() then
-		self:tryToDie()
+		self:tryToDie("suicide")
 		return {}
+	end
+
+	if self._entityId == "player" and hostileEntityType == "player" then
+		world.sendEntityMessage(self._entityId, "SexboundDefeat:TargetedBy", hostileEntityId)
 	end
 
 	-- Prevent the entity from dying by ticking its health up by a percentage point
@@ -117,12 +154,12 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 	self:setTimer(0)
 
 	-- Attempt to transform this entity into a sexnode
-	self:retrieveActorData()
+	self:retrieveActorData(hostileEntityId, hostileEntityType)
 
   return {}
 end
 
-function SexboundDefeat:retrieveActorData()
+function SexboundDefeat:retrieveActorData(damageSourceEntity, damageSourceEntityType)
 	local entityId = self._entityId
 	self._promises:add(
 		world.sendEntityMessage(
@@ -130,16 +167,47 @@ function SexboundDefeat:retrieveActorData()
 			"Sexbound:Actor:GetActorData"
 		),
 		function(actorData)
-			self._actorData = actorData
-			self:retrieveSexboundConfig(function(result)
-				return self:handleRetrieveSexboundConfigSuccess(result)
-			end, function()
-				return self:handleRetrieveSexboundConfigFailure()
-			end,
-			actorData)
+			--find closest entity that's in the table
+			local found = false
+			local hostileEntityId = nil
+			local sexboundConfig = nil
+			local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
+			for i,v in ipairs(entities) do
+				sb.logInfo("entity query returned: "..v)
+				for i2,v2 in ipairs(self._hostileEntities) do
+					sb.logInfo ("Checking entity list: queried "..v.." against list "..v2[1])
+					if v == v2[1] then
+						found = true
+						hostileEntityId = v2[1]
+						sexboundConfig = v2[2]
+						self._hostileEntityId = hostileEntityId
+						self._hostileEntityType = world.entityType(self._hostileEntityId)
+						break
+					end
+				end
+				if found then break end
+			end
+			if hostileEntityId then
+				--victory dialog, transform attempt
+				self:outputVictoryDialog()
+				self:transform(sexboundConfig,
+					function(result)
+						result = result or {}
+						if result.uniqueId == nil then
+							return self:handleTransformFailed()
+						end
+						return self:handleTransformSuccess(result.uniqueId)
+					end, function()
+						return self:handleTransformFailed()
+					end,
+					actorData
+				)
+			else
+				self:tryToDie("Hostile entity not found in table")
+			end
 		end,
 		function()
-			self:tryToDie()
+			self:tryToDie("Actor data retrieval failed")
 		end)
 
 end
@@ -181,10 +249,10 @@ function SexboundDefeat:outputVictoryDialog()
 	)
 end
 
-function SexboundDefeat:retrieveSexboundConfig(successCallback, failureCallback)
+function SexboundDefeat:retrieveSexboundConfig(successCallback, failureCallback, entityId)
 	self._promises:add(
 		world.sendEntityMessage(
-			self._hostileEntityId,
+			entityId,
 			"Sexbound:Config:Retrieve"
 		),
 		successCallback,
@@ -192,8 +260,13 @@ function SexboundDefeat:retrieveSexboundConfig(successCallback, failureCallback)
 	)
 end
 
-function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig)
-	-- Output the victory dialog
+function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig, hostileEntityId)
+	table.insert(self._hostileEntities, 1, {hostileEntityId, sexboundConfig})
+
+	if #self._hostileEntities > 8 then
+		table.remove(self._hostileEntities)
+	end
+	--[[ Output the victory dialog
 	self:outputVictoryDialog()
 	self:transform(sexboundConfig, function(result)
 		result = result or {}
@@ -206,11 +279,9 @@ function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig)
 	end,
 	self._actorData
 	)
+	]]
 end
 
-function SexboundDefeat:handleRetrieveSexboundConfigFailure()
-	self:tryToDie()
-end
 
 function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback, actorData)
 	local position = nil
@@ -237,7 +308,7 @@ function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallba
 end
 
 function SexboundDefeat:handleTransformFailed()
-	self:tryToDie()
+	self:tryToDie("Transform failed")
 	return false
 end
 
@@ -277,7 +348,8 @@ function SexboundDefeat:loadUIConfig()
 	return _config or {}
 end
 
-function SexboundDefeat:tryToDie()
+function SexboundDefeat:tryToDie(reason)
+  if reason then sb.logInfo("tryToDie reason: "..reason) end
   self:setIsDefeated(false)
   self:setIsTransformed(false)
 	if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then
@@ -297,7 +369,7 @@ end
 
 -- [Helper] Untransform the Entity
 function SexboundDefeat:untransform()
-	if not self:isPlayer() then self:tryToDie() end
+	if not self:isPlayer() then self:tryToDie("non-player untransform") end
 	local storage = {} -- temp local storage
 	if not self:isPlayer() and self:isPregnant() and self._config.convertPregnantEnemiesToFriends then
 		storage = { previousDamageTeam = { type = "friendly", team = 1 } }
@@ -363,7 +435,7 @@ function SexboundDefeat:isStunned()
 end
 
 function SexboundDefeat:isSuicide()
-	return self._hostileEntityId == nil or self._hostileEntityId == self._entityId
+	return self._hostileEntityId == self._entityId
 end
 
 function SexboundDefeat:isTransformed()
