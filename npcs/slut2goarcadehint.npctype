@@ -1,0 +1,21 @@
+{
+  "type" : "slut2goarcadehint",
+  "baseType" : "slut2gohooker",
+  
+  "npcname" : "Arcade Hooker",
+  
+  "persistent" : true,
+
+  "scriptConfig" : {
+    "behavior" : "tutorial",
+	
+    "dialog" : {
+      "greeting" : "/dialog/lustiaarcadehintconverse.config:greeting",
+      "converse" : "/dialog/lustiaarcadehintconverse.config:converse"
+    },
+	
+	"questGenerator" : {
+      "enableParticipation" : false
+    }
+  }
+}

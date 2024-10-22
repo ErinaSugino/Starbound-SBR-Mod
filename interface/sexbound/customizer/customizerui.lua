@@ -45,6 +45,11 @@ function sterilizeConfirm()
     self.customizer.tabs["General"]:sterilize()
 end
 
+function infertileConfirm()
+    if not self.customizer._inited then return end
+    self.customizer.tabs["General"]:makeFertile()
+end
+
 function canBeDefeatedConfirm()
     if not self.customizer._inited then return end
     self.customizer.tabs["General"]:toggleCanBeDefeated()

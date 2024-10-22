@@ -4,7 +4,8 @@ Sexbound.Common.Arousal_mt = { __index = Sexbound.Common.Arousal }
 --- Instantiates this class
 function Sexbound.Common.Arousal:new()
     return setmetatable({
-        _resourceName = "arousal"
+        _resourceName = "arousal",
+        _multiplierName = "arousalMult"
     }, Sexbound.Common.Arousal_mt)
 end
 
@@ -92,6 +93,9 @@ end
 function Sexbound.Common.Arousal:addAmount(amount)
     if self._parent._isKid then return end
     
+    -- Account for environmental multiplier
+    local mult = status.stat(self._multiplierName)
+    if mult > 0 then amount = amount * mult end
     status.modifyResource(self._resourceName, amount)
 end
 
