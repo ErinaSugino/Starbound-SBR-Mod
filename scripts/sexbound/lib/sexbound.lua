@@ -360,9 +360,6 @@ function Sexbound:addActor(actorConfig, store)
         object.setInteractive(false)
     end
 
-    -- Mark node as a defeat node.
-    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
-
     -- Resort actors based on changed environment
     self:helper_reassignAllRoles()
     
@@ -370,8 +367,19 @@ function Sexbound:addActor(actorConfig, store)
         self._positions:switchPosition(self._config.position.forceJoin)
     -- If we have no controlling player, try to initiate sex (switch from idle to a random available position)
     elseif not self._playerControl and self._config.sex.npcStartSex then
-        self._positions:switchRandomSexPosition(true)
+        local success = self._positions:switchRandomSexPosition(true)
+        -- Smash the defeat node if there's no valid position to avoid boring standing around
+        if not success and self._containsDefeated then
+            self:forEachActor(function(index,actor)
+                if actor:getStatus():hasStatus("sexbound_defeated") then
+                    world.sendEntityMessage(actor:getEntityId(), "SexboundDefeat:Untransform")
+                end
+            end)
+        end
     end
+    -- Mark node as a defeat node.
+    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
+
     
     -- Reset all actors to refresh their appearances
     self:resetAllActors()

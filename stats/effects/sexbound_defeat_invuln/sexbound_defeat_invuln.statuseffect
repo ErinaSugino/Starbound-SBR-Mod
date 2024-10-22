@@ -1,0 +1,9 @@
+{
+  "name"            : "sexbound_defeat_invuln",
+  "blockingStat"    : "specialStatusImmunity",
+  "defaultDuration" : 1.5,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/timefreeze.png",
+  "label"           : "Recovering",
+  "scripts"         : [ "sexbound_defeat_invuln.lua" ]
+}

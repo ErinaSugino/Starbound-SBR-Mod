@@ -45,6 +45,11 @@ function SexboundDefeat:new(entityType)
 	-- Set "Can use sexbound UI while defeated." state as a status for use with other scripts
 	status.setStatusProperty("can_use_sex_ui_defeated", _self._config.defeatedPlayersCanUseSexUI)
 
+	-- Enable canBeDefeated and canDefeatOthers on non-players. Additional conditions could be added.
+	if _self.entityType ~= "player" then
+		status.setStatusProperty("canBeDefeated", true)
+		status.setStatusProperty("canDefeatOthers", true)
+	end
 	return _self
 end
 
@@ -53,14 +58,17 @@ function SexboundDefeat:initMessageHandlers()
 		self._timer = self._timeout
 	end)
 	message.setHandler("SexboundDefeat:TargetedBy", function(_,_,entityId)
-		sb.logInfo("being targetd by entity: "..entityId)
+		-- Send hostile entity a message to add self to their hostile entity table
+		if status.statusProperty("canDefeatOthers") then
+			world.sendEntityMessage(entityId, "SexboundDefeat:InCombatWith", self._entityId)
+		end
 		local found = false
 		for i, v in ipairs(self._hostileEntities) do
 			if v[1] == entityId then found = true end
 		end
 		if not found then
 			self:retrieveSexboundConfig(function(result)
-				world.sendEntityMessage(entityId, "SexboundDefeat:InCombatWith", self._entityId)
+				-- Run function that adds entity with their sexbound config into the hostile entity table
 				return self:handleRetrieveSexboundConfigSuccess(result,entityId)
 			end, function()
 				return
@@ -68,6 +76,7 @@ function SexboundDefeat:initMessageHandlers()
 			entityId)
 		end
 	end)
+	-- Ends the hostile entity "handshake". Does same as "TargetedBy" but will not an additional message.
 	message.setHandler("SexboundDefeat:InCombatWith", function(_,_,entityId)
 		local found = false
 		for i, v in ipairs(self._hostileEntities) do
@@ -81,6 +90,10 @@ function SexboundDefeat:initMessageHandlers()
 			end,
 			entityId)
 		end
+	end)
+	-- Sets the entity's status to untransform at the earliers opportunity
+	message.setHandler("SexboundDefeat:Untransform", function(_,_)
+		self:setTimer(self._timeout - 3)
 	end)
 end
 
@@ -96,6 +109,7 @@ function SexboundDefeat:update(dt, oldUpdate)
 	    	self:setIsTransformed(false)
 	    	self:setTimer(0)
         	self:untransform()
+			status.removeEphemeralEffect("sexbound_defeat_stun")
     	end
 	end
 
@@ -126,6 +140,12 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 
 	-- When the this entity's health is greater than 0, generate damage
 	if status.resource("health") > 0 then return damage end
+
+	-- Handle the case where the entity doesn't have the status allowing being fucked after defeat.
+	if not status.statusProperty("canBeDefeated") then
+		self:tryToDie("entity does not have \"canBeDefeated\" status")
+		return {}
+	end
 
 	-- Store a reference to the hostile entity id that delivered the killing blow to this entity
 	local hostileEntityId   = damageRequest.sourceEntityId
@@ -173,9 +193,7 @@ function SexboundDefeat:retrieveActorData(damageSourceEntity, damageSourceEntity
 			local sexboundConfig = nil
 			local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
 			for i,v in ipairs(entities) do
-				sb.logInfo("entity query returned: "..v)
 				for i2,v2 in ipairs(self._hostileEntities) do
-					sb.logInfo ("Checking entity list: queried "..v.." against list "..v2[1])
 					if v == v2[1] then
 						found = true
 						hostileEntityId = v2[1]
@@ -326,7 +344,7 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 	end
 
 	status.addEphemeralEffect("sexbound_sex",  self._timeout)
-	status.addEphemeralEffect("sexbound_stun", self._timeout)
+	status.addEphemeralEffect("sexbound_defeat_stun", self._timeout)
 
 	-- Try to notify the controlling entity to mount the defeated player.
 	if (self._sexNodeId and self._hostileEntityId) then
@@ -349,7 +367,7 @@ function SexboundDefeat:loadUIConfig()
 end
 
 function SexboundDefeat:tryToDie(reason)
-  if reason then sb.logInfo("tryToDie reason: "..reason) end
+  --if reason then sb.logInfo("Sexbound Defeat Death: Name="..world.entityName(self._entityId).." reason: "..reason) end
   self:setIsDefeated(false)
   self:setIsTransformed(false)
 	if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then
@@ -431,7 +449,7 @@ function SexboundDefeat:isPregnant()
 end
 
 function SexboundDefeat:isStunned()
-	return status.statusProperty("sexbound_stun")
+	return status.statusProperty("sexbound_defeat_stun")
 end
 
 function SexboundDefeat:isSuicide()
@@ -445,7 +463,6 @@ end
 function SexboundDefeat:setIsDefeated(isDefeated)
 	self._isDefeated = isDefeated
 	status.setStatusProperty("sexbound_defeated", isDefeated)
-
 end
 
 function SexboundDefeat:setIsTransformed(isTransformed)

@@ -6,7 +6,7 @@ function init()
 	self.sexboundDefeat = SexboundDefeat:new("player")
   sexbound_defeat_init() -- call actual init function
   status.removeEphemeralEffect("sexbound_sex")
-  status.removeEphemeralEffect("sexbound_stun")
+  status.removeEphemeralEffect("sexbound_defeat_stun")
   status.removeEphemeralEffect("regeneration4")
   message.setHandler("Sexbound:Defeat:SetPosition", function(_, _, position)
     mcontroller.setPosition(position)

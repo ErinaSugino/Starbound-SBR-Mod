@@ -6,7 +6,7 @@ function init()
 	self.sexboundDefeat = SexboundDefeat:new("monster")
   sexbound_defeat_init() -- call actual init function
   status.removeEphemeralEffect("sexbound_sex")
-  status.removeEphemeralEffect("sexbound_stun")
+  status.removeEphemeralEffect("sexbound_defeat_stun")
 end
 
 -- Override Update Hook

@@ -95,6 +95,10 @@ end
 
 --- Function to choose a random available 
 function Sexbound.Sextalk:triggerTalk()
+
+    -- disable dialog if its a defeat node (will have separate dialog in the future)
+    if self._parent._containsDefeated then return end
+
     local viableActors = {}
     for _,a in ipairs(self._parent:getActors()) do
         local sxt = a:getPlugins("sextalk")

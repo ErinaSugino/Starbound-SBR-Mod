@@ -98,7 +98,7 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, a
         },
         respawner = storage.respawner,
         sexboundConfig = self:getSexboundConfig(),
-        storedActor = actorData or nil,
+        storedActor = actorData or self:getParent():getActorData(),
         uniqueId = sb.makeUuid()
     }
 
@@ -121,13 +121,13 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, a
         -- In the future, we'll need to handle tile protection on a different entity in case of a player being transformed
         local placed = world.placeObject(self._nodeName, targetTile, facingDirection, params)
         if placed then
-            if actorData.entityType == "player" then 
-                world.sendEntityMessage(actorData.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
+            if params.storedActor.entityType == "player" then 
+                world.sendEntityMessage(params.storedActor.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
             elseif mcontroller then
                 mcontroller.setPosition({targetTile[1], targetTile[2] + self._feetOffset})
             end
             if not spawnOptions.noEffect then
-                world.sendEntityMessage(actorData.entityId, "applyStatusEffect", "sexbound_transform")
+                world.sendEntityMessage(params.storedActor.entityId, "applyStatusEffect", "sexbound_transform")
             end
             return params.uniqueId
         end

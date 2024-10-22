@@ -549,7 +549,6 @@ function Sexbound.Actor.Climax:tryAutoClimax()
     
     if self._config.prioritizePlayer and playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
-        sb.logInfo("bailing climax due to config and player control")
         return
     end
 

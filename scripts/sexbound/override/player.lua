@@ -73,7 +73,9 @@ function Sexbound.Player.new()
         _loungeId = nil,
         _states = {"defaultState", "havingSexState"},
         _isSterilized = false,
-        _isInfertile = false
+        _isInfertile = false,
+        _canBeDefeated = false,
+        _canDefeatOthers = false
     }, Sexbound.Player_mt)
 
     self:init(self, "player")
@@ -125,6 +127,8 @@ function Sexbound.Player.new()
     
     self._isSterilized = self._status:hasStatus("sterilized")
     self._isInfertile = self._status:hasStatus("infertile")
+    self._canBeDefeated = self._status:hasStatus("canBeDefeated")
+    self._canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     
     self._hasInited = true
     self:updateTraitEffects()
@@ -231,6 +235,8 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.subGenders = self._subGender:getAllSubGenders()
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
     _loadedConfig.infertile = self._status:hasStatus("infertile")
+    _loadedConfig.canBeDefeated = self._status:hasStatus("canBeDefeated")
+    _loadedConfig.canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     return _loadedConfig
 end
 
