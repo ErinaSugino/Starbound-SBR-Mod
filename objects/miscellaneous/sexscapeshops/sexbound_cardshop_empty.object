@@ -1,0 +1,55 @@
+{
+  "objectName" : "sexbound_cardshop_empty",
+  "shortdescription" : "Card Sex Shop",
+  "description" : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "colonyTags" : ["sexbound", "sex", "commerce", "mechanical", "odd"],
+  "rarity" : "Uncommon",
+  "category" : "other",
+  "race" : "generic",
+  "price" : 500,
+  "printable" : false,
+
+  "apexDescription"    : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "avianDescription"   : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "floranDescription"  : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "glitchDescription"  : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "humanDescription"   : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "hylotlDescription"  : "A stall that, one day, will sell Monster Girl Cards and related items.",
+  "novakidDescription" : "A stall that, one day, will sell Monster Girl Cards and related items.",
+
+  "inventoryIcon" : "sexbound_sexshopicon_empty.png",
+
+  "offeredQuests" : [
+  ],
+  "turnInQuests" : [
+  ],
+
+  "uniqueId" : "cardshop_empty",
+  
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "sexbound_cardshopflip_empty.png" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+      
+      "direction" : "left",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "sexbound_cardshop_empty.png" } ],
+
+      "imagePosition" : [-28, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+      
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

@@ -73,7 +73,9 @@ function Sexbound.Player.new()
         _loungeId = nil,
         _states = {"defaultState", "havingSexState"},
         _isSterilized = false,
-        _isInfertile = false
+        _isInfertile = false,
+        _canBeDefeated = false,
+        _canDefeatOthers = false
     }, Sexbound.Player_mt)
 
     self:init(self, "player")
@@ -125,6 +127,8 @@ function Sexbound.Player.new()
     
     self._isSterilized = self._status:hasStatus("sterilized")
     self._isInfertile = self._status:hasStatus("infertile")
+    self._canBeDefeated = self._status:hasStatus("canBeDefeated")
+    self._canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     
     self._hasInited = true
     self:updateTraitEffects()
@@ -231,6 +235,8 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.subGenders = self._subGender:getAllSubGenders()
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
     _loadedConfig.infertile = self._status:hasStatus("infertile")
+    _loadedConfig.canBeDefeated = self._status:hasStatus("canBeDefeated")
+    _loadedConfig.canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     return _loadedConfig
 end
 
@@ -275,7 +281,7 @@ function Sexbound.Player:restore()
 end
 
 function Sexbound.Player:handleRetrieveConfig(args)
-    return nil
+    return nil, args
 end
 
 function Sexbound.Player:handleRetrieveStorage(args)
@@ -363,6 +369,9 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Actor:Respawn", function(_, _, args)
         return self:handleRespawn(args)
+    end)
+    message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
+        return self:getActorData(), args
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
@@ -514,10 +523,12 @@ function Sexbound.Player:getActorData()
         isFertile = status.statusProperty("sexbound_custom_fertility", false),
         isHyperFertile = status.statusProperty("sexbound_custom_hyper_fertility", false),
         isOvulating = status.statusProperty("sexbound_custom_ovulating", false),
+        birthcontrol = status.statusProperty("sexbound_birthcontrol"),
         aroused = status.statusProperty("sexbound_aroused", false),
         arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
         inHeat = status.statusProperty("sexbound_aroused_heat", false),
-        isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        canUseSexUIDefeated = status.statusProperty("can_use_sex_ui_defeated", false),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }

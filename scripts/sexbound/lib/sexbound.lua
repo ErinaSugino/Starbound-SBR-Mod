@@ -44,7 +44,9 @@ function Sexbound.new(maxActors)
         _globalActorId = 0,
         _uiSyncTokens = {positions=0},
         _containsPlayer = false,
-        _sexMusicListeners = {}
+        _sexMusicListeners = {},
+        _containsDefeated = false,
+        _playerControl = false
     }, Sexbound_mt)
 
     -- Store UUID of the entity running this instance of Sexbound.
@@ -336,23 +338,44 @@ function Sexbound:addActor(actorConfig, store)
     --actor:getApparel():sync()
 
     --actor:initPlugins()
-    
-    if actor:getEntityType() == "player" then self._containsPlayer = true end
-    
+
     self._positions:filterPositions(self._actors)
     
     self._UI:refresh()
-    actor:openUI()
+    
+    if actor:getEntityType() == "player" then 
+        self._containsPlayer = true 
+        -- Open UI if not defeated or is allowed to while defeated.
+        if not actor:getStatus():hasStatus("sexbound_defeated") or actor:getStatus():hasStatus("can_use_sex_ui_defeated") then
+            actor:openUI()
+            self._playerControl = true
+        end
+    end
+    if self._containsDefeated then
+        -- Disable node interaction if an actor joins a defeat node
+        object.setInteractive(false)
+    end
 
     -- Resort actors based on changed environment
     self:helper_reassignAllRoles()
     
     if self._config.position.forceJoin then
         self._positions:switchPosition(self._config.position.forceJoin)
-    -- If we only have NPCs, try to initiate sex (switch from idle to a random available position)
-    elseif not self._containsPlayer and self._config.sex.npcStartSex then
-        self._positions:switchRandomSexPosition(true)
+    -- If we have no controlling player, try to initiate sex (switch from idle to a random available position)
+    elseif not self._playerControl and self._config.sex.npcStartSex then
+        local success = self._positions:switchRandomSexPosition(true)
+        -- Smash the defeat node if there's no valid position to avoid boring standing around
+        if not success and self._containsDefeated then
+            self:forEachActor(function(index,actor)
+                if actor:getStatus():hasStatus("sexbound_defeated") then
+                    world.sendEntityMessage(actor:getEntityId(), "SexboundDefeat:Untransform")
+                end
+            end)
+        end
     end
+    -- Mark node as a defeat node.
+    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
+
     
     -- Reset all actors to refresh their appearances
     self:resetAllActors()
@@ -376,10 +399,14 @@ function Sexbound:removeActor(entityId)
         self:getLog():debug("Officially removed actor for entity "..tostring(entityId).." - new count: "..#self._actors)
         
         local containsPlayer = false
+        local containsDefeated = false
         for _,a in ipairs(self._actors) do
-            if a:getEntityType() == "player" then containsPlayer = true break end
+            if a:getEntityType() == "player" then containsPlayer = true end
+            if a:getStatus():hasStatus("sexbound_defeated") then containsDefeated = true end
         end
+        if not containsDefeated then object.setInteractive(true) end
         self._containsPlayer = containsPlayer
+        self._containsDefeated = containsDefeated
         
         self._positions:filterPositions(self._actors)
         self:helper_reassignAllRoles()
@@ -1478,6 +1505,11 @@ end
 --- Returns if the node currently contains a player actor
 function Sexbound:getContainsPlayer()
     return self._containsPlayer
+end
+
+--- Returns if the node currently contains a defeated actor
+function Sexbound:getContainsDefeated()
+    return self._containsDefeated
 end
 
 --- Returns a reference to this instance's sextalk manager
