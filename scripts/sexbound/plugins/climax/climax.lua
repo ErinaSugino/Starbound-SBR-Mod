@@ -531,23 +531,12 @@ end
 --- Attempts to cause this actor to begin climaxing.
 function Sexbound.Actor.Climax:tryAutoClimax()
     local entityType = self:getParent():getEntityType()
-    local playerControl = false
     
     if entityType == "player" then
         return
-    else
-        for _, actor in ipairs(self:getParent():getParent():getActors()) do
-            if actor:getActorNumber() ~= self:getParent():getActorNumber() then
-                if actor:getEntityType() == "player" then
-                    if not actor:getStatus():hasStatus("sexbound_defeated") or actor:getStatus():hasStatus("sexbound_defeated_can_use_ui") then
-                        playerControl = true
-                    end
-                end
-            end
-        end
     end
     
-    if self._config.prioritizePlayer and playerControl then
+    if self._config.prioritizePlayer and self:getParent():getParent()._playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
         return
     end

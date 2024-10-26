@@ -346,13 +346,9 @@ function Sexbound:addActor(actorConfig, store)
     if actor:getEntityType() == "player" then 
         self._containsPlayer = true 
         -- Open UI if not defeated or is allowed to while defeated.
-        if not actor:getStatus():hasStatus("sexbound_defeated") then
+        if not actor:getStatus():hasStatus("sexbound_defeated") or actor:getStatus():hasStatus("can_use_sex_ui_defeated") then
             actor:openUI()
             self._playerControl = true
-        else
-            if actor:getStatus():hasStatus("sexbound_defeated_can_use_ui") then
-                actor:openUI()
-            end
         end
     end
     if self._containsDefeated then

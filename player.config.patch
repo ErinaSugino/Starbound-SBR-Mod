@@ -83,17 +83,5 @@
       "deltaValue": 0.0,
       "initialPercentage": 0.0
     }
-  },
-
-  {
-    "op"    : "add",
-    "path"  : "/companionsConfig/scripts/-",
-    "value" : "/scripts/sexboundaddons/playerDefeat.lua"
-  },
-
-  {
-    "op"    : "add",
-    "path"  : "/statusControllerSettings/primaryScriptSources/-",
-    "value" : "/stats/sexbound/player_primary.lua"
   }
 ]

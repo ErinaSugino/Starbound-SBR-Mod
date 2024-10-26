@@ -3,20 +3,13 @@ require "/scripts/messageutil.lua"
 function init()
   self.config = config.getParameter("config")
   self.canvas = widget.bindCanvas("interface")
-  self.promise = PromiseKeeper.new()
   widget.focus("interface")
 end
 
 function update(dt)
-  self.promise:add(
-    world.findUniqueEntity(self.config.nodeUniqueId),
-    function(result) return end,
-    function()
-      pane.dismiss()
-    end
-  )
-
-  self.promise:update()
+  if not status.statusProperty("sexbound_defeated") then
+    pane.dismiss()
+  end
 
   self.canvas:clear()
 end

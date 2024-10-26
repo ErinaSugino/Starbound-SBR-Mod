@@ -7,7 +7,7 @@ Sexbound.Player.Transform_mt = {
 
 function Sexbound.Player.Transform:new(parent)
     local _self = setmetatable({
-        _canTransform = false,
+        _canTransform = true,
         _mindControl = {},
         _nodeName = "sexbound_main_node",
         _parent = parent

@@ -113,9 +113,6 @@ function SexboundDefeat:update(dt, oldUpdate)
     	end
 	end
 
-	-- Return when is defeated to prevent the default update loop from running
-	if self:isDefeated() then return end
-
 	oldUpdate(dt)
 end
 
@@ -339,7 +336,6 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 	if self:isPlayer() then
 		-- Check config for using invisible "UI" that allows escape with ESC key
 		if self._config.enableDefeatedPlayerEscape then world.sendEntityMessage(self._entityId, "Sexbound:UI:Show", {config = self:loadUIConfig()}) end
-		status.addEphemeralEffect("dontstarve",    self._timeout)
 		status.addEphemeralEffect("sexbound_regen4", self._timeout)
 	end
 
@@ -367,7 +363,7 @@ function SexboundDefeat:loadUIConfig()
 end
 
 function SexboundDefeat:tryToDie(reason)
-  --if reason then sb.logInfo("Sexbound Defeat Death: Name="..world.entityName(self._entityId).." reason: "..reason) end
+  if reason then sb.logInfo("Sexbound Defeat Death: Name="..world.entityName(self._entityId).." reason: "..reason) end
   self:setIsDefeated(false)
   self:setIsTransformed(false)
 	if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then

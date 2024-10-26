@@ -175,6 +175,7 @@ function Sexbound.Monster:restore()
     if entityId then
         world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_invisible")
         world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_stun")
+        world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_defeat_stun")
     end
 end
 

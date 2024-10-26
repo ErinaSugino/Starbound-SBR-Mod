@@ -345,6 +345,7 @@ function Sexbound.NPC:removeAllStunningStatusEffects()
     status.removeEphemeralEffect("sexbound_stun")
     status.setResource("stunned", 0)
     status.setStatusProperty("sexbound_stun", false)
+    status.removeEphemeralEffect("sexbound_defeat_stun")
 end
 
 function Sexbound.NPC:removeWeaponsWhenShouldHaveEmptyHands()
