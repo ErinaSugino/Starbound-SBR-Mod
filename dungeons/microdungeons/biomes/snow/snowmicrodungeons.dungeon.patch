@@ -1,0 +1,22 @@
+[
+	[
+		{"op": "add", "path": "/anchor/-", "value": "snowcabin_sxb1"},
+		{"op": "add", "path": "/anchor/-", "value": "snowhut_sxb1"}
+	],
+	[
+		{"op": "add", "path": "/parts/-", "value": {
+			"name" : "snowcabin_sxb1",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "snowcabin_sxb1.json" ]
+		}},
+		{"op": "add", "path": "/parts/-", "value": {
+			"name" : "snowhut_sxb1",
+			"rules" : [
+				[ "maxSpawnCount", [1] ]
+			],
+			"def" : [ "tmx", "snowhut_sxb1.json" ]
+		}}
+	]
+]

@@ -1,0 +1,35 @@
+{
+  "objectName" : "sexgrafitti",
+  "colonyTags" : ["human","humanprison"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+  "printable" : true,
+
+  "description" : "Graffiti. A blunt request.",
+  "shortdescription" : "Sex Grafitti",
+  "race" : "human",
+
+  "apexDescription" : "\"I have become SEX!\" Ah, what an inspiration to us all...",
+  "avianDescription" : "A peculiar thing to write down in large bold letters...",
+  "floranDescription" : "Floran wonderss if the person writing this got off?",
+  "glitchDescription" : "Alarmed. A curious message.",
+  "humanDescription" : "Oh, those fuckers. I hope that's chalk.",
+  "hylotlDescription" : "Perhaps I should follow this advice.",
+  "novakidDescription" : "Good for ya.",
+
+  "inventoryIcon" : "sexgrafitti_icon.png",
+  "orientations" : [
+    {
+      "image" : "sexgrafitti.png:<color>",
+      "imagePosition" : [-16, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "smashOnBreak" : true
+}

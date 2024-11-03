@@ -1,0 +1,26 @@
+[
+	[
+		{"op": "test", "path": "/parts/11/name", "value": "hylotlvertical1"},
+		{"op": "add", "path": "/parts/11/rules/0/-", "value": "hylotlvertical1_sxb"},
+		{"op": "add", "path": "/parts/-", "value": {
+			"name": "hylotlvertical1_sxb",
+			"rules" : [
+				[ "doNotCombineWith", [ "hylotlvertical1", "hylotlvertical1_sxb" ] ]
+			],
+			"def" : [ "tmx", "hylotlvertical1_sxb.json" ],
+			"chance" : 0.1
+		}}
+	],
+	[
+		{"op": "test", "path": "/parts/13/name", "value": "hylotlvertical3"},
+		{"op": "add", "path": "/parts/13/rules/0/-", "value": "hylotlvertical3_sxb"},
+		{"op": "add", "path": "/parts/-", "value": {
+			"name": "hylotlvertical3_sxb",
+			"rules" : [
+				[ "doNotCombineWith", [ "hylotlvertical1", "hylotlvertical3_sxb" ] ]
+			],
+			"def" : [ "tmx", "hylotlvertical3_sxb.json" ],
+			"chance" : 0.1
+		}}
+	]
+]
