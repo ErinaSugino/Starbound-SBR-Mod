@@ -11,4 +11,5 @@ function uninit()
 end
 
 function onExpire()
+  --if not self._aborted then status.addEphemeralEffect("sexbound_penalty_hyper_fertility") end
 end
