@@ -1,4 +1,12 @@
 {
+  "1.2_r2": [
+	"» 1.2 Revision 2 «",
+	"- Reworked Lustia to include the Omnibrowser Addon Arcade naturally, but non-functional",
+	"- Lustia now naturally increases arousal gain for any entity by x5",
+	"- This allows status effects to modify an entity's arousal gain in general",
+	"- Fixed arousal debuffs behaving wrongly",
+	"- Fixed the birth control pill. Yes, it never worked this entire time."
+  ],
   "1.2_r1": [
 	"» 1.2 Revision 1 «",
 	"- Added option to make an infertile character fertile again to customizer",
