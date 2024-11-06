@@ -1,0 +1,41 @@
+{
+  "objectName" : "tombstatueavian_sxb",
+  "colonyTags" : ["avian","aviantomb","pretty","sex"],
+  "rarity" : "Common",
+  "description" : "A statue of a great Avian hero.",
+  "shortdescription" : "Avian Hero Statue (F)",
+  "race" : "avian",
+  "category" : "decorative",
+  "price" : 110,
+
+  "apexDescription" : "To mark the grave of an Avian warrior, perhaps.",
+  "avianDescription" : "An Avian guardian that gave her life defending a temple.",
+  "floranDescription" : "Ssso many dead birdmen. What a wassste.",
+  "glitchDescription" : "Observant. This Avian has wings. They don't look real.",
+  "humanDescription" : "An Avian warrior. She looks fearsome.",
+  "hylotlDescription" : "Perhaps this Avian warrior died with glory.",
+  "novakidDescription" : "A statue of a proud lookin' Avian.",
+
+  "inventoryIcon" : "tombstatueavianicon.png",
+  "orientations" : [
+    {
+      "image" : "tombstatueavian_sxb.png:<color>",
+      "imagePosition" : [-13, 0],
+
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "tombstatueavian_sxb.png:<color>",
+      "imagePosition" : [-11, 0],
+
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "objectName" : "paintingpearlearring_sxb",
+  "colonyTags" : ["human","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A portrait of a woman with an earring.",
+  "shortdescription" : "Tasteful Painting",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 800,
+  "printable" : false,
+
+  "apexDescription" : "A lot of subtle emotion is captured in this piece. And alot of nudity.",
+  "avianDescription" : "This woman is turning to look at something, perhaps. Voyerism?",
+  "floranDescription" : "Tasssty human before being eaten!",
+  "glitchDescription" : "Quizzical. What is the human turning to look at? And why is it naked?",
+  "humanDescription" : "Artists back then had it great - drawing nudity all day and nobody complained.",
+  "hylotlDescription" : "A masterwork of captured emotion and beauty.",
+  "novakidDescription" : "A paintin' of a nice lookin' dame in nature's dress.",
+
+  "inventoryIcon" : "paintingpearlearringicon.png",
+  "orientations" : [
+    {
+      "image" : "paintingpearlearring_sxb.png:<color>",
+      "imagePosition" : [-8, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

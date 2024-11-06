@@ -1,0 +1,33 @@
+{
+  "objectName" : "molegirlposter_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 80,
+
+  "shortdescription" : "Molegirl Poster",
+  "description" : "A framed poster for porn parody, \"The Molehole Pornography\".",
+  "race" : "hylotl",
+
+  "apexDescription" : "They stay true to the original - turning this into smut is truly horrifying.",
+  "avianDescription" : "How did they see the original and thought this up?",
+  "floranDescription" : "Molegirl? Now there isss two of them? And they make even more?!",
+  "glitchDescription" : "Shocked. Who would turn a horror movie into porn?",
+  "humanDescription" : "Oh of course there is a porn spin-off! ...is it good?",
+  "hylotlDescription" : "Objectively, one version of the movie is better than the other.",
+  "novakidDescription" : "Judgin' by the original, not sure I wanna see this.",
+
+  "inventoryIcon" : "molegirlpostericon.png",
+  "orientations" : [
+    {
+      "image" : "molegirlposter_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "objectName" : "rainbowunicornstatue_sxb",
+  "colonyTags" : ["pretty","valuable","odd", "colourful","sex"],
+  "printable" : false,
+  "rarity" : "Rare",
+  "description" : "A stunning, anatomically correct unicorn statue. Watch out for the horns!",
+  "shortdescription" : "Rainbow Unicorn Statue (R18)",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 1000,
+
+  "apexDescription" : "This majestic beast takes my breath away. In more ways than one.",
+  "avianDescription" : "A stunning white steed with a glorious pearl horn and a strong, healthy member.",
+  "floranDescription" : "Even Floran not ssstab this horsie.",
+  "glitchDescription" : "Astonishment. A unicorn statue. How I'd love to see this creature in the flesh.",
+  "humanDescription" : "A unicorn statue. I always wanted a pet unicorn. Not for THAT reason!",
+  "hylotlDescription" : "This remarkable creature reminds me of the horned whales you see under the ocean.",
+  "novakidDescription" : "Aside from the horn it's a mighty fine lookin' horse. Good for breeding.",
+
+  "inventoryIcon" : "rainbowunicornstatueicon.png",
+  "orientations" : [
+    {
+      "image" : "rainbowunicornstatue.png:<color>",
+      "imagePosition" : [-15, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "rainbowunicornstatue.png:<color>",
+      "imagePosition" : [-11, 0],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

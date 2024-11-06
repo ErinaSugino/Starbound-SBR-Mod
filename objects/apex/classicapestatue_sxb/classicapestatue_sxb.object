@@ -1,0 +1,32 @@
+{
+  "objectName" : "classicapestatue_sxb",
+  "colonyTags" : ["apex","apexmansion","pretty","valuable","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 250,
+  "description" : "An appropriately glorious monument dedicated to a glorious leader.",
+  "shortdescription" : "Big Ape Monument (F)",
+  "race" : "apex",
+
+  "apexDescription" : "Centuries ago, alot of Apex believed Big Ape could be a woman, since noone ever saw him.",
+  "avianDescription" : "A statue built to inspire pride? Or perhaps fear?",
+  "floranDescription" : "Sssuch a big, tasssty monkey.",
+  "glitchDescription" : "Humbled. Is the scale correct?",
+  "humanDescription" : "That's a big statue. She looks stern.",
+  "hylotlDescription" : "A needless display of power. And other assets.",
+  "novakidDescription" : "A big statue of a serious lookin' Apex.",
+
+  "inventoryIcon" : "classicapestatueicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "classicapestatue_sxb.png:<color>",
+      "imagePosition" : [-16, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

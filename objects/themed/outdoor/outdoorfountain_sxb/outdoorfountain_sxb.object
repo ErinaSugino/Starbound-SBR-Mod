@@ -1,0 +1,71 @@
+{
+  "objectName" : "outdoorfountain_sxb",
+  "colonyTags" : ["outdoor","sex"],
+  "rarity" : "Common",
+  "price" : 300,
+  "description" : "A kinky fountain. The water looks refreshing.",
+  "shortdescription" : "Questionable Outdoor Fountain",
+  "race" : "generic",
+  "category" : "decorative",
+
+  "apexDescription" : "That's... some extravagant design choice for a public fountain.",
+  "avianDescription" : "That's the weirdest birdbath I have ever seen.",
+  "floranDescription" : "Water bring life to Floran. But why it come out of ssstoneman mouth?",
+  "glitchDescription" : "Appalled. Why is this water coming out of a woman's mouth and breasts?",
+  "humanDescription" : "I feel weirdly concerned and interested in trying this water...",
+  "hylotlDescription" : "Is this fountain some sign of fertility?",
+  "novakidDescription" : "That's a mighty kinky fountain right there.",
+
+  "lightColor" : [50, 67, 77],
+
+  "objectType" : "loungeable",
+  "sitFlipDirection" : false,
+
+  "inventoryIcon" : "outdoorfountainicon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "outdoorfountain_sxb.png:<color>.<frame>", "fullbright" : true }, { "image" : "outdoorfountainlit_sxb.png:<color>.<frame>" } ],
+      "imagePosition" : [-24, 0],
+      "frames" : 3,
+      "animationCycle" : 0.4,
+
+      "direction" : "left",
+      "flipImages" : true,
+      "lightPosition" : [-1, 0],
+
+      "sitPositions" : [
+        // Positions from front to back.
+        [-4, 20], // Right
+        [14, 20] // Left
+      ],
+
+      "interactiveSpaces" : [ [-3,0], [-3,1], [-2,0], [-2,1], [-1,0], [-1,1], [0,0], [0,1] ],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "outdoorfountain_sxb.png:<color>.<frame>", "fullbright" : true }, { "image" : "outdoorfountainlit_sxb.png:<color>.<frame>" } ],
+      "imagePosition" : [-24, 0],
+      "frames" : 3,
+      "animationCycle" : 0.4,
+
+      "sitPositions" : [
+        // Positions from front to back.
+        [-4, 20], // Left
+        [14, 20] // Right
+      ],
+
+      "interactiveSpaces" : [ [-1,0], [-1,1], [0,0], [0,1], [1,0], [1,1], [2,0], [2,1] ],
+
+      "direction" : "right",
+      "lightPosition" : [0, 0],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "soundEffect" : "/sfx/objects/fountain1.ogg"
+
+}

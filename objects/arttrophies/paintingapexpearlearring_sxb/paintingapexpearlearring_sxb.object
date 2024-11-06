@@ -1,0 +1,33 @@
+{
+  "objectName" : "paintingapexpearlearring_sxb",
+  "colonyTags" : ["apex","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A portrait of an Apex with an earring.",
+  "shortdescription" : "Tasteful Ape Painting",
+  "race" : "apex",
+  "category" : "decorative",
+  "price" : 800,
+  "printable" : false,
+
+  "apexDescription" : "A masterpiece, but what's the point here?",
+  "avianDescription" : "I understand artists have weird tastes, but what is the point of this?",
+  "floranDescription" : "Apex wearing no armor, easy sssnack!",
+  "glitchDescription" : "Observant. This painting's style doesn't appear to match its age.",
+  "humanDescription" : "This painting seems familar, but somehow bothers me.",
+  "hylotlDescription" : "Beautiful technique, but I don't know about the subject matter.",
+  "novakidDescription" : "Nice paintin', but that's one strange lookin' dame.",
+
+  "inventoryIcon" : "paintingapexpearlearringicon.png",
+  "orientations" : [
+    {
+      "image" : "paintingapexpearlearring_sxb.png:<color>",
+      "imagePosition" : [-8, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

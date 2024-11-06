@@ -1,0 +1,31 @@
+{
+  "objectName" : "tenstudiesinfemalehylotlgy_sxb",
+  "colonyTags" : ["hylotl","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A slightly less famous portrait of a mysterious lady.",
+  "shortdescription" : "Studies in Female Hylotlgy (Uncensored)",
+  "race" : "hylotl",
+  "category" : "decorative",
+  "price" : 3000,
+  "printable" : false,
+
+  "apexDescription" : "It is nice to see artwork that doesn't feature Big Ape's boobs.",
+  "avianDescription" : "This painting of a Hylotl would be better with clothing instead.",
+  "floranDescription" : "Picture doesn't have ssstabbing. Floran thinks thiss isss boring.",
+  "glitchDescription" : "Impressed. This picture of a Hylotl woman is very detailed and accurate.",
+  "humanDescription" : "I'm not sure how I'm meant to feel about this piece of art...",
+  "hylotlDescription" : "What a beautiful and alluring piece of art. It captures so much emotion and beauty.",
+  "novakidDescription" : "Now that's one raunchy lookin' dame.",
+
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "image" : "tenstudiesinfemalehylotlgy_sxb.png:<color>",
+      "imagePosition" : [-32, -32],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

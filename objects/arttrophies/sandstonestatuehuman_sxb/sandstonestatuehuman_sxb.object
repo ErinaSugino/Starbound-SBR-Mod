@@ -1,0 +1,34 @@
+{
+  "objectName" : "sandstonestatuehuman_sxb",
+  "colonyTags" : ["sandstone","pretty","sex"],
+  "printable" : false,
+  "rarity" : "Rare",
+  "description" : "A statue of a human. Check out the hair.",
+  "shortdescription" : "Human Sandstone Statue (F)",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 400,
+
+  "apexDescription" : "A human. It's easy to see why people believe the humans and the Apex are related.",
+  "avianDescription" : "A human. Her hairstyle almost looks like feathers.",
+  "floranDescription" : "Ssstupid fleshwoman with ssstupid hair. Ssstatue.",
+  "glitchDescription" : "Concern. I feel bad for the humans, having to suffer such outlandish hairstyles.",
+  "humanDescription" : "A popular human entertainer. I used to own all her albums.",
+  "hylotlDescription" : "A statue of a human. This woman appears to be attempting to pull off some kind of style.",
+  "novakidDescription" : "That's one crazy head o' hair. Looks t'me like she just took off her hat.",
+
+  "inventoryIcon" : "sandstonestatuehumanicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sandstonestatuehuman_sxb.png:<color>",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

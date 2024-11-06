@@ -1,0 +1,32 @@
+{
+  "objectName" : "huntingbigstatue_sxb",
+  "colonyTags" : ["floran","floranhuntinggrounds","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 275,
+  "description" : "A statue of a Floran. It looks like a great hunter.",
+  "shortdescription" : "Large Floran Statue (F)",
+  "race" : "floran",
+
+  "apexDescription" : "An imposing Floran overlord no doubt.",
+  "avianDescription" : "I assume this depicts a Floran hunting master.",
+  "floranDescription" : "This sstatue repressentss the hunt, not a sspecific Floran.",
+  "glitchDescription" : "Curious. Was the Floran depicted here important as a hunter?",
+  "humanDescription" : "I'll bet the history books have a lot to say about this Floran.",
+  "hylotlDescription" : "A hideous, mocking Floran. Immortalised in stone.",
+  "novakidDescription" : "A big ol' Floran statue.",
+
+  "inventoryIcon" : "huntingbigstatueicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "huntingbigstatue_sxb.png:<color>",
+      "imagePosition" : [-24, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

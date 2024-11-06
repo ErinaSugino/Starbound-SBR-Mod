@@ -1,0 +1,34 @@
+{
+  "objectName" : "hylotlsign1o_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","electronic","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 210,
+  "lightColor" : [244, 198, 36],
+
+  "shortdescription" : "Orange Brothel Sign",
+  "description" : "An orange neon sign displaying what obvious services are offered here.",
+  "race" : "hylotl",
+
+  "apexDescription" : "Selling oneself like this could never happen under Big Ape.",
+  "avianDescription" : "Oh my. Is this what I think it is?",
+  "floranDescription" : "Buzzy sssign annoy Floran.",
+  "glitchDescription" : "Hesitant. They openly advertise their services like this?",
+  "humanDescription" : "Yep. We all know what that reads.",
+  "hylotlDescription" : "You have to have been to one atleast once in your life.",
+  "novakidDescription" : "Is that a brothel?",
+
+  "inventoryIcon" : "hylotlsign1oicon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlsign1o_sxb.png:<color>",
+      "imagePosition" : [-24, -24],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

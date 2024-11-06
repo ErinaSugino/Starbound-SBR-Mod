@@ -1,0 +1,34 @@
+{
+  "objectName" : "sandstonestatuefloran_sxb",
+  "colonyTags" : ["sandstone","pretty","sex"],
+  "printable" : false,
+  "rarity" : "Rare",
+  "description" : "A statue of a Floran. Won't stab you... probably.",
+  "shortdescription" : "Floran Sandstone Statue (F)",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 400,
+
+  "apexDescription" : "A suave-looking Floran. Intimidating.",
+  "avianDescription" : "Despite the stony visage, this Floran looks more approachable than the usual.",
+  "floranDescription" : "Greenfinger. Ssspecial Floran. Sssmell funny.",
+  "glitchDescription" : "Hypothetical. I believe this statue depicts a great Floran leader.",
+  "humanDescription" : "An adorable Floran. That's something I never thought I'd say.",
+  "hylotlDescription" : "The blank stone of the statue suitably portrays the Floran's cold, dead eyes.",
+  "novakidDescription" : "Carvin' these leaves here must've been a tough job.",
+
+  "inventoryIcon" : "sandstonestatuefloranicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sandstonestatuefloran_sxb.png:<color>",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "objectName" : "apexhdtv_sxb",
+  "colonyTags" : ["apex","apexresearchlab","electronic","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 500,
+
+  "description" : "Detailed female body scans.",
+  "shortdescription" : "Big Ape HDTV (R18)",
+  "race" : "apex",
+
+  "apexDescription" : "Who could these scans belong to and what are they used for?",
+  "avianDescription" : "Are these anatomy studies? Why would they need this?",
+  "floranDescription" : "It'sss a large TV.",
+  "glitchDescription" : "Intrigued. This level of bio-scanning is fascinating.",
+  "humanDescription" : "That's some detailed scans. I wonder what for?",
+  "hylotlDescription" : "Somehow I doubt they were just interested in anatomy.",
+  "novakidDescription" : "A big ol' monitor. Displaying nothin' but a big ol' boobs and gibberish.",
+
+  "lightColor" : [89, 149, 179],
+
+  "inventoryIcon" : "apexhdtvicon.png",
+  "orientations" : [
+    {
+      "image" : "apexhdtv_sxb.png:<color>.<frame>",
+      "imagePosition" : [-40, -24],
+
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "animation" : "apexhdtv_sxb.animation",
+  "animationParts" : {
+    "bg" : "apexhdtv_sxb.png",
+    "fg" : "apexhdtvlit_sxb.png"
+  },
+  "animationPosition" : [-40, -24],
+
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+  
+  "interactive" : false,
+
+  "inputNodes" : [ [0, 0] ]
+}

@@ -1,0 +1,34 @@
+{
+  "objectName" : "sandstonestatueglitch_sxb",
+  "colonyTags" : ["sandstone","pretty","sex"],
+  "printable" : false,
+  "rarity" : "Rare",
+  "description" : "A sandstone Glitch. It's not sentient.",
+  "shortdescription" : "Glitch Sandstone Statue (F)",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 400,
+
+  "apexDescription" : "A Glitch. These gals all look the same to me.",
+  "genericDescription" : "A statue of a Glitch. I wonder if this one was important.",
+  "floranDescription" : "Machine woman made of ssstone. Floran think machine woman look sssilly.",
+  "glitchDescription" : "Informed. This statue depicts the first Glitch model, before the self-aware began to modify themselves.",
+  "humanDescription" : "I've always wanted a Glitch sidekick. This statue is the next best thing.",
+  "hylotlDescription" : "A Glitch. Their man-made appearance will forever be jarring.",
+  "novakidDescription" : "Now who'd go and build a metal-woman out of sandystone?",
+
+  "inventoryIcon" : "sandstonestatueglitchicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "sandstonestatueglitch_sxb.png:<color>",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

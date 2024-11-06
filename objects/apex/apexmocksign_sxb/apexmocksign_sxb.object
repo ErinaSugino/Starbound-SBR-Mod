@@ -1,0 +1,33 @@
+{
+  "objectName" : "apexmocksign_sxb",
+  "colonyTags" : ["apex","apexvillage","odd","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 80,
+
+  "description" : "A defaced poster of Big Ape.",
+  "shortdescription" : "SLUT Sign",
+  "race" : "apex",
+
+  "apexDescription" : "Looks like someone isn't fond of Big Ape. Or big boobs.",
+  "avianDescription" : "A defaced poster of Big Ape. Good work.",
+  "floranDescription" : "Floran find monkey funny!",
+  "glitchDescription" : "Amused. Someone has defaced this Big Ape poster.",
+  "humanDescription" : "Aww man, someone beat me to it!",
+  "hylotlDescription" : "Even during times of oppression, the Apex take time out to ruin art.",
+  "novakidDescription" : "Defacin' a Big Ape poster is a daring move. I bet someone paid the price.",
+
+  "inventoryIcon" : "apexmocksignicon.png",
+  "orientations" : [
+    {
+      "image" : "apexmocksign_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

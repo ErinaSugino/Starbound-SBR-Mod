@@ -1,0 +1,32 @@
+{
+  "objectName" : "apexstatue1_sxb",
+  "colonyTags" : ["apex","apexmansion","pretty","valuable","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 150,
+  "description" : "It's a bust of Big Ape, if he had Big Boobs.",
+  "shortdescription" : "Big Ape \"Bust\"",
+  "race" : "apex",
+
+  "apexDescription" : "Big Ape... His image is everywhere, but I've never seen him. What if he's actually a she?",
+  "avianDescription" : "A cheap stone bust. It looks machine-produced.",
+  "floranDescription" : "Sssilly sstone boobs.",
+  "glitchDescription" : "Questioning. I don't quite think this is accurate.",
+  "humanDescription" : "Big Ape with Big Boobs. I wonder if this is to scale?",
+  "hylotlDescription" : "I don't believe Big Ape appreciates their likeness to be... altered like this.",
+  "novakidDescription" : "This is clearly fake. And I ain't just talking about them knockers.",
+
+  "inventoryIcon" : "apexstatue1icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "apexstatue1_sxb.png:<color>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

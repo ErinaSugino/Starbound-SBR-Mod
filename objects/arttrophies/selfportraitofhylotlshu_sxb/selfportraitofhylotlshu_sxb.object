@@ -1,0 +1,31 @@
+{
+  "objectName" : "selfportraitofhylotlshu_sxb",
+  "colonyTags" : ["hylotl","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A very famous self-portrait of a very famous Hylotl artist.",
+  "shortdescription" : "Self-Portrait of Hylotl-Shu (nude)",
+  "race" : "hylotl",
+  "category" : "decorative",
+  "price" : 1800,
+  "printable" : false,
+
+  "apexDescription" : "A classic Hylotl self-portrait. Masterfully done.",
+  "avianDescription" : "The paintwork on this portrait is almost up to Avian standards.",
+  "floranDescription" : "Floran want to sssteal painting and sssell on black market.",
+  "glitchDescription" : "Appreciative. This self-portrait is a great work of art.",
+  "humanDescription" : "He looks familiar, yet somehow... not.",
+  "hylotlDescription" : "A self-portrait of a famous historical artist from my homeworld.",
+  "novakidDescription" : "Not a bad painting. Looks like he's playin' cards.",
+
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "image" : "selfportraitofhylotlshu_sxb.png:<color>",
+      "imagePosition" : [-24, -32],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

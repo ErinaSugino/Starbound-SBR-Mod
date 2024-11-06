@@ -1,0 +1,35 @@
+{
+  "objectName" : "hylotlfashionhologram_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","electronic","commerce","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 150,
+  "lightColor" : [65, 175, 225],
+
+  "description" : "A hologram displaying the latest trends in Hylotl adult fashion.",
+  "shortdescription" : "Hylotl Fashion Hologram (R18)",
+  "race" : "hylotl",
+
+  "apexDescription" : "The Hylotl have interesting taste in \"clothes\".",
+  "avianDescription" : "These \"styles\" are not what I'm used to...",
+  "floranDescription" : "Fishman fashion. Floran not like.",
+  "glitchDescription" : "Intrigued. Do these even still count as clothes.",
+  "humanDescription" : "Are we sure this is still about \"Fashion\"...?",
+  "hylotlDescription" : "Ah, the styles of the spring season are my favorite~",
+  "novakidDescription" : "Have seen Fluffalos wearing more than them.",
+
+  "inventoryIcon" : "hylotlfashionhologramicon.png",
+  "orientations" : [
+    {
+      "leftImage" : "hylotlfashionhologramleft_sxb.png:<color>.<frame>",
+      "rightImage" : "hylotlfashionhologramright_sxb.png:<color>.<frame>",
+      "imagePosition" : [-12, 0],
+      "frames" : 21,
+      "animationCycle" : 1.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

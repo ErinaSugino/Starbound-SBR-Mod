@@ -1,0 +1,58 @@
+{
+  "objectName" : "bunkerpanel2_sxb",
+  "colonyTags" : ["human","humanbunker","electronic","sex"],
+  "rarity" : "Common",
+  "description" : "It's a screen displaying an old medical scan.",
+  "shortdescription" : "Medical Data Panel (F)",
+  "race" : "human",
+
+  "apexDescription" : "This screen appears to display a medical diagnostic.",
+  "avianDescription" : "A scan of what appears to be medical data.",
+  "floranDescription" : "Screen showsss flesh perssson. Floran wondersss if perssson is trapped inssside.",
+  "glitchDescription" : "Intrigued. This appears to be a full-body medical scan. I wonder what was wrong with them?",
+  "humanDescription" : "A digital medical scan! The wonders of science.",
+  "hylotlDescription" : "A medical scan - judging by the images, it wasn't of a Hylotl.",
+  "novakidDescription" : "I wonder what this information was bein' used for?",
+
+  "category" : "decorative",
+  "price" : 135,
+  "lightColor" : [38, 84, 153],
+
+  "inventoryIcon" : "bunkerpanel2icon.png",
+  "orientations" : [
+    {
+      "image" : "bunkerpanel2_sxb.png:<color>.<frame>",
+      "imagePosition" : [-16, -16],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    },
+    {
+      "image" : "bunkerpanel2_sxb.png:<color>.<frame>",
+      "imagePosition" : [-16, -16],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "animation" : "bunkerpanel2_sxb.animation",
+  "animationParts" : {
+    "bg" : "bunkerpanel2_sxb.png",
+    "fg" : "bunkerpanel2lit_sxb.png"
+  },
+  "animationPosition" : [-16, -16],
+
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ],
+
+  "interactive" : false,
+
+  "soundEffect" : "/sfx/objects/bunkerpanel2.ogg"
+
+}

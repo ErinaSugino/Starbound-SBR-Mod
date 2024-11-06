@@ -1,0 +1,31 @@
+{
+  "objectName" : "paintingcreationofpixel_sxb",
+  "colonyTags" : ["human","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A grand painting of two pointing figures.",
+  "shortdescription" : "Grand Painting (F)",
+  "race" : "generic",
+  "category" : "decorative",
+  "price" : 1500,
+  "printable" : false,
+
+  "apexDescription" : "Such art would be banned by the Miniknog.",
+  "avianDescription" : "This would be improved if it had Kluex in it.",
+  "floranDescription" : "Look! Two humansss to hunt! A rare catch!",
+  "glitchDescription" : "Quizzical. Is this the hunt for knowledge in painted form?",
+  "humanDescription" : "This is a rare find indeed. It appears this is a piece of a larger painting.",
+  "hylotlDescription" : "Does this painting depict knowledge? The Hylotl would no doubt admire this.",
+  "novakidDescription" : "It's a paintin' of some humans floatin' and pointin'. I don't get it.",
+
+  "inventoryIcon" : "paintingcreationofpixelicon.png",
+  "orientations" : [
+    {
+      "image" : "paintingcreationofpixel_sxb.png:<color>",
+      "imagePosition" : [-32, -24],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}
