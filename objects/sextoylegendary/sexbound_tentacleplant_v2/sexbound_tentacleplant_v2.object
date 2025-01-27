@@ -254,22 +254,22 @@
 						"actors" : {
 							"position6" : {
 								"frameProperties" : {
-									"zLevel" : [61,61,61,61,61]
+									"zLevel" : [27,27,27,27,27]
 								}
 							},
 							"position6-climax" : {
 								"frameProperties" : {
-									"zLevel" : [61]
+									"zLevel" : [27]
 								}
 							},
 							"position6-postclimax" : {
 								"frameProperties" : {
-									"zLevel" : [61,61,61,61,61,61,61,61,61,61,61,61,61]
+									"zLevel" : [27,27,27,27,27,27,27,27,27,27,27,27,27]
 								}
 							},
 							"position6-reset" : {
 								"frameProperties" : {
-									"zLevel" : [61]
+									"zLevel" : [27]
 								}
 							}
 						}
