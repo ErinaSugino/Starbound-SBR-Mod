@@ -249,6 +249,33 @@
 					}
 				},
 
+				"actor1-body": {
+					"partStates" : {
+						"actors" : {
+							"position6" : {
+								"frameProperties" : {
+									"zLevel" : [27,27,27,27,27]
+								}
+							},
+							"position6-climax" : {
+								"frameProperties" : {
+									"zLevel" : [27]
+								}
+							},
+							"position6-postclimax" : {
+								"frameProperties" : {
+									"zLevel" : [27,27,27,27,27,27,27,27,27,27,27,27,27]
+								}
+							},
+							"position6-reset" : {
+								"frameProperties" : {
+									"zLevel" : [27]
+								}
+							}
+						}
+					}
+				},
+
 				"actor2-tail": {
 					"partStates" : {
 						"actors" : {
