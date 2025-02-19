@@ -82,10 +82,16 @@ end
 
 function Sexbound.Actor.SexTalk:loadDialog()
     species = self:getParent():getSpecies()
-
+    
+    local isAllowed = false
+    local allowed = (self._config.allowDefault or {}).entityType or {}
+    for _,et in ipairs(allowed) do
+        if et == self._parent:getEntityType() then isAllowed = true break end
+    end
+    
     local filename = self:getPosition():getDialog(species, nil)
 
-    if not filename and self._config.useDefaultDialog then
+    if not filename and self._config.useDefaultDialog and isAllowed then
         filename = self:getPosition():getDialog("default", nil)
     end
     if not filename then
