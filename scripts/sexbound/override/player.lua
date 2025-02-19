@@ -231,6 +231,7 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.subGenders = self._subGender:getAllSubGenders()
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
     _loadedConfig.infertile = self._status:hasStatus("infertile")
+    _loadedConfig.autoClimax = self._status:hasStatus("autoClimax")
     return _loadedConfig
 end
 
