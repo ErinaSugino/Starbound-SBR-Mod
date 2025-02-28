@@ -24,8 +24,10 @@
   "radioMessages" : {
     "birthTodayBasedOnOSTime"    : "You will give birth today in <hours> hours & <minutes> minutes in real-life time.",
     "birthLaterBasedOnOSTime"    : "You will give birth in <days> real-life day(s).",
-    "birthTodayBasedOnWorldTime" : "You will give birth at around <time> in-game world time.",
-    "birthLaterBasedOnWorldTime" : "You will give birth in <days> in-game world day(s).",
+    "birthTodayBasedOnWorldTime" : "You will give birth at around <time> local planet time.",
+    "birthLaterBasedOnWorldTime" : "You will give birth in <days> local planet day(s).",
+    "birthTodayInOrbit"          : "You will give birth in <time>h standard earth time.",
+    "birthLaterInOrbit"          : "You will give birth in <days> standard earth days.",
     "notPregnant" : "You're not pregnant!",
     "birthDetail" : "It will be <detail>!"
   }
