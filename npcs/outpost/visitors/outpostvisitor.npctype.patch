@@ -3,5 +3,10 @@
     "op" : "replace",
     "path" : "/scriptConfig/behavior",
     "value" : "sexboundoutpostvisitor"
+  },
+  {
+    "op": "add",
+    "path": "/damageTeamType",
+    "value": "assistant"
   }
 ]
