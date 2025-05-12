@@ -18,6 +18,7 @@
   "sitPosition"      : [ -4, 20 ],
   "sitStatusEffects" : [ "sexbound_sex" ],
   "smashable"        : true,
+  "health"           : 100,
 
   "inventoryIcon" : "sexbound_node.png",
   "orientations" : [
