@@ -13,7 +13,7 @@ require "/scripts/messageutil.lua"
 -- @param species
 function SexboundDefeat:new(entityType)
   local _self = setmetatable({
-		_configFilePath    = "/sexbound-defeat.config",
+		_configFilePath    = "/sxb_plugin.defeat.config",
 		_uiConfigFilePath  = "/interface/sexbound/defeat.config",
 		_entityId          = entity.id(),
 		_entityType        = entityType,
