@@ -2,7 +2,7 @@ require "/scripts/messageutil.lua"
 require "/stats/effects/sexbound_arousal/sexbound_arousal.lua"
 
 function init()
-  self._effect = "heat"
+  self._effect = "weak"
   
   local entityId = entity.id()
   status.setStatusProperty("sexbound_aroused", true)
