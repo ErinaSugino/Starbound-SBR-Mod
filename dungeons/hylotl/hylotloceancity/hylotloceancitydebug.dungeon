@@ -1,0 +1,23 @@
+{
+  "metadata" : {
+    "name" : "hylotloceancitydebug",
+    "species" : "hylotl",
+    "rules" : [],
+    "anchor" : [ "debugroom" ],
+    "gravity" : 80,
+    "maxRadius" : 1000000,
+    "maxParts" : 1,
+    "protected" : true
+  },
+
+  "parts" : [
+
+    // BASE LAYOUTS
+    {
+      "name" : "debugroom",
+      "rules" : [],
+      "def" : [ "tmx", "hylotlvertical1_sxb.json" ],
+      "chance" : 0
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "objectName" : "asranoxaf_sxb",
+  "colonyTags" : ["pretty","sex"],
+  "rarity" : "Legendary",
+  "category" : "actionFigure",
+  "collectablesOnPickup" : { "actionfigures" : "asranoxaf" },
+  "price" : 10000,
+  "printable" : false,
+  "description" : "The label reads, \"The cold-hearted human leader of the Occasus cult. She wields two strong knockers.\"",
+  "shortdescription" : "Asra Nox Figurine (Rare)",
+
+
+  "inventoryIcon" : "asranoxaficon.png",
+  "orientations" : [
+    {
+      "image" : "asranoxaf_sxb.png:<color>",
+      "imagePosition" : [-4, 0],
+      "direction" : "left",
+      "flipImages" : true,
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "asranoxaf_sxb.png:<color>",
+      "imagePosition" : [-4, 0],
+      "direction" : "right",
+
+      "spaces" : [ [0, 0], [0, 1] ],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+}

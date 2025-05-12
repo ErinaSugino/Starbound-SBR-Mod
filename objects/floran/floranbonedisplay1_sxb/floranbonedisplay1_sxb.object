@@ -1,0 +1,33 @@
+{
+  "objectName" : "floranbonedisplay1_sxb",
+  "colonyTags" : ["floran","floranvillage","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 120,
+
+  "description" : "The result of a successful Floran hunt.",
+  "shortdescription" : "Boner Trophy",
+  "race" : "floran",
+
+  "apexDescription" : "A gigantic boner being displayed like a trophy.",
+  "avianDescription" : "What huge creature did this boner originate from?",
+  "floranDescription" : "Floran display boness from only creaturesss killed by Floran.",
+  "glitchDescription" : "Fearful. Based on the size of this boner, the creature it came from is likely bigger than an entire Glitch castle.",
+  "humanDescription" : "That is one huge boner. I am jealous.",
+  "hylotlDescription" : "What creature did the Floran kill to obtain this... Trophy?",
+  "novakidDescription" : "It must've taken some serious skill to take this guy down. Or on.",
+
+  "inventoryIcon" : "floranbonedisplay1icon.png",
+  "orientations" : [
+    {
+      "dualImage" : "floranbonedisplay1_sxb.png:<color>",
+      "imagePosition" : [-33, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

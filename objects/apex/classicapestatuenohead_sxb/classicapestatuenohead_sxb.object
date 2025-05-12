@@ -1,0 +1,32 @@
+{
+  "objectName" : "classicapestatuenohead_sxb",
+  "colonyTags" : ["apex","apexmansion","pretty","valuable","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 250,
+  "description" : "Big ape statue with no head.",
+  "shortdescription" : "Headless Big Ape Statue (F)",
+  "race" : "apex",
+
+  "apexDescription" : "No matter what version of Big Ape is portrayed, some have always rebelled.",
+  "avianDescription" : "A statue built to inspire pride? It seems it's been vandalized.",
+  "floranDescription" : "Floran prefers headless monkey.",
+  "glitchDescription" : "Impressed. It must have taken some effort to deface this statue.",
+  "humanDescription" : "This takes drawing mustaches on pictures to a whole new level.",
+  "hylotlDescription" : "A needless display of power. Someone else agrees it seems and has vandalized this statue.",
+  "novakidDescription" : "A big statue of a giant lookin' headless Apex.",
+
+  "inventoryIcon" : "classicapestatuenoheadicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "classicapestatuenohead_sxb.png:<color>",
+      "imagePosition" : [-16, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

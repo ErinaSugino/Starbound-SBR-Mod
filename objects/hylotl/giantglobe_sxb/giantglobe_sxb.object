@@ -1,0 +1,33 @@
+{
+  "objectName" : "giantglobe_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","pretty","valuable","explorer","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 250,
+
+  "description" : "A large bronze statue of the Hylotl's home planet being held by a person.",
+  "shortdescription" : "Globe Statue (Abstract)",
+  "race" : "hylotl",
+
+  "apexDescription" : "Must be a model of the Hylotl's home planet. Who is the poor soul holding it?",
+  "avianDescription" : "A model of the Hylotl's home planet, perhaps? Why is a naked person holding it?",
+  "floranDescription" : "Ssstupid fishman planet. Hope it crushes them like thisss metal person.",
+  "glitchDescription" : "Curious. Is it the Hylotl's home planet? Whom is the naked person representing?",
+  "humanDescription" : "Knew Hylotl loved their smut a bit too much.",
+  "hylotlDescription" : "That is... a new take on historic art.",
+  "novakidDescription" : "I never understood abstract art.",
+
+  "inventoryIcon" : "giantglobeicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "giantglobe_sxb.png:<color>",
+      "imagePosition" : [-32, 0],
+      "frames" : 1,
+      "animationCycle" : 0.4,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

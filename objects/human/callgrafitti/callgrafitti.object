@@ -1,0 +1,35 @@
+{
+  "objectName" : "callgrafitti",
+  "colonyTags" : ["human","humanprison"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 250,
+  "printable" : true,
+
+  "description" : "Grafitti. A peculiar request.",
+  "shortdescription" : "Call Grafitti",
+  "race" : "human",
+
+  "apexDescription" : "Do you... do you think Big Ape minds?",
+  "avianDescription" : "The human tradition of promiscuity!",
+  "floranDescription" : "Floran wonderss if they want to go hunting.",
+  "glitchDescription" : "Curious. A promiscuous request.",
+  "humanDescription" : "One night stands, life-long consequences.",
+  "hylotlDescription" : "I am baffled and yet ever so curious.",
+  "novakidDescription" : "A request from someone. I will keep it in mind.",
+
+  "inventoryIcon" : "callgrafitti_icon.png",
+  "orientations" : [
+    {
+      "image" : "callgrafitti.png:<color>",
+      "imagePosition" : [-32, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "smashOnBreak" : true
+}

@@ -1,0 +1,59 @@
+{
+  "objectName" : "apextv_sxb",
+  "colonyTags" : ["apex","apexresearchlab","electronic","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 150,
+
+  "description" : "Has been tampered with to only display very questionable imagery.",
+  "shortdescription" : "Big Ape TV (hacked)",
+  "race" : "apex",
+
+  "apexDescription" : "Despite how much of an offense this is, someone also did a very good job hacking it.",
+  "avianDescription" : "Some people have interesting tastes on funny jokes.",
+  "floranDescription" : "Uselesss machine.",
+  "glitchDescription" : "Observant. This device's receiver has been feedback-looped and overwritten by an emulator.",
+  "humanDescription" : "Reminds me of the good old days of changing wallpapers on school PCs.",
+  "hylotlDescription" : "To be expected when you rely on digital infrastructure too much.",
+  "novakidDescription" : "A weird creature is staring at me from the screen.",
+
+  "lightColor" : [64, 107, 128],
+
+  "inventoryIcon" : "apextvicon.png",
+  "orientations" : [
+    {
+      "image" : "apextv_sxb.png:<color>.<frame>",
+      "imagePosition" : [-16, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+      "direction" : "left",
+      "flipImages" : true,
+      "lightPosition" : [0, 2],
+      "animationPosition" : [-16, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "image" : "apextv_sxb.png:<color>.<frame>",
+      "imagePosition" : [-16, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+      "direction" : "right",
+      "lightPosition" : [0, 2],
+      "animationPosition" : [-16, 0],
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "animation" : "/objects/wired/light/lighttogglebgfullbright.animation",
+  "animationParts" : {
+    "bg" : "apextv_sxb.png",
+    "fg" : "apextvlit_sxb.png"
+  },
+
+  "scripts" : [ "/objects/wired/light/light.lua" ],
+  "scriptDelta" : 60,
+
+  "inputNodes" : [ [0, 0] ]
+}

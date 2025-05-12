@@ -1,0 +1,31 @@
+{
+  "objectName" : "paintingcreationofapepixel_sxb",
+  "colonyTags" : ["apex","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A grand painting of two pointing Apex figures.",
+  "shortdescription" : "Grand Big Ape Painting (F)",
+  "race" : "apex",
+  "category" : "decorative",
+  "price" : 1200,
+  "printable" : false,
+
+  "apexDescription" : "Big Ape, the saviour of the Apex? Don't make me laugh.",
+  "avianDescription" : "This would be improved if it had Kluex in it instead.",
+  "floranDescription" : "Apex to hunt! One hasss a floating brain to sssit in!",
+  "glitchDescription" : "Confused. This seems oddly spiritual for an Apex painting.",
+  "humanDescription" : "Something seems off about this - I can't quite put my finger on it.",
+  "hylotlDescription" : "The Apex have their own stories for the origin of knowledge.",
+  "novakidDescription" : "Couple o' Apex here doin' somethin'. I don't understand.",
+
+  "inventoryIcon" : "paintingcreationofapepixelicon.png",
+  "orientations" : [
+    {
+      "image" : "paintingcreationofapepixel_sxb.png:<color>",
+      "imagePosition" : [-32, -24],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

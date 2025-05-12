@@ -1,0 +1,33 @@
+{
+  "objectName" : "tombstatuebunny_sxb",
+  "colonyTags" : ["avian","aviantomb","pretty","sex"],
+  "rarity" : "Common",
+  "description" : "A statue of a bunny.",
+  "shortdescription" : "Avian Bunny Statue (F)",
+  "race" : "avian",
+  "category" : "decorative",
+  "price" : 100,
+
+  "apexDescription" : "A rabbit statue. What does it mean?",
+  "avianDescription" : "This statue marks the grave of one destined to never receive wings in the afterlife. They will hop like a rabbit for all eternity.",
+  "floranDescription" : "Giant bunnyman make tassty snack.",
+  "glitchDescription" : "Observant. I believe the rabbit has significance in Avian society.",
+  "humanDescription" : "A rabbit statue. It must mean something to the Avians.",
+  "hylotlDescription" : "Is the rabbit some kind of insult? Does it mark an Avian fallen from grace?",
+  "novakidDescription" : "It's a statue of an animal. A rabbit to be precise.",
+
+  "inventoryIcon" : "tombstatuebunnyicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "tombstatuebunny_sxb.png:<color>",
+
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 1.0,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

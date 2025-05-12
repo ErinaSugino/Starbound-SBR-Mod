@@ -1,0 +1,33 @@
+{
+  "objectName" : "apexpainting5_sxb",
+  "colonyTags" : ["apex","apexvillage","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 80,
+
+  "description" : "Someone has good taste.",
+  "shortdescription" : "Big Ass Cross-Stitch",
+  "race" : "apex",
+
+  "apexDescription" : "Cross-stitch is one of the few permitted hobbies an Apex can undertake. This one clearly enjoyed it.",
+  "avianDescription" : "Delicate fingers must be required to create this. If only not for the dirty mind.",
+  "floranDescription" : "The Floran very skilled with fabric work.",
+  "glitchDescription" : "Contemplative. Ass or boobs. Truly the eternal question.",
+  "humanDescription" : "I see you are a man of culture aswell.",
+  "hylotlDescription" : "Finally something we can agree on.",
+  "novakidDescription" : "This must've taken time and desperation to make.",
+
+  "inventoryIcon" : "apexpainting5icon.png",
+  "orientations" : [
+    {
+      "image" : "apexpainting5_sxb.png:<color>",
+      "imagePosition" : [-16, -8],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

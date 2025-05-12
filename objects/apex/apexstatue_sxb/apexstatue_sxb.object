@@ -1,0 +1,33 @@
+{
+  "objectName" : "apexstatue_sxb",
+  "colonyTags" : ["apex","apexvillage","pretty","valuable","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+  "description" : "This seems to be a scientist that 'gave her body to science'.",
+  "shortdescription" : "Apex Scientist Statue (F)",
+  "race" : "apex",
+
+  "apexDescription" : "This scientist died attempting to alter her genes. She's used as an example to all other Apex. The Miniknog says it's the highest honour any Apex can achieve.",
+  "avianDescription" : "A scientist. The Stargazers would often warn us of the dangers inherent to science.",
+  "floranDescription" : "Ssilly Apex give body to science, ssuch a wassste of good meat.",
+  "glitchDescription" : "Questioning. The scientist 'gave her body to science'. Perhaps she had no choice?",
+  "humanDescription" : "Apparently this gal gave her body to her cause. Noble or stupid?",
+  "hylotlDescription" : "Self sacrifice is honoured by the Hylotl, but only if the cause is good.",
+  "novakidDescription" : "A statue of someone who sacrificed their life. Was it willingly?",
+
+
+  "inventoryIcon" : "apexstatueicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "apexstatue_sxb.png:<color>",
+      "imagePosition" : [-8, 0],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

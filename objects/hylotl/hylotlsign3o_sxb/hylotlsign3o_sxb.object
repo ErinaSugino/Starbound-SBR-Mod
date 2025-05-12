@@ -1,0 +1,34 @@
+{
+  "objectName" : "hylotlsign3o_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","electronic","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 200,
+  "lightColor" : [244, 198, 36],
+
+  "shortdescription" : "Orange Neon Procreation Sign",
+  "description" : "A sign reminding of the importance of reproduction.",
+  "race" : "hylotl",
+
+  "apexDescription" : "Are Hylotl on strict birth control aswell?",
+  "avianDescription" : "Do Hylotl really need reminding of one of the most natural things?",
+  "floranDescription" : "Buzzy sssign annoy Floran.",
+  "glitchDescription" : "Considerate. I guess keeping a civilization like this going requires effort like that.",
+  "humanDescription" : "The Hylotl have very traditional standards. And very lewd ones.",
+  "hylotlDescription" : "Becoming a mother for a new generation of noble citizens - what an honor that would be!",
+  "novakidDescription" : "Not sure I even wanna translate this!",
+
+  "inventoryIcon" : "hylotlsign3oicon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlsign3o_sxb.png:<color>",
+      "imagePosition" : [-24, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

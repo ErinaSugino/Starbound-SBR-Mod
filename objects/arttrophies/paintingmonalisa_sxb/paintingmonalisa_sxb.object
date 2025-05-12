@@ -1,0 +1,47 @@
+{
+  "objectName" : "paintingmonalisa_sxb",
+  "colonyTags" : ["human","pretty","valuable","sex"],
+  "rarity" : "Rare",
+  "description" : "A slightly less famous portrait of a mysterious lady.",
+  "shortdescription" : "Tasteful Classic Painting",
+  "race" : "human",
+  "category" : "decorative",
+  "price" : 1000,
+  "printable" : false,
+
+  "apexDescription" : "Perhaps this is what the Miniknog aspire towards.",
+  "avianDescription" : "A human woman in VERY revealing attire.",
+  "floranDescription" : "Human have nice sssmile, Floran ssmile scare human.",
+  "glitchDescription" : "Suspicious. This is not quite matching up the version in my database.",
+  "humanDescription" : "Does this count as \"artistic freedom\"? I like it!",
+  "hylotlDescription" : "That's quite alot of cleavage.",
+  "novakidDescription" : "It's hard to appreciate fine art when you put boobs smack dab in the middle of it.",
+
+  "inventoryIcon" : "paintingmonalisaicon.png",
+  "orientations" : [
+    {
+      "image" : "paintingmonalisa_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ],
+
+  "scripts" : [ "/scripts/npcToyObject.lua"],
+  "npcToy" : {
+    "influence" : [
+      "artwork"
+    ],
+    "defaultReactions" : {
+      "artwork" : [
+        [1.0, "smile"],
+        [1.0, "love"]
+      ]
+    },
+    "randomStandXRange" : [-2.5, 2.5]
+  }
+}

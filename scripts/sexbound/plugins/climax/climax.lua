@@ -532,7 +532,7 @@ end
 function Sexbound.Actor.Climax:tryAutoClimax()
     local entityType = self:getParent():getEntityType()
     
-    if entityType == "player" then
+    if entityType == "player" and not self._parent:getStatus():hasStatus("autoClimax") then
         return
     end
     

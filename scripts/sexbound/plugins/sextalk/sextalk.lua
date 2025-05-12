@@ -82,10 +82,16 @@ end
 
 function Sexbound.Actor.SexTalk:loadDialog()
     species = self:getParent():getSpecies()
-
+    
+    local isAllowed = false
+    local allowed = (self._config.allowDefault or {}).entityType or {}
+    for _,et in ipairs(allowed) do
+        if et == self._parent:getEntityType() then isAllowed = true break end
+    end
+    
     local filename = self:getPosition():getDialog(species, nil)
 
-    if not filename and self._config.useDefaultDialog then
+    if not filename and self._config.useDefaultDialog and isAllowed then
         filename = self:getPosition():getDialog("default", nil)
     end
     if not filename then
@@ -229,7 +235,7 @@ function Sexbound.Actor.SexTalk:helper_getActorStatuses(actor)
     local list, lookup = {}, {}
     
     if status:findStatus("pregnant") then table.insert(list, "pregnant") lookup["pregnant"] = true end
-    if status:findStatus("sexbound_arousal_heat") then table.insert(list, "heat") lookup["heat"] = true end
+    if status:findStatus("sexbound_aroused_heat") then table.insert(list, "heat") lookup["heat"] = true end
     if status:findStatus("sexbound_defeated") then table.insert(list, "defeated") lookup["defeated"] = true end
     if actor._config.identity.body.hasPenis then table.insert(list, "hasPenis") lookup["hasPenis"] = true end
     if actor._config.identity.body.hasVagina then table.insert(list, "hasVagina") lookup["hasVagina"] = true end

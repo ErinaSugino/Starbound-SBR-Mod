@@ -1,0 +1,32 @@
+{
+  "objectName" : "hylotlclassicpainting1_sxb",
+  "colonyTags" : ["hylotl","pretty","valuable"],
+  "rarity" : "Rare",
+  "description" : "An old calligraphy painting depicting a nude Hylotl warrior.",
+  "shortdescription" : "Hylotl Warrior Painting (nude)",
+  "race" : "hylotl",
+  "category" : "decorative",
+  "price" : 1650,
+  "printable" : false,
+
+  "apexDescription" : "This looks like an old art print. I wonder how they keep it in such good condition?",
+  "avianDescription" : "It is curious just how different cultures have different styles.",
+  "floranDescription" : "Fleshy warrior would fight better with Floran weaponsss. And pantsss.",
+  "glitchDescription" : "Impressed. This warrior's lack of armor shows confidence.",
+  "humanDescription" : "Have their warriors really fought naked? Impressive!",
+  "hylotlDescription" : "A handsome early Hylotl warrior, trained to defend his people. Inspiring.",
+  "novakidDescription" : "This fella looks ready for action, doesn't he? Heh.",
+
+  "inventoryIcon" : "icon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlclassicpainting1_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "objectName" : "lovegrafitti",
+  "colonyTags" : ["human","humanprison"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 10,
+  "printable" : true,
+
+  "description" : "Grafitti. Cute.",
+  "shortdescription" : "Heart Grafitti",
+  "race" : "human",
+
+  "apexDescription" : "Do you... do you think it's meant for me?",
+  "avianDescription" : "The human tradition of promiscuity!",
+  "floranDescription" : "Floran wonderss if they want to go hunting for hearts.",
+  "glitchDescription" : "Curious. The wonders of romance.",
+  "humanDescription" : "Ah, I remember doing this back in school.",
+  "hylotlDescription" : "Oh, to be so madly lovestruck one resorts to vandalism.",
+  "novakidDescription" : "Aww shucks, someone ain't gonna be happy for long.",
+
+  "inventoryIcon" : "lovegrafitti_icon.png",
+  "orientations" : [
+    {
+      "image" : "lovegrafitti.png:<color>",
+      "imagePosition" : [-4, -4],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+    }
+  ],
+
+  "smashOnBreak" : true
+}

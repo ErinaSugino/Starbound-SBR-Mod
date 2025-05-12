@@ -1,0 +1,33 @@
+{
+  "objectName" : "apexobeysign_sxb",
+  "colonyTags" : ["apex","apexvillage","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 70,
+
+  "description" : "What a convincing offer!",
+  "shortdescription" : "\"Obey\" Sign",
+  "race" : "apex",
+
+  "apexDescription" : "There has been a criminal group putting these up. Naturally, they are not around anymore.",
+  "avianDescription" : "I am not going to betray Kluex. Not even with this temptation.",
+  "floranDescription" : "Hsssss Floran not obey dinner.",
+  "glitchDescription" : "Considering. Maybe.",
+  "humanDescription" : "Somehow... it became much more convincing!",
+  "hylotlDescription" : "There are rulers that are strong, and then there is this.",
+  "novakidDescription" : "I ain't takin' orders from no picture. But hot dayum, those some fine knockers right there.",
+
+  "inventoryIcon" : "apexobeysignicon.png",
+  "orientations" : [
+    {
+      "image" : "apexobeysign_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

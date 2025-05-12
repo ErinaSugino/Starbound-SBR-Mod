@@ -1,6 +1,6 @@
 function init()
   if status.uniqueStatusEffectActive("sexbound_arousal_heat") then
-    local data = root.assetJson("/stats/effects/sexbound_arousal_heat/sexbound_arousal_heat.statuseffect") or {}
+    local data = root.assetJson("/stats/effects/sexbound_arousal/sexbound_arousal_heat/sexbound_arousal_heat.statuseffect") or {}
     local maxTime = data.defaultDuration or 1800
     local effects = status.activeUniqueStatusEffectSummary()
     local effectDuration = 1

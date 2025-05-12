@@ -1,0 +1,33 @@
+{
+  "objectName" : "bunkerposter2_sxb",
+  "colonyTags" : ["human","humanbunker","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 100,
+
+  "description" : "There is no need to be upset, honey.",
+  "shortdescription" : "Motivational Poster",
+  "race" : "human",
+
+  "apexDescription" : "Apex slut? Here? Why would humans have such a poster? Is it a joke?",
+  "avianDescription" : "Humans are very similar to Apex, but their desires still elude me.",
+  "floranDescription" : "Floran not sssure why there's an Apex on this possster. Or maybe hairy human?",
+  "glitchDescription" : "Suspicious. Why do the humans have a poster of a nude Apex, I wonder?",
+  "humanDescription" : "This hot chick really brings the message across.",
+  "hylotlDescription" : "A human poster, an Apex nudist. Curious.",
+  "novakidDescription" : "An nude female Apex. It's tellin' me not to be upset.",
+
+
+  "inventoryIcon" : "bunkerposter2icon.png",
+  "orientations" : [
+    {
+      "image" : "bunkerposter2_sxb.png:<color>",
+      "imagePosition" : [-16, -16],
+      "direction" : "right",
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

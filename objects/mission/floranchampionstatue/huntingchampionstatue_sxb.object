@@ -1,0 +1,55 @@
+{
+  "objectName" : "huntingchampionstatue_sxb",
+  "colonyTags" : ["floran","floranhuntinggrounds","combat","pretty","sex"],
+  "rarity" : "Rare",
+  "category" : "decorative",
+  "price" : 400,
+  "description" : "A statue of a Floran. It looks like a great hunter.",
+  "shortdescription" : "Floran Champion Statue (R18)",
+  "race" : "floran",
+
+  "apexDescription" : "A majestic yet imposing Floran hunter.",
+  "avianDescription" : "A statue of a Floran warrior. Avian warriors are not often importalised in stone.",
+  "floranDescription" : "Sssuccessful Floran hunters get big statuesss.",
+  "glitchDescription" : "Impressed. The Floran depicted here was a successful hunter.",
+  "humanDescription" : "All great personalities seem to also have big boobs. Coincidence?",
+  "hylotlDescription" : "A statue erected in honour of a revered Floran hunter.",
+  "novakidDescription" : "This guy must've been a mighty fine hunter!",
+
+  "lightColor" : [179, 149, 107],
+
+  "flickerPeriod" : 0.3,
+  "flickerMinIntensity" : 0.95,
+  "flickerMaxIntensity" : 1,
+  "flickerPeriodVariance" : 0.075,
+  "flickerIntensityVariance" : 0.025,
+
+  "inventoryIcon" : "huntingchampionstatueicon_sxb.png",
+  "orientations" : [
+    {
+      "imageLayers" : [ { "image" : "huntingchampionstatue_sxb.png:<color>.<frame>", "fullbright" : true }, { "image" : "huntingchampionstatuelit_sxb.png:<color>.<frame>" } ],      
+      "imagePosition" : [-40, 0],
+      "lightPosition" : [-3, 8],
+      "frames" : 4,
+      "animationCycle" : 0.5,
+      "direction" : "left",
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [ { "image" : "huntingchampionstatue_sxb.png:<color>.<frame>", "fullbright" : true }, { "image" : "huntingchampionstatuelit_sxb.png:<color>.<frame>" } ],      
+      "imagePosition" : [-40, 0],
+      "lightPosition" : [2, 8],
+      "frames" : 4,
+      "animationCycle" : 0.5,
+      "direction" : "right",
+      "flipImages" : true,
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+    }
+  ],
+
+  "soundEffect" : "/sfx/objects/torch.ogg",
+  "soundEffectRangeMultiplier" : 0.5
+  
+}

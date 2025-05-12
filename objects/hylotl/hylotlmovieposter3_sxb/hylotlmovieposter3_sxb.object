@@ -1,0 +1,33 @@
+{
+  "objectName" : "hylotlmovieposter3_sxb",
+  "colonyTags" : ["hylotl","hylotloceancity","pretty","sex"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 150,
+
+  "shortdescription" : "Horny Movie Poster",
+  "description" : "A limited edition fan poster of the heroine from \"10 Things I Hate About Florans\".",
+  "race" : "hylotl",
+
+  "apexDescription" : "\"10 Things I Hate About Florans\". What a sappy name for sloppy smut.",
+  "avianDescription" : "Oh my. This actress has no shame, does she?",
+  "floranDescription" : "Movie called \"10 Things I Hate About Florans\"... Why isss Fish naked?!",
+  "glitchDescription" : "Intrigued. What an effective marketing move.",
+  "humanDescription" : "Oh great... Of course there is porn of it.",
+  "hylotlDescription" : "I tried so hard to get one, but they were sold out immediately.",
+  "novakidDescription" : "Movie sold so bad they needed to sell her boobs?",
+
+  "inventoryIcon" : "hylotlmovieposter3icon.png",
+  "orientations" : [
+    {
+      "image" : "hylotlmovieposter3_sxb.png:<color>",
+      "imagePosition" : [-8, -16],
+      "frames" : 1,
+      "animationCycle" : 0.5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

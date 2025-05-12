@@ -1,0 +1,31 @@
+{
+  "objectName" : "venusdepixel_sxb",
+  "colonyTags" : ["human","pretty","valuable","sex"],
+  "rarity" : "Legendary",
+  "description" : "Ancient Greek marble sculpture, Venus De Pixel. Sculptor Unknown.",
+  "shortdescription" : "Venus de Pixel (nude)",
+  "race" : "human",
+  "category" : "decorative",
+  "price" : 1000,
+  "printable" : false,
+
+  "apexDescription" : "An unusual human statue.",
+  "avianDescription" : "A stone human. Her arms are missing. So is her top.",
+  "floranDescription" : "Floran like ssstone meatman. Ssstoneman?",
+  "glitchDescription" : "Amazed. This seems to be carved from a single piece of marble.",
+  "humanDescription" : "Ah, a blast from the past. The Greek always loved their nudity.",
+  "hylotlDescription" : "A crude rock sculpture. It appears to be humanoid.",
+  "novakidDescription" : "Well shucks, where'd her arms go?",
+
+  "inventoryIcon" : "venusdepixelicon.png",
+  "orientations" : [
+    {
+      "dualImage" : "venusdepixel_sxb.png:<color>",
+      "imagePosition" : [-8, 0],
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ]
+
+    }
+  ]
+}

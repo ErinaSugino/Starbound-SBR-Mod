@@ -40,6 +40,10 @@ function Customizer.General:init()
   if self.infertile == nil then self.infertile = false end
   if self.infertile then widget.setText("generalTab.infertileLabel", "^shadow;You currently ^orange;are^reset;^shadow; infertile.")
   else widget.setButtonEnabled("generalTab.infertileConfirm", false) end
+  
+  self.autoClimax = self._parent.config.autoClimax
+  if self.autoClimax == nil then self.autoClimax = false end
+  if self.autoClimax then widget.setText("generalTab.autoClimaxLabel", "^shadow;You currently ^orange;do^reset;^shadow; climax automatically.") end
 
   self.canBeDefeated = self._parent.config.canBeDefeated
   if self.canBeDefeated == nil then self.canBeDefeated = false end
@@ -174,6 +178,17 @@ function Customizer.General:makeFertile()
     world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "infertile")
     
     self.infertile = false
+end
+
+function Customizer.General:toggleAutoClimax()
+    if self.autoClimax then
+        widget.setText("generalTab.autoClimaxLabel", "^shadow;You currently ^orange;do not^reset;^shadow; climax automatically.")
+        world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "autoClimax")
+    else
+        widget.setText("generalTab.autoClimaxLabel", "^shadow;You currently ^orange;do^reset;^shadow; climax automatically.")
+        world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "autoClimax")
+    end
+    self.autoClimax = not self.autoClimax
 end
 
 function Customizer.General:toggleCanBeDefeated()
