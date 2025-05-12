@@ -12,23 +12,23 @@ require "/scripts/messageutil.lua"
 -- @param entityType
 -- @param species
 function SexboundDefeat:new(entityType)
-  local _self = setmetatable({
-		_configFilePath    = "/sxb_plugin.defeat.config",
-		_uiConfigFilePath  = "/interface/sexbound/defeat.config",
-		_entityId          = entity.id(),
-		_entityType        = entityType,
-		_hostileEntityId   = nil,
-		_hostileEntityType = nil,
-		_promises          = PromiseKeeper.new(),
-		_timer             = 0,
-		_timeout           = 60,
-		_isDefeated        = false,
-		_isTransformed     = false,
-		_sexNodeId         = nil,
-		_hostileEntities   = {},
-		_actorData		   = nil,
-		_sexboundConfig    = nil
-  }, SexboundDefeat_mt)
+    local _self = setmetatable({
+        _configFilePath    = "/sxb_plugin.defeat.config",
+        _uiConfigFilePath  = "/interface/sexbound/defeat.config",
+        _entityId          = entity.id(),
+        _entityType        = entityType,
+        _hostileEntityId   = nil,
+        _hostileEntityType = nil,
+        _promises          = PromiseKeeper.new(),
+        _timer             = 0,
+        _timeout           = 60,
+        _isDefeated        = false,
+        _isTransformed     = false,
+        _sexNodeId         = nil,
+        _hostileEntities   = {},
+        _actorData		   = nil,
+        _sexboundConfig    = nil
+    }, SexboundDefeat_mt)
 
   	_self:setIsDefeated(false)
 
@@ -64,7 +64,7 @@ function SexboundDefeat:initMessageHandlers()
 		end
 		local found = false
 		for i, v in ipairs(self._hostileEntities) do
-			if v[1] == entityId then found = true end
+			if v[1] == entityId then found = true break end
 		end
 		if not found then
 			self:retrieveSexboundConfig(function(result)
@@ -80,7 +80,7 @@ function SexboundDefeat:initMessageHandlers()
 	message.setHandler("SexboundDefeat:InCombatWith", function(_,_,entityId)
 		local found = false
 		for i, v in ipairs(self._hostileEntities) do
-			if v[1] == entityId then found = true end
+			if v[1] == entityId then found = true break end
 		end
 		if not found then
 			self:retrieveSexboundConfig(function(result)
@@ -184,26 +184,44 @@ function SexboundDefeat:retrieveActorData(damageSourceEntity, damageSourceEntity
 			"Sexbound:Actor:GetActorData"
 		),
 		function(actorData)
-			--find closest entity that's in the table
+			-- Find the most probably enemy that is our "defeater"
 			local found = false
 			local hostileEntityId = nil
 			local sexboundConfig = nil
-			local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
-			for i,v in ipairs(entities) do
-				for i2,v2 in ipairs(self._hostileEntities) do
-					if v == v2[1] then
-						found = true
-						hostileEntityId = v2[1]
-						sexboundConfig = v2[2]
-						self._hostileEntityId = hostileEntityId
-						self._hostileEntityType = world.entityType(self._hostileEntityId)
-						break
-					end
-				end
-				if found then break end
-			end
+            
+            if damageSourceEntity ~= nil then
+                -- Try to verify we were defeated by a valid enemy - direct killer has priority over other enemies
+                for i,v in ipairs(self._hostileEntities) do
+                    if damageSourceEntity == v[1] then
+                        found = true
+                        hostileEntityId = v[1]
+                        sexboundConfig = v[2]
+                        self._hostileEntityId = hostileEntityId
+						self._hostileEntityType = damageSourceEntityType
+                        break
+                    end
+                end
+            end
+            
+            if not found then
+                -- Direct killer entity does not exist (indirect damage) or couldn't be verified as hostile that targeted us (accidental kill) - search for nearest hostile that qualifies
+                local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
+                for i,v in ipairs(entities) do
+                    for i2,v2 in ipairs(self._hostileEntities) do
+                        if v == v2[1] then
+                            found = true
+                            hostileEntityId = v2[1]
+                            sexboundConfig = v2[2]
+                            self._hostileEntityId = hostileEntityId
+                            self._hostileEntityType = world.entityType(self._hostileEntityId)
+                            break
+                        end
+                    end
+                    if found then break end
+                end
+            end
 			if hostileEntityId then
-				--victory dialog, transform attempt
+				-- Defeater found - show victory dialog and attempt transformation
 				self:outputVictoryDialog()
 				self:transform(sexboundConfig,
 					function(result)
@@ -233,7 +251,7 @@ function SexboundDefeat:loadConfig()
 	end, function(err)
 		sb.logError("Unable to load config file for Sexbound Defeat!")
 	end)
-	return loadedConfig
+    return {}
 end
 
 function SexboundDefeat:outputDefeatedDialog()
@@ -279,22 +297,9 @@ function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig, host
 	table.insert(self._hostileEntities, 1, {hostileEntityId, sexboundConfig})
 
 	if #self._hostileEntities > 8 then
-		table.remove(self._hostileEntities)
+		-- Limit targeting cache
+        table.remove(self._hostileEntities)
 	end
-	--[[ Output the victory dialog
-	self:outputVictoryDialog()
-	self:transform(sexboundConfig, function(result)
-		result = result or {}
-		if result.uniqueId == nil then
-			return self:handleTransformFailed()
-		end
-		return self:handleTransformSuccess(result.uniqueId)
-	end, function()
-		return self:handleTransformFailed()
-	end,
-	self._actorData
-	)
-	]]
 end
 
 
@@ -363,9 +368,9 @@ function SexboundDefeat:loadUIConfig()
 end
 
 function SexboundDefeat:tryToDie(reason)
-  if reason then sb.logInfo("Sexbound Defeat Death: Name="..world.entityName(self._entityId).." reason: "..reason) end
-  self:setIsDefeated(false)
-  self:setIsTransformed(false)
+    if reason then sb.logInfo("[SxB | DEFT] : Death - Name="..world.entityName(self._entityId).." reason: "..reason) end
+    self:setIsDefeated(false)
+    self:setIsTransformed(false)
 	if not self:isPlayer() and self:isPregnant() and self._config.enableImmortalPregnantNPCs then
     	local species = self:findSpecies()
 		local pregnantDialog = self._config.pregnantDialog[species] or self._config.pregnantDialog.default
@@ -376,21 +381,22 @@ function SexboundDefeat:tryToDie(reason)
 	end
 end
 
-function SexboundDefeat:smashSexNode(storage)
+function SexboundDefeat:smashSexNode(lStorage)
 	if not self._sexNodeId then return end
-	world.sendEntityMessage(self._sexNodeId, "Sexbound:Smash", { storage = storage })
+	world.sendEntityMessage(self._sexNodeId, "Sexbound:Smash", { storage = lStorage })
 end
 
 -- [Helper] Untransform the Entity
 function SexboundDefeat:untransform()
 	if not self:isPlayer() then self:tryToDie("non-player untransform") end
-	local storage = {} -- temp local storage
+	local lStorage = {} -- temp local storage
 	if not self:isPlayer() and self:isPregnant() and self._config.convertPregnantEnemiesToFriends then
-		storage = { previousDamageTeam = { type = "friendly", team = 1 } }
+		lStorage = { previousDamageTeam = { type = "friendly", team = 1 } }
 	end
-	self:smashSexNode(storage)
+	self:smashSexNode(lStorage)
 	if not self._hostileEntityId then return end
 	if self._hostileEntityType == "player" then return end
+    -- TODO figure out if this respawn logic is necessary
 	world.sendEntityMessage(self._hostileEntityId, "Sexbound:Actor:Respawn")
 	self._hostileEntityId = nil
 	self._hostileEntityType = nil
