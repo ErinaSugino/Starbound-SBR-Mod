@@ -256,3 +256,7 @@ function CustomButton:setNewImage(image, imageOffset)
         self.config.image = nil
     end
 end
+
+function CustomButton:setEnabled(enabled)
+    self.config.enabled = not not enabled
+end

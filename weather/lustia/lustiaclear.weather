@@ -1,0 +1,13 @@
+{
+  "name" : "lustiaclear",
+
+  "particleDensity" : 0,
+  "particles" : [ ],
+  "projectiles" : [ ],
+  
+  "statusEffects" : ["lustia_hornybuff"],
+
+  "duration" : [40, 100],
+  "lightningFrequency" : 0.0,
+  "weatherNoises" : [ ]
+}

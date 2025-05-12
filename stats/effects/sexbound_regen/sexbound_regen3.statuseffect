@@ -1,0 +1,16 @@
+{
+  "name" : "sexbound_regen3",
+  "blockingStat" : "healingStatusImmunity",
+
+  "effectConfig" : {
+    "healTime" : 40
+  },
+  "defaultDuration" : 5,
+
+  "scripts" : [
+    "sexbound_regen.lua"
+  ],
+
+  "label" : "Defeat Regeneration",
+  "icon" : "/interface/statuses/heal.png"
+}

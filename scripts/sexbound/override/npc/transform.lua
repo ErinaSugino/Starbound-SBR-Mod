@@ -15,17 +15,17 @@ function Sexbound.NPC.Transform:new(parent)
 
     _self:setCanTransform(true);
 
-    message.setHandler("Sexbound:Transform", function(_, _, args)
-        return _self:handleTransform(args)
+    message.setHandler("Sexbound:Transform", function(_, _, args, actorData)
+        return _self:handleTransform(args, actorData)
     end)
 
     return _self
 end
 
-function Sexbound.NPC.Transform:handleTransform(args)
+function Sexbound.NPC.Transform:handleTransform(args, actorData)
     if self._parent._isKid then return false end
-    
-    if self:getCanTransform() then
+
+    if self:getCanTransform() or actorData ~= nil then
         -- Override sexbound config that is supplied to the spawned sexnode
         self:setSexboundConfig(args.sexboundConfig)
 
@@ -34,7 +34,7 @@ function Sexbound.NPC.Transform:handleTransform(args)
         if not args.responseRequired then
             self:notifyTransform()
         else
-            local result = self:tryCreateNode()
+            local result = self:tryCreateNode(args.spawnOptions or {}, args.position or nil, actorData or nil)
 
             if result ~= nil and args.applyStatusEffects ~= nil then
                 for _, statusName in ipairs(args.applyStatusEffects) do
@@ -73,19 +73,13 @@ function Sexbound.NPC.Transform:notifyTransform()
     end
 end
 
-function Sexbound.NPC.Transform:tryCreateNode()
+function Sexbound.NPC.Transform:tryCreateNode(spawnOptions, position, actorData)
     if self._parent._isKid then return nil end
     
-    local position = self:findNearbyOpenSpace()
-
-    if position == false then
-        return nil
-    end
-
-    -- Place Sexnode and store Unique ID
-    local uniqueId = self:placeSexNode(position, {
-        randomStartPosition = true
-    })
+    local uniqueId = self:placeSexNode({
+        randomStartPosition = true,
+        noEffect = spawnOptions.noEffect or false
+    }, position or nil, actorData or nil)
 
     if uniqueId ~= nil then
         world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {

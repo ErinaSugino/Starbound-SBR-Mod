@@ -1,0 +1,34 @@
+{
+  "objectName" : "arcadesign_off",
+  "colonyTags" : ["hylotl","hylotloceancity","electronic","light"],
+  "rarity" : "Common",
+  "category" : "decorative",
+  "price" : 150,
+  "lightColor" : [235, 180, 65],
+
+  "description" : "An arcade sign. Sadly, it seems to be off.",
+  "shortdescription" : "Arcade Sign (off)",
+  "race" : "hylotl",
+
+  "apexDescription" : "An arcade! Sadly, it seems to be closed.",
+  "avianDescription" : "An arcade. Too bad it seems to be closed!",
+  "floranDescription" : "Arcade! It not glowing though!",
+  "glitchDescription" : "Wanting. An amusement arcade! To bad it's closed.",
+  "humanDescription" : "I love arcades! Too bad it seems to be closed.",
+  "hylotlDescription" : "Hmm, it's been a while since my last arcade trip. Sadly it's closed.",
+  "novakidDescription" : "An arcade? Would be mighta fun if it wasn't closed.",
+
+  "inventoryIcon" : "arcadesignicon_off.png",
+  "orientations" : [
+    {
+      "image" : "arcadesign_off.png",
+      "imagePosition" : [-32, -8],
+      "frames" : 1,
+      "animationCycle" : 1,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "background" ]
+
+    }
+  ]
+}

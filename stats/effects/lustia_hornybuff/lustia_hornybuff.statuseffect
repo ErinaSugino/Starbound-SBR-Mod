@@ -1,0 +1,9 @@
+{
+  "name"            : "lustia_hornybuff",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 999,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/lustia.png",
+  "label"           : "Lustia makes you horny",
+  "scripts"         : [ "lustia_hornybuff.lua" ]
+}

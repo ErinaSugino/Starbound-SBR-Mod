@@ -12,7 +12,8 @@ function Sexbound.Common.Transform:new()
     return setmetatable({
         _canTransform = false,
         _nodeName = "sexbound_main_node",
-        _timeout = 300
+        _timeout = 300,
+        _promises = PromiseKeeper.new()
     }, Sexbound.Common.Transform_mt)
 end
 
@@ -23,41 +24,48 @@ function Sexbound.Common.Transform:init(parent)
     self._feetOffset = self:calculateFeetPositionOffset()
 end
 
---- Returns a nearby position within the specified rectangle.
--- @param rectSize
-function Sexbound.Common.Transform:findNearbyOpenSpace(rectSize)
+--- Returns 5 nearby positions within 10 blocks underneath the entity.
+function Sexbound.Common.Transform:findNearbyOpenSpace(startPosition)
     local yOffset = 0.5
-
-    local startPosition = entity.position()
+    local distance = 6
+    local positive = true
+    local positions = {}
+    local counter = 0
+    local position = nil
+    startPosition = startPosition or entity.position()
     startPosition[2] = (startPosition[2] - self._feetOffset) + yOffset
-
     local endPosition = vec2.add(startPosition, {0, -10})
+    for i=0,distance * 2 do
+        position = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
+        table.insert(positions, position)
+        counter = counter + 1
+        if positive then
+            startPosition[1] = startPosition[1] + counter
+            endPosition[1] = endPosition[1] + counter
+            positive = false
+        else
+            startPosition[1] = startPosition[1] - counter
+            endPosition[1] = endPosition[1] - counter
+            positive = true
+        end
 
-    local position = world.lineCollision(startPosition, endPosition, {"Block", "Platform"})
+    end
 
-    if position == nil then
+    if positions == {} then
         return false
     end
 
-    position = vec2.floor(position)
-
-    if not world.tileIsOccupied(position, true) then
-        return position
-    end
-
-    return false
+    return positions
 end
 
---- Attempts to place a sex node at a specified position.
+--- Attempts to place a sex node beneath an entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:placeSexNode(position, spawnOptions)
-    local dungeonId = Sexbound.Util.tileProtectionDisable(position)
-    local result = self:helper_SpawnSexNode(position, spawnOptions)
-
+function Sexbound.Common.Transform:placeSexNode(spawnOptions, position, actorData)
+    local dungeonId = Sexbound.Util.tileProtectionDisable(position or entity.position())
+    local uniqueId = self:helper_SpawnSexNode(spawnOptions, position or nil, actorData or nil)
     Sexbound.Util.tileProtectionEnable(dungeonId)
-
-    return result
+    return uniqueId
 end
 
 --- This function may never actually work while the NPC is stunned
@@ -79,24 +87,26 @@ function Sexbound.Common.Transform:calculateFeetPositionOffset()
     return 2.5 -- Else take a wild guess that it's 2.5
 end
 
--- [Helper] Handles the process of spawning a sex node at a specified position.
+-- [Helper] Handles the process of spawning a sex node in a tile beneath the entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:helper_SpawnSexNode(position, spawnOptions)
-    spawnOptions = spawnOptions or {}
-
+function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, actorData)
+    local positions = self:findNearbyOpenSpace(position)
     local params = {
         mindControl = {
             timeout = self._timeout -- 5 minutes by default unless overrided
         },
         respawner = storage.respawner,
         sexboundConfig = self:getSexboundConfig(),
-        storedActor = self:getParent():getActorData(),
+        storedActor = actorData or self:getParent():getActorData(),
         uniqueId = sb.makeUuid()
     }
 
+
+    spawnOptions = spawnOptions or {}
+
     -- Randomize the start position when true
-    params.sexboundConfig.randomStartPosition = spawnOptions.randomStartPosition
+    --params.sexboundConfig.randomStartPosition = spawnOptions.randomStartPosition
 
     local facingDirection = 1
 
@@ -105,15 +115,24 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(position, spawnOptions)
         facingDirection = mcontroller.facingDirection()
     end
 
-    if world.placeObject(self._nodeName, position, facingDirection, params) then
-        self:setPosition(position[1], position[2] + self._feetOffset)
-
-        if not spawnOptions.noEffect then
-            world.sendEntityMessage(entity.id(), "applyStatusEffect", "sexbound_transform")
+    -- Iterate through list of scanned tile positions until node is placed.
+    local uniqueId = params.uniqueId
+    for _, targetTile in ipairs(positions) do
+        -- In the future, we'll need to handle tile protection on a different entity in case of a player being transformed
+        local placed = world.placeObject(self._nodeName, targetTile, facingDirection, params)
+        if placed then
+            if params.storedActor.entityType == "player" then 
+                world.sendEntityMessage(params.storedActor.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
+            elseif mcontroller then
+                mcontroller.setPosition({targetTile[1], targetTile[2] + self._feetOffset})
+            end
+            if not spawnOptions.noEffect then
+                world.sendEntityMessage(params.storedActor.entityId, "applyStatusEffect", "sexbound_transform")
+            end
+            return params.uniqueId
         end
-
-        return params.uniqueId
     end
+
 
     return nil
 end

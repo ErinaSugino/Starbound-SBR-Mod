@@ -1,0 +1,8 @@
+{
+  "name"            : "sexbound_birthspeedpill",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 840,
+  "effectConfig"    : {},
+  "label"           : "Speed Birthing",
+  "scripts"         : [ "sexbound_birthspeedpill.lua" ]
+}

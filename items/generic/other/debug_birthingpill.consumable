@@ -1,0 +1,18 @@
+{
+  "itemName" : "debug_birthingpill",
+  "price" : 1,
+  "rarity" : "Common",
+  "category" : "medicine",
+  "inventoryIcon" : "debug_birthingpill.png",
+  "description" : "Debug version of the Birthing Pill without downsides.",
+  "shortdescription" : "Birthing Pill (Debug)",
+  "maxStack" : 1000,
+  "effects" : [ [
+    {
+      "effect" : "debug_birthingpill",
+      "duration" : 5
+    }
+  ] ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

@@ -58,6 +58,12 @@
     "path": "/statusControllerSettings/stats/climaxThreshold",
     "value": { "baseValue": 0.5 }
   },
+  
+  {
+    "op": "add",
+    "path": "/statusControllerSettings/stats/arousalMult",
+    "value": { "baseValue": 1.0 }
+  },
 
   {
     "op": "add",

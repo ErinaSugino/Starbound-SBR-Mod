@@ -1,0 +1,14 @@
+{
+  "itemName" : "debug_hyperfertilitypill",
+  "price" : 1,
+  "rarity" : "Legendary",
+  "category" : "medicine",
+  "inventoryIcon" : "debug_hyperfertilitypill.png",
+  "description" : "Debug version of the Hyper Fertility Pill without downsides!",
+  "shortdescription" : "Fertility Pill (Debug)",
+  "effects" : [ 
+    [ "sexbound_debug_hyper_fertility" ]
+  ],
+  "emote" : "",
+  "emitters" : [ "drinking" ]
+}

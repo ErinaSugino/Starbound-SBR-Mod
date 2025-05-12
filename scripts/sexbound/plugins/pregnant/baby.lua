@@ -369,8 +369,8 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         generationFertility = babyConfig.generationFertility,
         fertilityPenalty = babyConfig.generationFertility
     }
-    if self._parent._parent._config.enableKidStage then
-        params.statusControllerSettings.statusProperties.kid = world.time() + 840*(self._parent._parent._config.kidDayCount or 5) --Config based days of being a kid
+    if self._config.enableKidStage then
+        params.statusControllerSettings.statusProperties.kid = world.time() + 840*(self._config.kidDayCount or 5) --Config based days of being a kid
     end
     params.identity = {}
     params.identity.gender = babyConfig.birthGender
