@@ -3372,6 +3372,22 @@
 					"centered": true,
 					"image": "<part-actor2-nipple1>.1<actor2-nipple1>",
 					"zLevel": 33
+				},
+				"partStates": {
+					"actors": {
+						"position4": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-climax": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-postclimax": {
+							"properties": {"zLevel": 49}
+						},
+						"position4-reset": {
+							"properties": {"zLevel": 49}
+						}
+					}
 				}
 			},
 			"actor2-nipple2": {
