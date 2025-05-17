@@ -15,14 +15,14 @@ function Sexbound.NPC.Transform:new(parent)
 
     _self:setCanTransform(true);
 
-    message.setHandler("Sexbound:Transform", function(_, _, args, actorData)
-        return _self:handleTransform(args, actorData)
+    message.setHandler("Sexbound:Transform", function(_, _, args)
+        return _self:handleTransform(args)
     end)
 
     return _self
 end
 
-function Sexbound.NPC.Transform:handleTransform(args, actorData)
+function Sexbound.NPC.Transform:handleTransform(args)
     if self._parent._isKid then return false end
 
     if self:getCanTransform() or actorData ~= nil then
@@ -34,20 +34,22 @@ function Sexbound.NPC.Transform:handleTransform(args, actorData)
         if not args.responseRequired then
             self:notifyTransform()
         else
-            local result = self:tryCreateNode(args.spawnOptions or {}, args.position or nil, actorData or nil)
+            local targetEntity = args.targetEntity or entity.id()
+            local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil)
 
-            if result ~= nil and args.applyStatusEffects ~= nil then
-                for _, statusName in ipairs(args.applyStatusEffects) do
-                    status.addEphemeralEffect(statusName, args.timeout)
+            if result ~= nil and targetEntity == entity.id() then
+                -- Only apply things for this entity if not remote transformation
+                if args.applyStatusEffects ~= nil then
+                    for _, statusName in ipairs(args.applyStatusEffects) do
+                        status.addEphemeralEffect(statusName, args.timeout)
+                    end
                 end
-            end
-
-            if result ~= nil then
+                
                 -- Make sure this transformed NPCs arousal is reduced to zero so it doesn't try to use itself
                 self:getParent():getArousal():instaMin()
-
+                
                 storage.previousDamageTeam = storage.previousDamageTeam or world.entityDamageTeam(entity.id())
-
+                
                 npc.setDamageTeam({
                     type = "ghostly"
                 })
@@ -73,24 +75,25 @@ function Sexbound.NPC.Transform:notifyTransform()
     end
 end
 
-function Sexbound.NPC.Transform:tryCreateNode(spawnOptions, position, actorData)
+function Sexbound.NPC.Transform:tryCreateNode(targetEntity, spawnOptions, position)
     if self._parent._isKid then return nil end
     
     local uniqueId = self:placeSexNode({
+        targetEntity = targetEntity,
         randomStartPosition = true,
         noEffect = spawnOptions.noEffect or false
-    }, position or nil, actorData or nil)
+    }, position or nil)
 
     if uniqueId ~= nil then
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Success", {
             uniqueId = uniqueId
         })
-        self._controllerId = uniqueId
+        if targetEntity == entity.id() then self._controllerId = uniqueId end -- Handle remote transformation
         return {
             uniqueId = uniqueId
         }
     else
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Failure")
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Failure")
         return nil
     end
 end

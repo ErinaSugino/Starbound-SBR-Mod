@@ -171,78 +171,65 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 	self:setTimer(0)
 
 	-- Attempt to transform this entity into a sexnode
-	self:retrieveActorData(hostileEntityId, hostileEntityType)
+	self:findDefeater(hostileEntityId, hostileEntityType)
 
   return {}
 end
 
-function SexboundDefeat:retrieveActorData(damageSourceEntity, damageSourceEntityType)
-	local entityId = self._entityId
-	self._promises:add(
-		world.sendEntityMessage(
-			entityId,
-			"Sexbound:Actor:GetActorData"
-		),
-		function(actorData)
-			-- Find the most probably enemy that is our "defeater"
-			local found = false
-			local hostileEntityId = nil
-			local sexboundConfig = nil
-            
-            if damageSourceEntity ~= nil then
-                -- Try to verify we were defeated by a valid enemy - direct killer has priority over other enemies
-                for i,v in ipairs(self._hostileEntities) do
-                    if damageSourceEntity == v[1] then
-                        found = true
-                        hostileEntityId = v[1]
-                        sexboundConfig = v[2]
-                        self._hostileEntityId = hostileEntityId
-						self._hostileEntityType = damageSourceEntityType
-                        break
-                    end
+function SexboundDefeat:findDefeater(damageSourceEntity, damageSourceEntityType)
+    -- Find the most probably enemy that is our "defeater"
+    local found = false
+    local hostileEntityId = nil
+    local sexboundConfig = nil
+    
+    if damageSourceEntity ~= nil then
+        -- Try to verify we were defeated by a valid enemy - direct killer has priority over other enemies
+        for i,v in ipairs(self._hostileEntities) do
+            if damageSourceEntity == v[1] then
+                found = true
+                hostileEntityId = v[1]
+                sexboundConfig = v[2]
+                self._hostileEntityId = hostileEntityId
+                self._hostileEntityType = damageSourceEntityType
+                break
+            end
+        end
+    end
+    
+    if not found then
+        -- Direct killer entity does not exist (indirect damage) or couldn't be verified as hostile that targeted us (accidental kill) - search for nearest hostile that qualifies
+        local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
+        for i,v in ipairs(entities) do
+            for i2,v2 in ipairs(self._hostileEntities) do
+                if v == v2[1] then
+                    found = true
+                    hostileEntityId = v2[1]
+                    sexboundConfig = v2[2]
+                    self._hostileEntityId = hostileEntityId
+                    self._hostileEntityType = world.entityType(self._hostileEntityId)
+                    break
                 end
             end
-            
-            if not found then
-                -- Direct killer entity does not exist (indirect damage) or couldn't be verified as hostile that targeted us (accidental kill) - search for nearest hostile that qualifies
-                local entities = world.entityQuery(entity.position(), 25, {includedTypes = {"monster","npc","player"}, order = "nearest"})
-                for i,v in ipairs(entities) do
-                    for i2,v2 in ipairs(self._hostileEntities) do
-                        if v == v2[1] then
-                            found = true
-                            hostileEntityId = v2[1]
-                            sexboundConfig = v2[2]
-                            self._hostileEntityId = hostileEntityId
-                            self._hostileEntityType = world.entityType(self._hostileEntityId)
-                            break
-                        end
-                    end
-                    if found then break end
+            if found then break end
+        end
+    end
+    if hostileEntityId then
+        -- Defeater found - show victory dialog and attempt transformation
+        self:outputVictoryDialog()
+        self:transform(sexboundConfig,
+            function(result)
+                result = result or {}
+                if result.uniqueId == nil then
+                    return self:handleTransformFailed()
                 end
+                return self:handleTransformSuccess(result.uniqueId)
+            end, function()
+                return self:handleTransformFailed()
             end
-			if hostileEntityId then
-				-- Defeater found - show victory dialog and attempt transformation
-				self:outputVictoryDialog()
-				self:transform(sexboundConfig,
-					function(result)
-						result = result or {}
-						if result.uniqueId == nil then
-							return self:handleTransformFailed()
-						end
-						return self:handleTransformSuccess(result.uniqueId)
-					end, function()
-						return self:handleTransformFailed()
-					end,
-					actorData
-				)
-			else
-				self:tryToDie("Hostile entity not found in table")
-			end
-		end,
-		function()
-			self:tryToDie("Actor data retrieval failed")
-		end)
-
+        )
+    else
+        self:tryToDie("Hostile entity not found in table")
+    end
 end
 
 function SexboundDefeat:loadConfig()
@@ -303,7 +290,7 @@ function SexboundDefeat:handleRetrieveSexboundConfigSuccess(sexboundConfig, host
 end
 
 
-function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback, actorData)
+function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback)
 	local position = nil
 	local entityId = self._entityId
 	if self:isPlayer() then
@@ -315,12 +302,13 @@ function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallba
 			entityId,
 			"Sexbound:Transform",
 			{
-				responseRequired = true,
+				targetEntity = self._entityId,
+                responseRequired = true,
 				sexboundConfig = sexboundConfig,
 				timeout = 500,
-				position = position
-			},
-			actorData or nil
+				position = position,
+                defeatee = self._entityId
+			}
 		),
 		successCallback,
 		failureCallback
@@ -344,7 +332,6 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 		status.addEphemeralEffect("sexbound_regen4", self._timeout)
 	end
 
-	status.addEphemeralEffect("sexbound_sex",  self._timeout)
 	status.addEphemeralEffect("sexbound_defeat_stun", self._timeout)
 
 	-- Try to notify the controlling entity to mount the defeated player.

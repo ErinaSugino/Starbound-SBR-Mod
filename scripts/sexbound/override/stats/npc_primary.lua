@@ -7,12 +7,16 @@ function init()
     message.setHandler("Sexbound:removeStatusEffect", function(_, _, effectName)
         status.removeEphemeralEffect(effectName)
     end)
+    
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        npc.setLounging(data.id);
+    end)
 
     -- Defeat init
     self.sexboundDefeat = SexboundDefeat:new("npc")
     status.removeEphemeralEffect("sexbound_sex")
     status.removeEphemeralEffect("sexbound_defeat_stun")
-
 end
 
 -- Override Update Hook (defeat)

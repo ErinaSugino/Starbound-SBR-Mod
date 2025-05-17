@@ -13,7 +13,7 @@ function SexNode:new()
 end
 
 function SexNode:init()
-    Sexbound.API.init()
+    Sexbound.API.init(3)
 
     if not self:setupMindControl() then
         self:handleSmash()

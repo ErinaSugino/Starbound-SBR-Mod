@@ -61,9 +61,9 @@ end
 --- Attempts to place a sex node beneath an entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:placeSexNode(spawnOptions, position, actorData)
+function Sexbound.Common.Transform:placeSexNode(spawnOptions, position)
     local dungeonId = Sexbound.Util.tileProtectionDisable(position or entity.position())
-    local uniqueId = self:helper_SpawnSexNode(spawnOptions, position or nil, actorData or nil)
+    local uniqueId = self:helper_SpawnSexNode(spawnOptions, position or nil)
     Sexbound.Util.tileProtectionEnable(dungeonId)
     return uniqueId
 end
@@ -90,7 +90,7 @@ end
 -- [Helper] Handles the process of spawning a sex node in a tile beneath the entity.
 -- @param position
 -- @param spawnOptions
-function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, actorData)
+function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position)
     local positions = self:findNearbyOpenSpace(position)
     local params = {
         mindControl = {
@@ -98,7 +98,6 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, a
         },
         respawner = storage.respawner,
         sexboundConfig = self:getSexboundConfig(),
-        storedActor = actorData or self:getParent():getActorData(),
         uniqueId = sb.makeUuid()
     }
 
@@ -120,15 +119,14 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position, a
     for _, targetTile in ipairs(positions) do
         -- In the future, we'll need to handle tile protection on a different entity in case of a player being transformed
         local placed = world.placeObject(self._nodeName, targetTile, facingDirection, params)
+        local targetEntity = spawnOptions.targetEntity or entity.id()
         if placed then
-            if params.storedActor.entityType == "player" then 
-                world.sendEntityMessage(params.storedActor.entityId, "Sexbound:Defeat:SetPosition", {targetTile[1], targetTile[2] + 2.5})
-            elseif mcontroller then
-                mcontroller.setPosition({targetTile[1], targetTile[2] + self._feetOffset})
-            end
+            world.sendEntityMessage(targetEntity, "Sexbound:Defeat:SetPositionAndLounge", {id = params.uniqueId, x = targetTile[1], y = targetTile[2] + 2.5})
+            
             if not spawnOptions.noEffect then
-                world.sendEntityMessage(params.storedActor.entityId, "applyStatusEffect", "sexbound_transform")
+                world.sendEntityMessage(targetEntity, "applyStatusEffect", "sexbound_transform")
             end
+            
             return params.uniqueId
         end
     end

@@ -30,10 +30,11 @@ function Sexbound.Player.Transform:handleTransform(args)
         self:setSexboundConfig(args.sexboundConfig)
         
         self:setTimeout(args.timeout)
+        
+        local targetEntity = args.targetEntity or player.id()
+        local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil)
 
-        local result = self:tryCreateNode(args.spawnOptions or {}, args.position or nil)
-
-        if result ~= nil and args.applyStatusEffects ~= nil then
+        if result ~= nil and args.applyStatusEffects ~= nil and targetEntity ~= player.id() then
             for _, statusName in ipairs(args.applyStatusEffects) do
                 status.addEphemeralEffect(statusName, args.timeout)
             end
@@ -45,23 +46,24 @@ function Sexbound.Player.Transform:handleTransform(args)
     return false
 end
 
-function Sexbound.Player.Transform:tryCreateNode(spawnOptions, position, data)
+function Sexbound.Player.Transform:tryCreateNode(targetEntity, spawnOptions, position)
     -- Place Sexnode and store Unique ID
     local uniqueId = self:placeSexNode({
+        targetEntity = targetEntity,
         randomStartPosition = true,
         noEffect = spawnOptions.noEffect or false
-    }, position or nil, data or nil)
+    }, position or nil)
     if self._parent:canLog("debug") then sb.logInfo("Placed node with UUID "..tostring(uniqueId)) end
     if uniqueId ~= nil then
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Success", {
             uniqueId = uniqueId
         })
-        self._controllerId = uniqueId
+        if targetEntity ~= player.id() then self._controllerId = uniqueId end -- Handle remote transformation
         return {
             uniqueId = uniqueId
         }
     else
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Failure")
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Failure")
         return nil
     end
 end

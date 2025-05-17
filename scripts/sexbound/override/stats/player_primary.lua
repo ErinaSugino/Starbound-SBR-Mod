@@ -8,17 +8,17 @@ function init()
     message.setHandler("Sexbound:removeStatusEffect", function(_, _, effectName)
         status.removeEphemeralEffect(effectName)
     end)
+    
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        player.setLounging(data.id);
+    end)
 
     -- Defeat init
     self.sexboundDefeat = SexboundDefeat:new("player")
     status.removeEphemeralEffect("sexbound_sex")
     status.removeEphemeralEffect("sexbound_defeat_stun")
     status.removeEphemeralEffect("regeneration4")
-
-    message.setHandler("Sexbound:Defeat:SetPosition", function(_, _, position)
-        mcontroller.setPosition(position)
-    end)
-    
 end
 
 local Sexbound_Override_Player_Primary_update = update
