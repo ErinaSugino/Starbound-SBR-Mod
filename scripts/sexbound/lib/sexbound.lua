@@ -216,6 +216,14 @@ function Sexbound:initMessageHandlers()
     message.setHandler("Sexbound:Retrieve:ControllerId", function(_, _, args)
         return self:handleRetrieveControllerId(args)
     end)
+    
+    message.setHandler("Sexbound:Retrieve:NodeCompatibility", function(_, _, args)
+        return self:checkNodeCompatibility(args)
+    end)
+    
+    message.setHandler("Sexbound:Retrieve:IsFull", function(_, _, args)
+        return self:isFullyOccupied()
+    end)
 
     message.setHandler("Sexbound:Retrieve:UIConfig", function(_, _, args)
         return self:handleRetrieveUIConfig(args)
@@ -1509,6 +1517,11 @@ function Sexbound:getSextalk()
     return self._sextalk
 end
 
+--- Returns if this sexnode is at its defined actor cap or not
+function Sexbound:isFullyOccupied()
+    return #self._actors >= self._maxAllowedActors
+end
+
 
 
 --- DEBUG ---
@@ -1529,7 +1542,13 @@ function Sexbound:tickClock()
     end
 end
 
+--- BEHAVIOR REMOTE CALL ---
 function checkNodeCompatibility(args)
     if not self._sexbound then return 0 end
     return self._sexbound:checkNodeCompatibility(args)
+end
+
+function isFullyOccupied(args)
+    if not self._sexbound then return world.loungeableOccupied(entity.id()) end
+    return self._sexbound:isFullyOccupied() end
 end

@@ -29,6 +29,10 @@ function init()
     message.setHandler("Sexbound:Retrieve:ControllerId", function(_, _, args)
         return self.controllerId
     end)
+    
+    message.setHandler("Sexbound:Retrieve:IsFull", function(_, _, args)
+        return world.loungeableOccupied(entity.id())
+    end)
 
     message.setHandler("Sexbound:Backwear:Change", function(_, _, args)
         world.sendEntityMessage(self.controllerId, "Sexbound:Backwear:Change", args)
@@ -94,4 +98,9 @@ end
 
 function returnControllerId()
     return self.controllerId
+end
+
+-- Fallback placeholder for old seat nodes
+function isFullyOccupied()
+    return world.loungeableOccupied(entity.id())
 end
