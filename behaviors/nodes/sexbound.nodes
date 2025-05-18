@@ -181,7 +181,8 @@
     "name": "sortSexnodes",
     "title": "",
     "properties": {
-        "list": {"type": "list", "key": null}
+        "list": {"type": "list", "key": null},
+		"timeout": {"type": "number", "value": 1}
     },
     "category": "sexbound",
     "script": "/scripts/actions/sexbound.lua",
@@ -261,6 +262,37 @@
 	"properties": {
 	  "data": {"type": "list", "key": null},
 	  "entity": {"type": "entity", "key": null}
+	},
+	"category": "sexbound",
+	"script": "/scripts/actions/sexbound.lua",
+	"output": {}
+  },
+  
+  "findSexnodes": {
+    "type": "action",
+    "name": "findSexnodes",
+    "title": "findSexnodes",
+    "properties": {
+      "orderBy": {"type": "string", "value": "nearest"},
+      "orientation": {"type": "string", "value": "\"lay\""},
+      "position": {"type": "position", "key": "self"},
+      "range": {"type": "number", "value": 20},
+	  "exclude": {"type": "list", "key": null}
+    },
+    "category": "sexbound",
+    "script": "/scripts/actions/sexbound.lua",
+    "output": {
+      "entity": {"type": "entity", "key": null},
+      "list": {"type": "list", "key": null}
+    }
+  },
+  
+  "asyncIsNotFull": {
+	"type": "action",
+	"name": "asyncIsNotFull",
+	"title": "asyncIsNotFull",
+	"properties": {
+		"entity": {"type": "entity", "key": "self"}
 	},
 	"category": "sexbound",
 	"script": "/scripts/actions/sexbound.lua",

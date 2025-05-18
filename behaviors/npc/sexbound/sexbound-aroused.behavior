@@ -12,7 +12,7 @@
   ],
   "parameters": {},
   "root": {
-    "title": "Sit",
+    "title": "Try to lounge in sexnode",
     "type": "composite",
     "name": "sequence",
     "parameters": {},
@@ -47,22 +47,22 @@
 		}
 	  },
       {
-        "title": "",
+        "title": "Find all valid sexnodes",
         "type": "action",
-        "name": "findLoungable",
+        "name": "findSexnodes",
         "parameters": {
           "orderBy": { "value": "nearest" },
           "orientation": { "value": "lay" },
           "position": { "key": "self" },
           "range": { "value": 25 },
-          "unoccupied": { "value": true }
+          "exclude": { "key": "banned" }
         },
         "output": {
           "list": "loungables"
         }
       },
-      {
-        "title": "filter",
+	  {
+        "title": "Ensure only sexnodes",
         "type": "decorator",
         "name": "filter",
         "parameters": {
@@ -70,7 +70,7 @@
           "type": { "value": "entity" }
         },
         "child": {
-          "title": "hasItemTag",
+          "title": "Has loungable the sex tag?",
           "type": "action",
           "name": "hasItemTag",
           "parameters": {
@@ -80,17 +80,25 @@
         }
       },
 	  {
-		"title": "Advanced Sorting",
-		"type": "action",
-		"name": "sortSexnodes",
-		"parameters": {
-			"list": {"key": "loungables"}
-		},
-		"output": {
-			"list": "loungables",
-			"data": "loungableData",
-			"entity": "chair"
-		}
+		"title": "Sort via preference async",
+		"type": "composite",
+		"name": "selector",
+		"children": [
+		  {
+			"title": "Advanced sorting based on NPC preference",
+			"type": "action",
+			"name": "sortSexnodes",
+			"parameters": {
+				"list": {"key": "loungables"},
+				"timeout": {"value": 1}
+			},
+			"output": {
+				"list": "loungables",
+				"data": "loungableData",
+				"entity": "chair"
+			}
+		  },
+		]
 	  },
 	  {
 		"title": "Logging",
@@ -100,20 +108,8 @@
 			"list": {"key": "loungables"}
 		}
 	  },
-      //{
-      //  "title": "listPop",
-      //  "type": "action",
-      //  "name": "listPop",
-      //  "parameters": {
-      //    "list": { "key": "loungables" }
-      //  },
-      //  "output": {
-      //    "list": "loungables",
-      //    "entity": "chair"
-      //  }
-      //},
       {
-        "title": null,
+        "title": "Get sexnode position",
         "type": "action",
         "name": "entityPosition",
         "parameters": {
@@ -124,22 +120,22 @@
         }
       },
 	  {
-		"title": "",
+		"title": "Try to move while exists and free else exclude",
 		"type": "composite",
 		"name": "selector",
 		"parameters": {},
 		"children": [
 		  {
-			"title": "",
+			"title": "Try to move while exists and free loop",
 			"type": "composite",
 			"name": "parallel",
 			"parameters": {
 			  "fail": { "value": 1 },
-			  "success": { "value": 3 }
+			  "success": { "value": 2 }
 			},
 			"children": [
 			  {
-				"title": "entityExists",
+				"title": "Sexnode still exists?",
 				"type": "action",
 				"name": "entityExists",
 				"parameters": {
@@ -147,29 +143,22 @@
 				}
 			  },
 			  {
-				"title": null,
-				"type": "decorator",
-				"name": "inverter",
-				"parameters": {},
-				"child": {
-				  "title": null,
-				  "type": "action",
-				  "name": "loungableOccupied",
-				  "parameters": {
-					"entity": { "key": "chair" }
-				  }
-				}
+				"title": "Verify sexnode still free async",
+				"type": "composite",
+				"name": "selector",
+				"children": [
+				  {
+					"title": "Continuous async verification",
+					"type": "action",
+					"name": "asyncIsNotFull",
+					"parameters": {
+						"entity": {"key": "chair"}
+					}
+				  },
+				]
 			  },
-			  //{
-				//"title": "Backup Timeout",
-				//"type": "action",
-				//"name": "reverseTimer",
-				//"parameters": {
-				//  "time": {"value": 10}
-				//}
-			  //},
 			  {
-				"title": "",
+				"title": "Smartly move to sexnode with failsave timeout",
 				"type": "action",
 				"name": "abortingMoveToPosition",
 				"parameters": {
@@ -181,7 +170,7 @@
 			]
 		  },
 		  {
-			"title": "Store new broken node",
+			"title": "Store new broken node on failure",
 			"type": "action",
 			"name": "setNodeRestrictions",
 			"parameters": {
@@ -192,7 +181,7 @@
 		]
 	  },
       {
-        "title": "parallel",
+        "title": "Try to lounge while exists and horny",
         "type": "composite",
         "name": "parallel",
         "parameters": {
@@ -201,7 +190,7 @@
         },
         "children": [
           {
-            "title": "Check Arousal > Threshold",
+            "title": "Check Arousal still > Threshold",
             "type": "action",
             "name": "safeResourcePercentage",
             "parameters": {
@@ -210,7 +199,7 @@
             }
           },
           {
-            "title": "entityExists",
+            "title": "Sexnode really still exists?",
             "type": "action",
             "name": "entityExists",
             "parameters": {
@@ -218,7 +207,7 @@
             }
           },
           {
-            "title": "lounge",
+            "title": "Lounge in sexnode",
             "type": "action",
             "name": "lounge",
             "parameters": {
