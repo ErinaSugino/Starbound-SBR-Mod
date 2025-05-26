@@ -209,7 +209,7 @@
           {
             "title": "Lounge in sexnode",
             "type": "action",
-            "name": "lounge",
+            "name": "loungeMultiSeat",
             "parameters": {
               "entity": { "key": "chair" }
             }

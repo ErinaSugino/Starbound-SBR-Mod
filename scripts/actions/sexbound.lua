@@ -607,6 +607,30 @@ function asyncIsNotFull(args, board)
     return false
 end
 
+function loungeMultiSeat(args, board)
+    local target = args.entity
+    local success = false
+    if target == nil then return false end
+    if not npc.isLounging() or npc.loungingIn() ~= target then
+        local seatCount = getObjectSeatCount(target)
+        for i=1,seatCount do
+            success = npc.setLounging(target, (-1+i))
+            if success then break end
+        end
+    end
+    self.lounge = success
+    return success
+end
+
+function getObjectSeatCount(entityId)
+    if not entityId or not world.entityExists(entityId) then return 1 end
+    local config = world.getObjectParamter(entityId, "orientations", {})
+    if not config or not config[1] then return 1 end
+    local orientation = config[1]
+    if not orientation.sitPositions then return 1 end
+    return #orientation.sitPositions
+end
+
 function dump(o)
     if type(o) == 'table' then
       local s = '{ '
