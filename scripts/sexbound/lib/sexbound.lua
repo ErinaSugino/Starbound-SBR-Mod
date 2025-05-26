@@ -359,10 +359,6 @@ function Sexbound:addActor(actorConfig, store)
             self._playerControl = true
         end
     end
-    if self._containsDefeated then
-        -- Disable node interaction if an actor joins a defeat node
-        object.setInteractive(false)
-    end
 
     -- Resort actors based on changed environment
     self:helper_reassignAllRoles()

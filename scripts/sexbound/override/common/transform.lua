@@ -118,7 +118,7 @@ function Sexbound.Common.Transform:helper_SpawnSexNode(spawnOptions, position)
     local uniqueId = params.uniqueId
     for _, targetTile in ipairs(positions) do
         -- In the future, we'll need to handle tile protection on a different entity in case of a player being transformed
-        local placed = world.placeObject(self._nodeName, targetTile, facingDirection, params)
+        local placed = world.placeObject(spawnOptions.node or self._nodeName, targetTile, facingDirection, params)
         local targetEntity = spawnOptions.targetEntity or entity.id()
         if placed then
             world.sendEntityMessage(targetEntity, "Sexbound:Defeat:SetPositionAndLounge", {id = params.uniqueId, x = targetTile[1], y = targetTile[2] + 2.5})

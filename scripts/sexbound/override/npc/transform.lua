@@ -35,7 +35,7 @@ function Sexbound.NPC.Transform:handleTransform(args)
             self:notifyTransform()
         else
             local targetEntity = args.targetEntity or entity.id()
-            local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil)
+            local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil, args.node or nil)
 
             if result ~= nil and targetEntity == entity.id() then
                 -- Only apply things for this entity if not remote transformation
@@ -75,13 +75,14 @@ function Sexbound.NPC.Transform:notifyTransform()
     end
 end
 
-function Sexbound.NPC.Transform:tryCreateNode(targetEntity, spawnOptions, position)
+function Sexbound.NPC.Transform:tryCreateNode(targetEntity, spawnOptions, position, nodeOverride)
     if self._parent._isKid then return nil end
     
     local uniqueId = self:placeSexNode({
         targetEntity = targetEntity,
         randomStartPosition = true,
-        noEffect = spawnOptions.noEffect or false
+        noEffect = spawnOptions.noEffect or false,
+        node = nodeOverride
     }, position or nil)
 
     if uniqueId ~= nil then

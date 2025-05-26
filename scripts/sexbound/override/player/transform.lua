@@ -9,7 +9,7 @@ function Sexbound.Player.Transform:new(parent)
     local _self = setmetatable({
         _canTransform = true,
         _mindControl = {},
-        _nodeName = "sexbound_main_node",
+        _nodeName = "sexbound_main_node_centered",
         _parent = parent
     }, Sexbound.Player.Transform_mt)
 
@@ -32,7 +32,7 @@ function Sexbound.Player.Transform:handleTransform(args)
         self:setTimeout(args.timeout)
         
         local targetEntity = args.targetEntity or player.id()
-        local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil)
+        local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil, args.node or nil)
 
         if result ~= nil and args.applyStatusEffects ~= nil and targetEntity ~= player.id() then
             for _, statusName in ipairs(args.applyStatusEffects) do
@@ -46,12 +46,13 @@ function Sexbound.Player.Transform:handleTransform(args)
     return false
 end
 
-function Sexbound.Player.Transform:tryCreateNode(targetEntity, spawnOptions, position)
+function Sexbound.Player.Transform:tryCreateNode(targetEntity, spawnOptions, position, nodeOverride)
     -- Place Sexnode and store Unique ID
     local uniqueId = self:placeSexNode({
         targetEntity = targetEntity,
         randomStartPosition = true,
-        noEffect = spawnOptions.noEffect or false
+        noEffect = spawnOptions.noEffect or false,
+        node = nodeOverride
     }, position or nil)
     if self._parent:canLog("debug") then sb.logInfo("Placed node with UUID "..tostring(uniqueId)) end
     if uniqueId ~= nil then

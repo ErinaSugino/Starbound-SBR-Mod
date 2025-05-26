@@ -307,7 +307,8 @@ function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallba
 				sexboundConfig = sexboundConfig,
 				timeout = 500,
 				position = position,
-                defeatee = self._entityId
+                defeatee = self._entityId,
+                node = "sexbound_defeat_node"
 			}
 		),
 		successCallback,
