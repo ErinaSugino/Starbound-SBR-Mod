@@ -297,5 +297,17 @@
 	"category": "sexbound",
 	"script": "/scripts/actions/sexbound.lua",
 	"output": {}
+  },
+  
+  "loungeMultiSeat": {
+	"type": "action",
+	"name": "loungeMultiSeat",
+	"title": "loungeMultiSeat",
+	"properties": {
+		"entity": {"type": "entity", "key": "self"}
+	},
+	"category": "sexbound",
+	"script": "/scripts/actions/sexbound.lua",
+	"output": {}
   }
 }
