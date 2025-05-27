@@ -45,6 +45,37 @@ function uninit()
     end, sb.logError)
 end
 
+--- Overloading of main interaction logic to prevent interaction with too low reputation and hijack trade price data
+local Sexbound_Old_Interact = interact
+function interact(args)
+    local target = args.sourceId
+    local targetUnique = world.entityUniqueId(target)
+    if self.sb_npc then
+        if self.sb_npc._useReputation and not self.sb_npc:allowInteract(targetUnique) then
+            local dialog = config.getParameter("reputationResponse", {})
+            local species = npc.species()
+            local reponse = dialog[species] or dialog[default] or "I don't deal with criminals!"
+            npc.say(response)
+            return
+        end
+        
+        if self.tradingConfig then
+            -- Adjust trading prices if needed
+            local priceFactor = self.sb_npc:getPriceAdjustment(targetUnique)
+            if self.tradingConfig.buyFactor then
+                if self.tradingConfig.orgBuyFactor == nil then self.tradingConfig.orgBuyFactor = self.tradingConfig.buyFactor end -- Store baseline
+                self.tradingConfig.buyFactor = self.tradingConfig.orgBuyFactor * priceFactor
+            end
+            if self.tradingConfig.sellFactor then
+                if self.tradingConfig.orgSellFactor == nil then self.tradingConfig.orgSellFactor = self.tradingConfig.sellFactor end -- Store baseline
+                self.tradingConfig.sellFactor = self.tradingConfig.orgSellFactor * (1/priceFactor)
+            end
+        end
+    end
+    
+    Sexbound_Old_Interact(args)
+end
+
 --- Overloading of crewmember related functions to make sexbound storage data persistent, and make kids unrecruitable
 local Sexbound_Old_PreservedStorage = preservedStorage
 function preservedStorage()
@@ -85,19 +116,22 @@ end
 
 function Sexbound.NPC.new()
     local self = setmetatable({
-        _enableLoungeTimer = true,
-        _isHavingBirthday  = false,
-        _isHavingSex       = false,
-        _loungeId          = nil,
-        _loungeTimer       = 0,
-        _mindControl       = { damageSourceKind = "sexbound_mind_control" },
-        _states            = { "defaultState", "havingBirthdayState", "havingSexState" },
-        _isClimaxing       = false,
-        _isKid             = false,
-        _kidTimer          = 0,
-        _behaviorData      = {excludedNodes = {}},
-        _isShipWorld       = (world.type() == "unknown"),
-        _pregnancyDelay    = 5
+        _enableLoungeTimer  = true,
+        _isHavingBirthday   = false,
+        _isHavingSex        = false,
+        _loungeId           = nil,
+        _loungeTimer        = 0,
+        _mindControl        = { damageSourceKind = "sexbound_mind_control" },
+        _states             = { "defaultState", "havingBirthdayState", "havingSexState" },
+        _isClimaxing        = false,
+        _isKid              = false,
+        _kidTimer           = 0,
+        _behaviorData       = {excludedNodes = {}},
+        _isShipWorld        = (world.type() == "unknown"),
+        _pregnancyDelay     = 5,
+        _playerReputation   = {},
+        _reputationPromises = {},
+        _useReputation      = config.getParameter("", true)
     }, Sexbound.NPC_mt)
 
     self:init(self, "npc") -- init defined in common.lua
@@ -129,6 +163,8 @@ function Sexbound.NPC.new()
     self:updateTraitEffects()
     self:updateKidStatus()
     
+    self:fetchPlayerReputation()
+    
     return self
 end
 
@@ -156,6 +192,25 @@ function Sexbound.NPC:update(dt)
     end
     
     if self._pregnancyDelay > 0 then self._pregnancyDelay = self._pregnancyDelay - dt end
+    
+    local remainingPromises = {}
+    for _,p in ipairs(self._reputationPromises) do
+        if p:finished() then
+            if p:succeeded() then
+                local res = p:result()
+                self:setPlayerReputation(res.id, res.reputation or {species = {}})
+            end
+        else table.insert(remainingPromises, p) end
+        
+        if promise:finished() then
+            if promise:succeeded() then
+                local full = not not promise:result()
+                if full then return false end
+            else return false end
+            promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
+        end
+    end
+    self._reputationPromises = remainingPromises
 end
 
 function Sexbound.NPC:updateLoungeTimer(dt, callback)
@@ -215,7 +270,10 @@ function Sexbound.NPC:initMessageHandlers()
         return self:hazardAbortion()
     end)
     message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
-        self:updateFertility(args)
+        return self:updateFertility(args)
+    end)
+    message.setHandler("Sexbound:Defeat:ReputationSet", function(_, _, args)
+        return self:setPlayerReputation(args.id, args.reputation or {global = 0, species = {}})
     end)
     
     --- Debug stuff
@@ -453,7 +511,9 @@ function Sexbound.NPC:getActorData()
         seed = npc.seed(),
         storage = storage,
         generationFertility = status.statusProperty("generationFertility", 1.0),
-        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        defeatPenalty = true
     }
 end
 
@@ -650,4 +710,29 @@ function Sexbound.NPC:getCompatibilityData()
         fatherUuid = status.statusProperty("fatherUuid", nil),
         uuid = entity.uniqueId
     }
+end
+
+function Sexbound.NPC:fetchPlayerReputation()
+    local players = world.players()
+    for _,entityId in ipairs(players) do
+        table.insert(self._reputationPromises, world.sendEntityMessage(entityId, "Sexbound:Defeat:ReputationGet"))
+    end
+end
+
+function Sexbound.NPC:setPlayerReputation(entity, reputation)
+    local species = npc.species()
+    local speciesReputation = reputation.species[species] or 0
+    self._playerReputation[entity] = speciesReputation
+end
+
+function Sexbound.NPC:allowInteract(entity)
+    local reputation = self._playerReputation[entity] or 0
+    return reputation < 150
+end
+
+function Sexbound.NPC:getPriceAdjustment(entity)
+    local reputation = self._playerReputation[entity] or 0
+    if reputation > 100 then return 5
+    elseif reputation > 50 then return 2.5 end
+    return 1
 end

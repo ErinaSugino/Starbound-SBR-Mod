@@ -258,7 +258,9 @@ function Sexbound.Monster:getActorData()
         seed = monster.seed(),
         storage = storage,
         generationFertility = status.statusProperty("generationFertility", 1.0),
-        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        defeatPenalty = false
     }
 end
 

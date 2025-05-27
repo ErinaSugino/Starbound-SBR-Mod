@@ -134,6 +134,11 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
 
 	-- Otherwise use the original applyDamageRequest function to process the incoming damage
 	local damage = originalFunction(damageRequest)
+    
+    -- Do not process kids
+    local worldTime = world.time()
+    local kidTime = status.statusProperty('kid', -math.huge)
+    if kidTime <= worldTime then return damage end
 
 	-- When the this entity's health is greater than 0, generate damage
 	if status.resource("health") > 0 then return damage end

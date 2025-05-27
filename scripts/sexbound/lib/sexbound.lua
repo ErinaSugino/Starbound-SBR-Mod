@@ -321,14 +321,10 @@ function Sexbound:addActor(actorConfig, store)
     end
     
     self._globalActorId = self._globalActorId + 1 -- Loc, an ID should be universally unique, and not redundant crap.
-    --actor:setId(self._globalActorId)
     
     -- Try to retain current role composition by just adding new actor last
     local newMax = #self._actors + 1
     self._currentOrderId = self._currentOrderId..newMax
-    
-    --actor:setActorNumber(newMax)
-    --actor:setRole(newMax)
 
     local actor = Sexbound.Actor:new(self, actorConfig, self._globalActorId, newMax)
 
@@ -343,20 +339,28 @@ function Sexbound:addActor(actorConfig, store)
     table.insert(self._actorsOrdered, actor)
     self:getLog():debug("Actor added to list. Length now: "..#self._actors)
 
-    --actor:getApparel():sync()
-
-    --actor:initPlugins()
-
     self._positions:filterPositions(self._actors)
     
     self._UI:refresh()
     
+    -- Mark node as a defeat node.
+    if actor:getDefeated() then self._containsDefeated = true end
     if actor:getEntityType() == "player" then 
         self._containsPlayer = true 
         -- Open UI if not defeated or is allowed to while defeated.
-        if not actor:getStatus():hasStatus("sexbound_defeated") or actor:getStatus():hasStatus("can_use_sex_ui_defeated") then
+        if not actor:getDefeated() or actor:getStatus():hasStatus("can_use_sex_ui_defeated") then
+            self:getLog():debug("Actor is player in control - opening UI")
             actor:openUI()
             self._playerControl = true
+        end
+        
+        -- Apply defeat penalties
+        if not actor:getDefeated() and self._containsDefeated then
+            self:forEachActor(function(index,_actor)
+                if _actor:getDefeated() and _actor:getDefeatPenalty() then
+                    actor:penalizeDefeat(_actor:getSpecies())
+                end
+            end)
         end
     end
 
@@ -369,17 +373,14 @@ function Sexbound:addActor(actorConfig, store)
     elseif not self._playerControl and self._config.sex.npcStartSex then
         local success = self._positions:switchRandomSexPosition(true)
         -- Smash the defeat node if there's no valid position to avoid boring standing around
-        if not success and self._containsDefeated then
-            self:forEachActor(function(index,actor)
-                if actor:getStatus():hasStatus("sexbound_defeated") then
-                    world.sendEntityMessage(actor:getEntityId(), "SexboundDefeat:Untransform")
+        if not success and self._containsDefeated and #self._actors > 1 then
+            self:forEachActor(function(index,_actor)
+                if _actor:getDefeated() then
+                    world.sendEntityMessage(_actor:getEntityId(), "SexboundDefeat:Untransform")
                 end
             end)
         end
     end
-    -- Mark node as a defeat node.
-    if actor:getStatus():hasStatus("sexbound_defeated") then self._containsDefeated = true end
-
     
     -- Reset all actors to refresh their appearances
     self:resetAllActors()

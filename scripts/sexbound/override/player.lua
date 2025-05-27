@@ -84,6 +84,8 @@ function Sexbound.Player.new()
     storage.sexboundConfig = storage.sexboundConfig or {
         hasGivenStartItems = false
     }
+    storage.sexbound = storage.sexbound or {}
+    storage.sexbound.defeat = storage.sexbound.defeat or {global = 0, species = {}}
 
     self._legal = Sexbound.Player.Legal:new(self)
     self._legal:verify()
@@ -144,6 +146,8 @@ function Sexbound.Player.new()
     self._status:addEventListener("remove", function(data) self:notifySterilizationChange(data) end)
     self._status:addEventListener("add", function(data) self:notifyInfertileChange(data) end)
     self._status:addEventListener("remove", function(data) self:notifyInfertileChange(data) end)
+    
+    self:broadcastDefeatReputation()
 
     return self
 end
@@ -173,6 +177,16 @@ function Sexbound.Player:update(dt)
     
     -- Update the player's arousal module, as they, too, now can get horny
     self._arousal:update(dt)
+    
+    -- Tick defeat reputation decay
+    local reputation = storage.sexbound.defeat or {global = 0, species = {}}
+    -- Decay of 0.01667/s = 1/min
+    local decay = 0.01667*dt
+    if reputation.global > 0 then reputation.global = math.max(0, reputation.global - decay) end
+    for i,v in pairs(reputation.species) do
+        if v > 0 then reputation.species[i] = math.max(0, v - decay) end
+    end
+    storage.sexbound.defeat = reputation
 end
 
 function Sexbound.Player:handleEnterClimaxState(args)
@@ -449,6 +463,12 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Climax:Feed", function(_, _, args)
         if status.isResource("food") then status.giveResource("food", 0.1) end
     end)
+    message.setHandler("Sexbound:Defeat:Penalty", function(_, _, args)
+        return self:addDefeatPenalty(args)
+    end)
+    message.setHandler("Sexbound:Defeat:ReputationGet" function(_, _, args)
+        return self:getDefeatReputation()
+    end)
     
     --- Debug purposes
     message.setHandler("Sexbound:Debug:ResetStats", function(_, _, args)
@@ -529,6 +549,7 @@ function Sexbound.Player:getActorData()
         arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
         inHeat = status.statusProperty("sexbound_aroused_heat", false),
         isDefeated = status.statusProperty("sexbound_defeated", false),
+        defeatPenalty = false, -- Needs to be setting controlled
         canUseSexUIDefeated = status.statusProperty("can_use_sex_ui_defeated", false),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
@@ -735,4 +756,23 @@ end
 
 function Sexbound.Player:getSpecies()
     return player.species()
+end
+
+function Sexbound.Player:addDefeatPenalty(species)
+    storage.sexbound.defeat.global = storage.sexbound.defeat.global + 15
+    if storage.sexbound.defeat.species[species] then storage.sexbound.defeat.species[species] = storage.sexbound.defeat.species[species] + 15
+    else storage.sexbound.defeat.species[species] = 15 end
+    
+    self:broadcastDefeatReputation()
+end
+
+function Sexbound.Player:broadcastDefeatReputation()
+    local npcs = world.npcQuery([0,0], world.size(), {})
+    for _,entityId in ipairs(npcs) do
+        world.sendEntityMessage(entityId, "Sexbound:Defeat:ReputationSet", {id = player.uniqueId(), reputation = storage.sexbound.defeat or {global = 0, species = {}}})
+    end
+end
+
+function Sexbound.Player:getDefeatReputation()
+    return {id = player.uniqueId(), reputation = storage.sexbound.defeat or {global = 0, species = {}}}
 end

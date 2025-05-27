@@ -784,6 +784,10 @@ function Sexbound.Actor:validateSpecies(species)
     return validatedSpecies or self:getParent():getConfig().sex.defaultPlayerSpecies -- default is 'human'
 end
 
+function Sexbound.Actor:penalizeDefeat(species)
+    world.sendEntityMessage(self:getEntityId(), "Sexbound:Defeat:Penalty", species)
+end
+
 --- Executes the specifed callback function for each actor plugin.
 -- @param callback
 function Sexbound.Actor:forEachPlugin(callback)
@@ -1083,13 +1087,6 @@ function Sexbound.Actor:getEntityGroup()
 end
 
 function Sexbound.Actor:buildBodyType()
-    --local gender = self:getSubGender() or self:getGender()
-    --local targetGenders = self:getParent():getConfig().sex.whichGendersHaveBoobs or {"female", "futanari"}
-    --for _,g in pairs(targetGenders) do
-    --    if g == gender then return "female" end
-    --end
-    
-    --return "male"
     return self:getGender()
 end
 
@@ -1155,7 +1152,7 @@ end
 
 --- Returns the gender of this actor instance, dynamically accounting for futas in respect to the calling partner
 function Sexbound.Actor:getGenderFutasafe(diffNum)
-    -- TODO
+    -- OBSOLETE
     local actNum = self:getActorNumber() or 0
     local id  = self:getIdentity()
     diffNum = diffNum or 0
@@ -1183,20 +1180,6 @@ end
 
 --- Returns a list of available genital types on this actor
 function Sexbound.Actor:getGenitalTypes()
-    --[[local genitals = {}
-    local gender = self:getSubGender() or self:getGender()
-    local mainConfig = self:getParent():getConfig().sex
-    local maleGenders = mainConfig.whichGendersCanProduceSperm or {"male", "futanari"}
-    local femaleGenders = mainConfig.whichGendersCanOvulate or {"female", "futanari", "cuntboy"}
-    
-    for _,g in pairs(maleGenders) do
-        if g == gender then table.insert(genitals, "male") break end
-    end
-    for _,g in pairs(femaleGenders) do
-        if g == gender then table.insert(genitals, "female") break end
-    end
-    
-    return genitals]]
     local genitals = {}
     local id = self:getIdentity()
     if id.body.hasPenis then table.insert(genitals, "male") end
@@ -1208,16 +1191,6 @@ end
 -- getGenitalType returns the main visible type (dick > no dick) for sprite rendering purposes
 -- This method checks if the actor logically has a given gender type, for climax and pregnancy logic reasons
 function Sexbound.Actor:hasGenitalType(gtype)
-    --[[local gender = self:getSubGender() or self:getGender()
-    local targetGenders
-    if gtype == "male" then targetGenders = self:getParent():getConfig().sex.whichGendersCanProduceSperm or {"male", "futanari"}
-    elseif gtype == "female" then targetGenders = self:getParent():getConfig().sex.whichGendersCanOvulate or {"female", "futanari", "cuntboy"} end
-    
-    for _,g in pairs(targetGenders) do
-        if g == gender then return true end
-    end
-    
-    return false]]
     local id = self:getIdentity()
     if gtype == "male" then return id.body.hasPenis or false
     elseif gtype == "female" then return id.body.hasVagina or false end
@@ -1454,6 +1427,14 @@ function Sexbound.Actor:getGenePool()
     return g.bodyColorPool, g.bodyColorPoolAverage, g.bodyAllowBlending, g.undyColorPool, g.undyColorPoolAverage, g.undyAllowBlending, g.hairColorPool, g.hairColorPoolAverage, g.hairAllowBlending
 end
 
+function Sexbound.Actor:getDefeated()
+    return self._config.isDefeated
+end
+
+function Sexbound.Actor:getDefeatPenalty()
+    return self._config.defeatPenalty
+end
+
 function Sexbound.Actor:isPregnant()
     local plugin = self:getPlugins("pregnant")
 
@@ -1571,6 +1552,7 @@ function Sexbound.Actor:getUIData(args)
         entityType      = self:getEntityGroup(),
         genitalType     = self:getGenitalTypes(),
         species         = self:getSpecies(),
+        defeated        = self:getDefeated(),
         status          = {
             isPregnant          = self:isVisiblyPregnant(),
             isInflated          = self:isInflated(),
