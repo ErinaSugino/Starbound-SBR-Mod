@@ -97,7 +97,7 @@
 				"data": "loungableData",
 				"entity": "chair"
 			}
-		  },
+		  }
 		]
 	  },
 	  {
@@ -154,7 +154,7 @@
 					"parameters": {
 						"entity": {"key": "chair"}
 					}
-				  },
+				  }
 				]
 			  },
 			  {
