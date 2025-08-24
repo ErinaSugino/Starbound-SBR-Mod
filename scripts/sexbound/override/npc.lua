@@ -201,14 +201,6 @@ function Sexbound.NPC:update(dt)
                 self:setPlayerReputation(res.id, res.reputation or {species = {}})
             end
         else table.insert(remainingPromises, p) end
-        
-        if promise:finished() then
-            if promise:succeeded() then
-                local full = not not promise:result()
-                if full then return false end
-            else return false end
-            promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
-        end
     end
     self._reputationPromises = remainingPromises
 end

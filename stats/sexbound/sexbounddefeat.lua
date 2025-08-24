@@ -186,6 +186,7 @@ function SexboundDefeat:findDefeater(damageSourceEntity, damageSourceEntityType)
     local found = false
     local hostileEntityId = nil
     local sexboundConfig = nil
+    sb.logInfo("Entity "..world.entityName(entity.id()).." is defeated, attempting to turn into sexnode.");
     
     if damageSourceEntity ~= nil then
         -- Try to verify we were defeated by a valid enemy - direct killer has priority over other enemies
@@ -296,7 +297,8 @@ end
 
 
 function SexboundDefeat:transform(sexboundConfig, successCallback, failureCallback)
-	local position = nil
+	sb.logInfo("Entity #"..entity.id().." triggering transformation")
+    local position = nil
 	local entityId = self._entityId
 	if self:isPlayer() then
 		position = entity.position()
@@ -327,7 +329,8 @@ function SexboundDefeat:handleTransformFailed()
 end
 
 function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
-	self._sexNodeId = nodeUniqueId
+	sb.logInfo("Transformation success - applying effects and notifying defeater")
+    self._sexNodeId = nodeUniqueId
 	self:setIsTransformed(true)
 	self:setTimer(0)
 	self:outputDefeatedDialog()
@@ -343,8 +346,14 @@ function SexboundDefeat:handleTransformSuccess(nodeUniqueId)
 	-- Try to notify the controlling entity to mount the defeated player.
 	if (self._sexNodeId and self._hostileEntityId) then
 		self._promises:add(world.sendEntityMessage(self._sexNodeId, "Sexbound:Retrieve:ControllerId"), function(controllerId)
-			world.sendEntityMessage(self._hostileEntityId, "notify", {type = "sexbound.setup", targetId = controllerId})
-		end)
+			self._promises:add(world.sendEntityMessage(self._hostileEntityId, "notify", {type = "sexbound.setup", targetId = controllerId}), function() end, function()
+                sb.logWarn("Untrasforming because the defeater could not be notified!")
+                self:untransform()
+            end)
+		end, function()
+            sb.logWarn("Untrasforming because the controller id could not be fetched!")
+            self:untransform()
+        end)
 	end
 
 	return true

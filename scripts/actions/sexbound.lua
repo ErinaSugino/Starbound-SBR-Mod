@@ -353,7 +353,7 @@ function sortSexnodes(args, board)
         end
         
         -- Finally, yield until next tick
-        dt = coroutine.yield(nil, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController})
+        dt = coroutine.yield(nil, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}})
     end
     
     if (timeout <= 0 and self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
@@ -580,7 +580,7 @@ function findSexnodes(args, board)
   end
   local filteredLoungables = {}
   for _,lid in ipairs(loungables) do
-    if not (bannedIndex[id] or false) then table.insert(filteredLoungables, lid)
+    if not (bannedIndex[id] or false) then table.insert(filteredLoungables, lid) end
   end
 
   if #filteredLoungables > 0 then

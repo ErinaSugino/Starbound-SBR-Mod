@@ -466,7 +466,7 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Defeat:Penalty", function(_, _, args)
         return self:addDefeatPenalty(args)
     end)
-    message.setHandler("Sexbound:Defeat:ReputationGet" function(_, _, args)
+    message.setHandler("Sexbound:Defeat:ReputationGet", function(_, _, args)
         return self:getDefeatReputation()
     end)
     
@@ -767,7 +767,7 @@ function Sexbound.Player:addDefeatPenalty(species)
 end
 
 function Sexbound.Player:broadcastDefeatReputation()
-    local npcs = world.npcQuery([0,0], world.size(), {})
+    local npcs = world.npcQuery({0,0}, world.size(), {})
     for _,entityId in ipairs(npcs) do
         world.sendEntityMessage(entityId, "Sexbound:Defeat:ReputationSet", {id = player.uniqueId(), reputation = storage.sexbound.defeat or {global = 0, species = {}}})
     end

@@ -1547,5 +1547,5 @@ end
 
 function isFullyOccupied(args)
     if not self._sexbound then return world.loungeableOccupied(entity.id()) end
-    return self._sexbound:isFullyOccupied() end
+    return self._sexbound:isFullyOccupied()
 end
