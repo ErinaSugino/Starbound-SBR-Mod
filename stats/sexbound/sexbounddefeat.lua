@@ -129,7 +129,7 @@ function SexboundDefeat:findSpecies()
 end
 
 function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest)
-	-- Do not return damage while the entity isDefeated is true
+    -- Do not return damage while the entity isDefeated is true
 	if self:isDefeated() then return {} end
 
 	-- Otherwise use the original applyDamageRequest function to process the incoming damage
@@ -138,7 +138,7 @@ function SexboundDefeat:handleApplyDamageRequest(originalFunction, damageRequest
     -- Do not process kids
     local worldTime = world.time()
     local kidTime = status.statusProperty('kid', -math.huge)
-    if kidTime <= worldTime then return damage end
+    if kidTime > worldTime then return damage end
 
 	-- When the this entity's health is greater than 0, generate damage
 	if status.resource("health") > 0 then return damage end
@@ -243,8 +243,9 @@ function SexboundDefeat:loadConfig()
 		return root.assetJson(self._configFilePath)
 	end, function(err)
 		sb.logError("Unable to load config file for Sexbound Defeat!")
+        return {}
 	end)
-    return {}
+    return loadedConfig
 end
 
 function SexboundDefeat:outputDefeatedDialog()
@@ -408,7 +409,7 @@ end
 
 -- Validate Configuration
 function SexboundDefeat:validateConfig()
-	self:_validateConvertPregnantEnemiesToFriends(self._config.convertPregnantEnemiesToFriends, false)
+    self:_validateConvertPregnantEnemiesToFriends(self._config.convertPregnantEnemiesToFriends, false)
 	self:_validateDefeatedPlayersCanUseSexUI(self._config.defeatedPlayersCanUseSexUI, false)
 	self:_validateDefeatTimeoutMonster(self._config.defeatTimeoutMonster, 60)
 	self:_validateDefeatTimeoutNPC(self._config.defeatTimeoutNPC, 60)

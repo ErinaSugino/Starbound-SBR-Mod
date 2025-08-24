@@ -267,6 +267,10 @@ function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Defeat:ReputationSet", function(_, _, args)
         return self:setPlayerReputation(args.id, args.reputation or {global = 0, species = {}})
     end)
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        npc.setLounging(data.id);
+    end)
     
     --- Debug stuff
     message.setHandler("Sexbound:Debug:GetHitbox", function(_, _, args)
