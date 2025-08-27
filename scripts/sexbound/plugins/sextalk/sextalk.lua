@@ -172,9 +172,9 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     
     local potentialTargets = {}
     local interactionTypes = {}
-    if actorRelation[actorNum] ~= 0 then
+    if actorRelation[actorNum] ~= 0 and actors[actorRelation[actorNum]] then
         -- Only add the one targeted by this actor if this actor actually targets anyone.
-        table.insert(potentialTargets, actors[actorRelation[actorNum]] or actor)
+        table.insert(potentialTargets, actors[actorRelation[actorNum]])
         table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum]] or actor, interactionTypesList, false))
     end
     

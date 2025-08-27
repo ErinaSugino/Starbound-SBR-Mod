@@ -269,7 +269,7 @@ function Sexbound.NPC:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
         mcontroller.setPosition({data.x, data.y})
-        npc.setLounging(data.id);
+        npc.setLounging(data.id)
     end)
     
     --- Debug stuff

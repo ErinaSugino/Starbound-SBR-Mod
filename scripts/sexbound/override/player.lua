@@ -438,7 +438,7 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
         mcontroller.setPosition({data.x, data.y})
-        player.setLounging(data.id);
+        player.setLounging(data.id)
     end)
     
     --- Simply try to forward fertility status updates to sexbound actor
