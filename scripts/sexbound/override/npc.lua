@@ -652,6 +652,6 @@ function Sexbound.NPC:getCompatibilityData()
         bodyTraits = self._bodyTraits,
         motherUuid = status.statusProperty("motherUuid", nil),
         fatherUuid = status.statusProperty("fatherUuid", nil),
-        uuid = entity.uniqueId
+        uuid = entity.uniqueId()
     }
 end

@@ -159,7 +159,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
     
     local impregnators
     if otherActor then impregnators = {otherActor} else impregnators = self:getParent():getImpregnatorList() end
-    local bellyFull, isClone, fuckedProtected, canImpregnate, canCum, directInsertion, compatible, curFertility
+    local bellyFull, isClone, canImpregnate, directInsertion, compatible, curFertility
     local thisSpecies = self:getParent():getSpecies()
     local thatActor = nil
 
@@ -178,7 +178,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
                     if thisChance > 0 then
                         local roll = self:generateRandomNumber() / 100
 
-                        self:getLog():debug("Pregnancy hazzard roll: " .. thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. thisChance)
+                        self:getLog():debug("Pregnancy hazard roll: " .. thatSpecies .. "->" .. thisSpecies .. " - " .. roll .. " <= " .. thisChance)
 
                         if roll <= thisChance then
                             self:hazardAbortion()
@@ -191,8 +191,6 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
                 end
 
                 isClone = self:thisActorIsCloneOfOtherActor(actor)
-                --fuckedProtected = self:otherActorIsUsingContraception(actor)
-                --canCum = self:otherActorCanProduceSperm(actor)
                 compatible = self:otherActorIsCompatibleSpecies(actor)
                 curFertility = self:thisActorHasEnoughFertility(actor)
                 bellyFull = self:thisActorIsAlreadyTooPregnant()
@@ -202,6 +200,8 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
                     .. " - Can Impregnate " .. tostring(canImpregnate)
                     .. " - Can be impregnated " .. tostring(canPregnate)
                     .. " - Insertion " .. tostring(directInsertion))
+                    .. " - Protected " .. tostring(isProtected)
+                    .. " - Full " .. tostring(bellyFull)
 
                 if not bellyFull and not isProtected and not isClone and compatible and curFertility then
                     self:becomePregnant(actor)
@@ -211,18 +211,6 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
             self:handleInsemination(actor)
         end
     end
-
-    -- All of these checks must pass or this actor will not become pregnant
-    --if self:thisActorIsAlreadyTooPregnant() or self:thisActorIsCloneOfOtherActor() or
-    --    self:thisActorIsUsingContraception() or self:otherActorIsUsingContraception() or
-    --    not self:thisActorHasRoleInPositionWhichCanBeImpregnated() or not self:thisActorCanOvulate() or
-    --    not self:otherActorHasRoleInPositionWhichCanImpregnate() or not self:otherActorCanProduceSperm() or
-    --    not self:canImpregnate() or
-    --    not self:otherActorIsCompatibleSpecies() or not self:thisActorHasEnoughFertility() then
-    --    return
-    --end
-
-    -- self:becomePregnant()
 end
 
 --- Adds a new pregnancy to the in-game entity associated with this actor
