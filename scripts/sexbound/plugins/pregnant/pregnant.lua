@@ -199,9 +199,9 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
                     .. ": Allow species " .. tostring(compatible)
                     .. " - Can Impregnate " .. tostring(canImpregnate)
                     .. " - Can be impregnated " .. tostring(canPregnate)
-                    .. " - Insertion " .. tostring(directInsertion))
+                    .. " - Insertion " .. tostring(directInsertion)
                     .. " - Protected " .. tostring(isProtected)
-                    .. " - Full " .. tostring(bellyFull)
+                    .. " - Full " .. tostring(bellyFull))
 
                 if not bellyFull and not isProtected and not isClone and compatible and curFertility then
                     self:becomePregnant(actor)
