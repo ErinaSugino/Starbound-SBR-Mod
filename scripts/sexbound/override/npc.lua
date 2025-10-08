@@ -73,7 +73,7 @@ function interact(args)
         end
     end
     
-    Sexbound_Old_Interact(args)
+    return Sexbound_Old_Interact(args)
 end
 
 --- Overloading of crewmember related functions to make sexbound storage data persistent, and make kids unrecruitable
