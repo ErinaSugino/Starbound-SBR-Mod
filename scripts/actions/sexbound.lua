@@ -288,8 +288,8 @@ function sortSexnodes(args, board)
     -- Setup all async calls to retrieve controllerId of seat nodes
     for _,id in ipairs(list) do
         fetchPromises[id] = world.sendEntityMessage(id, "Sexbound:Retrieve:ControllerId")
-        queryPromiseCount = queryPromiseCount + 1
-        if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #"..entity.id().." CALLING NODE #"..tostring(id)) end
+        fetchPromiseCount = fetchPromiseCount + 1
+        if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #" .. entity.id() .. " CALLING NODE #" .. tostring(id)) end
     end
     
     while (queryPromiseDone < queryPromiseCount or fetchPromiseDone < fetchPromiseCount) and timeout > 0 do
@@ -333,6 +333,7 @@ function sortSexnodes(args, board)
                         local cid = p:result()
                         if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #"..entity.id().." GOT CONTROLLER #"..tostring(cid).." FROM #"..tostring(id)) end
                         if cid and not seen[cid] then
+                            nodeToController[id] = cid
                             controllers[cid] = 0 -- Default to 0 incase we don't get any updated results
                             seen[cid] = true
                             queryPromises[cid] = world.sendEntityMessage(cid, "Sexbound:Retrieve:NodeCompatibility", compatibilityData)
@@ -624,7 +625,7 @@ end
 
 function getObjectSeatCount(entityId)
     if not entityId or not world.entityExists(entityId) then return 1 end
-    local config = world.getObjectParamter(entityId, "orientations", {})
+    local config = world.getObjectParameter(entityId, "orientations", {})
     if not config or not config[1] then return 1 end
     local orientation = config[1]
     if not orientation.sitPositions then return 1 end
