@@ -1,0 +1,23 @@
+{
+    "Lua.codeLens.enable": true,
+    "Lua.completion.autoRequire": false,
+    "Lua.diagnostics.globals": [
+        "self",
+        "entity",
+        "world",
+        "config",
+        "sb",
+        "player",
+        "status",
+        "message",
+        "mcontroller",
+        "npc",
+        "object"
+    ],
+    "Lua.workspace.library": [
+        "${workspaceFolder}/../../unpacked_assets/scripts"
+    ],
+    "Lua.diagnostics.disable": [
+        "duplicate-set-field"
+    ]
+}
