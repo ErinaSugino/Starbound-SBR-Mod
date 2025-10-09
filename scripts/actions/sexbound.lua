@@ -279,6 +279,7 @@ function sortSexnodes(args, board)
     local queryPromises = {}
     local queryPromiseCount = 0
     local queryPromiseDone = 0
+    local targetNode = nil
     
     if #list <= 0 then return false end
     if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("NODE BEHAVIOR OF ENTITY #"..entity.id()) end
@@ -359,7 +360,6 @@ function sortSexnodes(args, board)
     
     if (timeout <= 0 and self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
     
-    local targetNode = nil
     local targetIndex = 0
     for j=1,#list do
         local curIndex = controllers[(nodeToController[list[j]] or 0)] or 0
@@ -576,16 +576,16 @@ function findSexnodes(args, board)
   
   local bannedList = args.exclude or {}
   local bannedIndex = {}
-  for _,id in ipairs(bannedList) do
-    bannedIndex[id] =  true
+    for _, id in ipairs(bannedList) do
+        bannedIndex[id] = true
   end
   local filteredLoungables = {}
-  for _,lid in ipairs(loungables) do
-    if not (bannedIndex[id] or false) then table.insert(filteredLoungables, lid) end
+    for _, lid in ipairs(loungables) do
+        if not (bannedIndex[lid] or false) then table.insert(filteredLoungables, lid) end
   end
 
   if #filteredLoungables > 0 then
-    return true, {entity = filteredLoungables[1], list = filteredLoungables}
+        return true, { entity = filteredLoungables[1], list = filteredLoungables }
   else
     return false
   end
