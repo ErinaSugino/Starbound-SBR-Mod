@@ -54,7 +54,7 @@ function interact(args)
         if self.sb_npc._useReputation and not self.sb_npc:allowInteract(targetUnique) then
             local dialog = config.getParameter("reputationResponse", {})
             local species = npc.species()
-            local reponse = dialog[species] or dialog[default] or "I don't deal with criminals!"
+            local response = dialog[species] or "I don't deal with criminals!"
             npc.say(response)
             return
         end
@@ -233,7 +233,7 @@ function Sexbound.NPC:initMessageHandlers()
         return self:handleSay(args)
     end)
     message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
-        return self:getActorData(), args
+        return self:getActorData()
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
@@ -323,7 +323,7 @@ function Sexbound.NPC:handleRestore(args)
 end
 
 function Sexbound.NPC:handleRetrieveConfig(args)
-    return config.getParameter("sexboundConfig"), args
+    return config.getParameter("sexboundConfig")
 end
 
 function Sexbound.NPC:handleSay(args)

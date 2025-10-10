@@ -428,8 +428,9 @@ function abortingMoveToPosition(args, board, node, dt)
   local timeout = args.timeout
   local timeoutMax = timeout
 
-  local lastPosition = false
-  local targetPosition = {args.position[1], args.position[2]}
+    --- @type Vec2F?
+    local lastPosition = nil
+    local targetPosition = { args.position[1], args.position[2] }
 
   local updateTarget = function()
     lastPosition = {args.position[1], args.position[2]}
@@ -570,9 +571,10 @@ function findSexnodes(args, board)
     order = args.orderBy,
     withoutEntityId = args.withoutEntity,
     callScript = "isFullyOccupied",
-    callScriptReturn = false
+        callScriptReturn = false,
+        orientation = args.orientation
   }
-  local loungables = world.loungeableQuery(args.position, args.range, { orientation = args.orientation }, queryArgs)
+    local loungables = world.loungeableQuery(args.position, args.range, queryArgs)
   
   local bannedList = args.exclude or {}
   local bannedIndex = {}

@@ -100,6 +100,7 @@ function Customizer.General:prevSubGender()
 end
 
 function Customizer.General:applySubGender()
+  ---@type any
     local target = self.subGenderList[self.currentSubGenderIndex] or {}
     target = target.name or ""
     

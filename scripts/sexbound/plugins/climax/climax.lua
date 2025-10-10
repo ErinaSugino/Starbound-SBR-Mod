@@ -404,11 +404,13 @@ function Sexbound.Actor.Climax:shoot(...)
     local target = config.actorRelation[actorNum]
     if target then
         local _actor = self:getParent():getParent():getActors()[target] or nil
+if _actor then
         if interaction == "oral" then
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
         if (interaction == "direct" or interaction == "toy_dick") and self._config.enableInflation then
             Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate())
+end
         end
     end
 end

@@ -124,8 +124,8 @@ function Sexbound.Actor:resetDirectives(actorNumber)
     }
 
     -- Merge in user defined directives
-    directives.body = directives.body .. self._config.bodyDirectives or ""
-    directives.head = directives.head .. self._config.headDirectives or ""
+    directives.body = directives.body .. (self._config.bodyDirectives or "")
+    directives.head = directives.head .. (self._config.headDirectives or "")
 
     directives.body, directives.head = directives.body .. directives.hair, directives.head .. directives.hair
 
@@ -401,7 +401,7 @@ end
 
 --- Resets the Actor's global animator tags.
 function Sexbound.Actor:resetGlobalAnimatorTags(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
+    prefix = (prefix or "actor") .. self:getActorNumber()
 
     -- Reset animation parts related to actor body parts
     self:resetAnimatorParts(prefix)
@@ -443,7 +443,7 @@ end
 
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
+    prefix = (prefix or "actor") .. self:getActorNumber()
     local offsets = self:getActorOffset(self:getPosition():getName())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
@@ -1341,7 +1341,7 @@ end
 -- @param index
 function Sexbound.Actor:setRole(index)
     local role = self:getAnimationState():getOverrideRoles(index)
-    self._role = role or "actor" .. index
+    self._role = (role or "actor") .. index
     return self._role
 end
 

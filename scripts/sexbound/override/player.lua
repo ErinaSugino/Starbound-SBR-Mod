@@ -296,7 +296,7 @@ function Sexbound.Player:restore()
 end
 
 function Sexbound.Player:handleRetrieveConfig(args)
-    return nil, args
+    return nil
 end
 
 function Sexbound.Player:handleRetrieveStorage(args)
@@ -314,9 +314,7 @@ function Sexbound.Player:notifySterilizationChange(data)
     notifications = notifications.events or {}
     notifications = notifications.sterilize or {}
     
-    local sterilized = data.query == "add"
-    sterilized = tostring(sterilized)
-    
+    local sterilized = tostring(data.query == "add")
     local text = notifications[sterilized]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
@@ -337,9 +335,7 @@ function Sexbound.Player:notifyInfertileChange(data)
     notifications = notifications.events or {}
     notifications = notifications.infertility or {}
     
-    local infertile = data.query == "add"
-    infertile = tostring(infertile)
-    
+    local infertile = tostring(data.query == "add")
     local text = notifications[infertile]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
@@ -386,7 +382,7 @@ function Sexbound.Player:initMessageHandlers()
         return self:handleRespawn(args)
     end)
     message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
-        return self:getActorData(), args
+        return self:getActorData()
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)

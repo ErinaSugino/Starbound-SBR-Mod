@@ -5,17 +5,17 @@ function init()
 
   resetIngredients()
 
-  message.setHandler("craft", function(_,_,args) return craft(args) end)
+  message.setHandler("craft", function(_, _, args) return craft(args) end)
 end
 
 function checkIngredients()
   local contents = world.containerItems(entity.id())
   
-  if contents[1] and contents[1].name and self.ingredients[contents[1].name] ~= nil then
+  if contents and contents[1] and contents[1].name and self.ingredients[contents[1].name] ~= nil then
     self.ingredients[contents[1].name] = true
   end
   
-  if contents[2] and contents[2].name and self.ingredients[contents[2].name] ~= nil then
+  if contents and contents[2] and contents[2].name and self.ingredients[contents[2].name] ~= nil then
     self.ingredients[contents[2].name] = true
   end
   

@@ -25,7 +25,7 @@ end
 function Sexbound.NPC.Transform:handleTransform(args)
     if self._parent._isKid then return false end
 
-    if self:getCanTransform() or actorData ~= nil then
+    if self:getCanTransform() then
         -- Override sexbound config that is supplied to the spawned sexnode
         self:setSexboundConfig(args.sexboundConfig)
 

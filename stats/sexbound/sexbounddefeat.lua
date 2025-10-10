@@ -26,7 +26,7 @@ function SexboundDefeat:new(entityType)
         _isTransformed     = false,
         _sexNodeId         = nil,
         _hostileEntities   = {},
-        _actorData		   = nil,
+        _actorData         = nil,
         _sexboundConfig    = nil
     }, SexboundDefeat_mt)
 
@@ -34,7 +34,7 @@ function SexboundDefeat:new(entityType)
 
 	-- Load the Sexbound Defeat config settings
 	_self._config = _self:loadConfig()
-	_self:validateConfig(_self._config)
+	_self:validateConfig()
 
 	-- Initialize message handlers
 	_self:initMessageHandlers()

@@ -27,7 +27,7 @@ end
 --- Updates this instance
 -- @param dt
 function Sexbound.Actor.Head:onUpdateSexState(dt)
-  self:adjustHeadRotation(dt)
+  self:adjustHeadRotation()
 end
 
 function Sexbound.Actor.Head:adjustHeadRotation()

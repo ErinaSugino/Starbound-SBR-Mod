@@ -183,7 +183,7 @@ function Sexbound.Common.Status:addEventListener(query, callback)
 end
 
 function Sexbound.Common.Status:removeEventListener(query, id)
-    if type(query) ~= "string" or type(callback) ~= "function" then return false end
+    if type(query) ~= "string" then return false end
     if not self._listeners[query] then return false end
     if not self._listeners[query][id] then return false end
     

@@ -9,23 +9,25 @@ function Sexbound.Monster.SubGender:new(parent)
     local _self = setmetatable({
         _parent = parent
     }, Sexbound.Monster.SubGender_mt)
-    
+
     storage.sexbound = storage.sexbound or {}
     storage.sexbound.subgender = storage.sexbound.subgender or {}
-    
+
     if storage.sexbound.subgender.hasAlreadyTriedGeneratingSubGender == false then
         _self:tryGeneratingSubGender()
     end
-    
+
     _self:init()
-    
+
     return _self
 end
 
 function Sexbound.Monster.SubGender:tryGeneratingSubGender()
     storage.sexbound.subgender.hasAlreadyTriedGeneratingSubGender = true
     if status.isResource("gender") then
-        local _gender = status.resource("gender") end
-    if _gender == 3 then
-        self:setSxbSubGender("futanari") end
+        local _gender = status.resource("gender")
+        if _gender == 3 then
+            self:setSxbSubGender("futanari")
+        end
+    end
 end

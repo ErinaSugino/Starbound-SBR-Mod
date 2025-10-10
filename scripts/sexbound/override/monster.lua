@@ -74,6 +74,7 @@ function Sexbound.Monster.new()
     self._transform = Sexbound.Monster.Transform:new(self)
 
     -- Check that the monster is not capturable by Red3dred
+    local isCapturable = config.getParameter("capturable")
     if not entity.uniqueId() and not (isCapturable or capturable.ownerUuid() or storage.respawner) then
         monster.setUniqueId(sb.makeUuid())
     end
@@ -115,7 +116,7 @@ function Sexbound.Monster:initMessageHandlers()
         return self:handleSay(args)
     end)
     message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
-        return self:getActorData(), args
+        return self:getActorData()
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
@@ -180,7 +181,7 @@ function Sexbound.Monster:restore()
 end
 
 function Sexbound.Monster:handleRetrieveConfig(args)
-    return config.getParameter("sexboundConfig"), args
+    return config.getParameter("sexboundConfig")
 end
 
 function Sexbound.Monster:handleSay(args)
