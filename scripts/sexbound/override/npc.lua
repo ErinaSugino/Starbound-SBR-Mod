@@ -54,7 +54,7 @@ function interact(args)
         if self.sb_npc._useReputation and not self.sb_npc:allowInteract(targetUnique) then
             local dialog = config.getParameter("reputationResponse", {})
             local species = npc.species()
-            local response = dialog[species] or "I don't deal with criminals!"
+            local response = dialog[species] or dialog["default"] or "I don't deal with criminals!"
             npc.say(response)
             return
         end
