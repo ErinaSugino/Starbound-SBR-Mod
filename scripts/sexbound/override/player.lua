@@ -73,7 +73,9 @@ function Sexbound.Player.new()
         _loungeId = nil,
         _states = {"defaultState", "havingSexState"},
         _isSterilized = false,
-        _isInfertile = false
+        _isInfertile = false,
+        _canBeDefeated = false,
+        _canDefeatOthers = false
     }, Sexbound.Player_mt)
 
     self:init(self, "player")
@@ -82,6 +84,8 @@ function Sexbound.Player.new()
     storage.sexboundConfig = storage.sexboundConfig or {
         hasGivenStartItems = false
     }
+    storage.sexbound = storage.sexbound or {}
+    storage.sexbound.defeat = storage.sexbound.defeat or {global = 0, species = {}}
 
     self._legal = Sexbound.Player.Legal:new(self)
     self._legal:verify()
@@ -125,6 +129,8 @@ function Sexbound.Player.new()
     
     self._isSterilized = self._status:hasStatus("sterilized")
     self._isInfertile = self._status:hasStatus("infertile")
+    self._canBeDefeated = self._status:hasStatus("canBeDefeated")
+    self._canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     
     self._hasInited = true
     self:updateTraitEffects()
@@ -140,6 +146,8 @@ function Sexbound.Player.new()
     self._status:addEventListener("remove", function(data) self:notifySterilizationChange(data) end)
     self._status:addEventListener("add", function(data) self:notifyInfertileChange(data) end)
     self._status:addEventListener("remove", function(data) self:notifyInfertileChange(data) end)
+    
+    self:broadcastDefeatReputation()
 
     return self
 end
@@ -169,6 +177,16 @@ function Sexbound.Player:update(dt)
     
     -- Update the player's arousal module, as they, too, now can get horny
     self._arousal:update(dt)
+    
+    -- Tick defeat reputation decay
+    local reputation = storage.sexbound.defeat or {global = 0, species = {}}
+    -- Decay of 0.01667/s = 1/min
+    local decay = 0.01667*dt
+    if reputation.global > 0 then reputation.global = math.max(0, reputation.global - decay) end
+    for i,v in pairs(reputation.species) do
+        if v > 0 then reputation.species[i] = math.max(0, v - decay) end
+    end
+    storage.sexbound.defeat = reputation
 end
 
 function Sexbound.Player:handleEnterClimaxState(args)
@@ -232,6 +250,8 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
     _loadedConfig.infertile = self._status:hasStatus("infertile")
     _loadedConfig.autoClimax = self._status:hasStatus("autoClimax")
+    _loadedConfig.canBeDefeated = self._status:hasStatus("canBeDefeated")
+    _loadedConfig.canDefeatOthers = self._status:hasStatus("canDefeatOthers")
     return _loadedConfig
 end
 
@@ -294,9 +314,7 @@ function Sexbound.Player:notifySterilizationChange(data)
     notifications = notifications.events or {}
     notifications = notifications.sterilize or {}
     
-    local sterilized = data.query == "add"
-    sterilized = tostring(sterilized)
-    
+    local sterilized = tostring(data.query == "add")
     local text = notifications[sterilized]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
@@ -317,9 +335,7 @@ function Sexbound.Player:notifyInfertileChange(data)
     notifications = notifications.events or {}
     notifications = notifications.infertility or {}
     
-    local infertile = data.query == "add"
-    infertile = tostring(infertile)
-    
+    local infertile = tostring(data.query == "add")
     local text = notifications[infertile]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
@@ -364,6 +380,9 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Actor:Respawn", function(_, _, args)
         return self:handleRespawn(args)
+    end)
+    message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
+        return self:getActorData()
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
@@ -413,6 +432,10 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Common:StopSexMusic", function(_, _, args)
         return self:stopSexMusic()
     end)
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        player.setLounging(data.id)
+    end)
     
     --- Simply try to forward fertility status updates to sexbound actor
     message.setHandler("Sexbound:Pregnant:AddStatus", function(_, _, args)
@@ -439,6 +462,12 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Climax:Feed", function(_, _, args)
         if status.isResource("food") then status.giveResource("food", 0.1) end
+    end)
+    message.setHandler("Sexbound:Defeat:Penalty", function(_, _, args)
+        return self:addDefeatPenalty(args)
+    end)
+    message.setHandler("Sexbound:Defeat:ReputationGet", function(_, _, args)
+        return self:getDefeatReputation()
     end)
     
     --- Debug purposes
@@ -519,7 +548,9 @@ function Sexbound.Player:getActorData()
         aroused = status.statusProperty("sexbound_aroused", false),
         arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
         inHeat = status.statusProperty("sexbound_aroused_heat", false),
-        isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        defeatPenalty = false, -- Needs to be setting controlled
+        canUseSexUIDefeated = status.statusProperty("can_use_sex_ui_defeated", false),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
@@ -725,4 +756,23 @@ end
 
 function Sexbound.Player:getSpecies()
     return player.species()
+end
+
+function Sexbound.Player:addDefeatPenalty(species)
+    storage.sexbound.defeat.global = storage.sexbound.defeat.global + 15
+    if storage.sexbound.defeat.species[species] then storage.sexbound.defeat.species[species] = storage.sexbound.defeat.species[species] + 15
+    else storage.sexbound.defeat.species[species] = 15 end
+    
+    self:broadcastDefeatReputation()
+end
+
+function Sexbound.Player:broadcastDefeatReputation()
+    local npcs = world.npcQuery({0,0}, world.size(), {})
+    for _,entityId in ipairs(npcs) do
+        world.sendEntityMessage(entityId, "Sexbound:Defeat:ReputationSet", {id = player.uniqueId(), reputation = storage.sexbound.defeat or {global = 0, species = {}}})
+    end
+end
+
+function Sexbound.Player:getDefeatReputation()
+    return {id = player.uniqueId(), reputation = storage.sexbound.defeat or {global = 0, species = {}}}
 end

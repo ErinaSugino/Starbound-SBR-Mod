@@ -130,6 +130,10 @@ function Sexbound.Actor.Climax:onUpdateSexState(dt)
 
     local multiplier = actor:getPosition():getAnimationState("sexState"):getClimaxMultiplier(actorNumber) or 1
     local increase = util.randomInRange(self:getDefaultIncrease()) * multiplier * dt
+    -- increase point gain if this is a defeat node to allow for climaxing during the limited sexnode duration
+    if self:getParent():getParent():getContainsDefeated() then
+        increase = increase * 2.1
+    end
 
     self._config.currentPoints = util.clamp(self._config.currentPoints + increase, self:getMinPoints(),
                                      self:getMaxPoints())
@@ -400,11 +404,13 @@ function Sexbound.Actor.Climax:shoot(...)
     local target = config.actorRelation[actorNum]
     if target then
         local _actor = self:getParent():getParent():getActors()[target] or nil
+if _actor then
         if interaction == "oral" then
             world.sendEntityMessage(_actor:getEntityId(), "Sexbound:Climax:Feed")
         end
         if (interaction == "direct" or interaction == "toy_dick") and self._config.enableInflation then
             Sexbound.Messenger.get('main'):send(self, _actor, "Sexbound:Climax:Inflate", self:getInflationRate())
+end
         end
     end
 end
@@ -527,21 +533,12 @@ end
 --- Attempts to cause this actor to begin climaxing.
 function Sexbound.Actor.Climax:tryAutoClimax()
     local entityType = self:getParent():getEntityType()
-    local containsPlayer = false
-    local playerControl = false
     
     if entityType == "player" and not self._parent:getStatus():hasStatus("autoClimax") then
         return
-    else
-        for _, actor in ipairs(self:getParent():getParent():getActors()) do
-            if actor:getActorNumber() ~= self:getParent():getActorNumber() then
-                if actor:getEntityType() == "player" then containsPlayer = true end
-                if not actor:getStatus():hasStatus("sexbound_defeated") then playerControl = true end
-            end
-        end
     end
     
-    if self._config.prioritizePlayer and containsPlayer and playerControl then
+    if self._config.prioritizePlayer and self:getParent():getParent()._playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
         return
     end

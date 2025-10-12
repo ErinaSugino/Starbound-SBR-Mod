@@ -89,7 +89,7 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanOrEqualToR
     return false
 end
 
-function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersion(major, minor, patch)
+function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return self._isOld end -- Lesser => new < old => is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch < patch then
         -- Patch only matters with old versions
@@ -105,7 +105,7 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersi
     return false
 end
 
-function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanOrEqualToRequiredVersion(major, minor, patch)
+function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanOrEqualToRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return self._isOld end -- Lesser => new < old => is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch <= patch then
         -- Patch only matters with old versions

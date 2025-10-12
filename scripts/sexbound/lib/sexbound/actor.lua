@@ -124,8 +124,8 @@ function Sexbound.Actor:resetDirectives(actorNumber)
     }
 
     -- Merge in user defined directives
-    directives.body = directives.body .. self._config.bodyDirectives or ""
-    directives.head = directives.head .. self._config.headDirectives or ""
+    directives.body = directives.body .. (self._config.bodyDirectives or "")
+    directives.head = directives.head .. (self._config.headDirectives or "")
 
     directives.body, directives.head = directives.body .. directives.hair, directives.head .. directives.hair
 
@@ -401,7 +401,7 @@ end
 
 --- Resets the Actor's global animator tags.
 function Sexbound.Actor:resetGlobalAnimatorTags(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
+    prefix = (prefix or "actor") .. self:getActorNumber()
 
     -- Reset animation parts related to actor body parts
     self:resetAnimatorParts(prefix)
@@ -443,7 +443,7 @@ end
 
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
+    prefix = (prefix or "actor") .. self:getActorNumber()
     local offsets = self:getActorOffset(self:getPosition():getName())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
@@ -643,6 +643,7 @@ function Sexbound.Actor:setup(actorConfig)
     if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
     if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
     if self._config.birthcontrol then actorStatus:addStatus("birthcontrol") end
+    if self._config.canUseSexUIDefeated then actorStatus:addStatus("can_use_sex_ui_defeated") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
@@ -781,6 +782,10 @@ function Sexbound.Actor:validateSpecies(species)
     end)
 
     return validatedSpecies or self:getParent():getConfig().sex.defaultPlayerSpecies -- default is 'human'
+end
+
+function Sexbound.Actor:penalizeDefeat(species)
+    world.sendEntityMessage(self:getEntityId(), "Sexbound:Defeat:Penalty", species)
 end
 
 --- Executes the specifed callback function for each actor plugin.
@@ -1082,13 +1087,6 @@ function Sexbound.Actor:getEntityGroup()
 end
 
 function Sexbound.Actor:buildBodyType()
-    --local gender = self:getSubGender() or self:getGender()
-    --local targetGenders = self:getParent():getConfig().sex.whichGendersHaveBoobs or {"female", "futanari"}
-    --for _,g in pairs(targetGenders) do
-    --    if g == gender then return "female" end
-    --end
-    
-    --return "male"
     return self:getGender()
 end
 
@@ -1154,7 +1152,7 @@ end
 
 --- Returns the gender of this actor instance, dynamically accounting for futas in respect to the calling partner
 function Sexbound.Actor:getGenderFutasafe(diffNum)
-    -- TODO
+    -- OBSOLETE
     local actNum = self:getActorNumber() or 0
     local id  = self:getIdentity()
     diffNum = diffNum or 0
@@ -1182,20 +1180,6 @@ end
 
 --- Returns a list of available genital types on this actor
 function Sexbound.Actor:getGenitalTypes()
-    --[[local genitals = {}
-    local gender = self:getSubGender() or self:getGender()
-    local mainConfig = self:getParent():getConfig().sex
-    local maleGenders = mainConfig.whichGendersCanProduceSperm or {"male", "futanari"}
-    local femaleGenders = mainConfig.whichGendersCanOvulate or {"female", "futanari", "cuntboy"}
-    
-    for _,g in pairs(maleGenders) do
-        if g == gender then table.insert(genitals, "male") break end
-    end
-    for _,g in pairs(femaleGenders) do
-        if g == gender then table.insert(genitals, "female") break end
-    end
-    
-    return genitals]]
     local genitals = {}
     local id = self:getIdentity()
     if id.body.hasPenis then table.insert(genitals, "male") end
@@ -1207,16 +1191,6 @@ end
 -- getGenitalType returns the main visible type (dick > no dick) for sprite rendering purposes
 -- This method checks if the actor logically has a given gender type, for climax and pregnancy logic reasons
 function Sexbound.Actor:hasGenitalType(gtype)
-    --[[local gender = self:getSubGender() or self:getGender()
-    local targetGenders
-    if gtype == "male" then targetGenders = self:getParent():getConfig().sex.whichGendersCanProduceSperm or {"male", "futanari"}
-    elseif gtype == "female" then targetGenders = self:getParent():getConfig().sex.whichGendersCanOvulate or {"female", "futanari", "cuntboy"} end
-    
-    for _,g in pairs(targetGenders) do
-        if g == gender then return true end
-    end
-    
-    return false]]
     local id = self:getIdentity()
     if gtype == "male" then return id.body.hasPenis or false
     elseif gtype == "female" then return id.body.hasVagina or false end
@@ -1367,7 +1341,7 @@ end
 -- @param index
 function Sexbound.Actor:setRole(index)
     local role = self:getAnimationState():getOverrideRoles(index)
-    self._role = role or "actor" .. index
+    self._role = (role or "actor") .. index
     return self._role
 end
 
@@ -1451,6 +1425,14 @@ function Sexbound.Actor:getGenePool()
     local g = self:getIdentity() or {}
     g = g.genetics or {}
     return g.bodyColorPool, g.bodyColorPoolAverage, g.bodyAllowBlending, g.undyColorPool, g.undyColorPoolAverage, g.undyAllowBlending, g.hairColorPool, g.hairColorPoolAverage, g.hairAllowBlending
+end
+
+function Sexbound.Actor:getDefeated()
+    return self._config.isDefeated
+end
+
+function Sexbound.Actor:getDefeatPenalty()
+    return self._config.defeatPenalty
 end
 
 function Sexbound.Actor:isPregnant()
@@ -1570,6 +1552,7 @@ function Sexbound.Actor:getUIData(args)
         entityType      = self:getEntityGroup(),
         genitalType     = self:getGenitalTypes(),
         species         = self:getSpecies(),
+        defeated        = self:getDefeated(),
         status          = {
             isPregnant          = self:isVisiblyPregnant(),
             isInflated          = self:isInflated(),

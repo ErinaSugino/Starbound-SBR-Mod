@@ -87,7 +87,7 @@ end
 
 function Sexbound.Common.Pregnant:initMessageHandlers()
     message.setHandler("Sexbound:Pregnant:Abortion", function(_, _, args)
-        return self:abortPregnancy(args)
+        return self:abortPregnancy()
     end)
     message.setHandler("Sexbound:Pregnant:GetData", function(_, _, args)
         return self:getData(args)

@@ -75,6 +75,10 @@ function Sexbound.Common.Status:addStatus(statusName, persistent)
         local l = self._listeners.add[n]
         xpcall(function() l({query="add", name=statusName, isPersistent=persistent}) end, function(err) sb.logWarn("Error in #"..entity.id().."'s status listener") sb.logWarn(err) end)
     end
+
+    if statusName == "canBeDefeated" or statusName == "canDefeatOthers" then
+        status.setStatusProperty(statusName, true)
+    end
     
     return true
 end
@@ -133,6 +137,10 @@ end
 -- @param statusName
 function Sexbound.Common.Status:removeStatus(statusName, persistent)
     if persistent == nil then persistent = true end
+
+    if statusName == "canBeDefeated" or statusName == "canDefeatOthers" then
+        status.setStatusProperty(statusName, false)
+    end
     
     for index, status in ipairs(self:getStatusList()) do
         if (status == statusName) then
@@ -175,7 +183,7 @@ function Sexbound.Common.Status:addEventListener(query, callback)
 end
 
 function Sexbound.Common.Status:removeEventListener(query, id)
-    if type(query) ~= "string" or type(callback) ~= "function" then return false end
+    if type(query) ~= "string" then return false end
     if not self._listeners[query] then return false end
     if not self._listeners[query][id] then return false end
     

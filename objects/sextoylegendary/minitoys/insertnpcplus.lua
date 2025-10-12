@@ -136,9 +136,9 @@ function tryGeneratingActors()
   local futanariPluginConfig = mainSxBConfig.actor.plugins.futanari or {}
   if futanariPluginConfig.enable == true then
     local chance = config.getParameter("actorChanceToSpawnWithGenderAsFutanari", 0.05)
-    if util.randomInRange({0.0, 1.0}) <= chance then
-      identity.gender = "female"
-      identity.sxbSubGender = "futanari"
+    if util.randomInRange({ 0.0, 1.0 }) <= chance then
+      actor.identity.gender = "female"
+      actor.identity.sxbSubGender = "futanari"
     end
   end
 

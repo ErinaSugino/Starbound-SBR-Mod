@@ -15,9 +15,9 @@
   "sitAngle"         : 0,
   "sitFlipDirection" : false,
   "sitOrientation"   : "lay",
-  "sitPosition"      : [ -4, 20 ],
   "sitStatusEffects" : [ "sexbound_sex" ],
   "smashable"        : true,
+  "health"           : 100,
 
   "inventoryIcon" : "sexbound_node.png",
   "orientations" : [
@@ -31,7 +31,8 @@
       "metaBoundBox"      : [ 0, 0, 1, 1 ],
       "renderLayer"       : "Player-1",
       "spaceScan"         : 0.1,
-      "anchors"           : [ "bottom" ]
+      "anchors"           : [ "bottom" ],
+      "sitPositions"      : [[-4,20],[-4,20],[-4,20]]
     },
     {
       "direction"         : "right",
@@ -43,7 +44,8 @@
       "metaBoundBox"      : [ 0, 0, 1, 1 ],
       "renderLayer"       : "Player-1",
       "spaceScan"         : 0.1,
-      "anchors"           : [ "bottom" ]
+      "anchors"           : [ "bottom" ],
+      "sitPositions"      : [[-4,20],[-4,20],[-4,20]]
     }
   ],
 

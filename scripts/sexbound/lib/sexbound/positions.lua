@@ -292,11 +292,12 @@ end
 
 function Sexbound.Positions:switchRandomSexPosition(fromIdle)
     fromIdle = fromIdle or false
-    if self._positionCount < 1 then return end
-    if fromIdle and self._index ~= -1 then return end
+    if self._positionCount < 1 then return false end
+    if fromIdle and self._index ~= -1 then return false end
     local randomIndex = util.randomIntInRange({1, self._positionCount})
 
     self:switchPosition(randomIndex)
+    return true
 end
 
 --- Returns a reference to the Positions Configuration.

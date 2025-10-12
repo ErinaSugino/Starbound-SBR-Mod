@@ -13,7 +13,7 @@ function SexNode:new()
 end
 
 function SexNode:init()
-    Sexbound.API.init()
+    Sexbound.API.init(3)
 
     if not self:setupMindControl() then
         self:handleSmash()
@@ -82,7 +82,7 @@ function SexNode:update(dt)
     self:addToTimer("mindControl", dt)
 
     if storage.mindControl then
-        if not Sexbound.API.StateMachine:getStatus("havingSex") and self:getTimer("mindControl") >=
+        if not Sexbound.API.StateMachine.getStatus("havingSex") and self:getTimer("mindControl") >=
             storage.mindControl.timeout then
             smash()
         end

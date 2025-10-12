@@ -74,6 +74,7 @@ function Sexbound.Monster.new()
     self._transform = Sexbound.Monster.Transform:new(self)
 
     -- Check that the monster is not capturable by Red3dred
+    local isCapturable = config.getParameter("capturable")
     if not entity.uniqueId() and not (isCapturable or capturable.ownerUuid() or storage.respawner) then
         monster.setUniqueId(sb.makeUuid())
     end
@@ -113,6 +114,9 @@ function Sexbound.Monster:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Actor:Say", function(_, _, args)
         return self:handleSay(args)
+    end)
+    message.setHandler("Sexbound:Actor:GetActorData", function(_, _, args)
+        return self:getActorData()
     end)
     message.setHandler("Sexbound:Config:Retrieve", function(_, _, args)
         return self:handleRetrieveConfig(args)
@@ -172,6 +176,7 @@ function Sexbound.Monster:restore()
     if entityId then
         world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_invisible")
         world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_stun")
+        world.sendEntityMessage(entityId, "Sexbound:removeStatusEffect", "sexbound_defeat_stun")
     end
 end
 
@@ -254,7 +259,9 @@ function Sexbound.Monster:getActorData()
         seed = monster.seed(),
         storage = storage,
         generationFertility = status.statusProperty("generationFertility", 1.0),
-        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
+        fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0),
+        isDefeated = status.statusProperty("sexbound_defeated", false),
+        defeatPenalty = false
     }
 end
 

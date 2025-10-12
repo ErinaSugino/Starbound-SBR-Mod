@@ -24,7 +24,7 @@ end
 
 function Sexbound.NPC.Transform:handleTransform(args)
     if self._parent._isKid then return false end
-    
+
     if self:getCanTransform() then
         -- Override sexbound config that is supplied to the spawned sexnode
         self:setSexboundConfig(args.sexboundConfig)
@@ -34,20 +34,22 @@ function Sexbound.NPC.Transform:handleTransform(args)
         if not args.responseRequired then
             self:notifyTransform()
         else
-            local result = self:tryCreateNode()
+            local targetEntity = args.targetEntity or entity.id()
+            local result = self:tryCreateNode(targetEntity, args.spawnOptions or {}, args.position or nil, args.node or nil)
 
-            if result ~= nil and args.applyStatusEffects ~= nil then
-                for _, statusName in ipairs(args.applyStatusEffects) do
-                    status.addEphemeralEffect(statusName, args.timeout)
+            if result ~= nil and targetEntity == entity.id() then
+                -- Only apply things for this entity if not remote transformation
+                if args.applyStatusEffects ~= nil then
+                    for _, statusName in ipairs(args.applyStatusEffects) do
+                        status.addEphemeralEffect(statusName, args.timeout)
+                    end
                 end
-            end
-
-            if result ~= nil then
+                
                 -- Make sure this transformed NPCs arousal is reduced to zero so it doesn't try to use itself
                 self:getParent():getArousal():instaMin()
-
+                
                 storage.previousDamageTeam = storage.previousDamageTeam or world.entityDamageTeam(entity.id())
-
+                
                 npc.setDamageTeam({
                     type = "ghostly"
                 })
@@ -73,30 +75,26 @@ function Sexbound.NPC.Transform:notifyTransform()
     end
 end
 
-function Sexbound.NPC.Transform:tryCreateNode()
+function Sexbound.NPC.Transform:tryCreateNode(targetEntity, spawnOptions, position, nodeOverride)
     if self._parent._isKid then return nil end
     
-    local position = self:findNearbyOpenSpace()
-
-    if position == false then
-        return nil
-    end
-
-    -- Place Sexnode and store Unique ID
-    local uniqueId = self:placeSexNode(position, {
-        randomStartPosition = true
-    })
+    local uniqueId = self:placeSexNode({
+        targetEntity = targetEntity,
+        randomStartPosition = true,
+        noEffect = spawnOptions.noEffect or false,
+        node = nodeOverride
+    }, position or nil)
 
     if uniqueId ~= nil then
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Success", {
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Success", {
             uniqueId = uniqueId
         })
-        self._controllerId = uniqueId
+        if targetEntity == entity.id() then self._controllerId = uniqueId end -- Handle remote transformation
         return {
             uniqueId = uniqueId
         }
     else
-        world.sendEntityMessage(entity.id(), "Sexbound:Transform:Failure")
+        world.sendEntityMessage(targetEntity, "Sexbound:Transform:Failure")
         return nil
     end
 end

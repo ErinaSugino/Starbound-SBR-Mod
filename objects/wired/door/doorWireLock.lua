@@ -92,7 +92,7 @@ end
 
 function onInputNodeChange(args)
   if args.level then
-    lockDoor(storage.doorDirection)
+    lockDoor()
   else
     unlockDoor()
   end

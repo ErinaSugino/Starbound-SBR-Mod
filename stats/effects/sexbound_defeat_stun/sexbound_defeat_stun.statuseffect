@@ -1,0 +1,9 @@
+{
+  "name"            : "sexbound_defeat_stun",
+  "blockingStat"    : "specialStatusImmunity",
+  "defaultDuration" : 300,
+  "effectConfig"    : {},
+  "icon"            : "/interface/statuses/timefreeze.png",
+  "label"           : "Defeated",
+  "scripts"         : [ "sexbound_defeat_stun.lua" ]
+}

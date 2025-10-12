@@ -1,0 +1,92 @@
+[
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/0/child/children/1/child/children/2",
+        "value": {
+            
+            "title": "listPush",
+            "type": "action",
+            "name": "listPush",
+            "parameters": {
+                "entity": {"key": "self"},
+                "list": {"key": "entitySelf"}
+            },
+            "output": {
+                "list": "entitySelf"
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/0/child/children/1/child/children/3",
+        "value": {
+            "title": "sendEntityMessage",
+            "type": "action",
+            "name": "sendEntityMessage",
+            "parameters": {
+                "entity": {"key": "filterItem"},
+                "message": {"value": "SexboundDefeat:TargetedBy"},
+                "arguments": {"key": "entitySelf"}
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/0/child/children/1/child/children/4",
+        "value": {
+            "title": "listPop",
+            "type": "action",
+            "name": "listPop",
+            "parameters": {
+                "list": {"key": "entitySelf"}
+            },
+            "output": {
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/1/child/children/1",
+        "value": {
+            
+            "title": "listPush",
+            "type": "action",
+            "name": "listPush",
+            "parameters": {
+                "entity": {"key": "self"},
+                "list": {"key": "entitySelf"}
+            },
+            "output": {
+                "list": "entitySelf"
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/1/child/children/2",
+        "value": {
+            "title": "sendEntityMessage",
+            "type": "action",
+            "name": "sendEntityMessage",
+            "parameters": {
+                "entity": {"key": "damageSource"},
+                "message": {"value": "SexboundDefeat:TargetedBy"},
+                "arguments": {"key": "entitySelf"}
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/root/children/1/children/0/children/1/child/children/1/child/children/3",
+        "value": {
+            "title": "listPop",
+            "type": "action",
+            "name": "listPop",
+            "parameters": {
+                "list": {"key": "entitySelf"}
+            },
+            "output": {
+            }
+        }
+    }
+]

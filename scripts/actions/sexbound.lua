@@ -267,47 +267,107 @@ end
 
 function sortSexnodes(args, board)
     local list = args.list or {}
+    local timeout = args.timeout or 1
+    local dt = 0
     local i = 1
-    local res = nil
     local seen = {}
     local controllers = {}
     local nodeToController = {}
-    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("NODE BEHAVIOUR OF ENTITY #"..entity.id()) end
-    while i <= #list do
-        -- For each node queries, fetch the controller that it belongs to
-        local id = list[i] or 0
-        res = world.callScriptedEntity(id, "returnControllerId");
-        i = i + 1
-        if (self.sb_monster or self.sb_npc):canLog("behavior") then
-            sb.logInfo("CALLING NODE #"..id)
-            sb.logInfo("GOT ID #"..tostring(res))
-        end
-        if res and not seen[res] then
-            controllers[res] = false
-            seen[res] = true
-        end
-        if res then nodeToController[id] = res end
-    end
-    if not next(controllers) then return false end
-    res = nil
-    for id,_ in pairs(controllers) do
-        -- For each unique controller, fetch the compatibility index
-        local r,e = pcall(function() res = world.callScriptedEntity(id, "checkNodeCompatibility", (self.sb_monster or self.sb_npc):getCompatibilityData()) end)
-        if not r then sb.logError(e) res = -1 end
-        if (self.sb_monster or self.sb_npc):canLog("behavior") then
-            sb.logInfo("CALLING CONTROLLER #"..id)
-            sb.logInfo("GOT INDEX "..tostring(res))
-        end
-        controllers[id] = res
-    end
+    local fetchPromises = {}
+    local fetchPromiseCount = 0
+    local fetchPromiseDone = 0
+    local queryPromises = {}
+    local queryPromiseCount = 0
+    local queryPromiseDone = 0
     local targetNode = nil
+    
+    if #list <= 0 then return false end
+    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("NODE BEHAVIOR OF ENTITY #"..entity.id()) end
+    
+    local compatibilityData = (self.sb_monster or self.sb_npc):getCompatibilityData()
+    
+    -- Setup all async calls to retrieve controllerId of seat nodes
+    for _,id in ipairs(list) do
+        fetchPromises[id] = world.sendEntityMessage(id, "Sexbound:Retrieve:ControllerId")
+        fetchPromiseCount = fetchPromiseCount + 1
+        if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #" .. entity.id() .. " CALLING NODE #" .. tostring(id)) end
+    end
+    
+    while (queryPromiseDone < queryPromiseCount or fetchPromiseDone < fetchPromiseCount) and timeout > 0 do
+        -- Main async loop
+        timeout = timeout - dt
+        
+        if queryPromiseDone < queryPromiseCount then
+            -- Handle pending query requests (before fetch to not instantly check new query from finished fetch)
+            local remainingQueryPromises = {}
+            for id,p in pairs(queryPromises) do
+                if p:finished() then
+                    -- New query result is in
+                    queryPromiseDone = queryPromiseDone + 1
+                    if p:succeeded() then
+                        -- Successful request - we go compatibility metrics
+                        local index = p:result() or 0
+                        controllers[id] = index
+                        if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #"..entity.id().." GOT INDEX "..tostring(index).." FOR #"..tostring(id)) end
+                    else
+                        -- Not successful request - something went wrong. Log and treat node as 0
+                        if (self.sb_monster or self.sb_npc):canLog("behavior") then
+                            sb.logError("ERROR FETCHING COMPATIBILITY ON ENTITY #"..entity.id().." FOR #"..tostring(id))
+                            sb.logError(tostring(p:error()))
+                        end
+                        controllers[id] = 0
+                    end
+                else remainingQueryPromises[id] = p end
+            end
+            queryPromises = remainingQueryPromises
+        end
+        
+        if fetchPromiseDone < fetchPromiseCount then
+            -- Handle pending fetch requests
+            local remainingFetchPromises = {}
+            for id,p in pairs(fetchPromises) do
+                if p:finished() then
+                    -- New request result is in
+                    fetchPromiseDone = fetchPromiseDone + 1
+                    if p:succeeded() then
+                        -- Successful request - we got a main controller id
+                        local cid = p:result()
+                        if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #"..entity.id().." GOT CONTROLLER #"..tostring(cid).." FROM #"..tostring(id)) end
+                        if cid and not seen[cid] then
+                            nodeToController[id] = cid
+                            controllers[cid] = 0 -- Default to 0 incase we don't get any updated results
+                            seen[cid] = true
+                            queryPromises[cid] = world.sendEntityMessage(cid, "Sexbound:Retrieve:NodeCompatibility", compatibilityData)
+                            queryPromiseCount = queryPromiseCount + 1
+                            if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #"..entity.id().." GOT NEW CONTROLLER #"..tostring(cid)) end
+                        end
+                    else
+                        -- Not successful request - something went wrong. Log and treat node as 0
+                        if (self.sb_monster or self.sb_npc):canLog("behavior") then
+                            sb.logError("ERROR FETCHING CONTROLLER ID ON ENTITY #"..entity.id().." FOR #"..tostring(id))
+                            sb.logError(tostring(p:error()))
+                        end
+                        nodeToController[id] = 0
+                    end
+                else remainingFetchPromises[id] = p end
+            end
+            fetchPromises = remainingFetchPromises
+        end
+        
+        -- Finally, yield until next tick
+        dt = coroutine.yield(nil, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}})
+    end
+    
+    if (timeout <= 0 and self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
+    
     local targetIndex = 0
     for j=1,#list do
-        local curIndex = controllers[nodeToController[list[j]]] or 0
+        local curIndex = controllers[(nodeToController[list[j]] or 0)] or 0
         if curIndex > targetIndex then targetNode = list[j] targetIndex = curIndex end
     end
-    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("FINAL NODE: #"..tostring(targetNode).." with "..tostring(targetIndex)) end
-    if targetNode == nil then return false end
+    if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("FINAL NODE FOR #"..entity.id()..": #"..tostring(targetNode).." with "..tostring(targetIndex)) end
+    if targetNode == nil or targetIndex <= 0 then return false end
+    
     return true, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}}
 end
 
@@ -368,8 +428,9 @@ function abortingMoveToPosition(args, board, node, dt)
   local timeout = args.timeout
   local timeoutMax = timeout
 
-  local lastPosition = false
-  local targetPosition = {args.position[1], args.position[2]}
+    --- @type Vec2F?
+    local lastPosition = nil
+    local targetPosition = { args.position[1], args.position[2] }
 
   local updateTarget = function()
     lastPosition = {args.position[1], args.position[2]}
@@ -501,6 +562,76 @@ function setNodeRestrictions(args, board)
     if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Node #"..target.." couldn't be reached. Excluding #"..cid.." (times: "..storedRestrictions[cid].count..")") end
     
     return false
+end
+
+function findSexnodes(args, board)
+  if args.position == nil then return false end
+
+  local queryArgs = {
+    order = args.orderBy,
+    withoutEntityId = args.withoutEntity,
+    callScript = "isFullyOccupied",
+        callScriptReturn = false,
+        orientation = args.orientation
+  }
+    local loungables = world.loungeableQuery(args.position, args.range, queryArgs)
+  
+  local bannedList = args.exclude or {}
+  local bannedIndex = {}
+    for _, id in ipairs(bannedList) do
+        bannedIndex[id] = true
+  end
+  local filteredLoungables = {}
+    for _, lid in ipairs(loungables) do
+        if not (bannedIndex[lid] or false) then table.insert(filteredLoungables, lid) end
+  end
+
+  if #filteredLoungables > 0 then
+        return true, { entity = filteredLoungables[1], list = filteredLoungables }
+  else
+    return false
+  end
+end
+
+function asyncIsNotFull(args, board)
+    local target = args.entity
+    local promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
+    while true do
+        if promise:finished() then
+            if promise:succeeded() then
+                local full = not not promise:result()
+                if full then return false end
+            else return false end
+            promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
+        end
+        
+        coroutine.yield(nil)
+    end
+    return false
+end
+
+function loungeMultiSeat(args, board)
+    local target = args.entity
+    local success = false
+    if target == nil then return false end
+    if not npc.isLounging() or npc.loungingIn() ~= target then
+        local seatCount = getObjectSeatCount(target)
+        for i=1,seatCount do
+            success = npc.setLounging(target, (-1+i))
+            if success then break end
+        end
+    end
+    self.lounge = success
+    return success
+end
+
+function getObjectSeatCount(entityId)
+    if not entityId or not world.entityExists(entityId) then return 1 end
+    local config = world.getObjectParameter(entityId, "orientations", {})
+    if not config or not config[1] then return 1 end
+    local orientation = config[1]
+    if not orientation.sitPositions then return 1 end
+    return #orientation.sitPositions
 end
 
 function dump(o)

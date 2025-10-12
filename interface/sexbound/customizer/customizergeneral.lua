@@ -12,7 +12,9 @@ function Customizer.General:new(parent)
     currentSubGenderIndex = 1,
     subGenderList = {},
     sterilized = false,
-    infertile = false
+    infertile = false,
+    canBeDefeated = false,
+    canDefeatOthers = false
   }, Customizer.General_mt)
 end
 
@@ -42,6 +44,16 @@ function Customizer.General:init()
   self.autoClimax = self._parent.config.autoClimax
   if self.autoClimax == nil then self.autoClimax = false end
   if self.autoClimax then widget.setText("generalTab.autoClimaxLabel", "^shadow;You currently ^orange;do^reset;^shadow; climax automatically.") end
+
+  self.canBeDefeated = self._parent.config.canBeDefeated
+  if self.canBeDefeated == nil then self.canBeDefeated = false end
+  if self.canBeDefeated then widget.setText("generalTab.canBeDefeatedLabel", "^shadow;You currently ^orange;will^reset;^shadow; be fuckable after being defeated.")
+  else widget.setButtonEnabled("generalTab.canBeDefeatedLabel", false) end
+
+  self.canDefeatOthers = self._parent.config.canDefeatOthers
+  if self.canDefeatOthers == nil then self.canDefeatOthers = false end
+  if self.canDefeatOthers then widget.setText("generalTab.canDefeatOthersLabel", "^shadow;Supported enemies currently ^orange;will^reset;^shadow; be fuckable after defeating them.")
+  else widget.setButtonEnabled("generalTab.canDefeatOthersLabel", false) end
 end
 
 function Customizer.General:handleMessage(message)
@@ -88,6 +100,7 @@ function Customizer.General:prevSubGender()
 end
 
 function Customizer.General:applySubGender()
+  ---@type any
     local target = self.subGenderList[self.currentSubGenderIndex] or {}
     target = target.name or ""
     
@@ -177,4 +190,26 @@ function Customizer.General:toggleAutoClimax()
         world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "autoClimax")
     end
     self.autoClimax = not self.autoClimax
+end
+
+function Customizer.General:toggleCanBeDefeated()
+    if self.canBeDefeated then
+      widget.setText("generalTab.canBeDefeatedLabel", "^shadow;You currently ^orange;will not^reset;^shadow; be fuckable after being defeated.")
+      world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "canBeDefeated")
+    else
+      widget.setText("generalTab.canBeDefeatedLabel", "^shadow;You currently ^orange;will^reset;^shadow; be fuckable after being defeated.")
+      world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "canBeDefeated")
+    end
+    self.canBeDefeated = not self.canBeDefeated
+end
+
+function Customizer.General:toggleCanDefeatOthers()
+  if self.canDefeatOthers then
+    widget.setText("generalTab.canDefeatOthersLabel", "^shadow;Supported enemies currently ^orange;will not^reset;^shadow; be fuckable after defeating them.")
+    world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "canDefeatOthers")
+  else
+    widget.setText("generalTab.canDefeatOthersLabel", "^shadow;Supported enemies currently ^orange;will^reset;^shadow; be fuckable after defeating them.")
+    world.sendEntityMessage(player.id(), "Sexbound:Status:AddStatus", "canDefeatOthers")
+  end
+  self.canDefeatOthers = not self.canDefeatOthers
 end

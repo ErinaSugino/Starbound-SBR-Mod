@@ -54,3 +54,13 @@ function autoClimaxConfirm()
     if not self.customizer._inited then return end
     self.customizer.tabs["General"]:toggleAutoClimax()
 end
+
+function canBeDefeatedConfirm()
+    if not self.customizer._inited then return end
+    self.customizer.tabs["General"]:toggleCanBeDefeated()
+end
+
+function canDefeatOthersConfirm()
+    if not self.customizer._inited then return end
+    self.customizer.tabs["General"]:toggleCanDefeatOthers()
+end

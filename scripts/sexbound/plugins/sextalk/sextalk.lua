@@ -122,7 +122,7 @@ function Sexbound.Actor.SexTalk:helper_fetchBase(source)
     if not pcall(function()
         base = root.assetJson(source.base)
     end) then
-        self:getLog():warn("Unable to load base \""..tostring(source.base).."\" for dialog file.")
+        self:getLog():warn("Unable to load base \"" .. tostring(source.base) .. "\" for dialog file.")
         return source
     end
     
@@ -130,7 +130,7 @@ function Sexbound.Actor.SexTalk:helper_fetchBase(source)
     if type(base.base) == "string" then base = self:helper_fetchBase(base) end
     
     local add = not not source.add
-    if add then base = util:mergeTable(base, source) else base = self:helper_mergeTableOverrideText(base, source) end
+    if add then base = util.mergeTable(base, source) else base = self:helper_mergeTableOverrideText(base, source) end
     
     return base
 end
@@ -172,9 +172,9 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     
     local potentialTargets = {}
     local interactionTypes = {}
-    if actorRelation[actorNum] ~= 0 then
+    if actorRelation[actorNum] ~= 0 and actors[actorRelation[actorNum]] then
         -- Only add the one targeted by this actor if this actor actually targets anyone.
-        table.insert(potentialTargets, actors[actorRelation[actorNum]] or actor)
+        table.insert(potentialTargets, actors[actorRelation[actorNum]])
         table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum]] or actor, interactionTypesList, false))
     end
     

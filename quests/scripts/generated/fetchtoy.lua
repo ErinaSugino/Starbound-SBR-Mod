@@ -45,17 +45,17 @@ function FetchObjective:text()
   return sb.replaceTags(self._text, {
       itemName = itemShortDescription(self.item),
       required = self.item.count,
-      current = self:currentCount()
+    current = tostring(self:currentCount())
     })
 end
 
 function FetchObjective:isComplete()
   return player.hasItem(self.item)
-  if ((player.hasItem(self.item)) and (bruhStorage = false)) then
-	bruhStorage = true
-	player.consumeItem(self.item)
-  end
-  return bruhStorage
+  --if (player.hasItem(self.item)) and not bruhStorage then
+  --  bruhStorage = true
+  --  player.consumeItem(self.item)
+  --end
+  --return bruhStorage
 end
 
 function onInit()
@@ -71,7 +71,7 @@ end
 
 function fetchList()
   local paramName = config.getParameter("fetchList")
-  if not paramName then return true end
+  if not paramName then return {} end
   return quest.parameters()[paramName].items or {}
 end
 
