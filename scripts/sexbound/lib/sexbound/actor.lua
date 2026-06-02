@@ -1592,8 +1592,13 @@ end
 --- Returns the offset applied to this actor for a given position
 function Sexbound.Actor:getActorOffset(position,slot)
     if self._config.identity.actorOffset then
-		local offsets = (self._config.identity.actorOffset[slot] or {default = {head = {0,0}, body = {0,0}}})
-		return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
+		if self._config.identity.actorOffset[slot] ~= n then
+			local offsets = (self._config.identity.actorOffset[slot] or {default = {head = {0,0}, body = {0,0}}})
+			return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
+		else 
+			local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
+			return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
+		end
 	else return {head = {0,0}, body = {0,0}} end
 end
 
