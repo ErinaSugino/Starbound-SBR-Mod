@@ -444,7 +444,7 @@ end
 --- Resets all transformations for this Actor.
 function Sexbound.Actor:resetTransformations(prefix)
     prefix = prefix or "actor" .. self:getActorNumber()
-    local offsets = self:getActorOffset(self:getPosition():getName())
+    local offsets = self:getActorOffset(self:getPosition():getName(),tostring(self:getActorNumber()))
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
     local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber())
@@ -1590,9 +1590,11 @@ function Sexbound.Actor:getUIData(args)
 end
 
 --- Returns the offset applied to this actor for a given position
-function Sexbound.Actor:getActorOffset(position)
-    local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
-    return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
+function Sexbound.Actor:getActorOffset(position,slot)
+    if self._config.identity.actorOffset then
+		local offsets = (self._config.identity.actorOffset[slot] or {default = {head = {0,0}, body = {0,0}}})
+		return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
+	else return {head = {0,0}, body = {0,0}} end
 end
 
 --- Legacy
