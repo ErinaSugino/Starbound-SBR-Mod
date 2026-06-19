@@ -115,6 +115,7 @@ function Sexbound.NPC.new()
             if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying random gender to new npc #"..entity.id()) end
             self._subGender:setSxbSubGender(self._subGender:createRandomSubGender(npc.gender()))
         end
+        status.setResource("arousal",math.random(100))
     end
 
     -- ensure this entity has a unique Id
