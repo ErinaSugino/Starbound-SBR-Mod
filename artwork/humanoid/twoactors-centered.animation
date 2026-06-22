@@ -256,6 +256,10 @@
 				},
 				"partStates": {
 					"actors": {
+						"idle_laying" : {
+							"properties": {
+								"zLevel": 8}
+							},
 						"position4": {
 							"properties": {"zLevel": 43}
 						},
@@ -280,6 +284,10 @@
 				},
 				"partStates": {
 					"actors": {
+						"idle_laying" : {
+							"properties": {
+								"zLevel": 9}
+							},
 						"position4": {
 							"properties": {"zLevel": 44}
 						},
@@ -304,6 +312,10 @@
 				},
 				"partStates": {
 					"actors": {
+						"idle_laying": {
+							"properties": {
+								"zLevel": 10}
+							},
 						"position4": {
 							"properties": {"zLevel": 42}
 						},
@@ -328,7 +340,10 @@
 				},
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": {
+							"properties": {
+								"zLevel": 11}
+							},
 						"idle": {},
 						"position1": {},
 						"position1-climax": {},
@@ -2268,7 +2283,12 @@
 				},
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": {
+							"properties": {
+								"offset": [0.625,-1.5],
+								"zLevel": 7
+							}
+						},
 						"idle": {},
 						"position1": {
 							"frameProperties": {
@@ -2686,7 +2706,10 @@
 				},
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": {
+							"properties": {
+								"zLevel": 10}
+							},
 						"idle": {},
 						"position1": {},
 						"position1-climax": {},
@@ -2749,7 +2772,10 @@
 				},
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": {
+							"properties": {
+								"zLevel": 7}
+							},
 						"idle": {},
 						"position1": {},
 						"position1-climax": {},
@@ -3251,7 +3277,10 @@
 				},
 				"partStates": {
 					"actors": {
-						"idle_laying": {},
+						"idle_laying": {
+							"properties": {
+								"zLevel": 10}
+							},
 						"idle": {},
 						"position1": {},
 						"position1-climax": {},
@@ -5560,7 +5589,7 @@
 						},
 						"idle_laying": {
 							"properties": {
-								"offset": [0.5,-1]
+								"offset": [-0.75,-1.875]
 							}
 						},
 						"position1": {
@@ -5995,7 +6024,7 @@
 						},
 						"idle_laying": {
 							"properties": {
-								"offset": [0.75,-1]
+								"offset": [-1,-1.875]
 							}
 						},
 						"position1": {
