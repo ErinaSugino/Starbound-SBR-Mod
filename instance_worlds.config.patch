@@ -35,21 +35,10 @@
       }
     }
   },
-  {
-    "op": "replace",
-    "path": "/museum/worldProperties/nonCombat",
-    "value": false
-  },
 
   {
     "op": "replace",
     "path": "/outpost/worldProperties/nonCombat",
-    "value": false
-  },
-
-  {
-    "op": "replace",
-    "path": "/protectorate/worldProperties/nonCombat",
     "value": false
   },
 

@@ -231,6 +231,7 @@ function Sexbound.Player:handleGetCutomizerData(args)
     _loadedConfig.subGenders = self._subGender:getAllSubGenders()
     _loadedConfig.sterilized = self._status:hasStatus("sterilized")
     _loadedConfig.infertile = self._status:hasStatus("infertile")
+    _loadedConfig.autoClimax = self._status:hasStatus("autoClimax")
     return _loadedConfig
 end
 
@@ -411,6 +412,10 @@ function Sexbound.Player:initMessageHandlers()
     end)
     message.setHandler("Sexbound:Common:StopSexMusic", function(_, _, args)
         return self:stopSexMusic()
+    end)
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        player.setLounging(data.id)
     end)
     
     --- Simply try to forward fertility status updates to sexbound actor

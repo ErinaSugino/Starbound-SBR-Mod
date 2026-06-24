@@ -49,3 +49,8 @@ function infertileConfirm()
     if not self.customizer._inited then return end
     self.customizer.tabs["General"]:makeFertile()
 end
+
+function autoClimaxConfirm()
+    if not self.customizer._inited then return end
+    self.customizer.tabs["General"]:toggleAutoClimax()
+end

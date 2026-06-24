@@ -65,6 +65,9 @@ function Sexbound.Player.Identity:build(target, portraitData)
             identity.facialHairDirectives = self:filterReplace(v.image)
         end
 
+        -- Strip masks as this can cause issues with file detection in some custom clients
+        v.image = string.gsub(v.image, '%?addmask=.+%.png:?.-(%?)', '%1')
+        
         -- Attempt to find body identity
         if (string.find(v.image, "body.png") ~= nil) then
             identity.bodyDirectives = string.match(v.image, '%?replace.*')

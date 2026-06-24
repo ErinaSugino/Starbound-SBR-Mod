@@ -213,7 +213,14 @@ function Sexbound.NPC:initMessageHandlers()
         return self:hazardAbortion()
     end)
     message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
-        self:updateFertility(args)
+        return self:updateFertility(args)
+    end)
+    message.setHandler("Sexbound:Defeat:ReputationSet", function(_, _, args)
+        return self:setPlayerReputation(args.id, args.reputation or {global = 0, species = {}})
+    end)
+    message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
+        mcontroller.setPosition({data.x, data.y})
+        npc.setLounging(data.id)
     end)
     
     --- Debug stuff
@@ -645,6 +652,6 @@ function Sexbound.NPC:getCompatibilityData()
         bodyTraits = self._bodyTraits,
         motherUuid = status.statusProperty("motherUuid", nil),
         fatherUuid = status.statusProperty("fatherUuid", nil),
-        uuid = entity.uniqueId
+        uuid = entity.uniqueId()
     }
 end

@@ -764,14 +764,6 @@ function Sexbound:updateAnimationRate(stateName, dt)
     -- Set the animator's animation rate
     animator.setAnimationRate(self._animationRate)
 
-    local actors = {}
-    for _, actor in ipairs(self._actors) do
-        table.insert(actors, {
-            name = actor:getName(),
-            uniqueId = actor:getUniqueId()
-        })
-    end
-
     if (self._animationRate >= _maxTempo) then
         self._animationRate = _animState:nextMinTempo()
 
