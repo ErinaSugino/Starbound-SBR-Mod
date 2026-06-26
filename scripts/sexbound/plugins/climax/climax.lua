@@ -530,14 +530,11 @@ function Sexbound.Actor.Climax:tryAutoClimax()
     local containsPlayer = false
     local playerControl = false
     
-    if entityType == "player" and not self._parent:getStatus():hasStatus("autoClimax") then
-        return
-    else
-        for _, actor in ipairs(self:getParent():getParent():getActors()) do
-            if actor:getActorNumber() ~= self:getParent():getActorNumber() then
-                if actor:getEntityType() == "player" then containsPlayer = true end
-                if not actor:getStatus():hasStatus("sexbound_defeated") then playerControl = true end
-            end
+    if entityType == "player" and not self._parent:getStatus():hasOneOf({"sexbound_defeated", "autoClimax"}) then return end
+    for _, actor in ipairs(self:getParent():getParent():getActors()) do
+        if actor:getActorNumber() ~= self:getParent():getActorNumber() then
+            if actor:getEntityType() == "player" then containsPlayer = true end
+            if not actor:getStatus():hasOneOf({"sexbound_defeated", "autoClimax"}) then playerControl = true end
         end
     end
     
