@@ -530,7 +530,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
     local containsPlayer = false
     local playerControl = false
     
-    if entityType == "player" then
+    if entityType == "player" and not self._parent:getStatus():hasStatus("autoClimax") then
         return
     else
         for _, actor in ipairs(self:getParent():getParent():getActors()) do

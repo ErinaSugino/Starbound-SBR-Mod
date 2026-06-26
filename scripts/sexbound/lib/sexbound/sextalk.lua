@@ -106,7 +106,11 @@ function Sexbound.Sextalk:triggerTalk()
     
     local l = #viableActors
     if l <= 0 then self._lastActor = 0 return end
-    if l == 1 then self._lastActor = 0 viableActors[1]:getPlugins("sextalk"):sayRandom()
+    if l == 1 then
+        self._lastActor = 0
+        local s = viableActors[1]:getPlugins("sextalk")
+        s._isTalking = true
+        s:sayRandom()
     else
         local i, j = self._lastActor, 0
         while i == self._lastActor and j < 10 do
