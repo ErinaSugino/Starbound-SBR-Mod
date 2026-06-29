@@ -439,6 +439,7 @@ function Sexbound.NPC:getActorData()
     if identity.sxbSubGender == nil then
         identity.sxbSubGender = self:getSubGender():getSxbSubGender()
     end
+    identity.sxbNaturalStatus = self:getStatus():getStatusList() or identity.sxbNaturalStatus
 
     return {
         entityId = entity.id(),

@@ -502,6 +502,7 @@ function Sexbound.Player:getActorData()
 
     local identity = self:getIdentity():build()
     identity.sxbSubGender = self:getSubGender():getSxbSubGender()
+    identity.sxbNaturalStatus = self:getStatus():getStatusList() or identity.sxbNaturalStatus
 
     return {
         entityId = player.id(),
