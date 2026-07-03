@@ -495,6 +495,9 @@ end
 function Sexbound.NPC:getTransform()
     return self._transform
 end
+function Sexbound.NPC:getStatus()
+    return self._status
+end
 
 -- Legacy functions
 
