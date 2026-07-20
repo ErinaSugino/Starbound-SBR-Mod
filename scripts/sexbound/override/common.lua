@@ -130,7 +130,7 @@ function Sexbound.Common:buildBodyTraits(gender)
 end
 
 function Sexbound.Common:updateTraitEffects()
-    if (self._pregnant and self._pregnant._config.enableFreeForAll) and not self._bodyTraits.canOvulate then
+    if (self._pregnant and self._pregnant._config.enableFreeForAll) and not (self._bodyTraits.canOvulate or status.statusProperty("sexbound_override_can_ovulate", false)) then
         storage.sexbound.pregnant = {} -- If we cannot ovulate anymore, remove current pregnancies
         storage.sexbound.ovulationCycle = 0 -- If we cannot ovulate anymore, remove and reset ovulation cycle
         status.removeEphemeralEffect("sexbound_custom_ovulating")
