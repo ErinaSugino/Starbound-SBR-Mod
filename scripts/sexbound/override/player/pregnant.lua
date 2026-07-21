@@ -131,6 +131,8 @@ function Sexbound.Player.Pregnant:canOvulate()
 
     if self:getParent()._bodyTraits.canOvulate or false then return true end
 
+	if status.statusProperty("sexbound_override_can_ovulate", false) then return true end
+
     return false
 end
 

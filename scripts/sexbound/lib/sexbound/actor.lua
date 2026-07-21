@@ -643,6 +643,8 @@ function Sexbound.Actor:setup(actorConfig)
     if self._config.inHeat then actorStatus:addStatus("sexbound_aroused_heat") end
     if self._config.isDefeated then actorStatus:addStatus("sexbound_defeated") end
     if self._config.birthcontrol then actorStatus:addStatus("birthcontrol") end
+    if self._config.forceCanOvulate then actorStatus:addStatus("sexbound_override_can_ovulate") end
+    if self._config.forceCanProduceSperm then actorStatus:addStatus("sexbound_override_can_produce_sperm") end
     
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
@@ -650,7 +652,7 @@ function Sexbound.Actor:setup(actorConfig)
         end
     end
     
-    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated).." - birthcontrol "..tostring(self._config.birthcontrol))
+    self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated).." - birthcontrol "..tostring(self._config.birthcontrol).." - can ovulate override "..tostring(self._config.forceCanOvulate).." - produce sperm override "..tostring(self._config.forceCanProduceSperm))
     
     self:initPlugins()
     self:getApparel():sync() -- initial fetching of apparel to determine initial gender
@@ -1499,11 +1501,11 @@ end
 
 --- Returns if this actor is capable of ovulating
 function Sexbound.Actor:canOvulate()
-    return self:getIdentity().body.canOvulate or false
+    return self:getIdentity().body.canOvulate or self:getStatus():hasStatus("sexbound_override_can_ovulate") or false
 end
 --- Returns if this actor is capable of producing sperm
 function Sexbound.Actor:canProduceSperm()
-    return self:getIdentity().body.canProduceSperm or false
+    return self:getIdentity().body.canProduceSperm or self:getStatus():hasStatus("sexbound_override_can_produce_sperm") or false
 end
 --- Returns if this actor has means to penetrate another actor
 function Sexbound.Actor:canPenetrate()

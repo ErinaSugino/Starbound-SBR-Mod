@@ -1,0 +1,7 @@
+{
+  "name"            : "sexbound_override_can_produce_sperm",
+  "blockingStat"    : "sexboundImmunity",
+  "defaultDuration" : 10,
+  "effectConfig"    : {},
+  "scripts"         : [ "sexbound_override_can_produce_sperm.lua" ]
+}
