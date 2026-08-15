@@ -1,8 +1,8 @@
 {
   "input": [
-    { "item": "darkwoodmaterial", "count": 10 },
+    { "item": "darkwoodmaterial", "count": 8 },
     { "item": "sexbux", "count": 100 }
   ],
-  "output": { "item": "sexbound_frontierbed", "count": 1 },
+  "output": { "item": "sexbound_fuckpost", "count": 1 },
   "groups": ["craftingfurniture", "beds", "all"]
 }
