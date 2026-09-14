@@ -26,6 +26,7 @@ function Sexbound.Monster.Identity:build(target, portraitData)
         species = monster.type(),
         gender = self._parent:getGender() or "male",
         sxbSubGender = self._parent._subGen or nil,
-        subGender = self._parent._subGen or nil
+        subGender = self._parent._subGen or nil,
+		actorOffset = config.getParameter("actorOffsets") or nil
     }
 end
