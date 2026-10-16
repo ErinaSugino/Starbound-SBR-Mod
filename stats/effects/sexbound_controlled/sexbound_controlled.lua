@@ -5,8 +5,8 @@ function init()
   effect.setParentDirectives("?multiply=ffffff00")
   -- Set 'sexbound_sex' status property to true.
   status.setStatusProperty("sexbound_sex", true)
-  Sexbound.API.init()
-  Sexbound.API.Actors.addActor(effect.getParameter("npcConfig"))
+  Sexbound.API.init(1)
+  Sexbound.API.Actors.addActor(effect.getParameter("npcConfig"), false)
 end
 
 function uninit()

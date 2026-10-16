@@ -1,9 +1,19 @@
--- Sexbound Behavior Actions
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- Sexbound Behavior Actions
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- Every node function (as defined in the .nodes file) can receive
+--- args table - The input arguments provided, as defined in node
+--- board table - The overarching behavior blackboard state table. Turly black magic and fully undocumented
+--- node table - The definition of the calling node being executed
+--- dt number - The delta time since last execution
+--- Every node returns, unless otherwise specified
+--- return boolean - True if node succesfully executed, false if it failed or nil if it is still executing
+--- All nodes execute asynchronously and can yield.
+
 --- Uses radio to broadcast a message to announce birth.
--- @param args
--- @param board
+--- @param args table
+--- @param board table
 function announceBirth(args, board)
     local targetEntity = self.sb_npc or self.sb_monster
 
@@ -15,14 +25,14 @@ function announceBirth(args, board)
 end
 
 --- Checks if the entity is ready to give birth.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function checkPregnancy(args, board)
     local targetEntity = self.sb_npc or self.sb_monster
     if not targetEntity then
         return false
     end
-    
+
     if (targetEntity._pregnancyDelay or 0) > 0 then
         return false
     end
@@ -38,8 +48,8 @@ function checkPregnancy(args, board)
 end
 
 --- Calls the entity's failed transformation function.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function failedTransformation(args, board)
     local targetEntity = self.sb_npc or self.sb_monster
     if not targetEntity then
@@ -51,8 +61,8 @@ function failedTransformation(args, board)
 end
 
 --- Returns the first known open block position within an inputted area.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function findNearbyOpenSpace(args, board)
     if args.rectSize == nil then
         return false
@@ -74,8 +84,8 @@ function findNearbyOpenSpace(args, board)
 end
 
 --- Calls the entity's function to give birth.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function giveBirth(args, board)
     if args.babyIndex == nil then
         return false
@@ -97,15 +107,15 @@ function giveBirth(args, board)
 end
 
 --- Checks if an entity is fully occupied.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function isFullyOccupied(args, board)
     -- Not implemented yet
 end
 
 --- Returns whether or not the entity is having sex.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function isHavingSex(args, board)
     local targetEntity = self.sb_monster or self.sb_npc
 
@@ -117,8 +127,8 @@ function isHavingSex(args, board)
 end
 
 --- Attempts to have entity place a sex node on the ground below its feet.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function placeSexNode(args, board)
     if not args.position then
         return false
@@ -141,8 +151,8 @@ function placeSexNode(args, board)
 end
 
 --- Checks whether or not entity is a recruitable entity with a uuid.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function hasOwnerUuid(args, board)
     if recruitable and recruitable.ownerUuid() then
         return true, {
@@ -154,8 +164,8 @@ function hasOwnerUuid(args, board)
 end
 
 --- Checks whether or not the entity is pregnant.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function hasPregnancy(args, board)
     if not storage.sexbound.pregnant or isEmpty(storage.sexbound.pregnant) then
         return false
@@ -166,8 +176,8 @@ function hasPregnancy(args, board)
 end
 
 --- Checks whether or not the entity will respawn upon death.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function hasRespawner(args, board)
     if storage.respawner then
         return true, {
@@ -179,8 +189,8 @@ function hasRespawner(args, board)
 end
 
 --- Sends entity message to prevent a respawnable entity from respawning.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function lockRespawner(args, board)
     if args.respawnerId == nil then
         return false
@@ -192,8 +202,8 @@ function lockRespawner(args, board)
 end
 
 --- Setup this entity.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function remoteSetup(args, board)
     if args.entity == nil then
         return false
@@ -209,8 +219,8 @@ function remoteSetup(args, board)
 end
 
 --- Returns a resource's value safely.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function safeGetResource(args, board)
     if not status.isResource(args.resource) then
         return false
@@ -219,8 +229,8 @@ function safeGetResource(args, board)
 end
 
 --- Returns a resource's percent value safely.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function safeResourcePercentage(args, board)
     if not status.isResource(args.resource) then
         return false
@@ -229,8 +239,8 @@ function safeResourcePercentage(args, board)
 end
 
 --- Untransforms this entity
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function smashSexNode(args, board)
     local targetEntity = self.sb_monster or self.sb_npc
 
@@ -243,8 +253,8 @@ function smashSexNode(args, board)
 end
 
 --- Unloads this entity as a sex actor.
--- @params args
--- @params board
+--- @param args table
+--- @param board table
 function unloadSexActor(args, board)
     local targetEntity = self.sb_monster or self.sb_npc
 
@@ -256,6 +266,9 @@ function unloadSexActor(args, board)
     return false
 end
 
+--- Logs debugging data
+--- @param args table
+--- @param board table
 function debugBehaviour(args, board)
     if (self.sb_monster or self.sb_npc):canLog("behavior") then
         sb.logInfo("LOGGING OF BEHAVIOR")
@@ -265,6 +278,9 @@ function debugBehaviour(args, board)
     return true
 end
 
+--- Sorts sexnodes by compatibility score
+--- @param args table
+--- @param board table
 function sortSexnodes(args, board)
     local list = args.list or {}
     local timeout = args.timeout or 1
@@ -280,23 +296,23 @@ function sortSexnodes(args, board)
     local queryPromiseCount = 0
     local queryPromiseDone = 0
     local targetNode = nil
-    
+
     if #list <= 0 then return false end
     if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("NODE BEHAVIOR OF ENTITY #"..entity.id()) end
-    
+
     local compatibilityData = (self.sb_monster or self.sb_npc):getCompatibilityData()
-    
+
     -- Setup all async calls to retrieve controllerId of seat nodes
     for _,id in ipairs(list) do
         fetchPromises[id] = world.sendEntityMessage(id, "Sexbound:Retrieve:ControllerId")
         fetchPromiseCount = fetchPromiseCount + 1
         if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ENTITY #" .. entity.id() .. " CALLING NODE #" .. tostring(id)) end
     end
-    
+
     while (queryPromiseDone < queryPromiseCount or fetchPromiseDone < fetchPromiseCount) and timeout > 0 do
         -- Main async loop
         timeout = timeout - dt
-        
+
         if queryPromiseDone < queryPromiseCount then
             -- Handle pending query requests (before fetch to not instantly check new query from finished fetch)
             local remainingQueryPromises = {}
@@ -321,7 +337,7 @@ function sortSexnodes(args, board)
             end
             queryPromises = remainingQueryPromises
         end
-        
+
         if fetchPromiseDone < fetchPromiseCount then
             -- Handle pending fetch requests
             local remainingFetchPromises = {}
@@ -353,13 +369,13 @@ function sortSexnodes(args, board)
             end
             fetchPromises = remainingFetchPromises
         end
-        
+
         -- Finally, yield until next tick
         dt = coroutine.yield(nil, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}})
     end
-    
+
     if (timeout <= 0 and self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
-    
+
     local targetIndex = 0
     for j=1,#list do
         local curIndex = controllers[(nodeToController[list[j]] or 0)] or 0
@@ -367,7 +383,7 @@ function sortSexnodes(args, board)
     end
     if (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("FINAL NODE FOR #"..entity.id()..": #"..tostring(targetNode).." with "..tostring(targetIndex)) end
     if targetNode == nil or targetIndex <= 0 then return false end
-    
+
     return true, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}}
 end
 
@@ -377,6 +393,9 @@ end
 -- Solution: Timeout which fails the current execution loop so the whole node finding process starts over (if applicable)
 -- Problem: Starbound. For a parallel execution node to fail, the specified number of nodes (parameter "fail") needs to return 'false' as first value. In this case any 1 node needs to fail for everything to abort.
 -- However, the timer returns 'true' upon completion and 'nil' while still ticking, like any yielding multi-tick node.
+--- @param args table
+--- @param board table
+--- @param dt number The delta time since last tick
 function reverseTimer(args, board, _, dt)
   local timer = timeRange(args.time)
   local max = timer
@@ -385,7 +404,7 @@ function reverseTimer(args, board, _, dt)
     timer = timer - dt
     dt = coroutine.yield(nil, {ratio = (max - timer) / max})
   end
-  
+
   self._nodeTimeout = true
 
   return false, {ratio = 1.0}
@@ -400,9 +419,15 @@ end
 -- param avoidLiquid
 -- output direction
 -- output pathfinding
+
+--- Version of moveToPosition pathfinding function that aborts itself if a stuck condition is detected
+--- @param args table
+--- @param board table
+--- @param node table
+--- @param dt number The delta time since last tick
 function abortingMoveToPosition(args, board, node, dt)
   self._nodeTimeout = false
-  
+
   if args.position == nil then return false end
 
   if entity.entityType() == "npc" then npc.resetLounging() end
@@ -424,11 +449,11 @@ function abortingMoveToPosition(args, board, node, dt)
     maxLandingVelocity = -10.0,
     liquidJumpCost = 15
   })
-  
+
   local timeout = args.timeout
   local timeoutMax = timeout
 
-  local lastPosition = false
+  local lastPosition = {0,0}
   local targetPosition = {args.position[1], args.position[2]}
 
   local updateTarget = function()
@@ -445,11 +470,11 @@ function abortingMoveToPosition(args, board, node, dt)
     self._nodeTimeout = true
     return false
   end
-  
+
   local ourLastPos = entity.position()
   local stuckFrames = 0
   local closestDistance = math.huge
-  
+
   local result = mcontroller.controlPathMove(targetPosition, args.run, pathOptions)
   while true do
     if not lastPosition or world.magnitude(args.position, lastPosition) > 2 then
@@ -478,7 +503,7 @@ function abortingMoveToPosition(args, board, node, dt)
         closeDoorsBehind()
       end
     end
-    
+
     local ourCurPos = entity.position()
     if ourCurPos[1] == ourLastPos[1] and ourCurPos[2] == ourLastPos[2] then
       stuckFrames = stuckFrames + 1
@@ -486,9 +511,9 @@ function abortingMoveToPosition(args, board, node, dt)
       stuckFrames = 0
       ourLastPos = ourCurPos
     end
-    
+
     if stuckFrames >= 10 then self._nodeTimeout = true return false end -- Abort if no actual movement for 10 steps (1 second-ish - nodes seem to not run every tick, which makes sense)
-    
+
     if timeout ~= -1 then -- Timeout of -1 means infinite
       local curDistance = world.magnitude(ourCurPos, targetPosition)
       -- If we work with a timeout, reset it when we actually got closer to our target
@@ -496,7 +521,7 @@ function abortingMoveToPosition(args, board, node, dt)
         closestDistance = curDistance
         timeout = timeoutMax
       end
-      
+
       timeout = timeout - dt
       if timeout <= 0 then self._nodeTimeout = true return false end -- Abort if no new progress for the duration of the defined timeout
     end
@@ -507,6 +532,11 @@ function abortingMoveToPosition(args, board, node, dt)
   return true
 end
 
+--- Fetches list of restricted sexnodes from entity storage
+--- @param args table
+--- @param board table
+--- @return boolean finished Whethere this node executed fully and successfully
+--- @return table restrictions The loaded list of restrictions
 function getNodeRestrictions(args, board)
     local restrictions = {}
     local sxb = (self.sb_npc or self.sb_monster)
@@ -523,26 +553,29 @@ function getNodeRestrictions(args, board)
             end
         end
     end
-    
+
     if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Loaded restrictions: "..dump(restrictions)) end
-    
+
     return true, restrictions
 end
 
+--- Sets restricted sexnodes to persistent entity storage
+--- @param args table
+--- @param board table
 function setNodeRestrictions(args, board)
     if not self._nodeTimeout then return false end
-    
+
     local target = args.entity
     if not target then return false end
-    
+
     local data = args.data
     if not data then return false end
-    
+
     local sxb = (self.sb_npc or self.sb_monster)
     if not sxb then return false end
     sxb._behaviorData = sxb._behaviorData or {}
     local storedRestrictions = ((self.sb_npc or self.sb_monster)._behaviorData or {}).excludedNodes or {}
-    
+
     local cid = data.nodeToController[target] or 0
     if storedRestrictions[cid] then
         storedRestrictions[cid].count = storedRestrictions[cid].count + 1
@@ -557,9 +590,9 @@ function setNodeRestrictions(args, board)
     end
     sxb._behaviorData.excludedNodes = storedRestrictions
     self._nodeTimeout = false
-    
+
     if sxb:canLog("behavior") then sb.logInfo("BEHAVIOR: Node #"..target.." couldn't be reached. Excluding #"..cid.." (times: "..storedRestrictions[cid].count..")") end
-    
+
     return false
 end
 
@@ -572,8 +605,8 @@ function findSexnodes(args, board)
     callScript = "isFullyOccupied",
     callScriptReturn = false
   }
-  local loungables = world.loungeableQuery(args.position, args.range, { orientation = args.orientation }, queryArgs)
-  
+  local loungables = world.loungeableQuery(args.position, args.range, { orientation = args.orientation, queryArgs })
+
   local bannedList = args.exclude or {}
   local bannedIndex = {}
     for _, id in ipairs(bannedList) do
@@ -591,6 +624,9 @@ function findSexnodes(args, board)
   end
 end
 
+--- Fetches the occupation state of a target sexnode asynchronously
+--- @param args table
+--- @param board table
 function asyncIsNotFull(args, board)
     local target = args.entity
     local promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
@@ -602,12 +638,15 @@ function asyncIsNotFull(args, board)
             else return false end
             promise = world.sendEntityMessage(target, "Sexbound:Retrieve:IsFull")
         end
-        
+
         coroutine.yield(nil)
     end
     return false
 end
 
+--- Attempts to lounge this NPC in a sexnode with multiple possible seat anchors
+--- @param args table
+--- @param board table
 function loungeMultiSeat(args, board)
     local target = args.entity
     local success = false
@@ -623,6 +662,9 @@ function loungeMultiSeat(args, board)
     return success
 end
 
+--- [Helper] Attempt to retrieve the amount of defined seat anchors from an object's config
+--- @param entityId EntityId The object entity's ID
+--- @return integer # The count of seat anchors
 function getObjectSeatCount(entityId)
     if not entityId or not world.entityExists(entityId) then return 1 end
     local config = world.getObjectParameter(entityId, "orientations", {})
@@ -632,6 +674,9 @@ function getObjectSeatCount(entityId)
     return #orientation.sitPositions
 end
 
+--- [Helper] Dumps a table as log-able string
+--- @param o any Any object
+--- @return string # The assembled string dump
 function dump(o)
     if type(o) == 'table' then
       local s = '{ '
@@ -645,6 +690,9 @@ function dump(o)
    end
 end
 
+--- [Helper] Dumps a table as log-able string, only traversing one layer
+--- @param o any Any object
+--- @return string # The assembled string dump
 function shallowDump(o)
     if type(o) == 'table' then
       local s = '{ '
@@ -658,6 +706,11 @@ function shallowDump(o)
    end
 end
 
+--- [Helper] Dumps a table as log-able string up to a defined maximum depth
+--- @param o any Any object
+--- @param n integer? The maximum depth (Default: 1)
+--- @param i integer? The starting depth (Default: 0)
+--- @return string # The assembled string dump
 function leveledDump(o,n,i)
     i=i or 0
     n=n or 1

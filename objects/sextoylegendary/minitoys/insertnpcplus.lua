@@ -120,10 +120,10 @@ end
 function tryGeneratingActors()
   local mainSxBConfig = root.assetJson("/sexbound.config")
   if not isEmpty(storage.sexboundjar.actors) then return end
-  
+
   local raceName = config.getParameter("actorRace", nil)
   local actor = GenerateActor.makeRandomNPC(raceName)
-  
+
   actor.backwear  = applyBackwear()
   actor.chestwear = applyChestwear()
   actor.headwear  = applyHeadwear(actor.identity)
@@ -137,8 +137,8 @@ function tryGeneratingActors()
   if futanariPluginConfig.enable == true then
     local chance = config.getParameter("actorChanceToSpawnWithGenderAsFutanari", 0.05)
     if util.randomInRange({0.0, 1.0}) <= chance then
-      identity.gender = "female"
-      identity.sxbSubGender = "futanari"
+      actor.identity.gender = "female"
+      actor.identity.sxbSubGender = "futanari"
     end
   end
 

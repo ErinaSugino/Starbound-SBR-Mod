@@ -10,15 +10,16 @@ end
 
 function checkIngredients()
   local contents = world.containerItems(entity.id())
-  
+  if contents == nil then contents = {} end
+
   if contents[1] and contents[1].name and self.ingredients[contents[1].name] ~= nil then
     self.ingredients[contents[1].name] = true
   end
-  
+
   if contents[2] and contents[2].name and self.ingredients[contents[2].name] ~= nil then
     self.ingredients[contents[2].name] = true
   end
-  
+
   return self.ingredients.sexbound_runic_cube and self.ingredients.sexbound_keystonechain
 end
 
@@ -33,7 +34,7 @@ function craft(args)
   if animator.animationState("main") ~= "idling" then
 	return "busy"  
   end
-  
+
   self.craftPlayerId = args.playerId
 
   if checkIngredients() then
@@ -42,7 +43,7 @@ function craft(args)
     world.containerTakeAll(entity.id())
     return "pass"
   end
-  
+
   return "fail"
 end
 
@@ -55,11 +56,11 @@ function update(dt)
 
   if animator.animationState("main") == "craftingLoop" then
     self.craftingTimer = self.craftingTimer + dt
-    
+
     if self.craftingTimer >= 5 then
       animator.setAnimationState("main", "craftingEnd", true)
     end
-    
+
     return
   end
 
@@ -67,12 +68,12 @@ function update(dt)
 
   if animator.animationState("main") == "finished" then
     animator.setAnimationState("main", "idling", true)
-    
+
     hideStaff()
     hideTwine()
-    
+
     world.spawnItem("sexbound_runic_cache", object.toAbsolutePosition(animator.partPoint("spawn", "offset")))
-	
+
     self.craftPlayerId = nil
   end
 
@@ -81,11 +82,11 @@ function update(dt)
   if self.ingredients.sexbound_runic_cube then
     showStaff()
   else hideStaff() end
-  
+
   if self.ingredients.sexbound_keystonechain then
     showTwine()
   else hideTwine() end
-  
+
   resetIngredients()
 end
 

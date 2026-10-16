@@ -1,22 +1,29 @@
---- Sexbound.Actor.Apparel.Headwear Class Module.
--- @classmod Sexbound.Actor.Apparel.Headwear
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
   require("/scripts/sexbound/lib/sexbound/actor/apparel/abstract.lua")
 end
 
+--- Sexbound.Actor.Apparel.Headwear Class Module.
+--- @class Sexbound.Actor.Apparel.Headwear: Sexbound.Actor.Apparel.Abstract
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _name string
 Sexbound.Actor.Apparel.Headwear = Sexbound.Actor.Apparel.Abstract:new()
 Sexbound.Actor.Apparel.Headwear_mt = {
     __index = Sexbound.Actor.Apparel.Headwear
 }
 
 --- Returns a reference to a new instance of this class.
--- @param parent
+--- @param parent Sexbound.Actor.Apparel # The calling parent apparel manager instance
 function Sexbound.Actor.Apparel.Headwear:new( parent )
   return setmetatable({ _parent = parent, _name = "headwear" }, Sexbound.Actor.Apparel.Headwear_mt)
 end
 
+--- Function to reset the apparel parts
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @param frameName string The current frame name
 function Sexbound.Actor.Apparel.Headwear:resetParts(role, species, gender, frameName)
   if not self._isVisible then return end
 
@@ -49,15 +56,21 @@ function Sexbound.Actor.Apparel.Headwear:resetParts(role, species, gender, frame
   animator.setGlobalTag(prefix .. "-headwearMask", "?addmask=" .. mask)
 end
 
+--- Function to reset the animator directive tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Headwear:resetAnimatorDirectives(prefix)
   animator.setGlobalTag(prefix .. "-headwear", "")
   animator.setGlobalTag(prefix .. "-headwear-static", "")
 end
 
+--- Function to reset the animator mask tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Headwear:resetAnimatorMasks(prefix)
   animator.setGlobalTag(prefix .. "-headwearMask", "?addmask=" .. self._defaultMask .. ":default")
 end
 
+--- Function to reset the animator part tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Headwear:resetAnimatorParts(prefix)
   animator.setGlobalTag("part-" .. prefix .. "-headwear", self._defaultImage .. ":default")
   animator.setGlobalTag("part-" .. prefix .. "-headwear-static", self._defaultImage .. ":default")

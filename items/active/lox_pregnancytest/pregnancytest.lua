@@ -62,21 +62,21 @@ function PregnancyTest:buildBirthTimeBasedOnOSTime(birthOSTime)
   if (diffTime <= 86400) then
     local totalMinutes = diffTime / 60
     local hours   = math.floor(totalMinutes / 60)
-    hours = "^red;" .. hours .. "^reset;"
+    hoursText = "^red;" .. hours .. "^reset;"
 
     local minutes = math.floor(totalMinutes % 60)
-    minutes = "^red;" .. minutes .. "^reset;"
+    minutesText = "^red;" .. minutes .. "^reset;"
 
     local text = config.getParameter("radioMessages.birthTodayBasedOnOSTime")
-    text = util.replaceTag(text, "hours", hours)
-    text = util.replaceTag(text, "minutes", minutes)
+    text = util.replaceTag(text, "hours", hoursText)
+    text = util.replaceTag(text, "minutes", minutesText)
     --text = text .. " - or - "
     return text
   else
     local days = math.floor((birthDateTimestamp - todayDateTimestamp) / 86400)
-    days = "^red;" .. days .. "^reset;"
+    daysText = "^red;" .. days .. "^reset;"
     local text = config.getParameter("radioMessages.birthLaterBasedOnOSTime")
-    text = util.replaceTag(text, "days", days)
+    text = util.replaceTag(text, "days", daysText)
     --text = text .. " - or - "
     return text
   end
@@ -93,7 +93,8 @@ function PregnancyTest:buildBirthTimeBasedOnWorldTime(birthTime)
   hours = math.floor(24 * hours)
 
   local minutes = math.floor(60 * (24 * birthTime - hours))
-  if minutes <= 9 then minutes = minutes .. '0' end
+  if minutes <= 9 then minutesZF = minutes .. '0'
+  else minutesZF = tostring(minutes) end
 
   local appendix = 'AM'
   if hours > 12 then
@@ -101,12 +102,12 @@ function PregnancyTest:buildBirthTimeBasedOnWorldTime(birthTime)
     appendix = 'PM'
   end
 
-  local time = self:buildFormattedBirthTimeString(hours, minutes, appendix)
+  local time = self:buildFormattedBirthTimeString(hours, minutesZF, appendix)
 
   if days > 0 then
     local text = config.getParameter("radioMessages.birthLaterBasedOnWorldTime")
-    days = "^red;" .. days .. "^reset;"
-    text = util.replaceTag(text, "days", days)
+    daysText = "^red;" .. days .. "^reset;"
+    text = util.replaceTag(text, "days", daysText)
     return text
   else
     local text = config.getParameter("radioMessages.birthTodayBasedOnWorldTime")
@@ -141,15 +142,16 @@ function PregnancyTest:buildBirthTimeBasedOnPlayerWorldTime(birthTime)
 
     if days > 0 then
       text = config.getParameter("radioMessages.birthLaterBasedOnWorldTime")
-      days = "^red;" .. days .. "^reset;"
-      text = util.replaceTag(text, "days", days)
+      daysText = "^red;" .. days .. "^reset;"
+      text = util.replaceTag(text, "days", daysText)
       return text
     end
 
     hours = math.floor(24 * birthTime)
 
     minutes = math.floor(60 * (24 * birthTime - hours))
-    if minutes <= 9 then minutes = '0' .. minutes end
+    if minutes <= 9 then minutesZF = '0' .. minutes
+    else minutesZF = tostring(minutes) end
 
     local appendix = 'AM'
     if hours > 12 then
@@ -157,7 +159,7 @@ function PregnancyTest:buildBirthTimeBasedOnPlayerWorldTime(birthTime)
       appendix = 'PM'
     end
 
-    time = self:buildFormattedBirthTimeString(hours, minutes, appendix)
+    time = self:buildFormattedBirthTimeString(hours, minutesZF, appendix)
 
     text = config.getParameter("radioMessages.birthTodayBasedOnWorldTime")
     text = util.replaceTag(text, "time", time)
@@ -167,8 +169,8 @@ function PregnancyTest:buildBirthTimeBasedOnPlayerWorldTime(birthTime)
     
     if days > 0 then
       text = config.getParameter("radioMessages.birthLaterInOrbit")
-      days = "^red;" .. days .. "^reset;"
-      text = util.replaceTag(text, "days", days)
+      daysText = "^red;" .. days .. "^reset;"
+      text = util.replaceTag(text, "days", daysText)
       return text
     end
     
@@ -180,9 +182,10 @@ function PregnancyTest:buildBirthTimeBasedOnPlayerWorldTime(birthTime)
     hours = math.floor(24 * birthTime)
 
     minutes = math.floor(60 * (24 * birthTime - hours))
-    if minutes <= 9 then minutes = '0' .. minutes end
+    if minutes <= 9 then minutesZF = '0' .. minutes
+    else minutesZF = tostring(minutes) end
 
-    time = self:buildFormattedBirthDurationString(hours, minutes)
+    time = self:buildFormattedBirthDurationString(hours, minutesZF)
 
     text = config.getParameter("radioMessages.birthTodayBasedOnWorldTime")
     text = util.replaceTag(text, "time", time)

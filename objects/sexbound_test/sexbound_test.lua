@@ -3,7 +3,7 @@ require "/scripts/sexbound/v2/api.lua"
 function init()
   self.debug = true
 
-  Sexbound.API.init()
+  Sexbound.API.init(2)
 
   local sitPositions  = config.getParameter("sexboundConfig.sitPositions")
   local nodePositions = config.getParameter("sexboundConfig.nodePositions")
@@ -16,7 +16,7 @@ function init()
   if not actors then return end
 
   for _,actor in ipairs(actors) do
-    Sexbound.API.Actors.addActor(actor)
+    Sexbound.API.Actors.addActor(actor, false)
   end
 end
 

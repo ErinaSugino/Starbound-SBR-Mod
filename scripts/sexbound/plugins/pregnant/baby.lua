@@ -1,10 +1,18 @@
 --- Baby Class Module.
--- @classmod Baby
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Pregnancy.Baby
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.Actor.Pregnant.BabyFactory|Sexbound.Common.Pregnant
+--- @field _config table
+--- @field _geneCache table
 Baby = {}
 Baby_mt = { __index = Baby }
 
+--- Creates a new baby instance
+--- @param parent Sexbound.Actor.Pregnant.BabyFactory|Sexbound.Common.Pregnant The calling parent instance, context-dependant
+--- @param config table The baby config
+--- @return Sexbound.Pregnancy.Baby # The newly created baby instance
 function Baby:new(parent, config)
     config = config or {}
 
@@ -16,11 +24,16 @@ function Baby:new(parent, config)
 end
 
 --- Function to create the data of a default SBR baby
---  !This method will be called from the actor side. self._parent will point towards the parent BabyFactory, child of the mother actor's pregnancy plugin, child of the mother actor!
---  !Entity tables such as "player", "npc", "monster" will not be available and "entity" refers to the sexnode object!
+--- !This method will be called from the actor side. self._parent will point towards the parent BabyFactory, child of the mother actor's pregnancy plugin, child of the mother actor!
+--- !Entity tables such as "player", "npc", "monster" will not be available and "entity" refers to the sexnode object!
+--- @param mother Sexbound.Actor The mother actor
+--- @param father Sexbound.Actor The father actor
+--- @return table # The baby's pregnancy data
 function Baby:create(mother, father)
+    local parent = self._parent --[[@as Sexbound.Actor.Pregnant.BabyFactory]]
+
     local baby = {
-        birthGender = self._parent:createRandomBirthGender(),
+        birthGender = parent:createRandomBirthGender(),
         subGender = nil,
         motherName = mother:getName(),
         motherId = mother:getEntityId(),
@@ -34,26 +47,25 @@ function Baby:create(mother, father)
         fatherSpecies = father:getSpecies(),
         generationFertility = mother._config.generationFertility
     }
-    
-    local subgenderPlugin = self._parent._parent._parent:getPlugins("subgender")
-    
-    if math.random() <= self._config.subGenderChance then baby.subGender = self._parent:createRandomSubGender(baby.birthGender) end
+
+    local subgenderPlugin = parent._parent._parent:getPlugins("subgender") --[[@as Sexbound.Actor.Subgender]]
+
+    if math.random() <= self._config.subGenderChance then baby.subGender = parent:createRandomSubGender(baby.birthGender) end
     if subgenderPlugin then
         -- Roll for a chance to copy the parent's sub-gender
         if not baby.subGender and subgenderPlugin:passesGenderRestriction(mother:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = mother:getSubGender() end
         if not baby.subGender and subgenderPlugin:passesGenderRestriction(father:getSubGender(), baby.birthGender) and math.random() <= self._config.subGenderChance then baby.subGender = father:getSubGender() end
-        
     end
-    
+
     if baby.motherType == "npc" and baby.fatherType == "npc" then
         local choices = {mother:getType(), father:getType()}
         baby.npcType = util.randomChoice(choices)
         baby.generationFertility = baby.generationFertility * (baby.generationFertility / 2)
     elseif baby.motherType == "player" or baby.fatherType == "player" then baby.npcType = "crewmembersexbound"
     else baby.npcType = "villager" end
-    
+
     baby.birthEntityGroup, baby.birthSpecies = self:reconcileEntityGroups(mother, father)
-    
+
     local motherBodyColor, motherBodyColorAverage, motherUndyColor, motherUndyColorAverage, motherHairColor, motherHairColorAverage = mother:getGenes()
     local fatherBodyColor, fatherBodyColorAverage, fatherUndyColor, fatherUndyColorAverage, fatherHairColor, fatherHairColorAverage = father:getGenes()
     local bodyColorPool, bodyColorPoolAverage, bodyAllowBlending, undyColorPool, undyColorPoolAverage, undyAllowBlending, hairColorPool, hairColorPoolAverage, hairAllowBlending
@@ -74,25 +86,25 @@ function Baby:create(mother, father)
         hairColorPoolAverage = self._geneCache[baby.birthSpecies].hairColorPoolAverage
         hairAllowBlending = self._geneCache[baby.birthSpecies].hairAllowBlending
     end
-    
+
     -- Map parent color themes to target space
-    local motherBodyIndex = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, motherBodyColorAverage)
-    local fatherBodyIndex = self._parent:findClosestColorAverageGene(bodyColorPoolAverage, fatherBodyColorAverage)
-    local motherUndyIndex = self._parent:findClosestColorAverageGene(undyColorPoolAverage, motherUndyColorAverage)
-    local fatherUndyIndex = self._parent:findClosestColorAverageGene(undyColorPoolAverage, fatherUndyColorAverage)
-    local motherHairIndex = self._parent:findClosestColorAverageGene(hairColorPoolAverage, motherHairColorAverage)
-    local fatherHairIndex = self._parent:findClosestColorAverageGene(hairColorPoolAverage, fatherHairColorAverage)
-    
+    local motherBodyIndex = parent:findClosestColorAverageGene(bodyColorPoolAverage, motherBodyColorAverage)
+    local fatherBodyIndex = parent:findClosestColorAverageGene(bodyColorPoolAverage, fatherBodyColorAverage)
+    local motherUndyIndex = parent:findClosestColorAverageGene(undyColorPoolAverage, motherUndyColorAverage)
+    local fatherUndyIndex = parent:findClosestColorAverageGene(undyColorPoolAverage, fatherUndyColorAverage)
+    local motherHairIndex = parent:findClosestColorAverageGene(hairColorPoolAverage, motherHairColorAverage)
+    local fatherHairIndex = parent:findClosestColorAverageGene(hairColorPoolAverage, fatherHairColorAverage)
+
     -- Generate crossed colors for baby
     math.randomseed(os.time())
     local bodyColorLambda = Sexbound.Util.normalDist()
     local undyColorLambda = Sexbound.Util.normalDist()
     local hairColorLambda = Sexbound.Util.normalDist()
-    
+
     local function verifyIndex(colorPool, index)
         return colorPool and (colorPool[index] or '' ~= '') and type(colorPool[index]) == 'table' and next(colorPool[index])
     end
-    
+
     local function pickRandomPaletteIndex(colorPool, notIndex)
         if type(notIndex) ~= "number" then notIndex = 0 end
         local l = #colorPool
@@ -118,21 +130,21 @@ function Baby:create(mother, father)
             failedPalettes = failedPalettes + 1
             fatherIndex = pickRandomPaletteIndex(colorPool, motherIndex)
         end
-        
+
         if failedPalettes > 1 then
             -- If both palettes had to be randomized - no point in doing Starbound's work. Abort to generate this color palette fully randomly.
             self:getLog():warn("Baby color genetics aborted for palette "..tostring(loggingName).."! Both detected indices invalid!")
             return
         end
-        
-        local motherPalette = colorPool[motherIndex] or ''
-        local fatherPalette = colorPool[fatherIndex] or ''
+
+        local motherPalette = colorPool[motherIndex] or {}
+        local fatherPalette = colorPool[fatherIndex] or {}
         if not verifyIndex(colorPool, motherIndex) or not verifyIndex(colorPool, fatherIndex) then
             -- If still invalid, just abort.
             self:getLog():warn("Baby color genetics aborted for palette "..tostring(loggingName).."! One index still invalid after random fill!")
             return
         end
-        
+
         color = {}
 
         for i, v in pairs(motherPalette) do
@@ -144,31 +156,34 @@ function Baby:create(mother, father)
                 return
             end
             if allowBlending then
-                r = self._parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(fv) }, colorLambda)
+                r = parent:crossfade({ Sexbound.Util.hexToRgb(v) }, { Sexbound.Util.hexToRgba(fv) }, colorLambda)
             else
                 r = util.randomChoice({ v, fv })
             end
             color[i] = Sexbound.Util.rgbaToHex6(r)
         end
-        
+
         return Sexbound.Util.messageEncode(color) --Encode color data cause Starbound sucks ass with Lua <-> JSON conversion
     end
 
     baby.bodyColor = generateColor(motherBodyIndex, fatherBodyIndex, bodyColorPool, bodyAllowBlending, bodyColorLambda, "bodyColor")
     baby.undyColor = generateColor(motherUndyIndex, fatherUndyIndex, undyColorPool, undyAllowBlending, undyColorLambda, "undyColor")
     baby.hairColor = generateColor(motherHairIndex, fatherHairIndex, hairColorPool, hairAllowBlending, hairColorLambda, "hairColor")
-    
+
     self:getLog():debug("Generated baby colors:")
     self:getLog():debug("Body " .. motherBodyIndex .. " x " .. fatherBodyIndex .. " - " .. Sexbound.Util.dump(baby.bodyColor))
     self:getLog():debug("Undy " .. motherUndyIndex .. " x " .. fatherUndyIndex .. " - " .. Sexbound.Util.dump(baby.undyColor))
     self:getLog():debug("Hair " .. motherHairIndex .. " x " .. fatherHairIndex .. " - " .. Sexbound.Util.dump(baby.hairColor))
-    
+
     return baby
 end
 
 --- Function to give birth to a default SBR baby
---  !This method will be called from the mother entity upon giving birth. self._parent will point towards the mother entity's pregnancy plugin, child of the mother entity!
---  !Entity tables like "player", "npc", "monster" are available for this and every subsequently called function!
+--- !This method will be called from the mother entity upon giving birth. self._parent will point towards the mother entity's pregnancy plugin, child of the mother entity!
+--- !Entity tables like "player", "npc", "monster" are available for this and every subsequently called function!
+--- @param babyConfig table The pregnancy data for this baby
+--- @param babyName string? The given baby name for birth
+--- @return EntityId? # The entity ID ofthe birthed entity, or nil on failure
 function Baby:birth(babyConfig, babyName)
     babyConfig.birthEntityGroup = babyConfig.birthEntityGroup or "humanoid"
 
@@ -180,9 +195,10 @@ function Baby:birth(babyConfig, babyName)
 end
 
 --- Fetch - if possible - and cache the genetic data of a new species
+--- @param species string The species
 function Baby:fetchGenes(species)
     local speciesConfig = {}
-        
+
     -- Attempt to read configuration from species config file.
     if not pcall(function()
         speciesConfig = root.assetJson("/species/" .. species .. ".species")
@@ -191,7 +207,7 @@ function Baby:fetchGenes(species)
         self._geneCache[species] = false
         return -- No species file. Abort further genetics.
     end
-    
+
     local bodyColorPool = speciesConfig.bodyColor or {}
     local bodyColorPoolAverage = {}
     local bodyAllowBlending = true
@@ -201,7 +217,7 @@ function Baby:fetchGenes(species)
     local hairColorPool = speciesConfig.hairColor or {}
     local hairColorPoolAverage = {}
     local hairAllowBlending = true
-    
+
     -- Pre calculate color palette averages
     for i, r in ipairs(bodyColorPool) do
         if type(r) ~= "table" then break end
@@ -216,7 +232,7 @@ function Baby:fetchGenes(species)
                 break
             end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
-            
+
             local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then bodyAllowBlending = false end
             avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -242,7 +258,7 @@ function Baby:fetchGenes(species)
                 break
             end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
-            
+
             local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then undyAllowBlending = false end
             avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -255,20 +271,20 @@ function Baby:fetchGenes(species)
         table.insert(undyColorPoolAverage, avg)
     end
 
-    for i, r in ipairs(hairColorPool) do
-        if type(r) ~= "table" then break end
+    for i, p in ipairs(hairColorPool) do
+        if type(p) ~= "table" then break end
         local x = 0
         local avg = { 0, 0, 0 }
         local valid = true
         -- Get average color of current checked palette from list
-        for j, v in pairs(r) do
+        for j, v in pairs(p) do
             local l = string.len(v)
             if l ~= 3 and l ~= 4 and l ~= 6 and l ~= 8 then
                 valid = false
                 break
             end -- If not length 3,4,6 or 8 it's invalid - ignore
             x = x + 1
-            
+
             local r, g, b, a = Sexbound.Util.hexToRgba(v)
             if a == 0 then hairAllowBlending = false end
             avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -280,7 +296,7 @@ function Baby:fetchGenes(species)
         end
         table.insert(hairColorPoolAverage, avg)
     end
-    
+
     self._geneCache[species] = {
         bodyColorPool = bodyColorPool,
         bodyColorPoolAverage = bodyColorPoolAverage,
@@ -295,6 +311,10 @@ function Baby:fetchGenes(species)
 end
 
 --- Reconciles differences between this actor and the other actor
+--- @param mother Sexbound.Actor The mother actor
+--- @param father Sexbound.Actor The father actor
+--- @return string entityGroup The entity group of the resulting offspring
+--- @return string species The species of the resulting offspring
 function Baby:reconcileEntityGroups(mother, father)
     local geneticTable = self._config.geneticTable or {}
     local species = mother:getOffspringSpecies()
@@ -306,7 +326,7 @@ function Baby:reconcileEntityGroups(mother, father)
         if geneticTable[species][otherSpecies] then return geneticTable[species][otherSpecies][2], geneticTable[species][otherSpecies][1] end -- Defined cross-breed species.
         if geneticTable[species]["all"] then return geneticTable[species]["all"][2], geneticTable[species]["all"][1] end                      -- Defined catch-all cross-breed species.
     end
-    
+
     if group == "humanoid" and otherGroup == "humanoid" then
         return "humanoid", self:generateBirthSpecies(mother, father)
     end
@@ -322,19 +342,27 @@ function Baby:reconcileEntityGroups(mother, father)
     if otherGroup == "monsters" then
         return "monsters", otherSpecies
     end
-    
+
     -- Backup: Just copy mother
     return group, species
 end
 
--- Returns a random species name based on the species of the parents
+--- Returns a random species name based on the species of the parents
+--- @param mother Sexbound.Actor The mother actor
+--- @param father Sexbound.Actor The father actor
+--- @return string # The chosen birth species
 function Baby:generateBirthSpecies(mother, father)
     local actor1Species = mother:getSpecies() or "human"
     local actor2Species = father:getSpecies() or actor1Species
     return util.randomChoice({ actor1Species, actor2Species })
 end
 
--- HELPER FUNCTIONS --
+-- [[ HELPER FUNCTIONS ]]
+
+--- [Helper] Converts baby pregnancy data into valid data to spawn a monster
+--- @private
+--- @param babyConfig table The baby's pregnancy data
+--- @return table<string, any> # The data to feed into world.spawnMonster
 function Baby:_convertBabyConfigToSpawnableMonster(babyConfig)
     local params = {}
     params.baseParameters = {}
@@ -351,6 +379,11 @@ function Baby:_convertBabyConfigToSpawnableMonster(babyConfig)
     }
 end
 
+--- [Helper] Converts baby pregnancy data into valid data to spawn an NPC
+--- @private
+--- @param babyConfig table The baby's pregnancy data
+--- @param babyName string? The chosen birth name
+--- @return table<string, any> # The data to feed into world.spawnNpc
 function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     local params = {}
     params.scriptConfig = {}
@@ -376,7 +409,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     params.identity.gender = babyConfig.birthGender
     if babyName and babyName ~= "" then params.identity.name = babyName end
     util.mergeTable(params, babyConfig.birthParams or {})
-    
+
     local speciesConfig = nil
     -- Attempt to read configuration from species config file.
     if not pcall(function()
@@ -384,13 +417,13 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     end) then
         sb.logWarn("SxB: Could not find species config file for baby - species "..(babyConfig.birthSpecies or "human"))
     end
-    
+
     if speciesConfig then
         -- Apply genetic color directives
         local bodyDirectives, emoteDirectives, hairDirectives, facialHairDirectives, facialMaskDirectives = "", "", "", "", ""
         local bodyColorPalette, hairColorPalette, undyColorPalette = "", "", ""
         local bodyColor, hairColor, altColor, facialHairColor, facialMaskColor = "", "", "", "", ""
-        
+
         local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
         local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
         local altOptionAsHairColor = not not speciesConfig.altOptionAsHairColor
@@ -399,7 +432,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         local altOptionAsFacialMask = not not speciesConfig.altOptionAsFacialMask
         local bodyColorAsFacialMaskSubColor = not not speciesConfig.bodyColorAsFacialMaskSubColor
         local altColorAsFacialMaskSubColor = not not speciesConfig.altColorAsFacialMaskSubColor
-        
+
         if babyConfig.bodyColor then
             local c = babyConfig.bodyColor
             local ci, cv = next(c)
@@ -408,7 +441,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             bodyColorPalette = "?replace"
             for k,v in pairs(c) do bodyColorPalette = bodyColorPalette..";"..k.."="..v end
         end
-        
+
         if babyConfig.hairColor then
             local c = babyConfig.hairColor
             local ci, cv = next(c)
@@ -417,7 +450,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             hairColorPalette = "?replace"
             for k,v in pairs(c) do hairColorPalette = hairColorPalette..";"..k.."="..v end
         end
-        
+
         if babyConfig.undyColor then
             local c = babyConfig.undyColor
             local ci, cv = next(c)
@@ -426,7 +459,7 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
             undyColorPalette = "?replace"
             for k,v in pairs(c) do undyColorPalette = undyColorPalette..";"..k.."="..v end
         end
-        
+
         -- Build directives like Starbound does
         bodyColor = bodyColorPalette
         if altOptionAsUndyColor then altColor = undyColorPalette end
@@ -439,20 +472,20 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
         if headOptionAsFacialhair then facialHairColor = hairColor end
         if bodyColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..bodyColor end
         if altColorAsFacialMaskSubColor then facialMaskColor = facialMaskColor..altColor end
-        
+
         bodyDirectives = bodyColor..altColor
         emoteDirectives = bodyColor..altColor
         hairDirectives = hairColor
         facialHairDirectives = facialHairColor
         facialMaskDirectives = facialMaskColor
-        
+
         -- Finalize
         if bodyDirectives ~= "" then params.identity.bodyDirectives = bodyDirectives end
         if emoteDirectives ~= "" then params.identity.emoteDirectives = emoteDirectives end
         if hairDirectives ~= "" then params.identity.hairDirectives = hairDirectives end
         if facialHairDirectives ~= "" then params.identity.facialHairDirectives = facialHairDirectives end
         if facialMaskDirectives ~= "" then params.identity.facialMaskDirectives = facialMaskDirectives end
-        
+
         -- Ensure gender-safe hair assignment
         -- Find relevant gender config
         local genderConfig = nil
@@ -462,14 +495,14 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
                 break
             end
         end
-        
+
         if genderConfig then
             -- If gender config was found and hair declaration exists, choose random gender specific hair style for baby
             local hairStyles = genderConfig.hair
             if hairStyles then params.identity.hairType = hairStyles[util.randomIntInRange({1,#hairStyles})] end
         end
     end
-    
+
     local spawnableNPC = {
         level    = babyConfig.birthLevel or 1,
         npcType  = babyConfig.npcType or "crewmembersexbound",
@@ -482,6 +515,11 @@ function Baby:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     return spawnableNPC
 end
 
+--- [Helper] Spawn a humanoid entity from baby data
+--- @private
+--- @param babyConfig table The baby's pregnancy data
+--- @param babyName string? The chosen birth name
+--- @return EntityId? # The entity id of the spawned humanoid, or nil on failure
 function Baby:_giveBirthToHumanoid(babyConfig, babyName)
     local spawnableNPC = self:_convertBabyConfigToSpawnableNPC(babyConfig, babyName)
     return world.spawnNpc(
@@ -494,6 +532,10 @@ function Baby:_giveBirthToHumanoid(babyConfig, babyName)
     )
 end
 
+--- [Helper] Spawn a monster entity from baby data
+--- @private
+--- @param babyConfig table The baby's pregnancy data
+--- @return EntityId? # The entity id of the spawned monster, or nil on failure
 function Baby:_giveBirthToMonster(babyConfig)
     local spawnableMonster = self:_convertBabyConfigToSpawnableMonster(babyConfig)
     return world.spawnMonster(
@@ -503,6 +545,9 @@ function Baby:_giveBirthToMonster(babyConfig)
     )
 end
 
+--- Returns the responsible logging instance
+--- @return Sexbound.Log? # The closest logging instance
 function Baby:getLog()
-    return self._parent._parent:getLog()
+    local parent = self._parent --[[@as Sexbound.Actor.Pregnant.BabyFactory]]
+    if parent._parent.getLog then return parent._parent:getLog() end
 end

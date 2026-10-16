@@ -1,20 +1,27 @@
---- Sexbound.Actor.SexTalk Class Module.
--- @classmod Sexbound.Actor.SexTalk
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
     require("/scripts/util.lua")
 end
 
+--- Sexbound.Actor.SexTalk Class Module.
+--- @class Sexbound.Actor.SexTalk: Sexbound.Actor.Plugin
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field private _debugColor string
+--- @field _dialog table
+--- @field _dialogPool table<integer, string>
+--- @field _lastMessage integer
+--- @field _isActive boolean
+--- @field _isTalking boolean
 Sexbound.Actor.SexTalk = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.SexTalk_mt = {
     __index = Sexbound.Actor.SexTalk
 }
 
 --- Instantiates a new instance of SexTalk.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The plugin config data
 function Sexbound.Actor.SexTalk:new(parent, config)
     local _self = setmetatable({
         _debugColor = "red",
@@ -33,6 +40,8 @@ function Sexbound.Actor.SexTalk:new(parent, config)
     return _self
 end
 
+--- Message handler
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.SexTalk:onMessage(message)
     if "Sexbound:Positions:SwitchPosition" == message:getType() then
         self:handleSwitchPosition()
@@ -54,22 +63,28 @@ function Sexbound.Actor.SexTalk:handleSwitchRoles()
     -- Nothing
 end
 
+--- Handler for entering climax state
 function Sexbound.Actor.SexTalk:onEnterClimaxState()
     self:processIsActive("climaxState")
 end
 
+--- Handler for entering exit state
 function Sexbound.Actor.SexTalk:onEnterExitState()
     self:processIsActive("exitState")
 end
 
+--- Handler for entering idle state
 function Sexbound.Actor.SexTalk:onEnterIdleState()
     self:processIsActive("idleState")
 end
 
+--- Handler for entering sex state
 function Sexbound.Actor.SexTalk:onEnterSexState()
     self:processIsActive("sexState")
 end
 
+--- Handler for each tick
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.SexTalk:onUpdateAnyState(dt)
     if not self._isActive then
         return
@@ -80,22 +95,24 @@ function Sexbound.Actor.SexTalk:onUpdateAnyState(dt)
     end
 end
 
+--- Load the entire dialog file for this actor
+--- @return table # The entire dialog file
 function Sexbound.Actor.SexTalk:loadDialog()
     species = self:getParent():getSpecies()
-    
+
     local isAllowed = false
     local allowed = (self._config.allowDefault or {}).entityType or {}
     for _,et in ipairs(allowed) do
         if et == self._parent:getEntityType() then isAllowed = true break end
     end
-    
+
     local filename = self:getPosition():getDialog(species, nil)
 
     if not filename and self._config.useDefaultDialog and isAllowed then
         filename = self:getPosition():getDialog("default", nil)
     end
     if not filename then
-        return
+        return {}
     end
 
     filename = util.replaceTag(filename, "species", species or "default")
@@ -109,14 +126,18 @@ function Sexbound.Actor.SexTalk:loadDialog()
         dialog = root.assetJson(filename)
     end) then
         self:getLog():warn("Unable to load dialog file for species: " .. species)
-        return
+        return {}
     end
-    
+
     if type(dialog.base) == "string" then dialog = self:helper_fetchBase(dialog) end
 
     return dialog
 end
 
+--- [Helper] Fetch the defined base dialog file(s) merged with the top-most one
+--- @private
+--- @param source table The source dialog file config
+--- @return table # The assembled dialog file tree
 function Sexbound.Actor.SexTalk:helper_fetchBase(source)
     local base
     if not pcall(function()
@@ -125,16 +146,21 @@ function Sexbound.Actor.SexTalk:helper_fetchBase(source)
         self:getLog():warn("Unable to load base \""..tostring(source.base).."\" for dialog file.")
         return source
     end
-    
+
     -- Recursively check deeper base layers
     if type(base.base) == "string" then base = self:helper_fetchBase(base) end
-    
+
     local add = not not source.add
-    if add then base = util:mergeTable(base, source) else base = self:helper_mergeTableOverrideText(base, source) end
-    
+    if add then base = util.mergeTable(base, source) else base = self:helper_mergeTableOverrideText(base, source) end
+
     return base
 end
 
+--- [Helper] Merge two dialog tables while overriding earlier text with later one
+--- @private
+--- @param t1 table First (lower hierarchy) table
+--- @param t2 table Second (higher hierarchy) table
+--- @return table # The merge result
 function Sexbound.Actor.SexTalk:helper_mergeTableOverrideText(t1, t2)
   for k, v in pairs(t2) do
     if k ~= "text" and type(v) == "table" and type(t1[k]) == "table" then --Override "text" list instead of merging
@@ -146,6 +172,12 @@ function Sexbound.Actor.SexTalk:helper_mergeTableOverrideText(t1, t2)
   return t1
 end
 
+--- [Helper] Merge two dialog tables while merging text from all into one list, ignoring status modifiers
+--- @private
+--- @param t1 table First (lower hierarchy) table
+--- @param t2 table Second (lower hierarchy) table
+--- @param isStatus boolean If we are inside of a status modifier block or not
+--- @return table # The merge result
 function Sexbound.Actor.SexTalk:helper_mergeTableMergeTextNoStatus(t1, t2, isStatus)
   isStatus = not not isStatus
   for k, v in pairs(t2) do
@@ -162,6 +194,10 @@ function Sexbound.Actor.SexTalk:helper_mergeTableMergeTextNoStatus(t1, t2, isSta
   return t1
 end
 
+--- [Helper] Returns all actors who are potential dialog target
+--- @private
+--- @return table<integer, Sexbound.Actor> actors The list of potential target actors
+--- @return table<integer, string> interactions The list of interaction types by actor
 function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     local actor = self:getParent()
     local position = actor:getPosition()
@@ -169,7 +205,7 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
     local actorRelation = position:getActorRelation()
     local interactionTypesList = position:getInteractionType()
     local actors = self._parent._parent:getActors()
-    
+
     local potentialTargets = {}
     local interactionTypes = {}
     if actorRelation[actorNum] ~= 0 and actors[actorRelation[actorNum]] then
@@ -177,23 +213,30 @@ function Sexbound.Actor.SexTalk:helper_getPotentialTargets()
         table.insert(potentialTargets, actors[actorRelation[actorNum]])
         table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[actorRelation[actorNum]] or actor, interactionTypesList, false))
     end
-    
+
     for i,a in ipairs(actorRelation) do
         if i ~= actorNum and a == actorNum and actors[i] then
             table.insert(potentialTargets, actors[i])
             table.insert(interactionTypes, self:helper_interactionTypeToName(actor, actors[i], interactionTypesList, true))
         end
     end
-    
+
     if #potentialTargets == 0 then
         -- This actor is neither interacting with nor interacted with by any other actor. Assume toy/solo action and self reference with interactionType
         potentialTargets = {actor}
         interactionTypes = {self:helper_interactionTypeToName(actor, actor, interactionTypesList, false)}
     end
-    
+
     return potentialTargets, interactionTypes
 end
 
+--- [Helper] Maps an interaction type to dialog type
+--- @private
+--- @param actor Sexbound.Actor The talking actor
+--- @param otherActor Sexbound.Actor The dialog partner
+--- @param types table<integer, string|nil> The list of interaction types per actor of the position
+--- @param receiving boolean Whethere or not we treat the talking actor as receiving interaction from the partner, or giving
+--- @return string # The mapped dialog type name
 function Sexbound.Actor.SexTalk:helper_interactionTypeToName(actor, otherActor, types, receiving)
     local t = receiving and types[otherActor:getActorNumber()] or types[actor:getActorNumber()]
     local res
@@ -215,46 +258,64 @@ function Sexbound.Actor.SexTalk:helper_interactionTypeToName(actor, otherActor, 
     elseif t == "boobjob" then
         res = "boobjob"
     else return "default" end
-    
+
     if receiving then res = "r_"..res end
     return res
 end
 
+--- [Helper] Gets an actor's state for dialog mapping
+--- @private
+--- @param actor Sexbound.Actor The actor in question
+--- @return string # The dialog state name
 function Sexbound.Actor.SexTalk:helper_getActorState(actor)
     local state = actor:getParent():getStateMachine():stateDesc()
     local status = actor:getStatus()
-    
+
     if status:findStatus("preclimaxing") then return "preclimax"
     elseif status:findStatus("climaxing") then return "climax"
     elseif state == "postclimaxState" then return "postclimax"
     else return "sex" end
 end
 
+--- [Helper] Gets all dialog-relevant statuses of an actor
+--- @private
+--- @param actor Sexbound.Actor The actor in question
+--- @return table<integer, string> list The list of all relevant statuses
+--- @return table<string, string> lookup A named lookup table for quick reference
 function Sexbound.Actor.SexTalk:helper_getActorStatuses(actor)
     local status = actor:getStatus()
     local list, lookup = {}, {}
-    
+
     if status:findStatus("pregnant") then table.insert(list, "pregnant") lookup["pregnant"] = true end
     if status:findStatus("sexbound_aroused_heat") then table.insert(list, "heat") lookup["heat"] = true end
     if status:findStatus("sexbound_defeated") then table.insert(list, "defeated") lookup["defeated"] = true end
     if actor._config.identity.body.hasPenis then table.insert(list, "hasPenis") lookup["hasPenis"] = true end
     if actor._config.identity.body.hasVagina then table.insert(list, "hasVagina") lookup["hasVagina"] = true end
-    
+
     return list, lookup
 end
 
+--- Sets and returns whethere or not this actor is allowed to talk in a given state of the current position
+--- @param stateName string The state name
+--- @return boolean # Whethere or not this actor can talk, already set
 function Sexbound.Actor.SexTalk:processIsActive(stateName)
     self._isActive = self:thisActorIsAllowedToTalk(stateName)
 
     return self._isActive
 end
 
+--- Returns whethere or not this actor is allowed to talk in a given state of the current position
+--- @param stateName string The state name
+--- @return boolean # Whethere or not this actor can talk
 function Sexbound.Actor.SexTalk:thisActorIsAllowedToTalk(stateName)
-    local animState = self:getParent():getAnimationState(stateName)
+    local animState = self:getParent():getPosition():getAnimationState(stateName)
 
-    return animState:getAllowTalk(self:getParent():getActorNumber())
+    return animState and animState:getAllowTalk(self:getParent():getActorNumber()) or false
 end
 
+--- Tries to parse a dialog for emote triggers
+--- @param dialog string The line of dialog to say
+--- @return string? # Name of the associated emotion, if any found
 function Sexbound.Actor.SexTalk:findEmoticon(dialog)
     local emoticons = self._config.emoticons
     local found
@@ -271,13 +332,14 @@ function Sexbound.Actor.SexTalk:findEmoticon(dialog)
     return found
 end
 
+--- Say a random dialog line from the pool
 function Sexbound.Actor.SexTalk:sayRandom()
     if self._config.roleplayMode and self:onlyPlayers() then return end
 
     if not self._dialog or isEmpty(self._dialog) then
         return
     end
-    
+
     local actor = self:getParent()
     local potentialTargets, interactionTypes = self:helper_getPotentialTargets()
     local target, interactionType, l = nil, nil, #potentialTargets
@@ -290,12 +352,12 @@ function Sexbound.Actor.SexTalk:sayRandom()
         target = potentialTargets[r]
         interactionType = interactionTypes[r]
     end
-    
+
     local targetSpecies = target:getSpecies()
-    
+
     local dialogPool = {}
     local lastLevel = self._dialog.content or {}
-    
+
     -- interaction type
     lastLevel = lastLevel[interactionType] or lastLevel["default"] or {}
     -- our state
@@ -305,12 +367,12 @@ function Sexbound.Actor.SexTalk:sayRandom()
     -- partner species
     local specificConfig = lastLevel[targetSpecies] or {}
     local defaultConfig = lastLevel["default"] or {text = {}} -- Fallback default should always have text to avoid merging errors when default doesn't exist.
-    
+
     local finalConfig
-    if not specificConfig.override then finalConfig = self:helper_mergeTableMergeTextNoStatus(defaultConfig, specificConfig) else finalConfig = specificConfig end
-    
+    if not specificConfig.override then finalConfig = self:helper_mergeTableMergeTextNoStatus(defaultConfig, specificConfig, false) else finalConfig = specificConfig end
+
     dialogPool = finalConfig.text or {}
-    
+
     local statuses, statusLookup = self:helper_getActorStatuses(actor)
     local otherStatuses, otherStatusLookup = self:helper_getActorStatuses(target)
     local statusModules = finalConfig.status or {}
@@ -324,7 +386,7 @@ function Sexbound.Actor.SexTalk:sayRandom()
             table.insert(finalModules, bothStatusModules[s])
             if bothStatusModules[s].overrideSoloStatus then bothStatusBlock[s] = true end -- Mark as blocked for solo status modules
         end
-        
+
         if statusModules[s] and not bothStatusBlock[s] then table.insert(finalModules, statusModules[s]) end
     end
     for _,s in ipairs(otherStatuses) do
@@ -334,7 +396,7 @@ function Sexbound.Actor.SexTalk:sayRandom()
     for _,m in ipairs(finalModules) do
         if m.override then dialogPool = m.text or {} else util.appendLists(dialogPool, m.text or {}) end
     end
-    
+
     local dialog = #dialogPool > 0 and util.randomChoice(dialogPool) or ""
 
     if "string" and type(dialog) and dialog ~= "" then
@@ -342,7 +404,7 @@ function Sexbound.Actor.SexTalk:sayRandom()
             local name = self._parent:getName()
             if name and name ~= "" then dialog = name..": "..dialog end
         end
-        
+
         local emote = self:getParent():getPlugins("emote")
         local emoticon
 
@@ -368,16 +430,22 @@ function Sexbound.Actor.SexTalk:sayRandom()
     end
 end
 
--- Getters / Setters
+-- [[ Getters / Setters ]]
 
+--- Gets the currently active position
+--- @return Sexbound.Position # The currently active position
 function Sexbound.Actor.SexTalk:getPosition()
     return self:getParent():getPosition()
 end
 
+--- Gets the global sextalk manager instance
+--- @return Sexbound.Sextalk # The global sextalk manager instance
 function Sexbound.Actor.SexTalk:getManager()
     return self:getParent():getParent():getSextalk()
 end
 
+--- Returns whethere or not only players are in the sexnode
+--- @return boolean # Whethere or not only players are in the sexnode
 function Sexbound.Actor.SexTalk:onlyPlayers()
     local actors = self:getParent():getParent():getActors()
     for _,a in ipairs(actors) do
@@ -386,6 +454,9 @@ function Sexbound.Actor.SexTalk:onlyPlayers()
     return true
 end
 
+--- [DEBUG] Dump anything for logging purposes
+--- @param o any Any input
+--- @return string # The dump
 function Sexbound.Actor.SexTalk:dump(o)
    if type(o) == 'table' then
       local s = '{ '

@@ -1,11 +1,11 @@
---- Sexbound.API Module.
--- @module Sexbound.API
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require "/scripts/sexbound/lib/sexbound.lua"
 end
 
+--- Sexbound.API Module.
+--- @class Sexbound.API
+--- @author Locuturus
+--- @license GNU General Public License v3.0
 Sexbound.API = {}
 
 if not SXB_RUN_TESTS then
@@ -16,7 +16,8 @@ if not SXB_RUN_TESTS then
 end
 
 --- Initializes a new instance of Sexbound.
--- @usage function init() Sexbound.API.init() end
+--- @param maxActors integer The maximum number of actors
+--- @return Sexbound # The Sexbound instance or the error message
 Sexbound.API.init = function(maxActors)
     maxActors = maxActors or 2
     if maxActors <= 0 then maxActors = 1 end
@@ -30,8 +31,7 @@ Sexbound.API.init = function(maxActors)
 end
 
 --- Updates the current instance.
--- @param dt The attached to entities delta time value.
--- @usage function update(dt) Sexbound.API.update(dt) end
+--- @param dt number The delta time since last tick
 Sexbound.API.update = function(dt)
     if not self._sexbound then
         return
@@ -45,10 +45,10 @@ Sexbound.API.update = function(dt)
 end
 
 --- Uninitializes the current instance.
--- @usage function uninit() Sexbound.API.uninit() end
+--- @return boolean # Whethere or not uninitialization was successful
 Sexbound.API.uninit = function()
     if not self._sexbound then
-        return
+        return true
     end
 
     local _, result = xpcall(function()
@@ -59,7 +59,7 @@ Sexbound.API.uninit = function()
 end
 
 --- Returns the running configuration for the current instance.
--- @usage local version = Sexbound.API.getConfig().version
+--- @return table? # The config of the sexbound instance or nil if sexbound instance does not exist
 Sexbound.API.getConfig = function()
     if not self._sexbound then
         return
@@ -73,10 +73,10 @@ Sexbound.API.getConfig = function()
 end
 
 --- Return the current animation rate of the attached to entity.
--- @usage local animationRate = Sexbound.API.getAnimationRate()
+--- @return number # The current animation rate
 Sexbound.API.getAnimationRate = function()
     if not self._sexbound then
-        return
+        return 0
     end
 
     local _, result = xpcall(function()
@@ -87,8 +87,7 @@ Sexbound.API.getAnimationRate = function()
 end
 
 --- Replace the animation rate with a specified rate.
--- @param animRate A positive integer value.
--- @usage Sexbound.API.setAnimationRate(1)
+--- @param animRate number The new animation rate
 Sexbound.API.setAnimationRate = function(animRate)
     if not self._sexbound then
         return
@@ -102,7 +101,9 @@ Sexbound.API.setAnimationRate = function(animRate)
 end
 
 --- Returns the facing direction of the attached to entity.
--- @usage local facingDirection = Sexbound.API.getFacingDirection()
+--- @return integer|nil
+--- |"1" # Right
+--- |"-1" # Left
 Sexbound.API.getFacingDirection = function()
     if not self._sexbound then
         return
@@ -116,7 +117,7 @@ Sexbound.API.getFacingDirection = function()
 end
 
 --- Returns the entity name of the attached to entity.
--- @usage local name = Sexbound.API.getEntityName()
+--- @return string? # The object entity's name or nil if sexbound instance does not exist
 Sexbound.API.getEntityName = function()
     if not self._sexbound then
         return
@@ -130,7 +131,7 @@ Sexbound.API.getEntityName = function()
 end
 
 --- Returns the state machine for the current instance.
--- @usage local stateMachine = Sexbound.API.getStateMachine()
+--- @return Sexbound.StateMachine? # The statemachine or nil if sexbound instance doesn't exist
 Sexbound.API.getStateMachine = function()
     if not self._sexbound then
         return
@@ -144,7 +145,7 @@ Sexbound.API.getStateMachine = function()
 end
 
 --- Returns the UUID of the entity running Sexbound.
--- @usage local id = Sexbound.API.getUniqueId()
+--- @return string? # The sexnode's uuid or nil if sexbound instance does not exist
 Sexbound.API.getUniqueId = function()
     if not self._sexbound then
         return
@@ -158,10 +159,10 @@ Sexbound.API.getUniqueId = function()
 end
 
 --- Returns the storage of this entity
--- @usage local s = Sexbound.API.getStorage()
+--- @return table? # The object's storage or nil if sexbound instance does not exist
 Sexbound.API.getStorage = function()
     if not self._sexbound then
-        return
+        return 
     end
 
     local _, result = xpcall(function()
@@ -172,7 +173,7 @@ Sexbound.API.getStorage = function()
 end
 
 --- Returns the current version of the API.
--- @usage local version = Sexbound.API.getVersion()
+--- @return string? # The version number or nil if sexbound instance does not exist
 Sexbound.API.getVersion = function()
     if not self._sexbound then
         return
@@ -186,8 +187,7 @@ Sexbound.API.getVersion = function()
 end
 
 --- Handles the specified arguments from an interact request.
--- @param args The arguments table from this object's onInteraction hook.
--- @usage function onInteraction(args) return Sexbound.API.handleInteract(args) end
+--- @param args table The arguments table from this object's onInteraction hook.
 Sexbound.API.handleInteract = function(args)
     if not self._sexbound then
         return
@@ -201,7 +201,6 @@ Sexbound.API.handleInteract = function(args)
 end
 
 --- Commands this object to respawn the stored actor.
--- @usage function die() Sexbound.API.respawnStoredActor() end
 Sexbound.API.respawnStoredActor = function()
     if not self._sexbound then
         return

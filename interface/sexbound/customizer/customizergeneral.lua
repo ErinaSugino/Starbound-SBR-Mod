@@ -20,25 +20,25 @@ function Customizer.General:init()
   self.subGenderList = self._parent.config.subGenders or {}
   table.insert(self.subGenderList, 1, {name="None",available=true})
   self.maxSubGenderIndex = #self.subGenderList
-  
+
   local currentSubGender = self._parent.config.currentGender or "None"
   if currentSubGender ~= "male" and currentSubGender ~= "female" then self.currentSubGender = currentSubGender end
-  
+
   self:updateSexbuxAmount()
   widget.setText("generalTab.subGenderLabel", self.currentSubGender)
   for i,v in ipairs(self.subGenderList) do
     if v.name == self.currentSubGender then self.currentSubGenderIndex = i break end
   end
-  
+
   self.sterilized = self._parent.config.sterilized
   if self.sterilized == nil then self.sterilized = false end
   if self.sterilized then widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are^reset;^shadow; sterilized.") end
-  
+
   self.infertile = self._parent.config.infertile
   if self.infertile == nil then self.infertile = false end
   if self.infertile then widget.setText("generalTab.infertileLabel", "^shadow;You currently ^orange;are^reset;^shadow; infertile.")
   else widget.setButtonEnabled("generalTab.infertileConfirm", false) end
-  
+
   self.autoClimax = self._parent.config.autoClimax
   if self.autoClimax == nil then self.autoClimax = false end
   if self.autoClimax then widget.setText("generalTab.autoClimaxLabel", "^shadow;You currently ^orange;do^reset;^shadow; climax automatically.") end
@@ -74,7 +74,7 @@ end
 function Customizer.General:nextSubGender()
   self.currentSubGenderIndex = self.currentSubGenderIndex + 1
   if self.currentSubGenderIndex > self.maxSubGenderIndex then self.currentSubGenderIndex = 1 end
-  
+
   local subgender = self.subGenderList[self.currentSubGenderIndex] or {}
   self:changeSubGender(subgender)
 end
@@ -82,26 +82,26 @@ end
 function Customizer.General:prevSubGender()
   self.currentSubGenderIndex = self.currentSubGenderIndex - 1
   if self.currentSubGenderIndex <= 0 then self.currentSubGenderIndex = self.maxSubGenderIndex end
-  
+
   local subgender = self.subGenderList[self.currentSubGenderIndex] or {}
   self:changeSubGender(subgender)
 end
 
 function Customizer.General:applySubGender()
-    local target = self.subGenderList[self.currentSubGenderIndex] or {}
-    target = target.name or ""
-    
+    local targetObj = self.subGenderList[self.currentSubGenderIndex] or {}
+    target = targetObj.name or ""
+
     if target == "" or target == self.currentSubGender then
       widget.playSound("/sfx/interface/clickon_error.ogg")
       return false
     end
-    
+
     local res = player.consumeCurrency("sexbux", 2500)
     if not res then
       widget.playSound("/sfx/interface/clickon_error.ogg")
       return false
     end
-    
+
     self.currentSubGender = target
     if target == "None" then target = nil end
     world.sendEntityMessage(player.id(), "Sexbound:SubGender:Change", target)
@@ -114,7 +114,7 @@ end
 function Customizer.General:changeSubGender(subgender)
     local name = subgender.name or "Unknown"
     local enabled = subgender.available or false
-    
+
     widget.setText("generalTab.subGenderLabel", "^shadow;"..name)
     if name == self.currentSubGender then
       widget.setVisible("generalTab.subGenderConfirm", false)
@@ -125,7 +125,7 @@ function Customizer.General:changeSubGender(subgender)
       widget.setVisible("generalTab.subGenderPriceIcon", true)
       widget.setVisible("generalTab.subGenderPrice", true)
     end
-    
+
     if enabled then
       widget.setButtonEnabled("generalTab.subGenderConfirm", true)
     else
@@ -139,7 +139,7 @@ function Customizer.General:sterilize()
         widget.playSound("/sfx/interface/clickon_error.ogg")
         return false
     end
-    
+
     if self.sterilized then
         widget.setText("generalTab.sterilizeLabel", "^shadow;You currently ^orange;are not^reset;^shadow; sterilized.")
         world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "sterilized")
@@ -155,16 +155,16 @@ function Customizer.General:makeFertile()
         widget.playSound("/sfx/interface/clickon_error.ogg")
         return false
     end
-    
+
     local res = player.consumeCurrency("sexbux", 2000)
     if not res then
         widget.playSound("/sfx/interface/clickon_error.ogg")
         return false
     end
-    
+
     widget.setText("generalTab.infertileLabel", "^shadow;You currently ^orange;are not^reset;^shadow; infertile.")
     world.sendEntityMessage(player.id(), "Sexbound:Status:RemoveStatus", "infertile")
-    
+
     self.infertile = false
 end
 

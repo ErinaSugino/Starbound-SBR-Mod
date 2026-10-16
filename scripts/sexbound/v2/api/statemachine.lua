@@ -1,16 +1,16 @@
 --- Sexbound.API.StateMachine Module.
--- @module Sexbound.API.StateMachine
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.API.StateMachine
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.API.StateMachine = {}
 
---- Returns the status the specified State Machine state for this instance.
--- @param[opt] name A string that represents a state name.
--- @usage local isIdling = Sexbound.API.StateMachine.getStatus("idle")
--- @usage local status   = Sexbound.API.StateMachine.getStatus()
+--- Returns whethere or not a given state machine status is active
+--- @param name string The status name
+--- @return boolean # Whethere or not that given status is active
 Sexbound.API.StateMachine.getStatus = function(name)
     if not self._sexbound then
-        return
+        return false
     end
 
     local _, result = xpcall(function()

@@ -14,7 +14,7 @@ function SexUI.Positions.new(parent, _config)
   _self:refreshPositionButtons()
   _self._canvas = widget.bindCanvas("positions")
   local offset = widget.getPosition("positions")
-  
+
   for index, button in ipairs(_self._config.buttons) do
     local buttons = _self._parent._buttons[_self._buttonPrefix] or _self._parent._buttons["main"]
     button.offset = offset
@@ -50,13 +50,13 @@ function SexUI.Positions:refreshPositionButtons()
     offset = 0
     self._parent._sexPositionsPage = 1
   end
-  
+
   self._parent:forEachButton(function(key, button)
-    local posNum = string.sub(key, -1, -1) or 0
-    posNum = tonumber(posNum)
+    local posNumS = string.sub(key, -1, -1) or 0
+    posNum = tonumber(posNumS)
     if posNum > 0 then posNum = posNum + offset end
     local positionData = self._allPositions[posNum] or {}
-    
+
     if positionData.name then button.config.name = positionData.name else button.config.name = "Position "..posNum end
     --if positionData.image then button.config.image = positionData.image else button.config.image = nil end
     --if positionData.imageOffset then button.config.imageOffset = positionData.imageOffset else button.config.imageOffset = {0,0} end

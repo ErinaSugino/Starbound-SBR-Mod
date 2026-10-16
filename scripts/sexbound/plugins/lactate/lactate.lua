@@ -1,19 +1,25 @@
---- Sexbound.Actor.Lactate Class Module.
--- @classmod Sexbound.Actor.Lactate
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
 end
 
+--- Sexbound.Actor.Lactate Class Module.
+--- @class Sexbound.Actor.Lactate: Sexbound.Actor.Plugin
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _burstTimer1 number
+--- @field _burstTimer2 number
+--- @field _nextBurstTimer1 number
+--- @field _nextBurstTimer2 number
 Sexbound.Actor.Lactate = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.Lactate_mt = {
     __index = Sexbound.Actor.Lactate
 }
 
 --- Instantiates a new instance of Lactation.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The plugin's config
+--- @return Sexbound.Actor.Lactate # The newly created lactation plugin instance
 function Sexbound.Actor.Lactate:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "LACT",
@@ -31,7 +37,7 @@ function Sexbound.Actor.Lactate:new(parent, config)
 end
 
 --- Handles message events.
--- @param message
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Lactate:onMessage(message)
     if message:getType() == "Sexbound:Climax:FireShot" then
         self:burstNipple1("-lactation-spew1")
@@ -39,8 +45,8 @@ function Sexbound.Actor.Lactate:onMessage(message)
     end
 end
 
---- Handles event: onUpdateSexState
--- @param dt delta time
+--- Function called every tick to update timers
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Lactate:onUpdateAnyState(dt)
     self._burstTimer1 = self._burstTimer1 + dt
     if self._burstTimer1 >= self._nextBurstTime1 then
@@ -54,6 +60,7 @@ function Sexbound.Actor.Lactate:onUpdateAnyState(dt)
 end
 
 --- Plays sexbound_lactation particle effect for Nipple position #1
+--- @param particleSuffix string? Suffix of particle emitter names
 function Sexbound.Actor.Lactate:burstNipple1(particleSuffix)
     if self:thisActorHasExcludedSpecies() then return end
     if self:getConfig().requiresPregnancy and not self:getParent():isVisiblyPregnant() then
@@ -70,6 +77,7 @@ function Sexbound.Actor.Lactate:burstNipple1(particleSuffix)
 end
 
 --- Plays sexbound_lactation particle effect for Nipple position #2
+--- @param particleSuffix string? Suffix of particle emitter names
 function Sexbound.Actor.Lactate:burstNipple2(particleSuffix)
     if self:thisActorHasExcludedSpecies() then return end
     if self:getConfig().requiresPregnancy and not self:getParent():isVisiblyPregnant() then
@@ -86,6 +94,7 @@ function Sexbound.Actor.Lactate:burstNipple2(particleSuffix)
 end
 
 --- Generates the Next Burst Time
+--- @return number # The generated next burst time
 function Sexbound.Actor.Lactate:generateNextBurstTime()
     local nextBurstTime = util.randomInRange(self:getConfig().nextBurstTime)
 
@@ -97,6 +106,7 @@ function Sexbound.Actor.Lactate:generateNextBurstTime()
 end
 
 --- Checks whether or not this actor is excluded by species
+--- @return boolean # Whethere or not this actor cannot lactate because of species
 function Sexbound.Actor.Lactate:thisActorHasExcludedSpecies()
     for _, species in ipairs(self:getConfig().excludedSpecies or {}) do
         if self:getParent():getSpecies() == species then

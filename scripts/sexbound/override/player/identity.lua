@@ -1,14 +1,20 @@
 require "/scripts/sexbound/override/common/identity.lua"
 
+--- Player identity builder class
+--- @class Sexbound.Player.Identity: Sexbound.Common.Identity
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.Player.Identity = Sexbound.Common.Identity:new()
 Sexbound.Player.Identity_mt = {
     __index = Sexbound.Player.Identity
 }
 
+--- Creates new player identity builder instance
+--- @param parent Sexbound.Player The calling parent player manager class
+--- @return Sexbound.Player.Identity # The newly created player instance builder instance
 function Sexbound.Player.Identity:new(parent)
-    local _self = setmetatable({
-        _parent = parent
-    }, Sexbound.Player.Identity_mt)
+    local _self = setmetatable({}, Sexbound.Player.Identity_mt)
 
     _self:init(parent)
 
@@ -16,8 +22,8 @@ function Sexbound.Player.Identity:new(parent)
 end
 
 --- Returns a table consisting of identifying information about the entity.
--- @param portraitData
-function Sexbound.Player.Identity:build(target, portraitData)
+--- @return table # The entity's actor identity data
+function Sexbound.Player.Identity:build()
     local identity = {
         gender = player.gender() or "male",
         species = player.species() or "human",
@@ -37,7 +43,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
         hairType = "1",
         hairDirectives = ""
     }
-    
+
     local speciesConfig = {}
     -- Attempt to read configuration from species config file.
     if not pcall(function()
@@ -67,7 +73,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
 
         -- Strip masks as this can cause issues with file detection in some custom clients
         v.image = string.gsub(v.image, '%?addmask=.+%.png:?.-(%?)', '%1')
-        
+
         -- Attempt to find body identity
         if (string.find(v.image, "body.png") ~= nil) then
             identity.bodyDirectives = string.match(v.image, '%?replace.*')
@@ -85,10 +91,10 @@ function Sexbound.Player.Identity:build(target, portraitData)
             identity.hairDirectives = self:filterReplace(v.image)
         end
     end)
-    
+
     local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
     local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
-    
+
     -- Separate directives string into individual color pairs
     identity.genetics.bodyColor = {}
     identity.genetics.bodyColorAverage = {0,0,0}
@@ -96,7 +102,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
     identity.genetics.undyColorAverage = {0,0,0}
     identity.genetics.hairColor = {}
     identity.genetics.hairColorAverage = {0,0,0}
-    
+
     local res,err = pcall(function()
         local bodyColors = {}
         if string.match(identity.bodyDirectives, "^%?replace;") then
@@ -123,7 +129,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
                 if identity.genetics.undyColorPoolAverage[i][1] >= 0 then ref2 = Sexbound.Util.listToUpper(identity.genetics.undyColorPool[i]) end
                 i = i + 1
             end
-            
+
             for k,v in string.gmatch(identity.bodyDirectives, "%?replace=(%w+)=(%w+);?") do
                 local compare = string.upper(k)
                 if ref[compare] then identity.genetics.bodyColor[compare.."X"] = v end
@@ -148,7 +154,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
                     if identity.genetics.hairColorPoolAverage[i][1] >= 0 then ref = Sexbound.Util.listToUpper(identity.genetics.hairColorPool[i]) end
                     i = i + 1
                 end
-                
+
                 for k,v in string.gmatch(identity.hairDirectives, "%?replace=(%w+)=(%w+);?") do
                     local compare = string.upper(k)
                     if ref[compare] then identity.genetics.hairColor[compare.."X"] = v end
@@ -156,8 +162,8 @@ function Sexbound.Player.Identity:build(target, portraitData)
             end
         end
     end)
-    if not res and self._parent:canLog("warn") then sb.logWarn("[SxB | GENE] - Couldn't fetch entity colors! Entity "..entity.id().." has no colors!") sb.logWarn(err) end
-    
+    if not res and self._parent:canLog("warn") then sb.logWarn("[SxB | GENE] - Couldn't fetch entity colors! Entity "..entity.id().." has no colors!") sb.logWarn(err --[[@as string]]) end
+
     -- Pre calculate color palette averages
     local x = 0
     for i,v in pairs(identity.genetics.bodyColor) do
@@ -180,7 +186,7 @@ function Sexbound.Player.Identity:build(target, portraitData)
         identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = identity.genetics.hairColorAverage[1]+r,identity.genetics.hairColorAverage[2]+g,identity.genetics.hairColorAverage[3]+b
     end
     identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = math.floor(identity.genetics.hairColorAverage[1]/x),math.floor(identity.genetics.hairColorAverage[2]/x),math.floor(identity.genetics.hairColorAverage[3]/x)
-    
+
     if self._parent:canLog("debug") then
         sb.logInfo("Entity colors:")
         sb.logInfo(sb.print(identity.genetics.bodyColor))

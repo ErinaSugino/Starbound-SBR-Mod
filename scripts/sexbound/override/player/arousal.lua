@@ -2,14 +2,21 @@ if not SXB_RUN_TESTS then
     require "/scripts/sexbound/override/common/arousal.lua"
 end
 
+--- Player arousal manager class
+--- @class Sexbound.Player.Arousal: Sexbound.Common.Arousal
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _arousalState integer
+--- @field _moanConfig table
 Sexbound.Player.Arousal = Sexbound.Common.Arousal:new()
 Sexbound.Player.Arousal_mt = { __index = Sexbound.Player.Arousal }
 
---- Instantiates this class which extends Common Arousal
--- @param parent
+--- Creates a new player arousal manager instance
+--- @param parent Sexbound.Player The calling parent player manager instance
+--- @return Sexbound.Player.Arousal # The newly created player arousal manager instance
 function Sexbound.Player.Arousal:new(parent)
     local _self = setmetatable({
-        _parent = parent,
         _arousalState = -1
     }, Sexbound.Player.Arousal_mt)
 
@@ -21,14 +28,14 @@ function Sexbound.Player.Arousal:new(parent)
     return _self
 end
 
---- Updates this instance
--- @param dt
+--- Function called each tick to update timers
+--- @param dt number The delta time since last tick
 function Sexbound.Player.Arousal:update(dt)
     -- super update
     Sexbound.Common.Arousal.update(self, dt)
-    
+
     if not self._config.playerArousalEffects then return end
-    
+
     if self._usesHeat then
         local heatTimer = storage.sexbound.heatCycle or 0
         if heatTimer <= 0 then
@@ -49,7 +56,7 @@ function Sexbound.Player.Arousal:update(dt)
         local max = self._maxAmount
         local cur = self:getAmount()
         local percent = cur / max
-        
+
         local targetArousalState = -1
         if percent < 0.5 then
             targetArousalState = 0
@@ -58,17 +65,18 @@ function Sexbound.Player.Arousal:update(dt)
         else
             targetArousalState = 2
         end
-        
+
         if self._arousalState ~= targetArousalState then self:updateArousalStatus() end
     end
 end
 
+--- Loads the moan plugin's config file
 function Sexbound.Player.Arousal:loadMoanConfig()
     local plugins = self:getParent():getConfig().actor.plugins or {}
     local plugin = plugins["moan"] or {}
-    
+
     local loadedConfig = {}
-    
+
     for _, _config in pairs(plugin.config) do
         xpcall(function()
             loadedConfig = util.mergeTable(loadedConfig, root.assetJson(_config))
@@ -76,17 +84,18 @@ function Sexbound.Player.Arousal:loadMoanConfig()
             sb.logError("[SxB | ENT] Fetching Moan config for arousal handler failed: "..errorMessage)
         end)
     end
-    
+
     self._moanConfig = loadedConfig["moan"] or {}
     self._moanConfig = self._moanConfig["soundConfig"] or {}
     self._moanConfig = self._moanConfig[player.species()] or self._moanConfig["default"] or {}
     self._moanConfig = self._moanConfig[player.gender()] or {}
 end
 
+--- Updates the arousal status (effects) of this player
 function Sexbound.Player.Arousal:updateArousalStatus()
     local removeList = {}
     local addList = {}
-    
+
     if not self._config.playerArousalEffects then
         removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
         self._arousalState = -1
@@ -98,7 +107,7 @@ function Sexbound.Player.Arousal:updateArousalStatus()
             local max = self._maxAmount
             local cur = self:getAmount()
             local percent = cur / max
-            
+
             if percent < 0.5 then
                 removeList = {"sexbound_arousal_heat", "sexbound_arousal_heat_weak", "sexbound_arousal_debuff1","sexbound_arousal_debuff2"}
                 self._arousalState = 0
@@ -113,7 +122,7 @@ function Sexbound.Player.Arousal:updateArousalStatus()
             end
         end
     end
-    
+
     for _,s in ipairs(removeList) do
         status.removeEphemeralEffect(s)
     end
@@ -122,7 +131,8 @@ function Sexbound.Player.Arousal:updateArousalStatus()
     end
 end
 
-function Sexbound.Common.Arousal:initPlayerMessageHandlers()
+--- Initializes additional player-specific entity message handlers
+function Sexbound.Player.Arousal:initPlayerMessageHandlers()
     message.setHandler("Sexbound:Pregnant:Pregnancy", function(_, _, args)
         status.removeEphemeralEffect("sexbound_arousal_heat")
         status.removeEphemeralEffect("sexbound_arousal_heat_weak")

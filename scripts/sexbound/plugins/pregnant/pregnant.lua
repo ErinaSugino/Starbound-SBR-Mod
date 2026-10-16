@@ -1,20 +1,24 @@
---- Sexbound.Actor.Pregnant Class Module.
--- @classmod Sexbound.Actor.Pregnant
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
     require("/scripts/sexbound/plugins/pregnant/baby_factory.lua")
 end
 
+--- Sexbound.Actor.Pregnant Class Module.
+--- @class Sexbound.Actor.Pregnant: Sexbound.Actor.Plugin
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _dripTimer number
+--- @field _inseminations table
 Sexbound.Actor.Pregnant = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.Pregnant_mt = {
     __index = Sexbound.Actor.Pregnant
 }
 
 --- Instantiates a new instance of Pregnant.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The plugin config
+--- @return Sexbound.Actor.Pregnant # The newly created pregnancy plugin instance
 function Sexbound.Actor.Pregnant:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "PREG",
@@ -22,7 +26,7 @@ function Sexbound.Actor.Pregnant:new(parent, config)
         _dripTimer = 0,
         _inseminations = {}
     }, Sexbound.Actor.Pregnant_mt)
-    
+
     local mainConfig = parent:getParent():getConfig() or {}
     _self:fetchRemoteConfig(mainConfig)
     _self:validateConfig()
@@ -35,7 +39,7 @@ function Sexbound.Actor.Pregnant:new(parent, config)
 end
 
 --- Handles message events.
--- @param message
+--- @param message Sexbound.Message The message
 function Sexbound.Actor.Pregnant:onMessage(message)
     if message:getType() == "Sexbound:Pregnant:BecomePregnant" then
         self:handleBecomePregnant(message)
@@ -43,17 +47,19 @@ function Sexbound.Actor.Pregnant:onMessage(message)
 end
 
 --- Returns a reference to this actor's insemination decay rate range.
+--- @return table<integer, number> # The decay rate range
 function Sexbound.Actor.Pregnant:getInseminationDecay()
     return self._config.inseminationDecay or { 0.2, 0.3 }
 end
 
 --- Returns a reference to this actor's drip rate modifier.
+--- @return number # The drip rate modifiter
 function Sexbound.Actor.Pregnant:getDripRateModifier()
     return self._config.dripRateModifier or 1.5
 end
 
---- Handle delta time updates
--- @param deltaTime
+--- Function called on every tick
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
     if self:getParent():getEntityType() == "player" then self:progressBabyState(dt) end
 
@@ -63,6 +69,9 @@ function Sexbound.Actor.Pregnant:onUpdateAnyState(dt)
     end
 end
 
+--- Processes this actor's insemination drip
+--- @param dt number The delta time since last tick
+--- @param fillCount number The current fill level
 function Sexbound.Actor.Pregnant:drip(dt, fillCount)
     self._dripTimer = math.max(0, self._dripTimer - dt)
 
@@ -77,23 +86,18 @@ function Sexbound.Actor.Pregnant:drip(dt, fillCount)
     end
 end
 
+--- Returns whethere or not this actor may drip right now
+--- @return boolean # Whethere or not dripping is blocked
 function Sexbound.Actor.Pregnant:isDripBlocked()
-    --local impregnators = self:getParent():getImpregnatorList()
-    --for _, actor in ipairs(impregnators) do
-    --    if self:otherActorHasRoleInPositionWhichCanImpregnate(actor) then
-    --        return true
-    --    end
-    --end
-    --return false
     return self._parent:hasInteractionType({"direct", "toy_dick"})
 end
 
 --- Function to progress pregnancy delay and progress based on script delta time
--- @param number deltaTime
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Pregnant:progressBabyState(dt)
     local pregnancies = self:getParent():getStorage():getData("sexbound").pregnant or {}
     if isEmpty(pregnancies) then return end
-    
+
     for i,b in pairs(pregnancies) do
         local delay = b.delay or 0
         if delay > 0 then
@@ -104,9 +108,11 @@ function Sexbound.Actor.Pregnant:progressBabyState(dt)
     end
 end
 
+--- Set up all relevant entity message handlers
+--- @private
 function Sexbound.Actor.Pregnant:setupMessageHandlers()
     self:getLog():debug("Setting up message handlers for "..self:getParent():getName().." in "..entity.id())
-    
+
     message.setHandler("Sexbound:Pregnant:AddStatus", function(_, _, args)
         local compId = args.id
         local statusName = args.effect
@@ -125,7 +131,8 @@ function Sexbound.Actor.Pregnant:setupMessageHandlers()
     end)
 end
 
---- Helper - Filters the pregnancies in storage and ensures it is set to a table
+--- [Helper] Filters the pregnancies in storage and ensures it is set to a table
+--- @private
 function Sexbound.Actor.Pregnant:ensurePregnanciesAreStoredAsTable()
     local storage = self:getParent():getStorage():getData("sexbound").pregnant
 
@@ -135,7 +142,7 @@ function Sexbound.Actor.Pregnant:ensurePregnanciesAreStoredAsTable()
 end
 
 --- Handler function for 'BecomePregnant' message
--- @param message
+--- @param message Sexbound.Message The message
 function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
     -- Climax logic doesn't trigger pregnancy request when climaxing actor cannot impregnate anyway - this check is only for relevant factors of the impregnated actor
     local otherActor = message:getData()
@@ -147,7 +154,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
     local canPregnate = self:thisActorHasRoleInPositionWhichCanBeImpregnated()
     -- Abort checks if this actor can't get pregnant in the first place, or is not in a vaginal penetration role
     if not canOvulate or not canPregnate then return end
-    
+
     local isProtected = self:thisActorIsUsingContraception()
     local isOvulating = self:thisActorIsOvulating()
     local ovulationCriteria = false
@@ -156,7 +163,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
     self:getLog():debug("Ovulation check: canOvulate "..tostring(canOvulate).." - isOvulating "..tostring(isOvulating).." - final "..tostring(ovulationCriteria))
     -- Second line of defense: We can ovulate, but aren't right now. No pregnancies possible, abort.
     if not ovulationCriteria then return end
-    
+
     local impregnators
     if otherActor then impregnators = {otherActor} else impregnators = self:getParent():getImpregnatorList() end
     local bellyFull, isClone, canImpregnate, directInsertion, compatible, curFertility
@@ -214,6 +221,7 @@ function Sexbound.Actor.Pregnant:handleBecomePregnant(message)
 end
 
 --- Adds a new pregnancy to the in-game entity associated with this actor
+--- @param daddy Sexbound.Actor The father actor
 function Sexbound.Actor.Pregnant:becomePregnant(daddy)
     self:getLog():info("Actor will become pregnant: " .. self:getParent():getName())
 
@@ -222,7 +230,7 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         self:getLog():warn("Actor has not become pregnant due to no successful pregnancy generation")
         return
     end
-    
+
     if self._config.incestPenalty then pregnancyConfig.incestLevel = self:incestLevel(daddy)
     else pregnancyConfig.incestLevel = 0 end
 
@@ -237,7 +245,7 @@ function Sexbound.Actor.Pregnant:becomePregnant(daddy)
         self:tryToRefreshStatusTextForThisActor(daddy)
         self:tryToApplyPregnantStatusEffectForThisActor(daddy)
     end
-    
+
     if self._parent:getEntityType() == "npc" and daddy:getEntityType() == "npc" then
         self._parent._config.fertilityPenalty = self._parent._config.fertilityPenalty * (self._parent._config.fertilityPenalty / 2)
         if self._parent._config.fertilityPenalty < 0.0001 then self._parent._config.fertilityPenalty = 0 end
@@ -250,11 +258,12 @@ end
 function Sexbound.Actor.Pregnant:hazardAbortion()
     local data = self:getParent():getStorage():getData()
     data.sexbound.pregnant = {}
-    
+
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Pregnant:HazardAbortion")
 end
 
 --- Generates and returns a random number between 1 & 100
+--- @return integer # 1..100
 function Sexbound.Actor.Pregnant:generateRandomNumber()
     return util.randomIntInRange({1, 100})
 end
@@ -276,21 +285,25 @@ function Sexbound.Actor.Pregnant:increaseStatisticPregnancyCountForThisActor()
 end
 
 --- Returns whether or not the actor is pregnant
+--- @return boolean # Whethere or not this actor is pregnant
 function Sexbound.Actor.Pregnant:isPregnant()
     return self:getCurrentPregnancyCount() > 0
 end
 
 --- Returns whether or not the actor is visibly pregnant
+--- @return boolean # Whethere or not this actor is visibly pregnant
 function Sexbound.Actor.Pregnant:isVisiblyPregnant()
     return self:getCurrentVisiblePregnancyCount() > 0
 end
 
 --- Returns a reference to the last current pregnancy
+--- @return table # The latest stored pregnancy data
 function Sexbound.Actor.Pregnant:lastCurrentPregnancy()
-    return self:getCurrentPregnancies(self:getCurrentPregnancyCount())
+    return self:getCurrentPregnancies(self:getCurrentPregnancyCount()) --[[@as table]]
 end
 
 --- Loads notifications configuration from file
+--- @return table<string, any> # The pregnancy notification data
 function Sexbound.Actor.Pregnant:loadNotificationDialog()
     local filePath = self:getConfig().notifications
     filePath = util.replaceTag(filePath, "langcode", self._parent._parent:getLanguageCode())
@@ -301,6 +314,7 @@ function Sexbound.Actor.Pregnant:loadNotificationDialog()
 end
 
 --- Returns whether or not this actor has a role in a position which allows it to be impregnated
+--- @return boolean # Whethere or not this actor is in a role that can be impregnated
 function Sexbound.Actor.Pregnant:thisActorHasRoleInPositionWhichCanBeImpregnated()
     local positionConfig = self:getParent():getPosition():getConfig()
 
@@ -308,6 +322,7 @@ function Sexbound.Actor.Pregnant:thisActorHasRoleInPositionWhichCanBeImpregnated
 end
 
 --- Returns whether or not the other actor has a role in a position which allows it to impregnate
+--- @return boolean # Whethere or not this actor is in a role that can impregnate
 function Sexbound.Actor.Pregnant:otherActorHasRoleInPositionWhichCanImpregnate(otherActor)
     local positionConfig = self:getParent():getPosition():getConfig()
 
@@ -315,6 +330,8 @@ function Sexbound.Actor.Pregnant:otherActorHasRoleInPositionWhichCanImpregnate(o
 end
 
 --- Returns whether or not the other actor has a role in a position which can impregnated this actor
+--- @param otherActor Sexbound.Actor The other actor trying to impregnate
+--- @return boolean # Whethere or not this actor is in a role that can be impregnated by the given actor
 function Sexbound.Actor.Pregnant:canImpregnate(otherActor)
     local positionConfig = self:getParent():getPosition():getConfig()
     local thisNum = self:getParent():getActorNumber()
@@ -326,6 +343,7 @@ function Sexbound.Actor.Pregnant:canImpregnate(otherActor)
 end
 
 --- Returns whether or not this actor is already too pregnant
+--- @return boolean # Whethere or not this actor has more pregnancies than allowed
 function Sexbound.Actor.Pregnant:thisActorIsAlreadyTooPregnant()
     if self:getConfig().allowMultipleImpregnations == true or self:getConfig().enableMultipleImpregnations == true then
         return false
@@ -335,6 +353,7 @@ function Sexbound.Actor.Pregnant:thisActorIsAlreadyTooPregnant()
 end
 
 --- Returns whether or not this actor can ovulate
+--- @return boolean # Whethere or not this actor can ovulate
 function Sexbound.Actor.Pregnant:thisActorCanOvulate()
     local thisActor = self:getParent()
 
@@ -349,15 +368,18 @@ function Sexbound.Actor.Pregnant:thisActorCanOvulate()
 end
 
 --- Returns whether or not this actor is currently ovulating
+--- @return boolean # Whethere or not this actor is currently ovulating
 function Sexbound.Actor.Pregnant:thisActorIsOvulating()
     if self:getParent():getEntityType() ~= "player" then return true end
-    
+
     if self:getParent():status():hasStatus("sexbound_custom_ovulating") then return true end
-    
+
     return false
 end
 
 --- Returns whether or not this actor is a clone of the other actor
+--- @param otherActor Sexbound.Actor The other actor to check against
+--- @return boolean # Whethere or not this actor is a clone of the target actor
 function Sexbound.Actor.Pregnant:thisActorIsCloneOfOtherActor(otherActor)
     if self:getConfig().enableAsexualReproduction == true then
         return false
@@ -366,23 +388,25 @@ function Sexbound.Actor.Pregnant:thisActorIsCloneOfOtherActor(otherActor)
 end
 
 --- Returns the fertility value applicable to the current entity type
+--- @return number # The fertility probability of this actor 0..1
 function Sexbound.Actor.Pregnant:getFertility()
     if self:getParent():getEntityType() == "player" then return self:getConfig().fertility
     else return self:getConfig().fertilityNPC end
 end
 
 --- Returns whether or not this actor has enough fertility to become pregnant
+--- @return boolean # Whethere or not this actor, with all buffs and multipliers, rolled high enough fertility to become pregnant
 function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
     local status = self:getParent():status()
     local otherStatus = otherActor:status()
-    
+
     if status:hasStatus("sexbound_custom_hyper_fertility") or otherStatus:hasStatus("sexbound_custom_hyper_fertility") then
         self:getLog():debug("Guaranteed impregnation due to hyper fertility pill effect")
         return true
     end
     local sxbFertility = self:getParent():getIdentity().sxbFertility
     local fertility = sxbFertility or self:getFertility()
-    
+
     -- Apply fertility buff from current arousal/heat level based on config
     local arousalBuff = 1
     if ((self._config.arousal.heat or {}).fertilityBonus or 0) > 0 and status:hasStatus("sexbound_aroused_heat") then -- Heat max priority
@@ -409,22 +433,25 @@ function Sexbound.Actor.Pregnant:thisActorHasEnoughFertility(otherActor)
         fertility = fertility * multiplier
         self:getLog():debug("Fertility chance multiplied due to fertility pill effect")
     end
-    
+
     if self:getParent():getEntityType() == "npc" and otherActor:getEntityType() == "npc" then
         fertility = fertility * self._parent._config.fertilityPenalty
     end
-    
+
     local pregnancyChance = self:generateRandomNumber() / 100;
     self:getLog():info("Pregnancy roll : " .. pregnancyChance .. " <= " .. fertility)
     return pregnancyChance <= fertility
 end
 
 --- Returns whether or not this actor is using contraception for females
+--- @return boolean # Whethere or not this actor is prevented from becoming pregnant by contraception
 function Sexbound.Actor.Pregnant:thisActorIsUsingContraception()
     return self:getParent():status():hasOneOf(self:getConfig().preventStatuses)
 end
 
 --- Returns whether or not the other actor can produce sperm
+--- @param otherActor Sexbound.Actor The target actor to check
+--- @return boolean # Whethere or not the target actor can produce sperm
 function Sexbound.Actor.Pregnant:otherActorCanProduceSperm(otherActor)
     if self:getConfig().enableFreeForAll == true or otherActor:getIdentity().sxbCanProduceSperm == true then
         return true
@@ -434,11 +461,15 @@ function Sexbound.Actor.Pregnant:otherActorCanProduceSperm(otherActor)
 end
 
 --- Returns whether or not the other actor is using contraception for males
+--- @param otherActor Sexbound.Actor The target actor to check
+--- @return boolean # Whethere or not the target actor cannot impregnate due to contraception
 function Sexbound.Actor.Pregnant:otherActorIsUsingContraception(otherActor)
     return otherActor:status():hasOneOf(self:getConfig().preventStatuses)
 end
 
 --- Returns whether or not the other actor is a compatible species
+--- @param otherActor Sexbound.Actor The target actor to verify
+--- @return boolean # Whethere or not the target actor is breeding-compatible
 function Sexbound.Actor.Pregnant:otherActorIsCompatibleSpecies(otherActor)
     local actor = self:getParent()
     local ownSpecies = actor:getOffspringSpecies()
@@ -451,11 +482,11 @@ function Sexbound.Actor.Pregnant:otherActorIsCompatibleSpecies(otherActor)
     elseif self:getConfig().enableFreeForAll == true or self:getConfig().enableCompatibleSpeciesOnly == false or ownSpecies == otherSpecies then
         return true
     end
-    
+
     -- Check if species types are compatible
     local thisSpeciesType, thatSpeciesType = actor:getIdentity("sxbSpeciesType"), otherActor:getIdentity("sxbSpeciesType")
     if thisSpeciesType == "universal" or thatSpeciesType == "universal" or (thisSpeciesType == thatSpeciesType and thisSpeciesType ~= nil) then return true end -- "nil" (aka. not set) is treated as universal incompatibility, so nil x nil == incompatible
-    
+
     -- Alternatively check if whitelist exists for species
     local speciesList = self:getConfig().compatibleSpecies[otherSpecies]
     if speciesList == "all" then return true end
@@ -478,6 +509,9 @@ function Sexbound.Actor.Pregnant:refreshStatusForThisActor()
 end
 
 --- Prepares the message to send to other actor
+--- @param pregnancy table Pregnancy data
+--- @param otherActor Sexbound.Actor The father to notify
+--- @return string # The prepared pregnancy notification
 function Sexbound.Actor.Pregnant:prepareMessageToSendToOtherActor(pregnancy, otherActor)
     local dayCount = pregnancy.dayCount
     local dialog = self:loadNotificationDialog() or {}
@@ -497,13 +531,16 @@ function Sexbound.Actor.Pregnant:prepareMessageToSendToOtherActor(pregnancy, oth
 end
 
 --- Prepares the message to send to this actor
+--- @param pregnancy table Pregnancy data
+--- @param otherActor Sexbound.Actor The father actor
+--- @return string # The prepared pregnancy notification
 function Sexbound.Actor.Pregnant:prepareMessageToSendToThisActor(pregnancy, otherActor)
     local dayCount = pregnancy.dayCount
     local dialog = self:loadNotificationDialog() or {}
     local daystring = "day"
     if dayCount > 1 then daystring = "days" end
     local message = ""
-    
+
     local immersionLevel = self._config.immersionLevel + 1
     dialog = dialog.pregnancy or {}
     dialog = dialog[immersionLevel] or {}
@@ -517,6 +554,8 @@ function Sexbound.Actor.Pregnant:prepareMessageToSendToThisActor(pregnancy, othe
 end
 
 --- Prepares the hazard abortion message to send to this actor
+--- @param otherActor Sexbound.Actor The father actor
+--- @return string # The prepared hazard abortion message
 function Sexbound.Actor.Pregnant:prepareHazardAbortionMessageForThisActor(otherActor)
     local species = self:getParent():getSpecies()
     local dialog = self:loadNotificationDialog() or {}
@@ -531,6 +570,8 @@ function Sexbound.Actor.Pregnant:prepareHazardAbortionMessageForThisActor(otherA
 end
 
 --- Prepares the hazard abortion message to send to the other actor
+--- @param otherActor Sexbound.Actor The father to notify
+--- @return string # The prepared hazard abortion message
 function Sexbound.Actor.Pregnant:prepareHazardAbortionMessageForOtherActor(otherActor)
     local species = otherActor:getSpecies()
     local dialog = self:loadNotificationDialog() or {}
@@ -545,6 +586,7 @@ function Sexbound.Actor.Pregnant:prepareHazardAbortionMessageForOtherActor(other
 end
 
 --- Tries to apply 'sexbound_pregnant' status effect for this actor
+--- @param otherActor Sexbound.Actor The father actor
 function Sexbound.Actor.Pregnant:tryToApplyPregnantStatusEffectForThisActor(otherActor)
     if self:getConfig().enableSilentImpregnations == true then
         return
@@ -554,6 +596,7 @@ function Sexbound.Actor.Pregnant:tryToApplyPregnantStatusEffectForThisActor(othe
 end
 
 --- Tries to refresh status text for this actor
+--- @param otherActor Sexbound.Actor The father actor
 function Sexbound.Actor.Pregnant:tryToRefreshStatusTextForThisActor(otherActor)
     if self:getConfig().enableSilentImpregnations == true or "npc" ~= self:getParent():getEntityType() then
         return
@@ -562,11 +605,14 @@ function Sexbound.Actor.Pregnant:tryToRefreshStatusTextForThisActor(otherActor)
 end
 
 --- Tries to send radio message to this actor
+--- @param pregnancy table Pregnancy data
+--- @param otherActor Sexbound.Actor The father actor
+--- @return boolean # Whethere or not the message was queued successfully
 function Sexbound.Actor.Pregnant:tryToSendRadioMessageToThisActor(pregnancy, otherActor)
     local immersionLevel = self:getConfig().immersionLevel
-    if immersionLevel >= 2 then return end
+    if immersionLevel >= 2 then return false end
     if "player" ~= self:getParent():getEntityType() then
-        return
+        return false
     end
 
     local message = self:prepareMessageToSendToThisActor(pregnancy, otherActor)
@@ -581,11 +627,14 @@ function Sexbound.Actor.Pregnant:tryToSendRadioMessageToThisActor(pregnancy, oth
 end
 
 --- Tries to send radio message to the other actor
+--- @param pregnancy table Pregnancy data
+--- @param otherActor Sexbound.Actor The father to notify
+--- @return boolean # Whethere or not the message was queued successfully
 function Sexbound.Actor.Pregnant:tryToSendRadioMessageToOtherActor(pregnancy, otherActor)
     local immersionLevel = self:getConfig().immersionLevel
-    if immersionLevel >= 2 then return end
+    if immersionLevel >= 2 then return false end
     if "player" ~= otherActor:getEntityType() then
-        return
+        return false
     end
 
     local message = self:prepareMessageToSendToOtherActor(pregnancy, otherActor)
@@ -600,11 +649,13 @@ function Sexbound.Actor.Pregnant:tryToSendRadioMessageToOtherActor(pregnancy, ot
 end
 
 --- Tries to send hazard abortion radio message to this actor
+--- @param otherActor Sexbound.Actor The father actor
+--- @return boolean # Whethere or not the message was queued successfully
 function Sexbound.Actor.Pregnant:tryToNotifyThisActorOfHazardAbortion(otherActor)
     local immersionLevel = self:getConfig().immersionLevel
-    if immersionLevel >= 2 then return end
+    if immersionLevel >= 2 then return false end
     if "player" ~= self:getParent():getEntityType() then
-        return
+        return false
     end
 
     local message = self:prepareHazardAbortionMessageForThisActor(otherActor)
@@ -619,11 +670,13 @@ function Sexbound.Actor.Pregnant:tryToNotifyThisActorOfHazardAbortion(otherActor
 end
 
 --- Tries to send hazard abortion radio message to the other actor
+--- @param otherActor Sexbound.Actor The father to notify
+--- @return boolean # Whethere or not the message was queued successfully
 function Sexbound.Actor.Pregnant:tryToNotifyOtherActorOfHazardAbortion(otherActor)
     local immersionLevel = self:getConfig().immersionLevel
-    if immersionLevel >= 2 then return end
+    if immersionLevel >= 2 then return false end
     if "player" ~= otherActor:getEntityType() then
-        return
+        return false
     end
 
     local message = self:prepareHazardAbortionMessageForOtherActor(otherActor)
@@ -638,6 +691,8 @@ function Sexbound.Actor.Pregnant:tryToNotifyOtherActorOfHazardAbortion(otherActo
 end
 
 --- Makes a new baby and stores it in this actor's storage
+--- @param otherActor Sexbound.Actor The father actor
+--- @return table? # The generated pregnancy data or nil on failure
 function Sexbound.Actor.Pregnant:makeBaby(otherActor)
     local factory = BabyFactory:new(self, self._config)
     local pregnancy = factory:make(self._parent, otherActor)
@@ -647,6 +702,7 @@ function Sexbound.Actor.Pregnant:makeBaby(otherActor)
 end
 
 --- Stores pregnancy data inside this actor
+--- @param pregnancy table The pregnancy data
 function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
     local _storage = self:getParent():getStorage()
     local _storageData = _storage:getData()
@@ -658,22 +714,25 @@ function Sexbound.Actor.Pregnant:storePregnancy(pregnancy)
         table.insert(storageData.sexbound.pregnant, pregnancy)
         return storageData
     end)
-    
+
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Common:UpdateFertility", self:getParent()._config.fertilityPenalty)
     world.sendEntityMessage(self:getParent():getEntityId(), "Sexbound:Pregnant:Pregnancy", pregnancy)
 end
 
 --- Fetches pregnancy-relevant settings from main config file
+--- @param mainConfig table The main sexbound config
 function Sexbound.Actor.Pregnant:fetchRemoteConfig(mainConfig)
     if not mainConfig then return end
-    
+
     self._config.immersionLevel = mainConfig.immersionLevel or 1
     self._config.subGenderList = mainConfig.sex.subGenderList or {}
     self._config.subGenderChance = mainConfig.sex.subGenderChance or 0.01
-    
+
     self._config.arousal = mainConfig.arousal or {}
 end
 
+--- Handle incoming insemination request
+--- @param otherActor Sexbound.Actor The responsible actor
 function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
     local otherUuid = otherActor._config.uniqueId or "other"
     local count = (self._inseminations[otherUuid] or 0) + 1
@@ -682,11 +741,16 @@ function Sexbound.Actor.Pregnant:handleInsemination(otherActor)
     self:getLog():info("Actor fill count " .. count)
 end
 
+--- Returns current insemination level for a given actor
+--- @param otherActor Sexbound.Actor The actor in question
+--- @return number # The current insemination level cause by this actor
 function Sexbound.Actor.Pregnant:getCurrentInseminations(otherActor)
     local otherUuid = otherActor._config.uniqueId or "other"
     return self._inseminations[otherUuid] or 0
 end
 
+--- Returns the current total insemination level
+--- @return number # The current total insemination level
 function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
     local count = 0
     for k, v in pairs(self._inseminations) do
@@ -696,7 +760,8 @@ function Sexbound.Actor.Pregnant:getCurrentAllInseminations()
 end
 
 --- Returns a reference to this actor's current pregnancies table
--- @param index
+--- @param index integer? The index of a specific pregnancy
+--- @return table? # The requested pregnancy, nil if it doesn't exist or the list of all pregnancies if non requested
 function Sexbound.Actor.Pregnant:getCurrentPregnancies(index)
     local pregnancies = self:getParent():getStorage():getData("sexbound").pregnant
     if index then
@@ -706,6 +771,7 @@ function Sexbound.Actor.Pregnant:getCurrentPregnancies(index)
 end
 
 --- Returns the count of current pregnancies for this actor
+--- @return integer # Number of concurrent pregnancies
 function Sexbound.Actor.Pregnant:getCurrentPregnancyCount()
     local pregnancies = self:getParent():getStorage():getData("sexbound").pregnant or {}
     local count = 0
@@ -716,6 +782,7 @@ function Sexbound.Actor.Pregnant:getCurrentPregnancyCount()
 end
 
 --- Returns the count of currently visible pregnancies for this actor
+--- @return integer # Number of concurrent pregnancies in visible state
 function Sexbound.Actor.Pregnant:getCurrentVisiblePregnancyCount()
     local pregnancies = self:getParent():getStorage():getData("sexbound").pregnant or {}
     local count = 0
@@ -738,6 +805,7 @@ function Sexbound.Actor.Pregnant:getCurrentVisiblePregnancyCount()
 end
 
 --- Returns a percantage of how much the most progressed pregnancy has progressed
+--- @return number # Percent 0..1 of the most progressed pregnancy
 function Sexbound.Actor.Pregnant:getPregnancyStage()
     local result = 0
     local pregnancies = self:getParent():getStorage():getData("sexbound").pregnant or {}
@@ -759,12 +827,18 @@ function Sexbound.Actor.Pregnant:getPregnancyStage()
 end
 
 --- Returns the incest degree between this and the given actor
+--- @param otherActor Sexbound.Actor The actor in question
+--- @return integer
+--- |"0" # Not related
+--- |"1" # Half-siblings
+--- |"2" # Blood siblings
+--- |"3" # Parent-child
 function Sexbound.Actor.Pregnant:incestLevel(otherActor)
-    local identity = self:getParent():getIdentity()
-    local otherIdentity = otherActor:getIdentity()
+    local identity = self:getParent():getIdentity() --[[@as table<string, any>]]
+    local otherIdentity = otherActor:getIdentity() --[[@as table<string, any>]]
     local uuid = self:getParent()._config.uniqueId
     local otherUuid = otherActor._config.uniqueId
-    
+
     if (identity.motherUuid == nil and identity.fatherUuid == nil) or (otherIdentity.motherUuid and otherIdentity.fatherUuid) then return 0 end -- Orphan, can't have (known) incest
     if identity.motherUuid == otherUuid or identity.fatherUuid == otherUuid or otherIdentity.motherUuid == uuid or otherIdentity.fatherUuid == uuid then return 3 end -- Level 3 incest - sex with your parent
     local thisPair = {identity.motherUuid, identity.fatherUuid}
@@ -775,7 +849,7 @@ function Sexbound.Actor.Pregnant:incestLevel(otherActor)
             if v1==v2 then matches = matches + 1 break end
         end
     end
-    
+
     -- Number of matches between this actor's parents and given actor's parents
     -- 1 match = level 1 incest - Sex with half-sibling
     -- 2 matches = level 2 incest - Sex with full-sibling
@@ -783,6 +857,8 @@ function Sexbound.Actor.Pregnant:incestLevel(otherActor)
 end
 
 --- Returns if there is incest between this and the given actor
+--- @param otherActor Sexbound.Actor The actor in question
+--- @return boolean # Whethere or not a level of incest is given
 function Sexbound.Actor.Pregnant:isIncest(otherActor)
     return self:incestLevel(otherActor) > 0
 end
@@ -814,7 +890,7 @@ function Sexbound.Actor.Pregnant:validateConfig()
 end
 
 --- Ensures immersionLevel is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateImmersionLevel(value)
     if type(value) ~= "number" then
         self._config.immersionLevel = 1
@@ -824,7 +900,7 @@ function Sexbound.Actor.Pregnant:validateImmersionLevel(value)
 end
 
 --- Ensures subGenderList is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateSubGenderList(value)
     if type(value) ~= "table" then
         self._config.subGenderList = {}
@@ -835,7 +911,7 @@ function Sexbound.Actor.Pregnant:validateSubGenderList(value)
 end
 
 --- Ensures subGenderChance is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateSubGenderChance(value)
     if type(value) ~= "number" then
         self._config.subGenderChance = 0.01
@@ -845,7 +921,7 @@ function Sexbound.Actor.Pregnant:validateSubGenderChance(value)
 end
 
 --- Ensures compatibleSpecies is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateCompatibleSpecies(value)
     if type(value) ~= "table" then
         self._config.compatibleSpecies = {}
@@ -856,7 +932,7 @@ function Sexbound.Actor.Pregnant:validateCompatibleSpecies(value)
 end
 
 --- Ensures enableAsexualReproduction is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableAsexualReproduction(value)
     if type(value) ~= "boolean" then
         self._config.enableAsexualReproduction = false
@@ -867,7 +943,7 @@ function Sexbound.Actor.Pregnant:validateEnableAsexualReproduction(value)
 end
 
 --- Ensures enableCompatibleSpeciesOnly is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableCompatibleSpeciesOnly(value)
     if type(value) ~= "boolean" then
         self._config.enableCompatibleSpeciesOnly = false
@@ -878,7 +954,7 @@ function Sexbound.Actor.Pregnant:validateEnableCompatibleSpeciesOnly(value)
 end
 
 --- Ensures enableFreeForAll is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableFreeForAll(value)
     if type(value) ~= "boolean" then
         self._config.enableFreeForAll = false
@@ -889,7 +965,7 @@ function Sexbound.Actor.Pregnant:validateEnableFreeForAll(value)
 end
 
 --- Ensures enableMultipleImpregnations is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableMultipleImpregnations(value)
     if type(value) ~= "boolean" then
         self._config.enableMultipleImpregnations = false
@@ -900,7 +976,7 @@ function Sexbound.Actor.Pregnant:validateEnableMultipleImpregnations(value)
 end
 
 --- Ensures enableNotifyPlayers is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableNotifyPlayers(value)
     if type(value) ~= "boolean" then
         self._config.enableNotifyPlayers = true
@@ -910,7 +986,7 @@ function Sexbound.Actor.Pregnant:validateEnableNotifyPlayers(value)
 end
 
 --- Ensures enablePregnancyFetish is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnablePregnancyFetish(value)
     if type(value) ~= "boolean" then
         self._config.enablePregnancyFetish = false
@@ -920,6 +996,7 @@ function Sexbound.Actor.Pregnant:validateEnablePregnancyFetish(value)
 end
 
 --- Ensures enableSilentImpregnations is set to an allowed value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableSilentImpregnations(value)
     if type(value) ~= "boolean" then
         self._config.enableSilentImpregnations = false
@@ -929,7 +1006,7 @@ function Sexbound.Actor.Pregnant:validateEnableSilentImpregnations(value)
 end
 
 --- Ensures fertility is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateFertility(value)
     if type(value) ~= "number" then
         self._config.fertility = 0.1
@@ -939,7 +1016,7 @@ function Sexbound.Actor.Pregnant:validateFertility(value)
 end
 
 --- Ensures fertility is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateFertilityBonusMult(value)
     if type(value) ~= "number" then
         self._config.fertilityBonusMult = 1.08
@@ -949,7 +1026,7 @@ function Sexbound.Actor.Pregnant:validateFertilityBonusMult(value)
 end
 
 --- Ensures fertility is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateFertilityBonusMax(value)
     if type(value) ~= "number" then
         self._config.fertilityBonusMax = 0.6
@@ -959,7 +1036,7 @@ function Sexbound.Actor.Pregnant:validateFertilityBonusMax(value)
 end
 
 --- Ensures fertility is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateFertilityMult(value)
     if type(value) ~= "number" then
         self._config.fertilityMult = 2.5
@@ -969,7 +1046,7 @@ function Sexbound.Actor.Pregnant:validateFertilityMult(value)
 end
 
 --- Ensures inseminationDecay is set to an allowed range
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateInseminationDecay(value)
     if type(value) ~= "table" then
         self._config.inseminationDecay = { 0.2, 0.3 }
@@ -991,7 +1068,7 @@ function Sexbound.Actor.Pregnant:validateInseminationDecay(value)
 end
 
 --- Ensures dripRateModifier is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateDripRateModifier(value)
     if type(value) ~= "number" then
         self._config.dripRateModifier = 1.5
@@ -1001,7 +1078,7 @@ function Sexbound.Actor.Pregnant:validateDripRateModifier(value)
 end
 
 --- Ensures notifications is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateNotifications(value)
     if type(value) ~= "string" then
         self._config.notifications = "/dialog/sexbound/en/notifications.config"
@@ -1011,7 +1088,7 @@ function Sexbound.Actor.Pregnant:validateNotifications(value)
 end
 
 --- Ensures preventStatuses are set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validatePreventStatuses(value)
     local defaultPreventStatuses = {"birthcontrol", "equipped_nopregnant", "equipped_iud", "infertile", "sterile"}
 
@@ -1029,7 +1106,7 @@ function Sexbound.Actor.Pregnant:validatePreventStatuses(value)
 end
 
 --- Ensures pregnancyLength is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validatePregnancyLength(value)
     if type(value) == "number" then
         self._config.pregnancyLength = util.clamp(value, 1, value)
@@ -1055,7 +1132,7 @@ function Sexbound.Actor.Pregnant:validatePregnancyLength(value)
 end
 
 --- Ensures useOSTimeForPregnancies is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateUseOSTimeForPregnancies(value)
     if type(value) ~= "boolean" then
         self._config.useOSTimeForPregnancies = true
@@ -1065,7 +1142,7 @@ function Sexbound.Actor.Pregnant:validateUseOSTimeForPregnancies(value)
 end
 
 --- Ensures useOSTimeForPregnancies is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateIncestPenalty(value)
     if type(value) ~= "boolean" then
         self._config.incestPenalty = true
@@ -1076,7 +1153,7 @@ end
 
 
 --- Ensures enableKidStage is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateEnableKidStage(value)
     if type(value) ~= "boolean" then
         self._config.enableKidStage = true
@@ -1086,7 +1163,7 @@ function Sexbound.Actor.Pregnant:validateEnableKidStage(value)
 end
 
 --- Ensures kidDayCount is set to an allowed value
--- @param value
+--- @param value any Any value given
 function Sexbound.Actor.Pregnant:validateKidDayCount(value)
     if type(value) == "number" then
         self._config.kidDayCount = util.clamp(value, 1, value)

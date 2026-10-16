@@ -18,9 +18,11 @@ function update(dt)
     local spawn = util.randomFromList(self.types)
     local species = util.randomFromList(spawn.species)
     local npcId = world.spawnNpc(self.spawnPosition, species, spawn.type, 1)
-    world.callScriptedEntity(npcId, "status.addEphemeralEffect", "beamin")
-    if spawn.displayNametag then
-      world.callScriptedEntity(npcId, "npc.setDisplayNametag", true)
+    if npcId ~= nil then
+      world.callScriptedEntity(npcId, "status.addEphemeralEffect", "beamin")
+      if spawn.displayNametag then
+        world.callScriptedEntity(npcId, "npc.setDisplayNametag", true)
+      end
     end
 
     self.spawnTimer = nil

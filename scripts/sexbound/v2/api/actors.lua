@@ -1,16 +1,17 @@
 --- Sexbound.API.Actors Module.
--- @module Sexbound.API.Actors
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.API.Actors
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.API.Actors = {}
 
 --- Adds a new actor to the current instance.
--- @param actorConfig A table representing the actor.
--- @param store A boolean indicating wether or not to store the actor.
--- @usage Sexbound.API.Actors.addActor(actorConfig, false)
+--- @param actorConfig table A table representing the actor.
+--- @param store boolean? A boolean indicating wether or not to store the actor.
+--- @return boolean # Whethere or not the actor was successfully added
 Sexbound.API.Actors.addActor = function(actorConfig, store)
     if not self._sexbound then
-        return
+        return false
     end
 
     local _, result = xpcall(function()
@@ -21,7 +22,7 @@ Sexbound.API.Actors.addActor = function(actorConfig, store)
 end
 
 --- Returns a list of all current actors.
--- @usage local actors = Sexbound.API.Actors.getActors()
+--- @return table<integer, Sexbound.Actor>? # The list of actors or nil if sexbound instance does not exist
 Sexbound.API.Actors.getActors = function()
     if not self._sexbound then
         return
@@ -35,7 +36,7 @@ Sexbound.API.Actors.getActors = function()
 end
 
 --- Replace current actors with a list of new actors.
--- @param newActors A list of actors.
+--- @param newActors table<integer, Sexbound.Actor> A list of actors.
 Sexbound.API.Actors.setActors = function(newActors)
     if not self._sexbound then
         return
@@ -49,10 +50,10 @@ Sexbound.API.Actors.setActors = function(newActors)
 end
 
 --- Returns the current actor count.
--- @usage local actorsCount = Sexbound.API.Actors.getActorCount()
+--- @return integer # The current amount of actors
 Sexbound.API.Actors.getActorCount = function()
     if not self._sexbound then
-        return
+        return 0
     end
 
     local _, result = xpcall(function()
@@ -63,10 +64,10 @@ Sexbound.API.Actors.getActorCount = function()
 end
 
 --- Uninitializes all actors.
--- @usage Sexbound.API.Actors.uninitActors()
+--- @return boolean # Wethere or not uninitializing the actors was successful
 Sexbound.API.Actors.uninitActors = function()
     if not self._sexbound then
-        return
+        return false
     end
 
     local _, result = xpcall(function()
@@ -77,7 +78,7 @@ Sexbound.API.Actors.uninitActors = function()
 end
 
 --- Translates actors to a new position.
--- @param translation { x, y }
+--- @param translation Vec2F Actor translation
 Sexbound.API.Actors.adjustPosition = function(translation)
     if not self._sexbound then
         return
@@ -93,8 +94,8 @@ Sexbound.API.Actors.adjustPosition = function(translation)
 end
 
 --- Rotates actors to a new rotation.
--- @param rotation (euler)
--- @param[opt] rotationCenter
+--- @param rotation number Rotation (in degrees?)
+--- @param rotationCenter Vec2F? Rotation axis offset from top left
 Sexbound.API.Actors.adjustRotation = function(rotation, rotationCenter)
     if not self._sexbound then
         return
@@ -110,11 +111,12 @@ Sexbound.API.Actors.adjustRotation = function(rotation, rotationCenter)
 end
 
 --- Scales actors to a new scale.
--- @param scale a floating point number.
--- @param[opt] scaleCenter
+--- @param scale number New scale factor
+--- @param scaleCenter Vec2F? Scale center offset from top left
+--- @return boolean # Whethere or not scaling was successful
 Sexbound.API.Actors.adjustScale = function(scale, scaleCenter)
     if not self._sexbound then
-        return
+        return false
     end
 
     local _, result = xpcall(function()

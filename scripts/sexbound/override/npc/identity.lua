@@ -1,14 +1,20 @@
 require "/scripts/sexbound/override/common/identity.lua"
 
+--- NPC identity builder class
+--- @class Sexbound.NPC.Identity: Sexbound.Common.Identity
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.NPC.Identity = Sexbound.Common.Identity:new()
 Sexbound.NPC.Identity_mt = {
     __index = Sexbound.NPC.Identity
 }
 
+--- Creates new npc identity builder instance
+--- @param parent Sexbound.NPC The calling parent npc manager class
+--- @return Sexbound.NPC.Identity # The newly created npc instance builder instance
 function Sexbound.NPC.Identity:new(parent)
-    local _self = setmetatable({
-        _parent = parent
-    }, Sexbound.NPC.Identity_mt)
+    local _self = setmetatable({}, Sexbound.NPC.Identity_mt)
 
     _self:init(parent)
 
@@ -16,9 +22,10 @@ function Sexbound.NPC.Identity:new(parent)
 end
 
 --- Returns a table consisting of identifying information about the entity.
+--- @return table # The entity's actor identity data
 function Sexbound.NPC.Identity:build()
     local identity = npc.humanoidIdentity()
-    
+
     local speciesConfig = {}
     -- Attempt to read configuration from species config file.
     if not pcall(function()
@@ -26,12 +33,12 @@ function Sexbound.NPC.Identity:build()
     end) then
         sb.logWarn("SxB: Could not find species config file.")
     end
- 
+
     local identity = self:addCustomProperties(identity, speciesConfig)
-    
+
     local altOptionAsUndyColor = not not speciesConfig.altOptionAsUndyColor
     local headOptionAsHairColor = not not speciesConfig.headOptionAsHairColor
-    
+
     -- Separate directives string into individual color pairs
     identity.genetics.bodyColor = {}
     identity.genetics.bodyColorAverage = {0,0,0}
@@ -39,7 +46,7 @@ function Sexbound.NPC.Identity:build()
     identity.genetics.undyColorAverage = {0,0,0}
     identity.genetics.hairColor = {}
     identity.genetics.hairColorAverage = {0,0,0}
-    
+
     local res,err = pcall(function()
         local bodyColors = {}
         if string.match(identity.bodyDirectives, "^%?replace;") then
@@ -66,7 +73,7 @@ function Sexbound.NPC.Identity:build()
                 if identity.genetics.undyColorPoolAverage[i][1] >= 0 then ref2 = Sexbound.Util.listToUpper(identity.genetics.undyColorPool[i]) end
                 i = i + 1
             end
-            
+
             for k,v in string.gmatch(identity.bodyDirectives, "%?replace=(%w+)=(%w+);?") do
                 local compare = string.upper(k)
                 if ref[compare] then identity.genetics.bodyColor[compare.."X"] = v end
@@ -91,7 +98,7 @@ function Sexbound.NPC.Identity:build()
                     if identity.genetics.hairColorPoolAverage[i][1] >= 0 then ref = Sexbound.Util.listToUpper(identity.genetics.hairColorPool[i]) end
                     i = i + 1
                 end
-                
+
                 for k,v in string.gmatch(identity.hairDirectives, "%?replace=(%w+)=(%w+);?") do
                     local compare = string.upper(k)
                     if ref[compare] then identity.genetics.hairColor[compare.."X"] = v end
@@ -99,8 +106,8 @@ function Sexbound.NPC.Identity:build()
             end
         end
     end)
-    if not res and self._parent:canLog("warn") then sb.logWarn("[SxB | GENE] - Couldn't fetch entity colors! Entity "..entity.id().." has no colors!") sb.logWarn(err) end
-    
+    if not res and self._parent:canLog("warn") then sb.logWarn("[SxB | GENE] - Couldn't fetch entity colors! Entity "..entity.id().." has no colors!") sb.logWarn(err --[[@as string]]) end
+
     -- Pre calculate color palette averages
     local x = 0
     for i,v in pairs(identity.genetics.bodyColor) do
@@ -123,6 +130,6 @@ function Sexbound.NPC.Identity:build()
         identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = identity.genetics.hairColorAverage[1]+r,identity.genetics.hairColorAverage[2]+g,identity.genetics.hairColorAverage[3]+b
     end
     identity.genetics.hairColorAverage[1],identity.genetics.hairColorAverage[2],identity.genetics.hairColorAverage[3] = math.floor(identity.genetics.hairColorAverage[1]/x),math.floor(identity.genetics.hairColorAverage[2]/x),math.floor(identity.genetics.hairColorAverage[3]/x)
-    
+
     return identity
 end

@@ -1,7 +1,7 @@
 require "/scripts/sexbound/v2/api.lua"
 
 function init()
-  Sexbound.API.init()
+  Sexbound.API.init(2)
 
   local colorvaluetrue = "?hueshift="
   local colorvaluefinal = "?hueshift=0"

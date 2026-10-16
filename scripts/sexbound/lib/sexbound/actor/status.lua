@@ -1,12 +1,19 @@
 --- Sexbound.Actor.Status Class Module.
--- @classmod Sexbound.Actor.Status
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Actor.Status
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.Actor
+--- @field _config table
+--- @field private _timers table<string, number>
 Sexbound.Actor.Status = {}
 Sexbound.Actor.Status_mt = {
     __index = Sexbound.Actor.Status
 }
 
+--- Creates new status manager instance
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @return Sexbound.Actor.Status # The newly creates status manager instance
 function Sexbound.Actor.Status:new(parent)
     return setmetatable({
         _config = {
@@ -18,8 +25,8 @@ function Sexbound.Actor.Status:new(parent)
 end
 
 --- Initializes the plugin for use.
--- @param parent
--- @param[opt] callback
+--- @param parent Sexbound.Actor No clue why we reset this again, Loc
+--- @param callback function? A callback to call when init is done
 function Sexbound.Actor.Status:init(parent, callback)
     self._parent = parent or {}
 
@@ -29,26 +36,16 @@ function Sexbound.Actor.Status:init(parent, callback)
 end
 
 --- Adds a new status to this actor's status list.
--- @param statusName As a string.
--- @param[opt] duration As a number.
+--- @param statusName string The name of the status to set
+--- @param duration number? Duration of the status effect or nil if forever
+--- @param delay boolean? Whethere or not to delay notifying about the status effect (Default: true)
 function Sexbound.Actor.Status:addStatus(statusName, duration, delay)
-    local orgDelay = delay
     if delay == nil then delay = true end
     if duration then
         self._timers[statusName] = duration
     end
 
     -- If status already exists, delete it first to re-insert it at the end (freshest status)
-    
-    --[[for index, status in ipairs(self:getStatusList()) do
-        if (status == statusName) then
-            table.remove(self._config.statusList, index)
-            break
-        end
-    end]]
-
-    --table.insert(self._config.statusList, statusName)
-    
     local list = self:getStatusList() or {}
     local j,n = 0,#list
     for i=1,n do
@@ -64,6 +61,9 @@ function Sexbound.Actor.Status:addStatus(statusName, duration, delay)
     Sexbound.Messenger.get("main"):send(self, self._parent, "Sexbound:Status:AddStatus", statusName, delay)
 end
 
+--- Returns whethere any one of the given list of status effects is present
+--- @param statusNames table<integer|string, string>
+--- @return boolean # Whethere or not any one of the given names is present
 function Sexbound.Actor.Status:hasOneOf(statusNames)
     local statusList = self:getStatusList()
 
@@ -77,7 +77,8 @@ function Sexbound.Actor.Status:hasOneOf(statusNames)
 end
 
 --- Returns wether or not this actor has a specified status in its status list.
--- @param statusName
+--- @param ... string The list of status names
+--- @return boolean # Whethere or not all given statuses are set
 function Sexbound.Actor.Status:hasStatus(...)
     local args = {...}
     local statusList = self:getStatusList()
@@ -92,7 +93,8 @@ function Sexbound.Actor.Status:hasStatus(...)
 end
 
 --- Returns a specified status name if it is found.
--- @param statusName
+--- @param statusName string The requested status effect
+--- @return string? # The name if found or nil if not
 function Sexbound.Actor.Status:findStatus(statusName)
     if self:hasStatus(statusName) then
         return statusName
@@ -100,7 +102,9 @@ function Sexbound.Actor.Status:findStatus(statusName)
 end
 
 --- Removes a specified status from this actor's status list.
--- @param statusName
+--- @param statusName string The status name to remove
+--- @param delay boolean? Whethere or not to delay notifying the removal (Default: true)
+--- @return boolean # Whethere or not the status was removed successfully
 function Sexbound.Actor.Status:removeStatus(statusName, delay)
     if delay == nil then delay = true end
     for index, status in ipairs(self:getStatusList()) do
@@ -114,12 +118,16 @@ function Sexbound.Actor.Status:removeStatus(statusName, delay)
     return false
 end
 
+--- Execute a callback for each ticking timer
+--- @param callback fun(string, number) The callback to execute, given status name and remaining timer time
 function Sexbound.Actor.Status:forEachTimer(callback)
     for statusName, statusTime in pairs(self._timers) do
         callback(statusName, statusTime)
     end
 end
 
+--- Function called each tick to progress timers
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Status:update(dt)
     if isEmpty(self._timers) then
         return
@@ -139,11 +147,14 @@ function Sexbound.Actor.Status:update(dt)
     end)
 end
 
+--- Returns the parent actor instance
+--- @return Sexbound.Actor # The parent actor instance
 function Sexbound.Actor.Status:getParent()
     return self._parent or {}
 end
 
 --- Returns a reference to this actor's status list as a table.
+--- @return table<integer, string> # The list of all set statuses
 function Sexbound.Actor.Status:getStatusList()
     return self._config.statusList
 end

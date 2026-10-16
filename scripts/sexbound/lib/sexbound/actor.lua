@@ -1,7 +1,26 @@
 --- Sexbound.Actor Class Module.
--- @classmod Sexbound.Actor
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Actor
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound
+--- @field _syncTimer number
+--- @field _hasInited boolean
+--- @field _syncDelta number
+--- @field _log Sexbound.Log
+--- @field _config table
+--- @field _apparel Sexbound.Actor.Apparel
+--- @field _nipples Sexbound.Actor.Nipples
+--- @field _head Sexbound.Actor.Head
+--- @field _mouth Sexbound.Actor.Mouth
+--- @field _status Sexbound.Actor.Status
+--- @field _storage Sexbound.Actor.Storage
+--- @field _isClimaxing boolean
+--- @field _isPreClimaxing boolean
+--- @field _isPostClimaxing boolean
+--- @field _isScriptedClimaxing boolean
+--- @field _animationState Sexbound.Position.AnimationState.State?
+--- @field _role string
 Sexbound.Actor = {}
 Sexbound.Actor_mt = {
     __index = Sexbound.Actor
@@ -18,8 +37,11 @@ if not SXB_RUN_TESTS then
 end
 
 --- Returns a reference to a new instance of this class.
--- @param parent
--- @param actorConfig
+--- @param parent Sexbound The creating parent instance
+--- @param actorConfig table The setup configuration for this actor
+--- @param id integer The actor uid for non-ambiguous referencing within sexnode
+--- @param number integer The actor's inital role number
+--- @return Sexbound.Actor
 function Sexbound.Actor:new(parent, actorConfig, id, number)
     local _self = setmetatable({
         _parent = parent,
@@ -56,7 +78,7 @@ function Sexbound.Actor:new(parent, actorConfig, id, number)
 
     -- Initialize sync delta used for how often storage is synced
     _self._syncDelta = _self._config.syncDelta or 1
-    
+
     _self:setId(id or 1)
     _self:setActorNumber(number or 1)
 
@@ -67,14 +89,15 @@ function Sexbound.Actor:new(parent, actorConfig, id, number)
 end
 
 --- Processes received messages from the message queue. Messages are directed into each plugin automatically.
--- @param message
+--- @param message Sexbound.Message The message
 function Sexbound.Actor:onMessage(message)
-    util.each(self:getPlugins(), function(index, plugin)
+    util.each(self:getPlugins(), function(_, plugin)
         plugin:onMessage(message)
     end)
 end
 
---- Resets this actor.
+--- Resets this actor
+--- @param stateName ?string The name of the animation state
 function Sexbound.Actor:reset(stateName)
     stateName = stateName or self:getParent():getStateMachine():stateDesc()
     local animState = self:setAnimationState(stateName)
@@ -97,9 +120,9 @@ function Sexbound.Actor:reset(stateName)
     -- Resets the actor's image parts and directives
     if self:getEntityType() == "player" or self:getEntityType() == "npc" then
         self:resetParts(animState, self:validateSpecies(self:getSpecies()), self:validateGender(self:getGender()),
-            self:resetDirectives(actorNumber))
+            self:resetDirectives())
     else
-        self:resetParts(animState, self:getSpecies(), self:getGender(), self:resetDirectives(actorNumber))
+        self:resetParts(animState, self:getSpecies(), self:getGender(), self:resetDirectives())
     end
 
     -- Apply flip to head directives
@@ -113,7 +136,9 @@ function Sexbound.Actor:reset(stateName)
     end
 end
 
-function Sexbound.Actor:resetDirectives(actorNumber)
+--- Reset all animator directives for this actor
+--- @return table List of all default directives for this actor
+function Sexbound.Actor:resetDirectives()
     local directives = {
         body = self:getIdentity("bodyDirectives") or "",
         head = self:getIdentity("headDirectives") or self:getIdentity("bodyDirectives") or "",
@@ -124,20 +149,25 @@ function Sexbound.Actor:resetDirectives(actorNumber)
     }
 
     -- Merge in user defined directives
-    directives.body = directives.body .. self._config.bodyDirectives or ""
-    directives.head = directives.head .. self._config.headDirectives or ""
+    directives.body = directives.body .. (self._config.bodyDirectives or "")
+    directives.head = directives.head .. (self._config.headDirectives or "")
 
     directives.body, directives.head = directives.body .. directives.hair, directives.head .. directives.hair
 
     local eyepatchMask = "?submask=/items/armors/decorative/hats/eyepatch/mask.png"
 
     -- Filter out the eyepatch submask from custom hats
-    directives.head = string.gsub(directives.head, eyepatchMask, "")
-    directives.body = string.gsub(directives.body, eyepatchMask, "")
+    directives.head = string.gsub(directives.head --[[@as string]], eyepatchMask, "")
+    directives.body = string.gsub(directives.body --[[@as string]], eyepatchMask, "")
 
     return directives
 end
 
+--- Reset all animator parts for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender (for body sprite)
+--- @param directives table All directives for this actor
 function Sexbound.Actor:resetParts(animState, species, gender, directives)
     local entityGroup = self:getEntityGroup()
     local parts = {}
@@ -154,7 +184,7 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     parts.ears = Sexbound.Util.fixPath(self:loadEarsPart(animState, entityGroup, role, species, gender))
     parts.tail = Sexbound.Util.fixPath(self:loadTailPart(animState, entityGroup, role, species, gender))
 
-    parts.groin, directives.groin, directives.groinMask = self:loadGroin(entityGroup, role, species, gender)
+    parts.groin, directives.groin, directives.groinMask = self:loadGroin(entityGroup, role, species)
     parts.groin = Sexbound.Util.fixPath(parts.groin)
 
     parts.overlay1 = self:loadOverlayPart(animState, 1) -- Load Overlay 1
@@ -211,7 +241,7 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
 
     -- Reset nipples separately
     self:getNipples():resetParts(entityGroup, role, species, gender)
-    
+
     -- Apply ears and tail sprites, if used
     if parts.ears then
         if self:getIdentity("sxbEarsOnBodyLayer") then animator.setGlobalTag("part-" .. slot .. "-ears-body", parts.ears)
@@ -221,6 +251,9 @@ function Sexbound.Actor:resetParts(animState, species, gender, directives)
     if parts.tail then animator.setGlobalTag("part-" .. slot .. "-tail", parts.tail) end
 end
 
+--- Get the name of the frame set associated with the given animation state for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @return string # The frame name for use in image animation
 function Sexbound.Actor:getFrameName(animState)
     if type(animState:getFrameName()) == "table" then
         return animState:getFrameName()[self:getActorNumber()]
@@ -229,6 +262,12 @@ function Sexbound.Actor:getFrameName(animState)
     return animState:getFrameName()
 end
 
+--- Load the back arm part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @return string # The fully qualified instruction to load the back arm sprite
 function Sexbound.Actor:loadArmBackPart(animState, entityGroup, role, species)
     return self:getSprite(animState, "armBack", {
         entityGroup = entityGroup,
@@ -237,6 +276,12 @@ function Sexbound.Actor:loadArmBackPart(animState, entityGroup, role, species)
     }) .. ":" .. self:getFrameName(animState)
 end
 
+--- Load the front arm part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @return string # The fully qualified instruction to load the front arm sprite
 function Sexbound.Actor:loadArmFrontPart(animState, entityGroup, role, species)
     return self:getSprite(animState, "armFront", {
         entityGroup = entityGroup,
@@ -245,6 +290,13 @@ function Sexbound.Actor:loadArmFrontPart(animState, entityGroup, role, species)
     }) .. ":" .. self:getFrameName(animState)
 end
 
+--- Load the body part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @param gender string "male" or "female" to load the correctly gendered body sprite
+--- @return string # The fully qualified instruction to load the body sprite
 function Sexbound.Actor:loadBodyPart(animState, entityGroup, role, species, gender)
     return self:getSprite(animState, "body", {
         entityGroup = entityGroup,
@@ -254,6 +306,13 @@ function Sexbound.Actor:loadBodyPart(animState, entityGroup, role, species, gend
     }) .. ":" .. self:getFrameName(animState)
 end
 
+--- Load the ears part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @param gender string "male" or "female"
+--- @return string|nil # The fully qualified instruction to load the ears sprite or nil if animated ears are disabled
 function Sexbound.Actor:loadEarsPart(animState, entityGroup, role, species, gender)
     if not self:getIdentity("sxbUseAnimatedEars") then return nil end
     local part = "ears"
@@ -266,6 +325,13 @@ function Sexbound.Actor:loadEarsPart(animState, entityGroup, role, species, gend
     }) .. ":" .. self:getFrameName(animState)
 end
 
+--- Load the tail part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @param gender string "male" or "female"
+--- @return string|nil # The fully qualified instruction to load the tail sprite or nil if animated ears are disabled
 function Sexbound.Actor:loadTailPart(animState, entityGroup, role, species, gender)
     if not self:getIdentity("sxbUseAnimatedTail") then return nil end
     return self:getSprite(animState, "tail", {
@@ -276,17 +342,23 @@ function Sexbound.Actor:loadTailPart(animState, entityGroup, role, species, gend
     }) .. ":" .. self:getFrameName(animState)
 end
 
+--- Load the emote part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param entityGroup string The entity group of this actor (for filepath building)
+--- @param role string The role of this actor
+--- @param species string The species of this actor
+--- @return string # The fully qualified instruction to load the emote sprite
 function Sexbound.Actor:loadEmotePart(animState, entityGroup, role, species)
     if entityGroup == "monsters" then
         return "/artwork/defaults/default_image.png"
     end
     if entityGroup == "objects" then
         local path = "/artwork/<entityGroup>/<role>/<species>/emote.png"
-        
+
         path = util.replaceTag(path, "entityGroup", entityGroup or "humanoid")
         path = util.replaceTag(path, "role", role or "default")
         path = util.replaceTag(path, "species", species or "default")
-        
+
         return path
     end
     return self:getSprite(animState, "emote", {
@@ -296,6 +368,10 @@ function Sexbound.Actor:loadEmotePart(animState, entityGroup, role, species)
     })
 end
 
+--- Load the overlay part for this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param index integer The actor's role number
+--- @return string # The fully qualified instruction to load the overlay sprite
 function Sexbound.Actor:loadOverlayPart(animState, index)
     local containerOverlay = self:getPosition():getContainerOverlay(index)
     if containerOverlay ~= nil then
@@ -304,6 +380,11 @@ function Sexbound.Actor:loadOverlayPart(animState, index)
     return self:getDefaultContainerImage()
 end
 
+--- Load the facial hair part for this actor
+--- @param entityGroup string The entity group of this actor (For file path building)
+--- @param species string The species of this actor
+--- @param directives table List of color directives for this actor
+--- @return string # The fully qualified instruction to load the facial hair sprite
 function Sexbound.Actor:loadFacialHairPart(entityGroup, species, directives)
     local facialHairType = self:getIdentity("facialHairType") or ""
     if facialHairType ~= "" then
@@ -313,6 +394,11 @@ function Sexbound.Actor:loadFacialHairPart(entityGroup, species, directives)
     return self:getDefaultPartImage()
 end
 
+--- Load the facial hair mask for this actor
+--- @param entityGroup string The entity group of this actor (For file path building)
+--- @param species string The species of this actor
+--- @param directives table List of color directives for this actor
+--- @return string # The fully qualified instruction to load the facial hair mask
 function Sexbound.Actor:loadFacialMaskPart(entityGroup, species, directives)
     local facialMaskType = self:getIdentity("facialMaskType") or ""
     if facialMaskType ~= "" then
@@ -322,6 +408,11 @@ function Sexbound.Actor:loadFacialMaskPart(entityGroup, species, directives)
     return self:getDefaultPartImage()
 end
 
+--- Load the hair part for this actor
+--- @param entityGroup string The entity group of this actor (For file path building)
+--- @param species string The species of this actor
+--- @param directives table List of color directives for this actor
+--- @return string # The fully qualified instruction to load the hair sprite
 function Sexbound.Actor:loadHairPart(entityGroup, species, directives)
     local hairType = self:getIdentity("hairType") or ""
     if hairType ~= "" then
@@ -331,6 +422,13 @@ function Sexbound.Actor:loadHairPart(entityGroup, species, directives)
     return self:getDefaultPartImage()
 end
 
+--- Load the head part for this actor
+--- @param entityGroup string The entity group for this actor (For file path building)
+--- @param role string The actor's current role
+--- @param species string The species of this actor
+--- @param gender string "male" or "female"
+--- @param directives table List of color directives of this actor
+--- @return string # The fully qualified instruction to load the head sprite
 function Sexbound.Actor:loadHeadPart(entityGroup, role, species, gender, directives)
     local forceUseOriginalHeadArtwork = self._parent._config.actor.forceUseOriginalHeadArtwork or false
     if forceUseOriginalHeadArtwork and entityGroup == "humanoid" then
@@ -344,13 +442,18 @@ function Sexbound.Actor:loadHeadPart(entityGroup, role, species, gender, directi
     }) .. ":normal" .. directives.head
 end
 
-function Sexbound.Actor:loadGroin(entityGroup, role, species, gender)
+--- Load the groin part for this actor
+--- @param entityGroup string The entity group for this actor (For file path building)
+--- @param role string The actor's current role
+--- @param species string The species of this actor
+--- @return string image The image path for the groin sprite
+--- @return string directives The directives string for the groin sprite
+--- @return string mask The masking instruction for the groin sprite
+function Sexbound.Actor:loadGroin(entityGroup, role, species)
     local animState = self:getAnimationState()
     local frameName = self:getFrameName(animState)
 
     local image, directives, mask = self:getDefaultGlobalTagSet()
-
-    local subGender = self:getSubGender()
 
     if (self:isVisiblyPregnant() and self:isEnabledPregnancyFetish()) or self:isInflated() then
         if self:getGenitalType() == "male" then
@@ -400,8 +503,9 @@ function Sexbound.Actor:loadGroin(entityGroup, role, species, gender)
 end
 
 --- Resets the Actor's global animator tags.
+--- @param prefix ?string The animator tag name prefix for this actor, or "actor<num>" if not given
 function Sexbound.Actor:resetGlobalAnimatorTags(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
+    prefix = prefix or ("actor" .. self:getActorNumber())
 
     -- Reset animation parts related to actor body parts
     self:resetAnimatorParts(prefix)
@@ -418,14 +522,16 @@ function Sexbound.Actor:resetGlobalAnimatorTags(prefix)
 end
 
 --- Resets animator masks.
--- @param role
+--- @param prefix ?string The animator tag name prefix for this actor, or "actor<num>" if not given
 function Sexbound.Actor:resetAnimatorMasks(prefix)
     animator.setGlobalTag(prefix .. "-groinMask", "?addmask=" .. self:getDefaultMaskImage())
 end
 
 --- Resets animator parts.
--- @param role
+--- @param prefix ?string The animator part name prefix for this actor, or "actor<num>" if not given
 function Sexbound.Actor:resetAnimatorParts(prefix)
+    prefix = prefix or ("actor" .. self:getActorNumber())
+    
     -- Reset each actor part
     for _, part in ipairs({"arm-back", "arm-front", "body", "climax", "head", "hair", "facial-hair", "facial-mask",
                            "groin", "ears", "ears-body", "tail"}) do
@@ -442,22 +548,23 @@ function Sexbound.Actor:resetAnimatorParts(prefix)
 end
 
 --- Resets all transformations for this Actor.
+--- @param prefix ?string The animator group name prefix for this actor, or "actor<num>" if not given
 function Sexbound.Actor:resetTransformations(prefix)
-    prefix = prefix or "actor" .. self:getActorNumber()
-    local offsets = self:getActorOffset(self:getPosition():getName(),tostring(self:getActorNumber()))
+    prefix = prefix or ("actor" .. self:getActorNumber())
+    local offsets = self:getActorOffset(self:getPosition():getName(),self:getActorNumber())
     self:getLog():debug("Actor "..self:getActorNumber().." fetched position offset of "..sb.print(offsets))
 
     local headFlipped = self:getAnimationState():getFlipHead(self:getActorNumber())
     local toReset = {"Body", "Head", "Ears"}
     local toOffset = {"Body", "Head"}
-    
+
     for _, partName in ipairs(toReset) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
             animator.resetTransformationGroup(transformationGroupName)
         end
     end
-    
+
     for _, partName in ipairs(toOffset) do
         local transformationGroupName = prefix .. partName
         if animator.hasTransformationGroup(transformationGroupName) then
@@ -476,8 +583,8 @@ function Sexbound.Actor:resetTransformations(prefix)
 end
 
 --- Rotates a specified animator part.
--- @param part
--- @param angle
+--- @param part string The name of the part to rotate for this actor
+--- @param angle number The angle to rotate, in degrees
 function Sexbound.Actor:rotatePart(part, angle)
     local prefix = "actor" .. self:getActorNumber()
     local transformationGroupName = prefix .. part
@@ -493,16 +600,16 @@ function Sexbound.Actor:rotatePart(part, angle)
 end
 
 --- Setup new actor.
--- @param actorConfig
+--- @param actorConfig table This actor's setup config
 function Sexbound.Actor:setup(actorConfig)
     self._config = util.mergeTable(self._config, actorConfig)
     self._config.storage = self._config.storage or {}
     self._config.storage.sexbound = self._config.storage.sexbound or {}
 
     self:setAnimationState(self:getParent():getStateMachine():stateDesc())
-    
+
     self:setRole(self:getActorNumber())
-    
+
     if not self._parent._config.position.noStats then
         world.sendEntityMessage(self:getEntityId(), "Sexbound:Statistics:Add", {
             name = "haveSexCount",
@@ -512,7 +619,7 @@ function Sexbound.Actor:setup(actorConfig)
 
     if self._config.entityType == "npc" or self._config.entityType == "player" then
         local identity = self._config.identity
-        
+
         -- Initialize hair identities.
         identity.hairFolder = self:getHairFolder()
         identity.hairType = self:getHairType()
@@ -524,11 +631,11 @@ function Sexbound.Actor:setup(actorConfig)
         -- Initialize facial mask identities.
         identity.facialMaskFolder = self:getFacialMaskFolder()
         identity.facialMaskType = self:getFacialMaskType()
-        
+
         -- Build color genetics. Doing so on the actor ensures no entity messaging bullshittery happens to the data
         -- Load species file
         local speciesConfig = root.assetJson("/species/"..identity.species..".species") or {}
-        
+
         -- Cache species genetic templates
         identity.genetics = identity.genetics or {}
         identity.genetics.bodyColorPool = speciesConfig.bodyColor or {}
@@ -540,7 +647,7 @@ function Sexbound.Actor:setup(actorConfig)
         identity.genetics.hairColorPool = speciesConfig.hairColor or {}
         identity.genetics.hairColorPoolAverage = {}
         identity.genetics.hairAllowBlending = true
-        
+
         local res, err = pcall(function()
             -- Pre calculate color palette averages
             for i, r in ipairs(identity.genetics.bodyColorPool) do
@@ -556,7 +663,7 @@ function Sexbound.Actor:setup(actorConfig)
                         break
                     end     -- If not length 3,4,6 or 8 it's invalid - ignore
                     x = x + 1
-                    
+
                     local r, g, b, a = Sexbound.Util.hexToRgba(v)
                     if a == 0 then identity.genetics.bodyAllowBlending = false end
                     avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -581,7 +688,7 @@ function Sexbound.Actor:setup(actorConfig)
                         break
                     end -- If not length 3,4,6 or 8 it's invalid - ignore
                     x = x + 1
-                    
+
                     local r, g, b, a = Sexbound.Util.hexToRgba(v)
                     if a == 0 then identity.genetics.undyAllowBlending = false end
                     avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -606,7 +713,7 @@ function Sexbound.Actor:setup(actorConfig)
                         break
                     end -- If not length 3,4,6 or 8 it's invalid - ignore
                     x = x + 1
-                    
+
                     local r, g, b, a = Sexbound.Util.hexToRgba(v)
                     if a == 0 then identity.genetics.hairAllowBlending = false end
                     avg[1], avg[2], avg[3] = avg[1] + r, avg[2] + g, avg[3] + b
@@ -621,16 +728,16 @@ function Sexbound.Actor:setup(actorConfig)
         end)
 
         if not res then
-            self:getLog().warn("Couldn't fetch species color averages! Species " .. tostring(identity.species) .. " has no color averages!")
-            self:getLog().warn(err)
+            self:getLog():warn("Couldn't fetch species color averages! Species " .. tostring(identity.species) .. " has no color averages!")
+            self:getLog():warn(err --[[@as table]])
         end
-        
+
         -- Decode entity color directives
         self._config.identity.genetics.bodyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.bodyColor)
         self._config.identity.genetics.undyColor = Sexbound.Util.messageDecode(self._config.identity.genetics.undyColor)
         self._config.identity.genetics.hairColor = Sexbound.Util.messageDecode(self._config.identity.genetics.hairColor)
     end
-    
+
     self._config.identity.body = {canOvulate=false, canProduceSperm=true, hasPenis=true, hasVagina=false} -- init default male body traits
     self:buildSubGenderList()
 
@@ -645,24 +752,26 @@ function Sexbound.Actor:setup(actorConfig)
     if self._config.birthcontrol then actorStatus:addStatus("birthcontrol") end
     if self._config.forceCanOvulate then actorStatus:addStatus("sexbound_override_can_ovulate") end
     if self._config.forceCanProduceSperm then actorStatus:addStatus("sexbound_override_can_produce_sperm") end
-    
+
     if self._config.identity.sxbNaturalStatus then
         for _,s in ipairs(self._config.identity.sxbNaturalStatus) do
             actorStatus:addStatus(s)
         end
     end
-    
+
     self:getLog():debug("Actor "..self:getName().." setup fertility: fertile "..tostring(self._config.isFertile).." - hyperFertile "..tostring(self._config.isHyperFertile).." - ovulating "..tostring(self._config.isOvulating).." - defeated "..tostring(self._config.isDefeated).." - birthcontrol "..tostring(self._config.birthcontrol).." - can ovulate override "..tostring(self._config.forceCanOvulate).." - produce sperm override "..tostring(self._config.forceCanProduceSperm))
-    
+
     self:initPlugins()
     self:getApparel():sync() -- initial fetching of apparel to determine initial gender
 
     self:addInnateStatusNames()
-    
+
     self._hasInited = true
     self:buildBodyTraits()
 end
 
+--- Generate a list of all known subgenders
+--- @private
 function Sexbound.Actor:buildSubGenderList()
     self._config.allGenders = { -- Define default main gender traits
         male={
@@ -689,6 +798,8 @@ function Sexbound.Actor:buildSubGenderList()
     end
 end
 
+--- Apply the native status effects protraying what kind of actor this is
+--- @private
 function Sexbound.Actor:addInnateStatusNames()
     local entityType = self:getEntityType() or ""
     self:getStatus():addStatus("entity_type_" .. entityType)
@@ -697,23 +808,27 @@ function Sexbound.Actor:addInnateStatusNames()
     self:getStatus():addStatus("type_" .. type)
 end
 
+--- Build the applied body traits of this actor
 function Sexbound.Actor:buildBodyTraits()
     if not self._hasInited then return end
     local gender = self:getGender()
     local subGender = self:getSubGender()
     local genderTraits = self._config.allGenders or {}
-    
+
     if genderTraits[subGender] then self._config.identity.body = copy(genderTraits[subGender]) -- set body traits of defined subgender if exists
     elseif genderTraits[gender] then self._config.identity.body = copy(genderTraits[gender]) -- set body traits of defined gender instead if exists
     else self._config.identity.body = {canOvulate=false, canProduceSperm=true, hasPenis=true, hasVagina=false} end -- else, reset to fallback male
     self:getLog():debug("Rebuilding actor gender for "..self:getName().." - "..tostring(gender).."/"..tostring(subGender).." => "..Sexbound.Util.shallowDump(self._config.identity.body))
 end
 
+--- Initialize all plugins that are enabled for this actor
+--- @protected
 function Sexbound.Actor:initPlugins()
     -- Create new plugin manager.
     self._pluginmgr = Sexbound.Actor.PluginMgr:new(self)
 end
 
+--- Function to trigger opening the SexUI for this actor
 function Sexbound.Actor:openUI()
     if self:getEntityType() ~= "player" then return end
     local uiConfig = self:getParent()._UI:handleInteract() or {}
@@ -725,13 +840,12 @@ function Sexbound.Actor:openUI()
 end
 
 --- Flips a specified animator part.
--- @param part
+--- @param part string Name of the part to flip
 function Sexbound.Actor:flipPart(part)
     local prefix = "actor" .. self:getActorNumber()
     local transformationGroupName = prefix .. part
 
     -- (43 pixels / 2) / 8 = 2.6875; (2.6875, 2.6875) is the center point of a 43 x 43 pixel image.
-
     if (animator.hasTransformationGroup(transformationGroupName)) then
         local scaleCenter = {2.6875, 2.6875}
         if self:getParent():getAnimationPartsCentered() == true then
@@ -742,8 +856,8 @@ function Sexbound.Actor:flipPart(part)
 end
 
 --- Translates a specified animator part.
--- @param part
--- @param offset
+--- @param part string Name of the part to move
+--- @param offset Vec2F X and Y coordinate offset to translate form origin
 function Sexbound.Actor:translatePart(part, offset)
     local prefix = "actor" .. self:getActorNumber()
     local transformationGroupName = prefix .. part
@@ -762,7 +876,7 @@ function Sexbound.Actor:uninit()
 end
 
 --- Processes gender value.
--- @param gender male, female, or something else (future)
+--- @param gender string "male" or "female"
 function Sexbound.Actor:validateGender(gender)
     local validatedGender = util.find(self:getParent():getConfig().sex.supportedPlayerGenders, function(v)
         if (gender == v) then
@@ -774,7 +888,7 @@ function Sexbound.Actor:validateGender(gender)
 end
 
 --- Processes species value.
--- @param species name of species
+--- @param species string Name of species
 function Sexbound.Actor:validateSpecies(species)
     local validatedSpecies = util.find(self:getParent():getConfig().sex.supportedPlayerSpecies, function(v)
         if (species == v) then
@@ -786,98 +900,102 @@ function Sexbound.Actor:validateSpecies(species)
 end
 
 --- Executes the specifed callback function for each actor plugin.
--- @param callback
+--- @param callback function<integer, Sexbound.Actor.Plugin> The function to call for each plugin, given plugin index and instance
 function Sexbound.Actor:forEachPlugin(callback)
     util.each(self:getPlugins(), function(index, plugin)
         callback(index, plugin)
     end)
 end
 
+--- Function executed when entering any sex state - propagates to all plugins
 function Sexbound.Actor:onEnterAnyState()
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onEnterAnyState()
     end)
 end
 
---- Calls onEnterClimaxState for every loaded plugin.
+--- Function executed when entering climax state - propagates to all plugins
 function Sexbound.Actor:onEnterClimaxState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:ClimaxState:Enter")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onEnterClimaxState()
     end)
 end
 
---- Calls onEnterExitState for every loaded plugin.
+--- Function executed when entering exit state - propagates to all plugins
 function Sexbound.Actor:onEnterExitState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:ExitState:Enter")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onEnterExitState()
     end)
 end
 
---- Calls onEnterIdleState for every loaded plugin.
+--- Function executed when entering idle state - propagates to all plugins
 function Sexbound.Actor:onEnterIdleState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:IdleState:Enter")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onEnterIdleState()
     end)
 end
 
---- Calls onEnterSexState for every loaded plugin.
+--- Function executed when entering sex state - propagates to all plugins
 function Sexbound.Actor:onEnterSexState()
     -- Notify the actor that it is entering the sex state
     world.sendEntityMessage(self:getEntityId(), "Sexbound:SexState:Enter")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onEnterSexState()
     end)
 end
 
+--- Function executed when leaving exit state - propagates to all plugins
 function Sexbound.Actor:onExitAnyState()
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onExitAnyState()
     end)
 end
 
---- Calls onExitClimaxState for every loaded plugin.
+--- Function executed when leaving climax state - propagates to all plugins
 function Sexbound.Actor:onExitClimaxState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:ClimaxState:Exit")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onExitClimaxState()
     end)
 end
 
---- Calls onExitExitState for every loaded plugin.
+--- Function executed when leaving exit state - propagates to all plugins
 function Sexbound.Actor:onExitExitState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:ExitState:Exit")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onExitExitState()
     end)
 end
 
---- Calls onExitIdleState for every loaded plugin.
+--- Function executed when leaving idle state - propagates to all plugins
 function Sexbound.Actor:onExitIdleState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:IdleState:Exit")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onExitIdleState()
     end)
 end
 
---- Calls onExitSexState for every loaded plugin.
+--- Function executed when leaving sex state - propages to all plugins
 function Sexbound.Actor:onExitSexState()
     world.sendEntityMessage(self:getEntityId(), "Sexbound:SexState:Exit")
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onExitSexState()
     end)
 end
 
+--- Function executed each tick in any state - propagates to all plugins
+--- @param dt number The delta time since last tick
 function Sexbound.Actor:onUpdateAnyState(dt)
     self:getApparel():update(dt)
 
@@ -885,7 +1003,7 @@ function Sexbound.Actor:onUpdateAnyState(dt)
 
     self:getStatus():update(dt)
 
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onUpdateAnyState(dt)
     end)
 
@@ -899,34 +1017,34 @@ function Sexbound.Actor:onUpdateAnyState(dt)
     end
 end
 
---- Calls onUpdateExitState for every loaded plugin.
--- @param dt
+--- Function executed each tick while in exit state - propagates to all plugins
+--- @param dt number The delta time since last tick
 function Sexbound.Actor:onUpdateExitState(dt)
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onUpdateExitState(dt)
     end)
 end
 
---- Calls onUpdateClimaxState for every loaded plugin.
--- @param dt
+--- Function executed each tick while in climax state - propagates to all plugins
+--- @param dt number The delta time since last tick
 function Sexbound.Actor:onUpdateClimaxState(dt)
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onUpdateClimaxState(dt)
     end)
 end
 
---- Calls onUpdateIdleState for every loaded plugin.
--- @param dt
+--- Function executed each tick while in idle state - propagates to all plugins
+--- @param dt number The delta time since last tick
 function Sexbound.Actor:onUpdateIdleState(dt)
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onUpdateIdleState(dt)
     end)
 end
 
---- Calls onUpdateSexState for every loaded plugin.
--- @param dt
+--- Function executed each tick while in sex state - propagates to all plugins
+--- @param dt number The delta time since last tick
 function Sexbound.Actor:onUpdateSexState(dt)
-    self:forEachPlugin(function(index, plugin)
+    self:forEachPlugin(function(_, plugin)
         plugin:onUpdateSexState(dt)
     end)
     self:getHead():onUpdateSexState(dt)
@@ -935,49 +1053,65 @@ end
 -- [Getters / Setters]-------------------------------------------------------------------------
 
 --- Returns the actor number for this Actor instance.
+--- @return integer # The role number of this actor
 function Sexbound.Actor:getActorNumber()
     return self._actorNumber
 end
 
 --- Sets the actor number to the specified value.
--- @param value
+--- @param value integer The new role number of this actor
 function Sexbound.Actor:setActorNumber(value)
     self._actorNumber = value
     return self._actorNumber
 end
 
+--- Sets the animation state of this actor
+--- @param stateName string The new state's name
+--- @return Sexbound.Position.AnimationState.State # The current state, to verify success
 function Sexbound.Actor:setAnimationState(stateName)
-    self._animationState = self:getPosition():getAnimationState(stateName)
+    self._animationState = self:getPosition():getAnimationState(stateName) --[[@as Sexbound.Position.AnimationState.State|nil]]
 
     return self._animationState
 end
 
+--- Gets the current animation state of this actor
+--- @return Sexbound.Position.AnimationState.State # The current animation state
 function Sexbound.Actor:getAnimationState()
     return self._animationState
 end
 
+--- Gets this actor's apparel instance
+--- @return Sexbound.Actor.Apparel # The apparel instance
 function Sexbound.Actor:getApparel()
     return self._apparel
 end
 
+--- Gets this actor's head manager
+--- @return Sexbound.Actor.Head # The head manager instance
 function Sexbound.Actor:getHead()
     return self._head
 end
 
+--- Gets this actor's nipples manager
+--- @return Sexbound.Actor.Nipples # The nipples manager instance
 function Sexbound.Actor:getNipples()
     return self._nipples
 end
 
---- Legacy
+--- [Legacy] Gets this actor's current mouth offset
+--- @return Vec2F # Offset coordinates
 function Sexbound.Actor:getMouthOffset()
-    return self:getMouth():getOffset();
+    return self:getMouth():getPositionOffset();
 end
 
---- Legacy
+--- [Legacy] Gets this actor's current mouth position
+--- @return Vec2F # Position coordinates
 function Sexbound.Actor:getMouthPosition()
-    return self:getMouth():getPosition();
+    return self:getMouth():getPositionOffset();
 end
 
+--- Gets current climax particle spawn offset
+--- @return Vec2F # Offset coordinates
 function Sexbound.Actor:getClimaxSpawnOffset()
     local prefix = "actor" .. self:getActorNumber()
     local nextPart, offset = prefix .. "-body", {0, 0}
@@ -985,7 +1119,7 @@ function Sexbound.Actor:getClimaxSpawnOffset()
     while (nextPart ~= nil) do
         offset = vec2.add(offset, animator.partProperty(nextPart, "offset") or {0, 0})
 
-        nextPart = animator.partProperty(nextPart, "anchorPart")
+        nextPart = animator.partProperty(nextPart, "anchorPart")  --[[@as string]]
     end
 
     local groinTerm = ""
@@ -1000,12 +1134,16 @@ function Sexbound.Actor:getClimaxSpawnOffset()
     return vec2.add(offset, animator.partProperty(lastPart, "offset") or {0, 0})
 end
 
+--- Gets current climax particle spawn position
+--- @return Vec2F # Position coordiantes
 function Sexbound.Actor:getClimaxSpawnPosition()
     local offset = vec2.mul(self:getClimaxSpawnOffset(), {object.direction(), 1})
 
     return object.toAbsolutePosition(offset)
 end
 
+--- Gets current body offset, measured from center
+--- @return Vec2F # Offset coordinates
 function Sexbound.Actor:getBodyCenterOffset()
     local prefix = "actor" .. self:getActorNumber()
     local nextPart, offset = prefix .. "-body-center", {0, 0}
@@ -1013,27 +1151,37 @@ function Sexbound.Actor:getBodyCenterOffset()
     while (nextPart ~= nil) do
         offset = vec2.add(offset, animator.partProperty(nextPart, "offset") or {0, 0})
 
-        nextPart = animator.partProperty(nextPart, "anchorPart")
+        nextPart = animator.partProperty(nextPart, "anchorPart") --[[@as string]]
     end
 
     return offset
 end
 
+--- Gets current body position, centered
+--- @return Vec2F # Position coordiantes
 function Sexbound.Actor:getBodyCenterPosition()
     local offset = vec2.mul(self:getBodyCenterOffset(), {object.direction(), 1})
 
     return object.toAbsolutePosition(offset)
 end
 
+--- Gets the default image instruction for an animator tag
+--- @return string image The fully qualified instruction for the default image
+--- @return string # Empty string
+--- @return string mask The mask directive
 function Sexbound.Actor:getDefaultGlobalTagSet()
     return self:getDefaultPartImage(), "", "?addmask=" .. self:getDefaultMaskImage()
 end
 
 --- Returns the running configuration for this Actor instance.
+--- @return table # The config data of this actor
 function Sexbound.Actor:getConfig()
     return self._config
 end
 
+--- Gets the defined default artworks for this actor, or for a specific part name
+--- @param name ?string The part name to get
+--- @return table<string, string>|string|nil # If name given, the string path of that part or nil if it isn't set. Otherwise, list of all default artworks
 function Sexbound.Actor:getDefaultArtwork(name)
     if name then
         return self._config.defaultArtwork[name]
@@ -1042,6 +1190,9 @@ function Sexbound.Actor:getDefaultArtwork(name)
     return self._config.defaultArtwork
 end
 
+--- Gets the default mask instruction, optionally for a given frame name
+--- @param frameName ?string An animation frame name
+--- @return string # The fully qualified mask image path
 function Sexbound.Actor:getDefaultMaskImage(frameName)
     local path = "/artwork/defaults/default_mask.png"
     if frameName then
@@ -1051,6 +1202,9 @@ function Sexbound.Actor:getDefaultMaskImage(frameName)
     end
 end
 
+--- Gets the default container image instruction, optionally for a given frame name
+--- @param frameName ?string An animation frame name
+--- @return string # The fully qualified container image path
 function Sexbound.Actor:getDefaultContainerImage(frameName)
     local path = "/artwork/container.png"
     if frameName then
@@ -1060,6 +1214,9 @@ function Sexbound.Actor:getDefaultContainerImage(frameName)
     end
 end
 
+--- Gets the default part instruction, optionally for a given frame name
+--- @param frameName ?string An animation frame name
+--- @return string # The fully qualified part image path
 function Sexbound.Actor:getDefaultPartImage(frameName)
     local path = "/artwork/defaults/default_image.png"
     if frameName then
@@ -1069,6 +1226,8 @@ function Sexbound.Actor:getDefaultPartImage(frameName)
     end
 end
 
+--- Gets the entity group of this actor
+--- @return string # The entity group
 function Sexbound.Actor:getEntityGroup()
     local entityType = self:getEntityType()
 
@@ -1083,17 +1242,14 @@ function Sexbound.Actor:getEntityGroup()
     return entityType
 end
 
+--- Gets the body type of this actor
+--- @return string # "male" or "female" for determining the right body sprite
 function Sexbound.Actor:buildBodyType()
-    --local gender = self:getSubGender() or self:getGender()
-    --local targetGenders = self:getParent():getConfig().sex.whichGendersHaveBoobs or {"female", "futanari"}
-    --for _,g in pairs(targetGenders) do
-    --    if g == gender then return "female" end
-    --end
-    
-    --return "male"
     return self:getGender()
 end
 
+--- Determines and sets the genital type of this actor
+--- @return string # "male" or "female", depending on if a penis needs to be rendered or not
 function Sexbound.Actor:buildGenitalType()
     local gender = self:getSubGender() or self:getGender()
     self:getLog():warn("OLD Building genital type for "..self:getName().." - is "..tostring(gender).." - THIS SHOULD NOT FIRE")
@@ -1106,59 +1262,71 @@ function Sexbound.Actor:buildGenitalType()
 end
 
 --- Returns the body type of this actor instance.
+--- @return string # "male" or "female", depending on if a penis needs to be rendered or not
 function Sexbound.Actor:getBodyType()
     return self:getIdentity().sxbBodyType or self:buildBodyType()
 end
 
 --- Returns the entity id of this actor instance.
+--- @return EntityId # This actor's entity's ID
 function Sexbound.Actor:getEntityId()
     return self._config.entityId
 end
 
 --- Returns the entity type of this Actor instance.
+--- @return string # The entity type of this actor's entity
 function Sexbound.Actor:getEntityType()
     return self._config.entityType
 end
 
 --- Returns the validated facial hair folder name for this Actor instance.
+--- @return string # The folder name to fetch facial hair images from
 function Sexbound.Actor:getFacialHairFolder()
-    return self:getIdentity("facialHairFolder") or self:getIdentity("facialHairGroup") or ""
+    return self:getIdentity("facialHairFolder") or self:getIdentity("facialHairGroup") or ""  --[[@as string]]
 end
 
 --- Returns the validated facial hair type for this Actor instance.
+--- @return string # The name of the facial hair image for this actor
 function Sexbound.Actor:getFacialHairType()
-    return self:getIdentity("facialHairType") or "1"
+    return self:getIdentity("facialHairType") or "1" --[[@as string]]
 end
 
 --- Returns the validated facial mask folder name for this Actor instance.
+--- @return string # The folder name to fetch facial mask images from
 function Sexbound.Actor:getFacialMaskFolder()
-    return self:getIdentity("facialMaskFolder") or self:getIdentity("facialMaskGroup") or ""
+    return self:getIdentity("facialMaskFolder") or self:getIdentity("facialMaskGroup") or "" --[[@as string]]
 end
 
 --- Returns the validated facial mask type for this Actor instance.
+--- @return string # The name of the facial mask image for this actor
 function Sexbound.Actor:getFacialMaskType()
-    return self:getIdentity("facialMaskType") or "1"
+    return self:getIdentity("facialMaskType") or "1" --[[@as string]]
 end
 
 --- Returns the forced role for this actor.
+--- @return integer # The role number
 function Sexbound.Actor:getForceRole()
     return self._config.forceRole or 0
 end
 
+--- Returns the object orientation of the parent sexnode
+--- @return integer # 1 for right or -1 for left
 function Sexbound.Actor:getFacingDirection()
     return self._parent._facingDirection
 end
 
---- Returns the gender of this actor instance.
+--- Returns the vanilla gender of this actor instance.
+--- @return string # The name of the active gender or sub-gender of this actor
 function Sexbound.Actor:getGender()
     return self:getIdentity().gender
 end
 
 --- Returns the gender of this actor instance, dynamically accounting for futas in respect to the calling partner
+--- @param diffNum integer Actor role number of that comparison target
+--- @return string # "male" or "female", with futanari specifically being the opposite of the reference target
 function Sexbound.Actor:getGenderFutasafe(diffNum)
-    -- TODO
     local actNum = self:getActorNumber() or 0
-    local id  = self:getIdentity()
+    local id  = self:getIdentity()  --[[@as table<string,any>]]
     diffNum = diffNum or 0
     local actGender = id.gender
     if id.sxbSubGender == "futanari" or id.sxbSubGender == "cuntboy" then
@@ -1169,93 +1337,81 @@ function Sexbound.Actor:getGenderFutasafe(diffNum)
        if thisFucks ~= 0 and thisFucks == diffNum then actGender = "male"
        elseif thatFucks ~= 0 and thatFucks == actNum then actGender = "female" end
     end
-    
+
     return actGender
 end
 
---- Returns the visible genital type of this actor.
+--- Returns the visible genital type of this actor. For actors with both, "male" outweighs because it needs to be drawn
+--- @return string # "male" or "female" whethere a penis needs to be rendered or not
 function Sexbound.Actor:getGenitalType()
     --return self:getIdentity().sxbGenitalType or self:buildGenitalType()
-    local id = self:getIdentity()
+    local id = self:getIdentity() --[[@as table<string,any>]]
     local genitalType = "female"
     if id.body.hasPenis then genitalType = "male" end
     return self:getIdentity().sxbGenitalType or genitalType
 end
 
 --- Returns a list of available genital types on this actor
+--- @return table<integer, string> # List of available gential types as "male" for penis and "female" for vagina
 function Sexbound.Actor:getGenitalTypes()
-    --[[local genitals = {}
-    local gender = self:getSubGender() or self:getGender()
-    local mainConfig = self:getParent():getConfig().sex
-    local maleGenders = mainConfig.whichGendersCanProduceSperm or {"male", "futanari"}
-    local femaleGenders = mainConfig.whichGendersCanOvulate or {"female", "futanari", "cuntboy"}
-    
-    for _,g in pairs(maleGenders) do
-        if g == gender then table.insert(genitals, "male") break end
-    end
-    for _,g in pairs(femaleGenders) do
-        if g == gender then table.insert(genitals, "female") break end
-    end
-    
-    return genitals]]
     local genitals = {}
-    local id = self:getIdentity()
+    local id = self:getIdentity() --[[@as table<string,any>]]
     if id.body.hasPenis then table.insert(genitals, "male") end
     if id.body.hasVagina then table.insert(genitals, "female") end
     return genitals
 end
 
---- Returns if this actor has the given genital type (e.g. Futas have a dick and a vagina, but on the sprite only the dick counts)
--- getGenitalType returns the main visible type (dick > no dick) for sprite rendering purposes
--- This method checks if the actor logically has a given gender type, for climax and pregnancy logic reasons
+--- Returns if this actor has the given genital type
+--- @param gtype string "male" or "female" to check for penis or vagina respectively
+--- @return boolean # Whethere or not this actor has the given genital type
 function Sexbound.Actor:hasGenitalType(gtype)
-    --[[local gender = self:getSubGender() or self:getGender()
-    local targetGenders
-    if gtype == "male" then targetGenders = self:getParent():getConfig().sex.whichGendersCanProduceSperm or {"male", "futanari"}
-    elseif gtype == "female" then targetGenders = self:getParent():getConfig().sex.whichGendersCanOvulate or {"female", "futanari", "cuntboy"} end
-    
-    for _,g in pairs(targetGenders) do
-        if g == gender then return true end
-    end
-    
-    return false]]
-    local id = self:getIdentity()
+    local id = self:getIdentity() --[[@as table<string,any>]]
     if gtype == "male" then return id.body.hasPenis or false
     elseif gtype == "female" then return id.body.hasVagina or false end
     return false
 end
 
 --- Returns the sub-gender of this actor instance.
+--- @return string # The sub-gender of this actor
 function Sexbound.Actor:getSubGender()
     return self:getIdentity().sxbSubGender
 end
 
 --- Returns the validated hair folder of this actor instance.
+--- @return string # The folder name to fetch hair sprites from
 function Sexbound.Actor:getHairFolder()
     return self:getIdentity().hairFolder or self:getIdentity("hairGroup") or "hair"
 end
 
 --- Returns the validated hair type of this actor instance.
+--- @return string # The name of the hair sprite for this actor
 function Sexbound.Actor:getHairType()
-    return self:getIdentity("hairType") or "1"
+    return self:getIdentity("hairType") or "1" --[[@as string]]
 end
 
+--- Returns the current animation frame
+--- @return table|string # Animator properties or "1"
 function Sexbound.Actor:getCurrentFrame()
     return animator.partProperty("actors", "currentFrame") or "1"
 end
 
 --- Returns the id of this actor instance.
+--- @return integer # This actor's uid
 function Sexbound.Actor:getId()
     return self._id
 end
 
+--- Set this actor's uid
+--- @param value integer New uid
+--- @return integer # Current uid, which is the new one
 function Sexbound.Actor:setId(value)
     self._id = value
     return self._id
 end
 
 --- Returns a reference to this Actor identifiers.
--- @param[opt] param
+--- @param param ?string The name of the parameter to feth from this actor's identity
+--- @return table<string,any>|string|nil # The requested parameter if it exists, nil if it doesn't or the entire identity table if nothing requested
 function Sexbound.Actor:getIdentity(param)
     if param then
         return self._config.identity[param]
@@ -1265,21 +1421,25 @@ function Sexbound.Actor:getIdentity(param)
 end
 
 --- Returns a reference to the log for this Actor instance.
+--- @return Sexbound.Log # The logging instance
 function Sexbound.Actor:getLog()
     return self._log
 end
 
 --- Returns a reference to this instance's Mouth.
+--- @return Sexbound.Actor.Mouth # The mouth manager instance
 function Sexbound.Actor:getMouth()
     return self._mouth
 end
 
 --- Returns the name of this Actor instance.
+--- @return string # The name of this actor
 function Sexbound.Actor:getName()
     return self._config.identity.name
 end
 
---- Returns reference to targeted other actor.
+--- [Legacy] Returns reference to targeted other actor.
+--- @return Sexbound.Actor|nil # The first-best actor that isn't this one. Why? Dunno. Ancient relic from twoactor times.
 function Sexbound.Actor:getOtherActor()
     for _, actor in pairs(self:getParent():getActors()) do
         if actor:getActorNumber() ~= self:getActorNumber() then
@@ -1289,6 +1449,8 @@ function Sexbound.Actor:getOtherActor()
 end
 
 --- Returns actual reference to targeted other actor, based on fuck hierarchy.
+--- @param prioSub boolean Whethere or not to prioritize the one being fucked over the one fucking when this actor is sandwiched
+--- @return Sexbound.Actor|nil # The actor this one sexually engages with, based on actual sexual engagement, or nil if no interaction
 function Sexbound.Actor:getOtherActorPositionsafe(prioSub)
     prioSub = prioSub or false
     local actNum = self:getActorNumber()
@@ -1301,7 +1463,7 @@ function Sexbound.Actor:getOtherActorPositionsafe(prioSub)
     local dom, sub = nil, nil
     local target = nil
     local actors = self:getParent():getActors()
-    
+
     dom = actors[thatFucks]
     sub = actors[thisFucks]
 
@@ -1311,38 +1473,42 @@ function Sexbound.Actor:getOtherActorPositionsafe(prioSub)
         else target = dom end
     elseif dom ~= nil then target = dom
     else target = sub end
-    
+
     return target
 end
 
 --- Returns list of all actors fucking this actor.
+--- @return table<integer, Sexbound.Actor> # List of all actor, dom and sub, sexually interacting with this one
 function Sexbound.Actor:getImpregnatorList()
     local list = {}
     local relations = self:getPosition():getActorRelation()
     local actorNum = self:getActorNumber()
-    
+
     for i, target in ipairs(relations) do
-        if target == actorNum then 
+        if target == actorNum then
             local targetActor = self:getParent():getActors()[i] or nil
             if targetActor then table.insert(list, targetActor) end
         end
     end
-    
+
     return list
 end
 
 --- Returns the parent class of this Actor instance.
+--- @return Sexbound # Parent sexnode instance
 function Sexbound.Actor:getParent()
     return self._parent
 end
 
 --- Returns the plugin manager of this Actor instance.
+--- @return Sexbound.Actor.PluginMgr # The plugin manager instance
 function Sexbound.Actor:getPluginMgr()
     return self._pluginmgr
 end
 
 --- Returns a reference to this Actor instance's plugins as a table.
--- @param pluginName
+--- @param pluginName ?string Name of the plugin to try and get
+--- @return table<integer, Sexbound.Actor.Plugin>|Sexbound.Actor.Plugin|nil # The plugin or nil if it doesn't exist, or the list of all plugins if none requested
 function Sexbound.Actor:getPlugins(pluginName)
     if self:getPluginMgr() == nil then
         return
@@ -1355,29 +1521,35 @@ function Sexbound.Actor:getPlugins(pluginName)
     return self:getPluginMgr():getPlugins()
 end
 
--- Returns a reference to the current position.
+--- Returns a reference to the current position.
+--- @return Sexbound.Position # The current position of the sexnode this actor is in
 function Sexbound.Actor:getPosition()
     return self._parent:getPositions():getCurrentPosition()
 end
 
 --- Returns the role of this actor instance.
+--- @return string # The role number of this actor
 function Sexbound.Actor:getRole()
     return self._role
 end
 
 --- Sets the role for this actor with the specifed index.
--- @param index
+--- @param index integer The new role number
+--- @return string # The current role name
 function Sexbound.Actor:setRole(index)
     local role = self:getAnimationState():getOverrideRoles(index)
-    self._role = role or "actor" .. index
+    self._role = "actor" .. role
     return self._role
 end
 
 --- Returns the species value.
+--- @return string # The actor's species
 function Sexbound.Actor:getSpecies()
     return self:getIdentity().species
 end
 
+--- Returns which entity group the offspring of this actor will have upon pregnancy
+--- @return string # The entity group babies of this actor should have - empty if normal behavior
 function Sexbound.Actor:getOffspringGroup()
     local result = self:getIdentity().offspringGroup
     if result then return result end
@@ -1386,6 +1558,8 @@ function Sexbound.Actor:getOffspringGroup()
     return ""
 end
 
+--- Returns which species the offspring of this actor will have upon pregnancy
+--- @return string # The species babies of this actor should have - empty if normal behavior
 function Sexbound.Actor:getOffspringSpecies()
     local alt = self:getIdentity().offspringSpecies
     if alt then return alt end
@@ -1393,8 +1567,13 @@ function Sexbound.Actor:getOffspringSpecies()
     return ""
 end
 
+--- Fetch a specific sprite from this actor
+--- @param animState Sexbound.Position.AnimationState.State The current animation state
+--- @param partName string The name of the part to fetch
+--- @param tags table Data to replace in the filepath template
+--- @return string # The full filepath of the sprite to load
 function Sexbound.Actor:getSprite(animState, partName, tags)
-    local defaultArtwork = self:getDefaultArtwork(partName)
+    local defaultArtwork = self:getDefaultArtwork(partName) --[[@as string]]
     local filename = animState:getSprite(partName, defaultArtwork)
 
     if type(filename) == "table" then
@@ -1417,46 +1596,74 @@ function Sexbound.Actor:getSprite(animState, partName, tags)
 end
 
 --- Returns a reference to the state machine
+--- @return Sexbound.StateMachine # The state machine of the sexnode
 function Sexbound.Actor:getStateMachine()
     return self._parent:getStateMachine()
 end
 
 --- Returns a reference to this instance's Status.
+--- @return Sexbound.Actor.Status # The status manager
 function Sexbound.Actor:getStatus()
     return self._status
 end
 
+--- Returns a reference to this instance's Status.
+--- @return Sexbound.Actor.Status # The status manager
 function Sexbound.Actor:status()
     return self._status
 end
 
 --- Returns a reference to the storage interface
+--- @return Sexbound.Actor.Storage # The storage manager
 function Sexbound.Actor:getStorage()
     return self._storage
 end
 
+--- Returns the actor's entity type
+--- @return string # The entity type
 function Sexbound.Actor:getType()
     return self._config.type
 end
 
+--- Returns this actor's entity's uuid
+--- @return string # The UUID
 function Sexbound.Actor:getUniqueId()
     return self._config.uniqueId
 end
 
+--- Returns this actor's baby color genes
+--- @return table<string, string> bodyColor The body color hex replacements
+--- @return table<integer, integer> bodyColorAverage The average color as RGB of the body palette
+--- @return table<string, string> undyColor The undy color hex replacements
+--- @return table<integer, integer> undyColorAverage The average color as RGB of the undy palette
+--- @return table<string, string> hairColor The hair color hex replacements
+--- @return table<integer, integer> hairColorAverage The average color as RGB of the hair palette
 function Sexbound.Actor:getGenes()
     local g = self:getIdentity() or {}
     g = g.genetics or {}
     return g.bodyColor, g.bodyColorAverage, g.undyColor, g.undyColorAverage, g.hairColor, g.hairColorAverage
 end
 
+--- Returns the full baby color gene pool
+--- @return table<integer, table<string, string>> bodyColorPool List of all body color hex replacement sets
+--- @return table<integer, table<integer, integer>> bodyColorPoolAverage List of all body palette average colors as RGB
+--- @return boolean bodyAllowBlending Whethere or not this actor's body color pool supports color blending for the result
+--- @return table<integer, table<string, string>> undyColorPool List of all undy color hex replacement sets
+--- @return table<integer, table<integer, integer>> undyColorPoolAverage List of all undy palette average colors as RGB
+--- @return boolean undyAllowBlending Whethere or not this actor's undy color pool supports color blending for the result
+--- @return table<integer, table<string, string>> hairColorPool List of all hair color hex replacement sets
+--- @return table<integer, table<integer, integer>> hairColorPoolAverage List of all hair palette average colors as RGB
+--- @return boolean hairAllowBlending Whethere or not this actor's hair color pool supports color blending for the result
 function Sexbound.Actor:getGenePool()
     local g = self:getIdentity() or {}
     g = g.genetics or {}
     return g.bodyColorPool, g.bodyColorPoolAverage, g.bodyAllowBlending, g.undyColorPool, g.undyColorPoolAverage, g.undyAllowBlending, g.hairColorPool, g.hairColorPoolAverage, g.hairAllowBlending
 end
 
+--- Returns whethere or not this actor is pregnant
+--- @return boolean # Whethere or not this actor is pregnant
 function Sexbound.Actor:isPregnant()
-    local plugin = self:getPlugins("pregnant")
+    local plugin = self:getPlugins("pregnant") --[[@as Sexbound.Actor.Pregnant]]
 
     if plugin == nil then
         return false
@@ -1465,32 +1672,40 @@ function Sexbound.Actor:isPregnant()
     return plugin:isPregnant()
 end
 
+--- Returns whethere or not this actor is cum inflated
+--- @return boolean # Whethere or not this actor is cum inflated
 function Sexbound.Actor:isInflated()
-    local plugin = self:getPlugins("climax")
+    local plugin = self:getPlugins("climax") --[[@as Sexbound.Actor.Climax]]
 
     if plugin == nil then return false end
 
     return plugin:isInflated()
 end
 
+--- Returns whethere or not this actor is pregnant enough for the pregnancy to be visible
+--- @return boolean # Whethere or not this actor is visibly pregnant
 function Sexbound.Actor:isVisiblyPregnant()
-    local plugin = self:getPlugins("pregnant")
+    local plugin = self:getPlugins("pregnant") --[[@as Sexbound.Actor.Pregnant]]
 
     if plugin == nil then return false end
 
     return plugin:isVisiblyPregnant()
 end
 
+--- Returns the stage of pregnancy the actor is in in decimal percent
+--- @return number # 0..1 progress of the most progressed pregnancy
 function Sexbound.Actor:getPregnancyStage()
-    local plugin = self:getPlugins("pregnant")
-    
-    if plugin == nil then return false end
-    
+    local plugin = self:getPlugins("pregnant") --[[@as Sexbound.Actor.Pregnant]]
+
+    if plugin == nil then return 0 end
+
     return plugin:getPregnancyStage()
 end
 
+--- Returns whethere or not the pregnant belly sprite is enabled
+--- @return boolean # Whethere or not the pregnant belly sprite my render
 function Sexbound.Actor:isEnabledPregnancyFetish()
-    local plugin = self:getPlugins("pregnant")
+    local plugin = self:getPlugins("pregnant") --[[@as Sexbound.Actor.Pregnant]]
 
     if plugin == nil then
         return false
@@ -1500,27 +1715,38 @@ function Sexbound.Actor:isEnabledPregnancyFetish()
 end
 
 --- Returns if this actor is capable of ovulating
+--- @return boolean # Whethere or not ovulation is possible
 function Sexbound.Actor:canOvulate()
     return self:getIdentity().body.canOvulate or self:getStatus():hasStatus("sexbound_override_can_ovulate") or false
 end
+
 --- Returns if this actor is capable of producing sperm
+--- @return boolean # Whethere or not sperm production is possible
 function Sexbound.Actor:canProduceSperm()
     return self:getIdentity().body.canProduceSperm or self:getStatus():hasStatus("sexbound_override_can_produce_sperm") or false
 end
+
 --- Returns if this actor has means to penetrate another actor
+--- @return boolean # Whethere or not this actor has something to penetrate with
 function Sexbound.Actor:canPenetrate()
     return self:getStatus():hasStatus("equipped_strapon") or self:getGenitalType() == "male"
 end
+
 --- Returns if this actor has a biological penis
+--- @return boolean # Whethere or not this actor has a natural, biological penis to penetrate with
 function Sexbound.Actor:hasPenis()
     return self:hasGenitalType("male")
 end
+
 --- Returns if this actor has a vagina
+--- @return boolean # Whethere or not this actor has a vagina
 function Sexbound.Actor:hasVagina()
     return self:hasGenitalType("female")
 end
 
 --- Checks if an actor has a given set of traits
+--- @param traits table<integer, string> List of trait names to check against
+--- @return boolean # True if all traits are present or the request is invalid, false otherwise
 function Sexbound.Actor:hasTraits(traits)
     if traits == nil then return true end
     if type(traits) ~= "table" then return true end
@@ -1534,6 +1760,8 @@ function Sexbound.Actor:hasTraits(traits)
 end
 
 --- Checks if the actor is currently in a role in the current position that has the interaction type(s) given
+--- @param targetType table<integer, string>|string The name of the interaction type to check for
+--- @return boolean # Whethere or not the actor is engaging in the requested interaction type or not
 function Sexbound.Actor:hasInteractionType(targetType)
     local interactionTypes = self:getPosition()._config.interactionType
     local actorList = self:getImpregnatorList()
@@ -1550,7 +1778,8 @@ function Sexbound.Actor:hasInteractionType(targetType)
 end
 
 --- Retrieves the data for UI syncing for this actor
-function Sexbound.Actor:getUIData(args)
+--- @return table # All relevant data about this actor for the SexUI
+function Sexbound.Actor:getUIData(_)
     local data = {
         actorSlot       = "actor" .. self:getActorNumber(),
         isPlayer        = self:getEntityType() == "player",
@@ -1581,10 +1810,11 @@ function Sexbound.Actor:getUIData(args)
         }
     }
 
-    if self:getPlugins("climax") then
+    local climax = self:getPlugins("climax") --[[@as Sexbound.Actor.Climax|nil]]
+    if climax then
         data.climax = {
-            currentPoints = self:getPlugins("climax"):getCurrentPoints(),
-            maxPoints = self:getPlugins("climax"):getMaxPoints()
+            currentPoints = climax:getCurrentPoints(),
+            maxPoints = climax:getMaxPoints()
         }
     end
     
@@ -1592,32 +1822,43 @@ function Sexbound.Actor:getUIData(args)
 end
 
 --- Returns the offset applied to this actor for a given position
+--- @param position string The name of the position
+--- @param slot integer The actor role number in the position
+--- @return table<string, table<integer, integer>> # List of offsets per part
 function Sexbound.Actor:getActorOffset(position,slot)
     if self._config.identity.actorOffset then
 		if self._config.identity.actorOffset[slot] ~= nil then
 			local offsets = (self._config.identity.actorOffset[slot] or {default = {head = {0,0}, body = {0,0}}})
 			return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
-		else 
+		else
 			local offsets = self._config.identity.actorOffset or {default = {head = {0,0}, body = {0,0}}}
 			return offsets[position] or offsets["default"] or {head = {0,0}, body = {0,0}}
 		end
 	else return {head = {0,0}, body = {0,0}} end
 end
 
---- Legacy
+-- [[ Legacy ]]
 
+--- Returns the item config of the backwear item
+--- @return table # The config, probably
 function Sexbound.Actor:getBackwear()
-    return self:getApparel():getItemConfig("backwear")
+    return self:getApparel():getItemConfig("backwear") --[[@as table]]
 end
 
+--- Returns the item config of the chestwear item
+--- @return table # The config, probably
 function Sexbound.Actor:getChestwear()
-    return self:getApparel():getItemConfig("chestwear")
+    return self:getApparel():getItemConfig("chestwear") --[[@as table]]
 end
 
+--- Returns the item config of the headwear item
+--- @return table # The config, probably
 function Sexbound.Actor:getHeadwear()
-    return self:getApparel():getItemConfig("headwear")
+    return self:getApparel():getItemConfig("headwear") --[[@as table]]
 end
 
+--- Returns the item config of the legswear item
+--- @return table # The config, probably
 function Sexbound.Actor:getLegswear()
-    return self:getApparel():getItemConfig("legswear")
+    return self:getApparel():getItemConfig("legswear") --[[@as table]]
 end

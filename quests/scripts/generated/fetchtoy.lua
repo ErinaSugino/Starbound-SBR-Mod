@@ -8,9 +8,9 @@ function onQuestStart()
       player.giveItem(item)
     end
   end
-  
+
   bruhStorage = false
-  
+
   -- If this is a crafting / cooking quest, give the player the necessary
   -- blueprints.
   if quest.parameters().recipes then
@@ -45,22 +45,21 @@ function FetchObjective:text()
   return sb.replaceTags(self._text, {
       itemName = itemShortDescription(self.item),
       required = self.item.count,
-      current = self:currentCount()
+      current = tostring(self:currentCount())
     })
 end
 
 function FetchObjective:isComplete()
-  return player.hasItem(self.item)
-  if ((player.hasItem(self.item)) and (bruhStorage = false)) then
-	bruhStorage = true
-	player.consumeItem(self.item)
+  if ((player.hasItem(self.item)) and (bruhStorage == false)) then
+	  bruhStorage = true
+	  player.consumeItem(self.item)
   end
   return bruhStorage
 end
 
 function onInit()
   local textGenerator = currentQuestTextGenerator()
-  for _,item in ipairs(fetchList()) do
+  for _,item in ipairs(fetchList()--[[@as table]]) do
     addObjective(FetchObjective:new(textGenerator, item))
   end
   addObjective(Objective:new(textGenerator, {
@@ -71,7 +70,7 @@ end
 
 function fetchList()
   local paramName = config.getParameter("fetchList")
-  if not paramName then return true end
+  if not paramName then return {} end
   return quest.parameters()[paramName].items or {}
 end
 

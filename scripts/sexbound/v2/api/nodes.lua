@@ -1,14 +1,14 @@
 --- Sexbound.API.Nodes Module.
--- @module Sexbound.API.Nodes
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.API.Nodes
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.API.Nodes = {}
 
 --- Add a new node object to the current world.
--- @param tilePosition A Vec2I position to place the 8 x 8 pixel node. It is placed relative to the imagePosition of this object.
--- @param sitPosition A Vec2I position to place the character who sits in this object.
--- @param params A table of object params to be applied to placed object node.
--- @usage Sexbound.API.Nodes.addNode({0, 0}, {0, 20})
+--- @param tilePosition Vec2I A position to place the 8 x 8 pixel node. It is placed relative to the imagePosition of this object.
+--- @param sitPosition Vec2I A position to place the character who sits in this object.
+--- @param params table? A table of object params to be applied to placed object node.
 Sexbound.API.Nodes.addNode = function(tilePosition, sitPosition, params)
     if not self._sexbound then
         return
@@ -22,8 +22,7 @@ Sexbound.API.Nodes.addNode = function(tilePosition, sitPosition, params)
 end
 
 --- Add this entity as a node.
--- @param sitPosition A Vec2I position to place the character who sits in this object.
--- @usage Sexbound.API.Nodes.addNode({0, 20})
+--- @param sitPosition Vec2I A position to place the character who sits in this object.
 Sexbound.API.Nodes.becomeNode = function(sitPosition)
     if not self._sexbound then
         return
@@ -37,7 +36,7 @@ Sexbound.API.Nodes.becomeNode = function(sitPosition)
 end
 
 --- Returns a list of all current nodes.
--- @usage local nodes = Sexbound.API.Nodes.getNodes()
+--- @return table<integer, Sexbound.Node>? # The list of all nodes or nil if sexbound instance not existing
 Sexbound.API.Nodes.getNodes = function()
     if not self._sexbound then
         return
@@ -51,7 +50,7 @@ Sexbound.API.Nodes.getNodes = function()
 end
 
 --- Replace current nodes with a list of new nodes.
--- @param newNodes A list of nodes.
+--- @param newNodes table<integer, Sexbound.Node> A list of nodes.
 Sexbound.API.Nodes.setNodes = function(newNodes)
     if not self._sexbound then
         return
@@ -65,10 +64,10 @@ Sexbound.API.Nodes.setNodes = function(newNodes)
 end
 
 --- Returns the current node count.
--- @usage local nodesCount = Sexbound.API.Nodes.getNodeCount()
+--- @return integer # Number of nodes
 Sexbound.API.Nodes.getNodeCount = function()
     if not self._sexbound then
-        return
+        return 0
     end
 
     local _, result = xpcall(function()
@@ -79,10 +78,10 @@ Sexbound.API.Nodes.getNodeCount = function()
 end
 
 --- Uninitializes all nodes.
--- @usage Sexbound.API.Nodes.uninitNodes()
+--- @return boolean # Whethere or not node uninitialization was successful
 Sexbound.API.Nodes.uninitNodes = function()
     if not self._sexbound then
-        return
+        return true
     end
 
     local _, result = xpcall(function()

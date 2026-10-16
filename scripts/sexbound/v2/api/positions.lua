@@ -1,10 +1,12 @@
 --- Sexbound.API.Positions Module.
--- @module Sexbound.API.Positions
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.API.Positions
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
 Sexbound.API.Positions = {}
 
---- Returns a list of loaded positions.
+--- Returns the position manager.
+--- @return Sexbound.Positions? # The positions manager or nil if sexbound instance not existing
 Sexbound.API.Positions.getPositions = function()
     if not self._sexbound then
         return
@@ -18,6 +20,7 @@ Sexbound.API.Positions.getPositions = function()
 end
 
 --- Returns the current position.
+--- @return Sexbound.Position? # The currently active position or nil if sexbound node not existing
 Sexbound.API.Positions.getCurrentPosition = function()
     if not self._sexbound then
         return
@@ -37,7 +40,7 @@ Sexbound.API.Positions.switchToRandomPosition = function()
     end
 
     local _, result = xpcall(function()
-        return self._sexbound:getPositions():switchRandomSexPosition()
+        return self._sexbound:getPositions():switchRandomSexPosition(false)
     end, sb.logError)
 
     return result

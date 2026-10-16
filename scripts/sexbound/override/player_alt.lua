@@ -1,5 +1,7 @@
---- Sexbound.Player Module.
--- @module Sexbound.Player
+--- Dummy Player class
+--- @diagnostic disable: missing-fields
+--- @diagnostic disable: param-type-mismatch
+--- @diagnostic disable: redundant-parameter
 Sexbound = Sexbound or {}
 Sexbound.Player = {}
 Sexbound.Player_mt = {

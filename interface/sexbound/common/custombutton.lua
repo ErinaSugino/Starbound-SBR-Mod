@@ -109,7 +109,7 @@ end
 -- @param canvas CanvasWidget
 -- @param color[opt] i.e. red, green, blue..
 function CustomButton:drawBoundingBox(canvas, color)
-    local debug, boundingBox, j = self.config.debug, self.config.boundingBox
+    local debug, boundingBox, j = self.config.debug, self.config.boundingBox, 0
     color = color or debug.boxColor
 
     for i, v in ipairs(boundingBox) do
@@ -123,7 +123,7 @@ end
 -- @param canvas
 -- @param color[opt] i.e. red, green, blue..
 function CustomButton:drawPoly(canvas, color)
-    local debug, poly, vertCount, j = self.config.debug, self.config.poly, self.config.vertCount
+    local debug, poly, vertCount, j = self.config.debug, self.config.poly, self.config.vertCount, 0
     color = color or debug.polyColor
 
     for i, v in ipairs(poly) do

@@ -1,7 +1,7 @@
 --- Sexbound.Messenger Class Module.
--- @classmod Sexbound.Messenger
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Messenger
+--- @author Locuturus
+--- @license GNU General Public License v3.0
 Sexbound.Messenger = {
     Channels = {}
 }

@@ -1,10 +1,19 @@
 require "/scripts/sexbound/override/common/transform.lua"
 
+--- NPC transformation manager class
+--- @class Sexbound.NPC.Transform: Sexbound.Common.Transform
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.NPC
 Sexbound.NPC.Transform = Sexbound.Common.Transform:new()
 Sexbound.NPC.Transform_mt = {
     __index = Sexbound.NPC.Transform
 }
 
+--- Creates new npc transformation manager instance
+--- @param parent Sexbound.NPC The calling parent npc manager instance
+--- @return Sexbound.NPC.Transform # The newly created npc transformation manager instance
 function Sexbound.NPC.Transform:new(parent)
     local _self = setmetatable({
         _nodeName = "sexbound_main_node_centered",
@@ -22,9 +31,12 @@ function Sexbound.NPC.Transform:new(parent)
     return _self
 end
 
+--- Message handler for transformation request
+--- @param args table Transformation config
+--- @return table|boolean|nil # The transform result, true if request was sent or false if not possible
 function Sexbound.NPC.Transform:handleTransform(args)
     if self._parent._isKid then return false end
-    
+
     if self:getCanTransform() then
         -- Override sexbound config that is supplied to the spawned sexnode
         self:setSexboundConfig(args.sexboundConfig)
@@ -64,6 +76,7 @@ function Sexbound.NPC.Transform:handleTransform(args)
     return false
 end
 
+--- Notifies someone about something. Not really sure what this does
 function Sexbound.NPC.Transform:notifyTransform()
     if notify and not self:getParent():getIsHavingSex() then
         notify({
@@ -73,12 +86,14 @@ function Sexbound.NPC.Transform:notifyTransform()
     end
 end
 
+--- Actually try to create the node
+--- @return {uniqueId: string}? # The uuid of the created node, if successful
 function Sexbound.NPC.Transform:tryCreateNode()
     if self._parent._isKid then return nil end
-    
+
     local position = self:findNearbyOpenSpace()
 
-    if position == false then
+    if not position then
         return nil
     end
 

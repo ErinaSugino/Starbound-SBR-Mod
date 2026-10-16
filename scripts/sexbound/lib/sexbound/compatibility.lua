@@ -1,26 +1,36 @@
 --- Sexbound.Compatibility Class Module.
--- @classmod Sexbound.Compatibility
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Compatibility
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound
+--- @field _isCompatible boolean
+--- @field _major integer
+--- @field _minor integer
+--- @field _patch integer
+--- @field _isOld boolean
 Sexbound.Compatibility = {}
 Sexbound.Compatibility_mt = {
     __index = Sexbound.Compatibility
 }
 
 --- Instantiates a new instance of Compatibility.
--- @param parent
+--- @param parent Sexbound The calling parent sexnode instance
+--- @return Sexbound.Compatibility # The new compatibility manager instance
 function Sexbound.Compatibility.new(parent)
     local self = setmetatable({
         _parent = parent
     }, Sexbound.Compatibility_mt)
 
-    self._, self._major, self._minor, self._patch, self._isOld = Sexbound.Util.parseVersion(self._parent:getConfig().version)
+    local _
+    _, self._major, self._minor, self._patch, self._isOld = Sexbound.Util.parseVersion(self._parent:getConfig().version)
     self._isCompatible = self:_checkIsCompatible()
 
     return self
 end
 
 --- Returns whether or not the mod is compatible based on its requiredVersion
+--- @return boolean # Whethere or not the mod is compatible
 function Sexbound.Compatibility:_checkIsCompatible()
     local _requiredVersion = self:getParent():getRequiredVersion()
 
@@ -34,7 +44,7 @@ function Sexbound.Compatibility:_checkIsCompatible()
     -- Use range to determine if the current version is compatible with the mod
     if type(_range) ~= "string" or #_range == 0 then
         --return self._major == _major and self._minor == _minor and self._patch == _patch
-        return self._isInstalledSexboundVersionRequiredVersion(_major, _minor, _patch, _isOld)
+        return self:_isInstalledSexboundVersionRequiredVersion(_major, _minor, _patch, _isOld)
     elseif _range == ">=" then
         return self:_isInstalledSexboundVersionGreaterThanOrEqualToRequiredVersion(_major, _minor, _patch, _isOld)
     elseif _range == ">" then
@@ -48,6 +58,13 @@ function Sexbound.Compatibility:_checkIsCompatible()
     return false
 end
 
+--- Function to check if given version is equal to installed version
+--- @protected
+--- @param major integer The major version number
+--- @param minor integer The minor version number
+--- @param patch integer The patch version number
+--- @param old boolean If this is a version number of old SxB or SBR
+--- @return boolean # Are versions the same?
 function Sexbound.Compatibility:_isInstalledSexboundVersionRequiredVersion(major, minor, patch, old)
     if old ~= self._isOld then return false end
     if self._isOld then
@@ -57,6 +74,13 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionRequiredVersion(major
     end
 end
 
+--- Function to check if given version is older than installed version
+--- @protected
+--- @param major integer The major version number
+--- @param minor integer The minor version number
+--- @param patch integer The patch version number
+--- @param old boolean If this is a version number of old SxB or SBR
+--- @return boolean # Is given version older than installed?
 function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return not self._isOld end -- Greater => new > old => not is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch > patch then
@@ -73,6 +97,13 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanRequiredVe
     return false
 end
 
+--- Function to check if given version is equal to or older than installed version
+--- @protected
+--- @param major integer The major version number
+--- @param minor integer The minor version number
+--- @param patch integer The patch version number
+--- @param old boolean If this is a version number of old SxB or SBR
+--- @return boolean # Are versions the same or given older than installed?
 function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanOrEqualToRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return not self._isOld end -- Greater => new > old => not is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch >= patch then
@@ -89,7 +120,14 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionGreaterThanOrEqualToR
     return false
 end
 
-function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersion(major, minor, patch)
+--- Function to check if given version is newer than installed version
+--- @protected
+--- @param major integer The major version number
+--- @param minor integer The minor version number
+--- @param patch integer The patch version number
+--- @param old boolean If this is a version number of old SxB or SBR
+--- @return boolean # Is given version newer than installed?
+function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return self._isOld end -- Lesser => new < old => is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch < patch then
         -- Patch only matters with old versions
@@ -105,7 +143,14 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanRequiredVersi
     return false
 end
 
-function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanOrEqualToRequiredVersion(major, minor, patch)
+--- Function to check if given version is equal to or newer than installed version
+--- @protected
+--- @param major integer The major version number
+--- @param minor integer The minor version number
+--- @param patch integer The patch version number
+--- @param old boolean If this is a version number of old SxB or SBR
+--- @return boolean # Are versions the same or given newer than installed?
+function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanOrEqualToRequiredVersion(major, minor, patch, old)
     if self._isOld ~= old then return self._isOld end -- Lesser => new < old => is old on difference
     if self._isOld and self._major == major and self._minor == minor and self._patch <= patch then
         -- Patch only matters with old versions
@@ -121,6 +166,7 @@ function Sexbound.Compatibility:_isInstalledSexboundVersionLessThanOrEqualToRequ
     return false
 end
 
+--- Send warning radio message informing about incompatibility
 function Sexbound.Compatibility:incompatibleVersion()
     Sexbound.Util.broadcastRadioMessage(
         "Sexbound:Compatibility",
@@ -129,6 +175,9 @@ function Sexbound.Compatibility:incompatibleVersion()
     )
 end
 
+--- Build the message to output via radio message informing about incompatibility
+--- @protected
+--- @return string # The assembled message
 function Sexbound.Compatibility:_buildIncompatibleVersionMessage()
     local _modLink = self._parent:getModLink()
     local _modName = self._parent:getModName()
@@ -145,10 +194,14 @@ function Sexbound.Compatibility:_buildIncompatibleVersionMessage()
     return _message
 end
 
+--- Returns parent sexnode instance
+--- @return Sexbound # The parent sexnode instance
 function Sexbound.Compatibility:getParent()
     return self._parent
 end
 
+--- Returns the cached compatibility state
+--- @return boolean # Whethere or not mod is compatible
 function Sexbound.Compatibility:isCompatible()
     return self._isCompatible
 end

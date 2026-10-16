@@ -1,15 +1,19 @@
 --- Sexbound.Log Class Module.
--- @classmod Sexbound.Log
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Log
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _config table
+--- @field _logPrefix string
 Sexbound.Log = {}
 Sexbound.Log_mt = {
     __index = Sexbound.Log
 }
 
 --- Returns a reference to a new instance of this class.
--- @param logPrefix a string (four letters)
--- @param sexboundConfig a table
+--- @param logPrefix string A four letters prefix code
+--- @param sexboundConfig table Global logging configuration
+--- @return Sexbound.Log
 function Sexbound.Log:new(logPrefix, sexboundConfig)
     return setmetatable({
         _config = sexboundConfig.log or {},
@@ -18,7 +22,7 @@ function Sexbound.Log:new(logPrefix, sexboundConfig)
 end
 
 --- Logs specified data as an debug message.
--- @param data a string or table
+--- @param data string|table A string or table to log
 function Sexbound.Log:debug(data)
     if self._config.showDebug ~= true then
         return
@@ -27,7 +31,7 @@ function Sexbound.Log:debug(data)
 end
 
 --- Logs specified data as an error.
--- @param data a string or table
+--- @param data string|table A string or table to log
 function Sexbound.Log:error(data)
     if self._config.showError ~= true and self._config.showDebug ~= true then
         return
@@ -36,7 +40,7 @@ function Sexbound.Log:error(data)
 end
 
 --- Logs specified data as an informational message.
--- @param data a string or table
+--- @param data string|table A string or table to log
 function Sexbound.Log:info(data)
     if self._config.showInfo ~= true and self._config.showDebug ~= true then
         return
@@ -45,7 +49,7 @@ function Sexbound.Log:info(data)
 end
 
 --- Logs specified data as a warning.
--- @param data a string or table
+--- @param data string|table A string or table to log
 function Sexbound.Log:warn(data)
     if self._config.showWarn ~= true and self._config.showDebug ~= true then
         return
@@ -54,7 +58,9 @@ function Sexbound.Log:warn(data)
 end
 
 --- Prepares specified data to be logged.
--- @param data a string or table
+--- @private
+--- @param data string|table A string or table to log
+--- @return string # The prepared logging content
 function Sexbound.Log:_prepare(data)
     local pretext = "[SxB | " .. self:getLogPrefix() .. "] : "
     if type(data) == "string" then
@@ -67,11 +73,13 @@ function Sexbound.Log:_prepare(data)
 end
 
 --- Returns a reference to this instance's config.
+--- @return table # The logging config
 function Sexbound.Log:getConfig()
     return self._config
 end
 
 --- Returns a reference to this instance's log prefix.
+--- @return string # This logger's prefix
 function Sexbound.Log:getLogPrefix()
     return self._logPrefix
 end

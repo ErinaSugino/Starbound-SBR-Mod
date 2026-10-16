@@ -1,7 +1,17 @@
 --- Sexbound.Positions Class Module.
--- @classmod Sexbound.Positions
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Positions
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound
+--- @field _index integer
+--- @field _lastPositionName string
+--- @field private _logPrefix string
+--- @field _positionCount integer
+--- @field _positions table<integer, Sexbound.Position>
+--- @field _availablePositions table<integer, Sexbound.Position>
+--- @field _idlePosition Sexbound.Position|nil
+--- @field _log Sexbound.Log
 Sexbound.Positions = {}
 Sexbound.Positions_mt = {
     __index = Sexbound.Positions
@@ -11,8 +21,9 @@ if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/position.lua")
 end
 
----Returns a reference to a new instance of this class.
--- @param parent
+--- Returns a reference to a new instance of this class.
+--- @param parent Sexbound The calling parent sexnode instance
+--- @return Sexbound.Positions # The new position manager instance
 function Sexbound.Positions:new(parent)
     local _self = setmetatable({
         _index = -1,
@@ -36,6 +47,8 @@ function Sexbound.Positions:new(parent)
     return _self
 end
 
+--- Setup all necessary message handlers
+--- @private
 function Sexbound.Positions:initMessageHandler()
     message.setHandler("Sexbound:Actor:SwitchPosition", function(_, _, args)
         local stateMachine = self:getParent():getStateMachine()
@@ -60,6 +73,7 @@ function Sexbound.Positions:initMessageHandler()
 end
 
 --- Loads and returns positions config.
+--- @param sexboundConfig table The sexbound main config JSON
 function Sexbound.Positions:loadConfig(sexboundConfig)
     local _, _config = xpcall(function()
         return root.assetJson(sexboundConfig.position.configFile or "/positions/positions.config")
@@ -71,6 +85,7 @@ function Sexbound.Positions:loadConfig(sexboundConfig)
 end
 
 --- Loads the idle setup
+--- @param sexboundConfig table The sexbound main config JSON
 function Sexbound.Positions:loadIdle(sexboundConfig)
     sexboundConfig = sexboundConfig or {}
     local _, _config = nil, nil
@@ -81,7 +96,7 @@ function Sexbound.Positions:loadIdle(sexboundConfig)
     end, function(error)
         self:getLog():error("Unable to load idle config file")
     end)
-    
+
     _, _config = xpcall(function()
             if _config and _config.base and self._config[_config.base] then
                 _config = self:util_mergeConfig(root.assetJson(self._config[_config.base].configFile), _config)
@@ -98,10 +113,11 @@ function Sexbound.Positions:loadIdle(sexboundConfig)
     end
 end
 
---- Returns loaded Sex Positions as a table.
+--- Loads list of all sex positions
+--- @param sexboundConfig table The sexbound main config JSON
 function Sexbound.Positions:loadPositions(sexboundConfig)
     local positionList = sexboundConfig.position.sex or {}
-    
+
     for _, v in ipairs(positionList) do
         local _, _config = nil, nil
 
@@ -129,20 +145,22 @@ function Sexbound.Positions:loadPositions(sexboundConfig)
             self._positionCount = self._positionCount + 1
         end
     end
-    
+
     self._availablePositions = self._positions
 end
 
 --- Generates table of all valid actor composition permutations for all available positions
+--- @param actorList table<integer, Sexbound.Actor> The list of all actors in the sexnode
+--- @param actorCount integer The number of actors
 function Sexbound.Positions:updateActorRoles(actorList, actorCount)
     local allIndices, allPerms = self:util_generatePermutation(actorCount or 3)
     local doFilter = not self:getParent():getConfig().sex.forceAllPositions and not self:getParent():getConfig().sex.forcePositions and not self:getParent():getConfig().position.force
-    
+
     self:getLog():debug("Updating position permutations for "..actorCount.." actors")
-    
+
     local allPositionsToCheck = {self._idlePosition}
     for i,p in ipairs(self._availablePositions) do allPositionsToCheck[i+1] = p end
-    
+
     for _,pos in ipairs(allPositionsToCheck) do
         local posIndices = {}
         local posPerms = {}
@@ -165,44 +183,42 @@ function Sexbound.Positions:updateActorRoles(actorList, actorCount)
         end
         pos:setAvailableRoles(posIndices, posPerms)
     end
-    
-    --self._idlePosition:setAvailableRoles(allIndices, allPerms)
 end
 
 --- Filters all registered positions by their actorCount and actorTrait requirements - if not disabled
+--- @param actorList table<integer, Sexbound.Actor> The list of all actors in the sexnode
 function Sexbound.Positions:filterPositions(actorList)
     actorList = actorList or {}
     local actorCount = 0
     local hasPlayer = false
     for i,a in ipairs(actorList) do actorCount = actorCount + 1 if a:getEntityType() == "player" then hasPlayer = true end end
-    
+
     self:getLog():debug("Re-evaluating positions. Total available: "..#self._positions.." - actor count: "..actorCount)
-    
-    --local forceTarget = self:getParent():getConfig().position.force
+
     local forceAll = self:getParent():getConfig().sex.forceAllPositions and hasPlayer
-    
+
     local availablePositions = {}
     local positionCount = 0
-    
+
     for i,p in ipairs(self._positions) do
         local posConf = p:getConfig() or {}
         local posMin = posConf.minRequiredActors or 1
         local posMax = posConf.maxAllowedActors or 3
-        
+
         if forceAll or (actorCount >= posMin and actorCount <= posMax) then
             table.insert(availablePositions, p)
             positionCount = positionCount + 1
         end
     end
-    
+
     self:getLog():debug("Remaining positions after count check: "..positionCount)
-    
+
     self._availablePositions = availablePositions -- first filter by count to reduce load of role composition checks
     self._positionCount = positionCount
     if self._positionCount > 0 then
         -- Only continue if there are any positions left to check
         self:updateActorRoles(actorList, actorCount)
-        
+
         positionCount = 0
         availablePositions = {}
         local next = next
@@ -211,19 +227,20 @@ function Sexbound.Positions:filterPositions(actorList)
             if next(i) ~= nil then table.insert(availablePositions, p) positionCount = positionCount + 1 end
             -- If available roles are not empty (has "next" value) it means there is at least one available actor composition - position valid, add to available list
         end
-        
+
         self._availablePositions = availablePositions
         self._positionCount = positionCount
     end
-    
+
     if self._index ~= -1 and not self:isAvailable(self._lastPositionName) then self:switchPosition(-1)
     elseif self._index ~= -1 then self:findNewIndex(self._lastPositionName) end
-    
+
     self:getParent():tickToken("positions")
-    
+
     self:getLog():debug("New available positions: "..self._positionCount)
 end
 
+--- Switch to the next position in the list of available
 function Sexbound.Positions:nextPosition()
     if self._positionCount == 0 then return end
     local maxIndex = #self._availablePositions
@@ -233,6 +250,7 @@ function Sexbound.Positions:nextPosition()
     self:switchPosition(self._index)
 end
 
+--- Switch to the previous position in the list of available
 function Sexbound.Positions:previousPosition()
     if self._positionCount == 0 then return end
     local maxIndex = #self._availablePositions
@@ -242,6 +260,7 @@ function Sexbound.Positions:previousPosition()
     self:switchPosition(self._index)
 end
 
+--- Reset the position index to idle
 function Sexbound.Positions:resetIndex()
     self._index = -1
     
@@ -249,11 +268,11 @@ function Sexbound.Positions:resetIndex()
 end
 
 --- Switches to the specified position.
--- @param index
+--- @param index integer The index of the new position. -1 to switch to idle
 function Sexbound.Positions:switchPosition(index)
     local stateMachine = self:getParent():getStateMachine()
     local stateName = stateMachine:stateDesc()
-    
+
     if index == -1 or self._positionCount == 0 then self._index = -1
     else self._index = util.wrap(index, 1, self._positionCount) end
 
@@ -264,32 +283,35 @@ function Sexbound.Positions:switchPosition(index)
         self:getCurrentPosition(),
         false
     )
-    
+
     self:getParent():helper_reassignAllRoles()
-    
+
     local isSex = self._index ~= -1
     stateMachine:setStatus("havingSex", isSex)
     self._lastPositionName = self:getCurrentPosition():getName()
-    
+
     if stateName and stateName ~= "nullState" then
-        local animationState = self:getCurrentPosition():getAnimationState(stateName)
-        
+        local animationState = self:getCurrentPosition():getAnimationState(stateName) --[[@as Sexbound.Position.AnimationState.State]]
+
         stateName = animationState:getStateName()
-        
+
         -- Set new animation state to match the position.
         animator.setAnimationState("props", stateName, true)
         animator.setAnimationState("actors", stateName, true)
-        
+
         self:getParent():resetAllActors()
     else self:getLog():info("Soft position switch due to nullState.") end
-    
+
     self:getLog():debug("Switching positions. New position: "..self._index.." - sexState: "..tostring(isSex))
 end
 
+--- Quick alias to toggle to idle
 function Sexbound.Positions:toggleIdle()
     self:switchPosition(-1)
 end
 
+--- Switch to a random sex position
+--- @param fromIdle boolean Whethere or not we only switch when in idle
 function Sexbound.Positions:switchRandomSexPosition(fromIdle)
     fromIdle = fromIdle or false
     if self._positionCount < 1 then return end
@@ -300,42 +322,57 @@ function Sexbound.Positions:switchRandomSexPosition(fromIdle)
 end
 
 --- Returns a reference to the Positions Configuration.
+--- @return table # The sexbound config
 function Sexbound.Positions:getConfig()
     return self._config
 end
 
+--- Returns the logging instance
+--- @return Sexbound.Log # The logging instance
 function Sexbound.Positions:getLog()
     return self._log
 end
 
+--- Returns this instance's logging instance
+--- @return string # This instance's logging instance
 function Sexbound.Positions:getLogPrefix()
     return self._logPrefix
 end
 
+--- Returns the currently active position's index
+--- @return integer # The currently active position's index
 function Sexbound.Positions:getIndex()
     return self._index
 end
 
 --- Returns a reference to the Current Position.
+--- @return Sexbound.Position # The currently active position
 function Sexbound.Positions:getCurrentPosition()
     if self._index == -1 then return self._idlePosition end
     return self._availablePositions[self._index] or self._idlePosition
 end
 
+--- Returns the parent sexnode instance
+--- @return Sexbound # The parent sexnode instance
 function Sexbound.Positions:getParent()
     return self._parent
 end
 
---- Returns a reference to the Positions.
+--- Returns all avialable positions.
+--- @return table<integer, Sexbound.Position> # The list of all available positions
 function Sexbound.Positions:getPositions()
     return self._availablePositions
 end
 
+--- Returns all known positions
+--- @return table<integer, Sexbound.Position> # The list of all known positions
 function Sexbound.Positions:getAllPositions()
     return self._positions
 end
 
 --- Returns if a position name is available
+--- @param posName string Name of the position to check availability of
+--- @return boolean # Whethere or not the requested position is available
 function Sexbound.Positions:isAvailable(posName)
     for _,p in ipairs(self._availablePositions) do
         if p:getName() == posName then return true end
@@ -344,6 +381,7 @@ function Sexbound.Positions:isAvailable(posName)
 end
 
 --- Sets the new index of the old position if still existant
+--- @param posName string Name of the position to find the index of
 function Sexbound.Positions:findNewIndex(posName)
     local index = -1
     for i,p in ipairs(self._availablePositions) do
@@ -353,12 +391,15 @@ function Sexbound.Positions:findNewIndex(posName)
 end
 
 --- Generate permutations of actor combinations for actorCount
+--- @param actorCount integer Number of actors in the sexnode
+--- @return table<integer, table<integer, integer>> indices Array list of all permutations for the active position
+--- @return table<string, table<integer, integer>> result Lookup table of all permutations for the active position
 function Sexbound.Positions:util_generatePermutation(actorCount)
-    if actorCount <= 0 then return {} end
+    if actorCount <= 0 then return {}, {} end
     local permPool = {}
     for i=1,actorCount do permPool[i] = i end
-    
-    local it = coroutine.wrap(function() self:util_perm(permPool, 1, actorCount) end)
+
+    local it = coroutine.wrap(function() self:util_perm(permPool, 1, actorCount) end) --[[@as fun():table<integer,integer>]]
     local indices = {}
     local result = {}
     for p in it do
@@ -370,8 +411,13 @@ function Sexbound.Positions:util_generatePermutation(actorCount)
     return indices, result
 end
 --- Coroutine iterator for actual permutation generation
+--- @async
+--- @param a table<integer, integer> The permutation list
+--- @param n integer Lower loop bound
+--- @param m integer Upper loop bound
 function Sexbound.Positions:util_perm(a,n,m)
     if n == m then
+        --- @type table<integer, integer> # The next possible permutation via yield
         coroutine.yield(a)
     else
         for i=n,m do
@@ -387,6 +433,9 @@ function Sexbound.Positions:util_perm(a,n,m)
 end
 
 --- Merge configs but overwrite nil-able values
+--- @param a table Left table
+--- @param b table Right table
+--- @return table combined Left table with right table values inserted
 function Sexbound.Positions:util_mergeConfig(a,b)
     for k, v in pairs(b) do
         if type(v) == "table" and type(a[k]) == "table" and k ~= "requireTraits" and k ~= "interactionType" then

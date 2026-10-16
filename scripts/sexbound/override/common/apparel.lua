@@ -1,15 +1,23 @@
+--- Abstract shared entity apparel manager class
+--- @class Sexbound.Common.Apparel
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.Common
+--- @field _config table
 Sexbound.Common.Apparel = {}
 Sexbound.Common.Apparel_mt = { __index = Sexbound.Common.Apparel }
 
---- Instantiates this class
+--- Creates new entity apparel manager instance
+--- @return Sexbound.Common.Apparel # The newly created entity apparel manager instance
 function Sexbound.Common.Apparel:new()
     return setmetatable({
         _config = config.getParameter("apparelConfig", {})
     }, Sexbound.Common.Apparel_mt)
 end
 
---- Initializes this instance
--- @param parent
+--- Late init binding
+--- @param parent Sexbound.Common The calling parent entity manager instance
 function Sexbound.Common.Apparel:init(parent)
     self._parent = parent
     local nippleswearConfig  = self._config.nippleswear or {}
@@ -22,10 +30,11 @@ function Sexbound.Common.Apparel:init(parent)
     storage.sexbound.apparel.groin1 = storage.sexbound.apparel.groin1 or
     groinwearConfig[1] or {}
     self:initMessageHandlers()
-    
+
     self:update(nil, self:getParent():getGender()) -- initial verification
 end
 
+--- Sets up eneity message handlers
 function Sexbound.Common.Apparel:initMessageHandlers()
     message.setHandler("Sexbound:Apparel:AttachToGroin1", function(_, _, args)
         return self:handleAttachToGroin1(args)
@@ -52,21 +61,29 @@ function Sexbound.Common.Apparel:initMessageHandlers()
     end)
 end
 
+--- Message handler for applying a groin apparel item
+--- @param params table? The apparel data
 function Sexbound.Common.Apparel:handleAttachToGroin1(params)
     storage.sexbound.apparel.groin1 = params or {}
     storage.sexbound.apparel.groin1.shouldUpdate = true
 end
 
+--- Message handler for applying a nipple apparel item to the first nipple
+--- @param params table? The apparel data
 function Sexbound.Common.Apparel:handleAttachToNipple1(params)
     storage.sexbound.apparel.nipple1 = params or {}
     storage.sexbound.apparel.nipple1.shouldUpdate = true
 end
 
+--- Message handler for applying a nipple apparel item to the second nipple
+--- @param params table? The apparel data
 function Sexbound.Common.Apparel:handleAttachToNipple2(params)
     storage.sexbound.apparel.nipple2 = params or {}
     storage.sexbound.apparel.nipple2.shouldUpdate = true
 end
 
+--- Message handler for applying a nipple apparel item to the nipples
+--- @param params {[1]: table?, [2]: table?} The apparel data
 function Sexbound.Common.Apparel:handleAttachToNipples(params)
     storage.sexbound.apparel.nipple1 = params[1] or {}
     storage.sexbound.apparel.nipple1.shouldUpdate = true
@@ -74,11 +91,15 @@ function Sexbound.Common.Apparel:handleAttachToNipples(params)
     storage.sexbound.apparel.nipple2.shouldUpdate = true
 end
 
+--- Message handler for resetting the groin
+--- @param params any Message data
 function Sexbound.Common.Apparel:handleResetGroin(params)
     storage.sexbound.apparel.groin1 = {}
     storage.sexbound.apparel.groin1.shouldUpdate = true
 end
 
+--- Message handler for resetting the nipples
+--- @param params any Message data
 function Sexbound.Common.Apparel:handleResetNipples(params)
     storage.sexbound.apparel.nipple1 = {}
     storage.sexbound.apparel.nipple2 = {}
@@ -86,6 +107,9 @@ function Sexbound.Common.Apparel:handleResetNipples(params)
     storage.sexbound.apparel.nipple2.shouldUpdate = true
 end
 
+--- Updates all apparel items
+--- @param controllerId EntityId? The sexnode controller id to notify, if lounging
+--- @param gender string The entity's gender
 function Sexbound.Common.Apparel:update(controllerId, gender)
     self:updateBackwear(controllerId, gender)
     self:updateNippleswear(controllerId, gender)
@@ -95,6 +119,10 @@ function Sexbound.Common.Apparel:update(controllerId, gender)
     self:updateLegswear(controllerId, gender)
 end
 
+--- Returns the item, if any equipped, in a given slot
+--- @param entityType string The entity type of the entity
+--- @param slotNames string[] The names of the apparel slots
+--- @return ItemDescriptor? # The apparel item data, if any equipped
 function Sexbound.Common.Apparel:findItemInSlot(entityType, slotNames)
     if entityType == "player" then
         return self:findItemForPlayer(slotNames)
@@ -105,6 +133,9 @@ function Sexbound.Common.Apparel:findItemInSlot(entityType, slotNames)
     end
 end
 
+--- Returns the item, if any equipped, in a given slot for a player entity
+--- @param slotNames string[] The names of the apparel slots
+--- @return ItemDescriptor? # The apparel item data, if any equipped
 function Sexbound.Common.Apparel:findItemForPlayer(slotNames)
     for _, slotName in ipairs(slotNames) do
         if player.equippedItem(slotName) ~= nil then
@@ -114,6 +145,9 @@ function Sexbound.Common.Apparel:findItemForPlayer(slotNames)
     return nil
 end
 
+--- Returns the item, if any equipped, in a given slot for an npc entity
+--- @param slotNames string[] The names of the apparel slots
+--- @return ItemDescriptor? # The apparel item data, if any equipped
 function Sexbound.Common.Apparel:findItemForNPC(slotNames)
     for _, slotName in ipairs(slotNames) do
         if npc.getItemSlot(slotName) ~= nil then
@@ -123,30 +157,45 @@ function Sexbound.Common.Apparel:findItemForNPC(slotNames)
     return nil
 end
 
+--- Returns the relevant data from an item's config for the backwear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table? # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareBackwear(gender)
     self._back = self:findItemInSlot(entity.entityType(), {"backCosmetic", "back"})
 
     return self:extractOtherItemConfig(self._back, gender)
 end
 
+--- Returns the relevant data from an item's config for the chestwear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table? # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareChestwear(gender)
     self._chest = self:findItemInSlot(entity.entityType(), {"chestCosmetic", "chest"})
 
     return self:extractOtherItemConfig(self._chest, gender)
 end
 
+--- Returns the relevant data from an item's config for the headwear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table? # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareHeadwear(gender)
     self._head = self:findItemInSlot(entity.entityType(), {"headCosmetic", "head"})
 
     return self:extractHeadItemConfig(self._head, gender)
 end
 
+--- Returns the relevant data from an item's config for the legswear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table? # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareLegswear(gender)
     self._legs = self:findItemInSlot(entity.entityType(), {"legsCosmetic", "legs"})
 
     return self:extractOtherItemConfig(self._legs, gender)
 end
 
+--- Returns the relevant data from an item's config for the groinwear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareGroinwear(gender)
     local _config = {[1] = {}}
     local groin1ItemName = storage.sexbound.apparel.groin1.item_name
@@ -163,6 +212,9 @@ function Sexbound.Common.Apparel:prepareGroinwear(gender)
     return _config
 end
 
+--- Returns the relevant data from an item's config for the nippleswear slot
+--- @param gender string "male" or "female" vanilla gender of the entity
+--- @return table # The relevant data from the item config, if any equipped
 function Sexbound.Common.Apparel:prepareNippleswear(gender)
     local _config = {[1] = {}, [2] = {}}
     local nipple1ItemName = storage.sexbound.apparel.nipple1.item_name
@@ -189,10 +241,13 @@ function Sexbound.Common.Apparel:prepareNippleswear(gender)
     return _config
 end
 
+--- Updates the backwear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateBackwear(controllerId, gender)
     if not root.itemDescriptorsMatch(self._back, self:findItemInSlot(
         entity.entityType(), {"backCosmetic", "back"}
-    )) then
+    ) or {name = ""}) then
         local sxbConfig = self:prepareBackwear(gender) or {}
         local statuses = sxbConfig.addStatus or {}
         local oldStatuses = self._backStatuses or {}
@@ -207,10 +262,13 @@ function Sexbound.Common.Apparel:updateBackwear(controllerId, gender)
     end
 end
 
+--- Updates the chestwear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateChestwear(controllerId, gender)
     if not root.itemDescriptorsMatch(self._chest, self:findItemInSlot(
         entity.entityType(), {"chestCosmetic", "chest"}
-    )) then
+    ) or {name = ""}) then
         local sxbConfig = self:prepareChestwear(gender) or {}
         local statuses = sxbConfig.addStatus or {}
         local oldStatuses = self._chestStatuses or {}
@@ -225,6 +283,9 @@ function Sexbound.Common.Apparel:updateChestwear(controllerId, gender)
     end
 end
 
+--- Updates the groinwear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateGroinwear(controllerId, gender)
     if not controllerId then return end
 
@@ -238,6 +299,9 @@ function Sexbound.Common.Apparel:updateGroinwear(controllerId, gender)
     })
 end
 
+--- Updates the nippleswear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateNippleswear(controllerId, gender)
     if not controllerId then return end
 
@@ -253,10 +317,13 @@ function Sexbound.Common.Apparel:updateNippleswear(controllerId, gender)
     })
 end
 
+--- Updates the headwear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateHeadwear(controllerId, gender)
     if not root.itemDescriptorsMatch(self._head, self:findItemInSlot(
         entity.entityType(), {"headCosmetic", "head"}
-    )) then
+    ) or {name = ""}) then
         local sxbConfig = self:prepareHeadwear(gender) or {}
         local statuses = sxbConfig.addStatus or {}
         local oldStatuses = self._headStatuses or {}
@@ -271,10 +338,13 @@ function Sexbound.Common.Apparel:updateHeadwear(controllerId, gender)
     end
 end
 
+--- Updates the legswear apparel if it changed
+--- @param controllerId EntityId? Sexnode controller id to notify if lounging
+--- @param gender string Entity vanilla gender
 function Sexbound.Common.Apparel:updateLegswear(controllerId, gender)
     if not root.itemDescriptorsMatch(self._legs, self:findItemInSlot(
         entity.entityType(), {"legsCosmetic", "legs"}
-    )) then
+    ) or {name = ""}) then
         local sxbConfig = self:prepareLegswear(gender) or {}
         local statuses = sxbConfig.addStatus or {}
         local oldStatuses = self._legsStatuses or {}
@@ -289,6 +359,10 @@ function Sexbound.Common.Apparel:updateLegswear(controllerId, gender)
     end
 end
 
+--- Extracts relevant config data from a headwear item
+--- @param itemDesc ItemDescriptor|string?
+--- @param gender string Vanilla gender of the entity
+--- @return table?
 function Sexbound.Common.Apparel:extractHeadItemConfig(itemDesc, gender)
     if not itemDesc then
         return
@@ -322,6 +396,10 @@ function Sexbound.Common.Apparel:extractHeadItemConfig(itemDesc, gender)
     }, sexboundConfig)
 end
 
+--- Extracts relevant config data from a non-headwear item
+--- @param itemDesc ItemDescriptor|string
+--- @param gender string Vanilla gender of the entity
+--- @return table?
 function Sexbound.Common.Apparel:extractOtherItemConfig(itemDesc, gender)
     if not itemDesc then
         return
@@ -340,12 +418,18 @@ function Sexbound.Common.Apparel:extractOtherItemConfig(itemDesc, gender)
     end
 end
 
+--- Returns colors from a color pool by list index
+--- @param colorOptions table The color pool
+--- @param colorIndex integer The index
+--- @return table? # The color palette if it exists
 function Sexbound.Common.Apparel:getColorsByIndex(colorOptions, colorIndex)
     if (colorOptions ~= nil and colorIndex ~= nil) then
         return colorOptions[colorIndex + 1]
     end
 end
 
+--- Returns the parent entity manager instance
+--- @return Sexbound.Common # The parent entity manager instance
 function Sexbound.Common.Apparel:getParent()
     return self._parent
 end

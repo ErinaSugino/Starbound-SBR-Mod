@@ -1,10 +1,10 @@
 require "/scripts/sexbound/v2/api.lua"
 
 function init()
-  Sexbound.API.init()
-  
+  Sexbound.API.init(2)
+
   Sexbound.API.Nodes.becomeNode(config.getParameter("sitPosition", {0, 20}))
-  
+
   Sexbound.API.Actors.addActor({
     entityId   = entity.id(),
     entityType = "object",

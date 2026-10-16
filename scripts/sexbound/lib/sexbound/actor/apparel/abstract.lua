@@ -1,14 +1,25 @@
---- Sexbound.Actor.Apparel.Util Class Module.
--- @classmod Sexbound.Actor.Apparel.Util
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- Sexbound.Actor.Apparel.Abstract Base Class.
+--- @class Sexbound.Actor.Apparel.Abstract
+--- @author Locuturus
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.Actor.Apparel
+--- @field _config table
+--- @field protected _defaultImage string
+--- @field protected _defaultMask string
+--- @field _angularSpeed number
+--- @field _isLocked boolean
+--- @field _isVisible boolean
+--- @field _maxVariants integer
+--- @field _startAngle number
+--- @field _startScale number
+--- @field _variantIndex integer
 Sexbound.Actor.Apparel.Abstract = {}
 Sexbound.Actor.Apparel.Abstract_mt = {
     __index = Sexbound.Actor.Apparel.Abstract
 }
 
---- Returns a reference to a new instance of this class.
--- @param parent
+--- Abstract constructor
+--- @return Sexbound.Actor.Apparel.Abstract # The abstract base instance
 function Sexbound.Actor.Apparel.Abstract:new()
   return setmetatable({
     _config       = {},
@@ -25,10 +36,16 @@ function Sexbound.Actor.Apparel.Abstract:new()
   }, Sexbound.Actor.Apparel.Abstract_mt)
 end
 
+--- Placeholder tick update handler. To be implemented by child classes.
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Apparel.Abstract:update(dt)
     -- Should be defined in classes which derive from this class
 end
 
+--- Generated a fully qualified image file path
+--- @param filePath string The base filepath
+--- @param frameName string? The name of the animation frame
+--- @return string # The fully qualified image file path
 function Sexbound.Actor.Apparel.Abstract:finalizeFilePath(filePath, frameName)
     if frameName == nil then return filePath end
 
@@ -40,11 +57,15 @@ function Sexbound.Actor.Apparel.Abstract:finalizeFilePath(filePath, frameName)
 end
 
 --- Loads an apparel part image, directives, & mask.
--- @param apparel
--- @param frameName
--- @param role
--- @param species
--- @param gender
+--- @param index integer Variant index
+--- @param apparel table Apparel config data
+--- @param role string Actor role
+--- @param species string Actor species
+--- @param gender string Actor vanilla gender
+--- @return number index The adjusted variant index
+--- @return string image The fully qualified image path
+--- @return string directives The directives string
+--- @return string mask The fully qualified mask path
 function Sexbound.Actor.Apparel.Abstract:loadApparel(index, apparel, role, species, gender)
   local image, directives, mask = self._defaultImage, "", self._defaultMask
 
@@ -101,6 +122,12 @@ function Sexbound.Actor.Apparel.Abstract:loadApparel(index, apparel, role, speci
   return index, image, directives, mask
 end
 
+--- Replaces placeholder tags in a filepath
+--- @param filepath string The template filepath
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @return string # The replaced filepath
 function Sexbound.Actor.Apparel.Abstract:replaceTags(filepath, role, species, gender)
   filepath = util.replaceTag(filepath, "entityGroup", "humanoid")
   filepath = util.replaceTag(filepath, "role", role)
@@ -110,21 +137,23 @@ function Sexbound.Actor.Apparel.Abstract:replaceTags(filepath, role, species, ge
   return filepath
 end
 
+--- Increases the variant index
 function Sexbound.Actor.Apparel.Abstract:gotoNextVariant()
     self._variantIndex = self._variantIndex + 1
 end
 
+--- Decreases the variant index
 function Sexbound.Actor.Apparel.Abstract:gotoPrevVariant()
     self._variantIndex = math.max(self._variantIndex - 1, 1)
 end
 
 --- Checks specified config and attaches all specified sexbound statuses
--- @param config
+--- @param config table The config data
 function Sexbound.Actor.Apparel.Abstract:attachStatuses(config)
     if "table" ~= type(config.addStatus) then
-        config.addStatus = { config.addStatus }
+        config.addStatus = { config.addStatus --[[@as string]] }
     end
-    
+
     delay = self:getParent():getParent()._hasInited
     for _, status in pairs(config.addStatus) do
         self:getParent():getParent():getStatus():addStatus(status, nil, delay)
@@ -132,10 +161,10 @@ function Sexbound.Actor.Apparel.Abstract:attachStatuses(config)
 end
 
 --- Checks specified config and detaches all specified sexbound statuses
--- @param config
+--- @param config table The config data
 function Sexbound.Actor.Apparel.Abstract:detachStatuses(config)
     if "table" ~= type(config.addStatus) then
-        config.addStatus = { config.addStatus }
+        config.addStatus = { config.addStatus --[[@as string]] }
     end
 
     delay = self:getParent():getParent()._hasInited
@@ -144,22 +173,35 @@ function Sexbound.Actor.Apparel.Abstract:detachStatuses(config)
     end
 end
 
+--- Placeholder parts reset function. To be implemented in child classes.
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @param frameName string The current frame name
 function Sexbound.Actor.Apparel.Abstract:resetParts(role, species, gender, frameName)
     -- Should be defined in classes which derive from this class
 end
 
+--- Placeholder directive tags reset function. To be implemented in child classes.
+--- @param role string The actor's role name
 function Sexbound.Actor.Apparel.Abstract:resetAnimatorDirectives(role)
     -- Should be defined in classes which derive from this class
 end
 
+--- Placeholder mask tags reset function. To be implemented in child classes.
+--- @param role string The actor's role name
 function Sexbound.Actor.Apparel.Abstract:resetAnimatorMasks(role)
     -- Should be defined in classes which derive from this class
 end
 
+--- Placeholder part tags reset function. To be implemented in child classes.
+--- @param role string The actor's role name
 function Sexbound.Actor.Apparel.Abstract:resetAnimatorParts(role)
     -- Should be defined in classes which derive from this class
 end
 
+--- Sets a new apparel config
+--- @param config table The new config data
 function Sexbound.Actor.Apparel.Abstract:setConfig(config)
     self:detachStatuses(self._config)
     self._config = config
@@ -175,27 +217,37 @@ function Sexbound.Actor.Apparel.Abstract:setConfig(config)
     self._variantIndex = 1
 end
 
+--- Sets the visibility state
+--- @param value boolean The new visibility state
 function Sexbound.Actor.Apparel.Abstract:setIsVisible(value)
     if self._isLocked == true then return end
 
     self._isVisible = value
 end
 
+--- Sets the locked state
+--- @param value boolean The new locked state
 function Sexbound.Actor.Apparel.Abstract:setIsLocked(value)
     self._isLocked = value
 end
 
+--- Toggles the locked state
+--- @return boolean # The new locked state
 function Sexbound.Actor.Apparel.Abstract:toggleIsLocked()
     self._isLocked = not self._isLocked
     return self._isLocked
 end
 
+--- Toggles the visibility state
+--- @return boolean # The new visibility state
 function Sexbound.Actor.Apparel.Abstract:toggleIsVisible()
     if self._isLocked == true then return self._isVisible end
     self._isVisible = not self._isVisible
     return self._isVisible
 end
 
+--- Returns the parent apparel manager instance
+--- @return Sexbound.Actor.Apparel # The parent apparel manager instance
 function Sexbound.Actor.Apparel.Abstract:getParent()
     return self._parent
 end

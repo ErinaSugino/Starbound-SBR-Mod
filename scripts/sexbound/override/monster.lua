@@ -1,7 +1,12 @@
---- Sexbound.Monster Module.
--- @module Sexbound.Monster
 require "/scripts/sexbound/override/common.lua"
 
+--- Sexbound.Monster Module.
+--- @class Sexbound.Monster: Sexbound.Common
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _gender integer
+--- @field _subGen string?
 Sexbound.Monster = Sexbound.Common:new()
 Sexbound.Monster_mt = {
     __index = Sexbound.Monster
@@ -37,6 +42,8 @@ function update(dt)
     end
 end
 
+--- Creates a new monster entity handler instance
+--- @return Sexbound.Monster # The newly created monster entity handler
 function Sexbound.Monster.new()
     local self = setmetatable({
         _isHavingSex = false,
@@ -46,7 +53,7 @@ function Sexbound.Monster.new()
         _promises = PromiseKeeper.new(),
         _states = {"defaultState", "havingSexState"}
     }, Sexbound.Monster_mt)
-    
+
     if status.isResource("gender") == false then
         status.giveResource("gender", 0)
     end
@@ -74,20 +81,22 @@ function Sexbound.Monster.new()
     self._transform = Sexbound.Monster.Transform:new(self)
 
     -- Check that the monster is not capturable by Red3dred
+    --- @diagnostic disable-next-line: undefined-global
     if not entity.uniqueId() and not (isCapturable or capturable.ownerUuid() or storage.respawner) then
         monster.setUniqueId(sb.makeUuid())
     end
 
     self._stateMachine = self:helper_loadStateMachine()
 
-    self._hasInitied = true
+    self._hasInited = true
     self:updateTraitEffects()
 
     return self
 end
 
--- [Helper] Loads the stateMachine
--- See state definitions at the bottom of the script
+--- [Helper] Loads the stateMachine
+--- @private
+--- @return table # The vanilla state meachine
 function Sexbound.Monster:helper_loadStateMachine()
     self._stateDefinitions = {
         defaultState = self:defineStateDefaultState(),
@@ -97,6 +106,8 @@ function Sexbound.Monster:helper_loadStateMachine()
     return stateMachine.create(self._states, self._stateDefinitions)
 end
 
+--- Function called each tick to progress timers
+--- @param dt number The delta time since last tick
 function Sexbound.Monster:update(dt)
     -- Monster script doesn't have a promises handler by default
     self._promises:update()
@@ -104,6 +115,7 @@ function Sexbound.Monster:update(dt)
     self:getArousal():update(dt)
 end
 
+--- Setup entity message handlers
 function Sexbound.Monster:initMessageHandlers()
     message.setHandler("Sexbound:Actor:Restore", function(_, _, args)
         return self:handleRestore(args)
@@ -134,16 +146,19 @@ function Sexbound.Monster:initMessageHandlers()
     end)
 end
 
-function Sexbound.Monster:handleEnterIdleState(args)
+--- Message handler for sexnode idle state being entered
+function Sexbound.Monster:handleEnterIdleState(_)
     self:getArousal():setRegenRate("default")
-    -- self:getClimax():setRegenRate("default")
 end
 
-function Sexbound.Monster:handleEnterSexState(args)
+--- Message handler for sexnode sex state being entered
+--- @param _ any
+function Sexbound.Monster:handleEnterSexState(_)
     self:getArousal():setRegenRate("havingSex")
-    -- self:getClimax():setRegenRate("havingSex")
 end
 
+--- Message handler for sexnode actor storage being restored
+--- @param args table # The provided data
 function Sexbound.Monster:handleRestore(args)
     if args then
         self:mergeStorage(args)
@@ -154,6 +169,7 @@ function Sexbound.Monster:handleRestore(args)
     self:restore()
 end
 
+--- Restore this monster entity
 function Sexbound.Monster:restore()
     self._isHavingSex = false
 
@@ -175,14 +191,21 @@ function Sexbound.Monster:restore()
     end
 end
 
-function Sexbound.Monster:handleRetrieveConfig(args)
+--- Message handler for sexnode actor requesting sexboundConfig data from this entity
+--- @return any # Whatever may or may not be defined for this monster
+function Sexbound.Monster:handleRetrieveConfig(_)
     return config.getParameter("sexboundConfig")
 end
 
+--- Message handler for making the entity say something
+--- @param args table # The message data to say
 function Sexbound.Monster:handleSay(args)
     monster.say(args.message);
 end
 
+--- Message handler for sexnode actor requesting entity's persistent storage data
+--- @param args table? Potentially provided arguments for retrieving a specific name from storage
+--- @return any # Whatever the requested storage parameter is, if it exists, or the entire storage
 function Sexbound.Monster:handleRetrieveStorage(args)
     if args and args.name then
         return storage[args.name]
@@ -191,14 +214,19 @@ function Sexbound.Monster:handleRetrieveStorage(args)
     return storage
 end
 
+--- Message handler for sexnode actor syncing persistent storage data
+--- @param args table # The sync data
 function Sexbound.Monster:handleSyncStorage(args)
     self:mergeStorage(args)
 end
 
+--- Merges given table into persistent storage
+--- @param newData table? The data to merge
 function Sexbound.Monster:mergeStorage(newData)
     storage = util.mergeTable(storage, newData or {})
 end
 
+--- Unloads this monster entity. Probably to emulate "lounging"
 function Sexbound.Monster:unload()
     local duration = 300 -- 5 minutes
     local entityId = entity.id()
@@ -216,6 +244,10 @@ function Sexbound.Monster:unload()
     end
 end
 
+--- Starts actor setup, optionally with provided fixed parameters
+--- @param controllerId EntityId The entity id of the sexnode controller to talk to
+--- @param params table? Optional override parameters for the actor data
+--- @return boolean # Whethere or not setup was successful
 function Sexbound.Monster:setup(controllerId, params)
     self._isHavingSex = true
 
@@ -234,10 +266,9 @@ function Sexbound.Monster:setup(controllerId, params)
     return false
 end
 
+--- Returns all data relevant to build a corresponding sexnode actor
+--- @return table? # The assembled actor data
 function Sexbound.Monster:getActorData()
-    -- storage.sexbound.climax = self:getClimax():getCurrentValue()
-    -- storage.sexbound.fertility = 1.0
-
     local identity = self:getIdentity():build()
     if identity.sxbSubGender == nil then
         identity.sxbSubGender = self:getSubGender():getSxbSubGender()
@@ -258,35 +289,10 @@ function Sexbound.Monster:getActorData()
     }
 end
 
--- Getters
+-- [[ Legacy functions ]]
 
-function Sexbound.Monster:getIsHavingSex()
-    return self._isHavingSex
-end
-function Sexbound.Monster:getArousal()
-    return self._arousal
-end
-function Sexbound.Monster:getClimax()
-    return self._climax
-end
-function Sexbound.Monster:getIdentity()
-    return self._identity
-end
-function Sexbound.Monster:getPregnant()
-    return self._pregnant
-end
-function Sexbound.Monster:getStatistics()
-    return self._statistics
-end
-function Sexbound.Monster:getSubGender()
-    return self._subGender
-end
-function Sexbound.Monster:getTransform()
-    return self._transform
-end
-
--- Legacy functions
-
+--- Message handler for "respawning" this entity
+--- @param args table The provided storage data
 function Sexbound.Monster:handleRespawn(args)
     if args then
         self:mergeStorage(args)
@@ -297,12 +303,15 @@ function Sexbound.Monster:handleRespawn(args)
     self:respawn()
 end
 
+--- "Respawns" this entity
 function Sexbound.Monster:respawn()
     self:restore()
 end
 
--- State Definitions
+-- [[ State Definitions ]]
 
+--- Defines state machine states - default state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.Monster:defineStateDefaultState()
     return {
         enter = function()
@@ -327,6 +336,8 @@ function Sexbound.Monster:defineStateDefaultState()
     }
 end
 
+--- Defines state machine states - havingSex state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.Monster:defineStateHavingSexState()
     return {
         enter = function()
@@ -363,16 +374,24 @@ function Sexbound.Monster:defineStateHavingSexState()
     }
 end
 
+-- [[ Abstract implementations ]]
+
+--- Returns this entity's gender
+--- @return string # The monster's gender
 function Sexbound.Monster:getGender()
     local binGenders = {"male", "female", "female"} -- Gender 3 is for sub-gender fem-futa [Red3Red]
-    
+
     return binGenders[self._gender or 1]
 end
 
+--- Returns this entity's species
+--- @return string # The monster's species
 function Sexbound.Monster:getSpecies()
     return monster.type()
 end
 
+--- Returns necessary data for sexnode compatibility comparison
+--- @return table<string, any> # The comparison data
 function Sexbound.Monster:getCompatibilityData()
     return {
         species = monster.type(),

@@ -1,7 +1,19 @@
---- Sexbound.NPC Module.
--- @module Sexbound.NPC
 require "/scripts/sexbound/override/common.lua"
 
+--- Sexbound.NPC Module.
+--- @class Sexbound.NPC: Sexbound.Common
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _behaviorData table
+--- @field _enableLoungeTimer boolean
+--- @field _kidTimer number
+--- @field _isKid boolean
+--- @field _loungeId EntityId?
+--- @field _loungeTimer number
+--- @field _mindControl table
+--- @field _isShipWorld boolean
+--- @field _pregnancyDelay number
 Sexbound.NPC = Sexbound.Common:new()
 Sexbound.NPC_mt = {
     __index = Sexbound.NPC
@@ -40,7 +52,7 @@ local Sexbound_Old_Uninit = uninit
 function uninit()
     xpcall(function()
         self.sb_npc:uninit()
-        
+
         Sexbound_Old_Uninit()
     end, sb.logError)
 end
@@ -83,6 +95,8 @@ function setCurrentStatus(statusSummary, statEffectCategory)
     end
 end
 
+--- Creates new NPC manager instance
+--- @return Sexbound.NPC # The newly created NPC manager instance
 function Sexbound.NPC.new()
     local self = setmetatable({
         _enableLoungeTimer = true,
@@ -104,7 +118,7 @@ function Sexbound.NPC.new()
     self:initMessageHandlers()
     self:restorePreviousStorage()
     self:initSubmodules()
-    
+
     if self._firstInit then
         local birthSubGender = config.getParameter("subGender", nil)
         if birthSubGender then
@@ -113,7 +127,7 @@ function Sexbound.NPC.new()
         end
         if not storage.sexbound.identity.sxbSubGender and math.random() <= (self._config.sex.subGenderChance or 0.01) then
             if self:canLog("info") then sb.logInfo("[SxB | ENT] Applying random gender to new npc #"..entity.id()) end
-            self._subGender:setSxbSubGender(self._subGender:createRandomSubGender(npc.gender()))
+            self._subGender:setSxbSubGender(self._subGender:createRandomSubGender())
         end
         status.setResource("arousal",math.random(100))
     end
@@ -125,40 +139,45 @@ function Sexbound.NPC.new()
 
     self:restore(true)
     self._stateMachine = self:loadStateMachine()
-    
+
     self._hasInited = true
     self:updateTraitEffects()
     self:updateKidStatus()
-    
+
     return self
 end
 
+--- Function called each tick to update timers
+--- @param dt number The delta time since last tick
 function Sexbound.NPC:update(dt)
     -- Update the NPC's Statemachine
     self._stateMachine.update(dt)
 
     -- Always update arousal
     self:getArousal():update(dt)
-    
+
     -- Tick kid status if active
     if self._kidTimer > 0 then self._kidTimer = self._kidTimer - dt end
     if self._isKid and self._kidTimer <= 0 then
         local worldTime = world.time()
         local kidTime = status.statusProperty('kid', -math.huge)
         if kidTime <= worldTime then self:updateKidStatus() end
-        
+
         if self._isKid then self._kidTimer = 10 end -- Only check every 10 seconds
     end
-    
+
     -- Progress time on temporarily excluded sexnodes for behavior script
     for c,d in pairs(self._behaviorData.excludedNodes) do
         d.time = (d.time or 0) - dt
         if d.time <= 0 then self._behaviorData.excludedNodes[c] = nil end
     end
-    
+
     if self._pregnancyDelay > 0 then self._pregnancyDelay = self._pregnancyDelay - dt end
 end
 
+--- Progresses the lounging timer
+--- @param dt number The delta time since last tick
+--- @param callback function # Function to execute when timer is up
 function Sexbound.NPC:updateLoungeTimer(dt, callback)
     if not self._enableLoungeTimer then return end
     self._loungeTimer = self._loungeTimer + dt
@@ -170,6 +189,7 @@ function Sexbound.NPC:updateLoungeTimer(dt, callback)
     end
 end
 
+--- Sets up entity message handlers
 function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Actor:HideName", function(_, _, args)
         return self:handleHideName(args)
@@ -215,23 +235,21 @@ function Sexbound.NPC:initMessageHandlers()
     message.setHandler("Sexbound:Common:UpdateFertility", function(_, _, args)
         return self:updateFertility(args)
     end)
-    message.setHandler("Sexbound:Defeat:ReputationSet", function(_, _, args)
-        return self:setPlayerReputation(args.id, args.reputation or {global = 0, species = {}})
-    end)
     message.setHandler("Sexbound:Defeat:SetPositionAndLounge", function(_, _, data)
         mcontroller.setPosition({data.x, data.y})
         npc.setLounging(data.id)
     end)
-    
+
     --- Debug stuff
     message.setHandler("Sexbound:Debug:GetHitbox", function(_, _, args)
-        sb.logInfo(self:dump(mcontroller.baseParameters()))
+        sb.logInfo(Sexbound.Util.dump(mcontroller.baseParameters()))
     end)
     message.setHandler("Sexbound:Debug:SetHitbox", function(_, _, args)
         mcontroller.controlParameters(args)
     end)
 end
 
+--- Initializes all submodules
 function Sexbound.NPC:initSubmodules()
     self._status = Sexbound.NPC.Status:new(self)
     self._subGender = Sexbound.NPC.SubGender:new(self)
@@ -244,10 +262,11 @@ function Sexbound.NPC:initSubmodules()
     self._identity = Sexbound.NPC.Identity:new(self)
 end
 
+--- Updates kid status timer
 function Sexbound.NPC:updateKidStatus()
     local worldTime = world.time()
     local kidTime = status.statusProperty('kid')
-    
+
     if kidTime == nil or kidTime <= worldTime then
         status.removeEphemeralEffect('sexbound_kid')
         status.setStatusProperty('kid', nil)
@@ -258,39 +277,55 @@ function Sexbound.NPC:updateKidStatus()
     end
 end
 
-function Sexbound.NPC:handleEnterIdleState(args)
+--- Message handler for sexnode entering idle state
+function Sexbound.NPC:handleEnterIdleState(_)
     self:getArousal():setRegenRate("default")
     self:getClimax():setRegenRate("default")
 end
 
-function Sexbound.NPC:handleEnterSexState(args)
+--- Message handler for sexnode entering sex state
+--- @param _ any
+function Sexbound.NPC:handleEnterSexState(_)
     self:getArousal():setRegenRate("havingSex")
     self:getClimax():setRegenRate("havingSex")
 end
 
+--- Message handler for sexnode actor storage being restored
+--- @param args table The data to restore
 function Sexbound.NPC:handleRestore(args)
     if args then self:mergeStorage(args) end
     self:restore()
 end
 
-function Sexbound.NPC:handleRetrieveConfig(args)
+--- Message handler for sexnode actor fetching sexboundConfig data of this entity
+--- @return any # Whatever is, or isn't, defined on this entity for sexboundConfig
+function Sexbound.NPC:handleRetrieveConfig(_)
     return config.getParameter("sexboundConfig")
 end
 
+--- Message handler for sexnode actor making the entity speak
+--- @param args table # The message data to say
 function Sexbound.NPC:handleSay(args)
     npc.say(args.message);
 end
 
-function Sexbound.NPC:handleHideName(args)
+--- Message handler for sexnode triggering this NPC's nametag invisible
+--- @return boolean # True. Just because
+function Sexbound.NPC:handleHideName(_)
     self:hideName()
     return true
 end
 
-function Sexbound.NPC:handleShowName(args)
+--- Message handler for sexnode triggering this NPC's nametag visible
+--- @return boolean # True. Just because
+function Sexbound.NPC:handleShowName(_)
     self:showName()
     return true
 end
 
+--- Message handler for sexnode actor requesting entity's persistent storage data
+--- @param args table? Potentially provided arguments for retrieving a specific name from storage
+--- @return any # Whatever the requested storage parameter is, if it exists, or the entire storage
 function Sexbound.NPC:handleRetrieveStorage(args)
     if args and args.name then
         return storage[args.name]
@@ -299,13 +334,18 @@ function Sexbound.NPC:handleRetrieveStorage(args)
     return storage
 end
 
+--- Message handler for sexnode actor syncing persistent storage data
+--- @param args table # The sync data
 function Sexbound.NPC:handleSyncStorage(args)
-    if self._idKid then return end
+    if self._isKid then return end
     
     args = self:fixPregnancyData(args)
     self:mergeStorage(args)
 end
 
+--- Fixes pregnancy data to be a numeric array to prevent Starbound schenanigans
+--- @param data table The storage data
+--- @return table # The fixed storage data
 function Sexbound.NPC:fixPregnancyData(data)
     if type(data.sexbound.pregnant) ~= "table" then data.sexbound.pregnant = {} end
     if isEmpty(data.sexbound.pregnant) then return data end
@@ -321,12 +361,16 @@ function Sexbound.NPC:fixPregnancyData(data)
     return data
 end
 
+--- Handles interaction? I think?
+--- @param args any Data
+--- @param callback fun(any) Function called with data
 function Sexbound.NPC:handleInteract(args, callback)
     callback(args)
 end
 
--- [Helper] Loads the stateMachine
--- See state definitions at the bottom of the script
+--- [Helper] Loads the stateMachine
+--- @private
+--- @return table # The vanilla state meachine
 function Sexbound.NPC:loadStateMachine()
     self._stateDefinitions = {
         defaultState = self:defineStateDefaultState(),
@@ -337,21 +381,27 @@ function Sexbound.NPC:loadStateMachine()
     return stateMachine.create(self._states, self._stateDefinitions)
 end
 
+--- Merges given table into persistent storage
+--- @param newData table? The data to merge
 function Sexbound.NPC:mergeStorage(newData)
     storage = util.mergeTable(storage, newData or {})
 end
 
+--- Resets the timer for kicking this NPC out of the node
+--- @return number # The newly set timer value
 function Sexbound.NPC:refreshLoungeTimeout()
     self._loungeTimeout = util.randomInRange({300, 600})
     return self._loungeTimeout
 end
 
+--- Removes all status effects from the entity caused by being stunned from defeat
 function Sexbound.NPC:removeAllStunningStatusEffects()
     status.removeEphemeralEffect("sexbound_stun")
     status.setResource("stunned", 0)
     status.setStatusProperty("sexbound_stun", false)
 end
 
+--- Forces the NPC to have empty hands if it should
 function Sexbound.NPC:removeWeaponsWhenShouldHaveEmptyHands()
     if config.getParameter("behaviorConfig", {}).emptyHands then
         npc.setItemSlot("primary", "")
@@ -359,7 +409,8 @@ function Sexbound.NPC:removeWeaponsWhenShouldHaveEmptyHands()
     end
 end
 
--- Called via handleRestore
+--- Restore this npc entity
+--- @param skipArousal boolean? # Whethere or not to skip resetting arousal
 function Sexbound.NPC:restore(skipArousal)
     skipArousal = skipArousal or false
     self._isHavingSex = false
@@ -374,10 +425,14 @@ function Sexbound.NPC:restore(skipArousal)
     self:removeWeaponsWhenShouldHaveEmptyHands()
 end
 
+--- Starts actor setup, optionally with provided fixed parameters
+--- @param entityId EntityId The entity id of the sexnode seat to talk to
+--- @param params table? Optional override parameters for the actor data
+--- @return boolean # Whethere or not setup was successful
 function Sexbound.NPC:setup(entityId, params)
     if self._isKid then npc.resetLounging() return false end
-    
-    if not entityId then return end
+
+    if not entityId then return false end
     params = params or {}
     self._isHavingSex = true
 
@@ -399,24 +454,30 @@ function Sexbound.NPC:setup(entityId, params)
     return true
 end
 
+--- Hides this NPC's nametag
 function Sexbound.NPC:hideName()
     npc.setDisplayNametag(false)
 end
 
+--- Shows this NPC's nametag
 function Sexbound.NPC:showName()
     npc.setDisplayNametag(true)
 end
 
+--- Resets this NPC's damage team to the stored original
 function Sexbound.NPC:restoreDamageTeam()
     if storage.previousDamageTeam then
         npc.setDamageTeam(storage.previousDamageTeam)
+        storage.previousDamageTeam = nil
     end
 end
 
+--- Stores this NPC's damage team if not set
 function Sexbound.NPC:storePreviousDamageTeam()
     storage.previousDamageTeam = storage.previousDamageTeam or world.entityDamageTeam(entity.id())
 end
 
+--- Unloads this entity
 function Sexbound.NPC:unload()
     local defaultDuration = 300 -- 5 minutes
     self._isHavingSex = true
@@ -428,11 +489,13 @@ function Sexbound.NPC:unload()
     world.sendEntityMessage(entityId, "applyStatusEffect", "sexbound_stun", defaultDuration, entityId)
 end
 
--- Getters/Setters
+-- [[ Getters/Setters ]]
 
+--- Returns all data relevant to build a corresponding sexnode actor
+--- @return table? # The assembled actor data
 function Sexbound.NPC:getActorData()
     if self._isKid then npc.resetLounging() return nil end
-    
+
     local gender = npc.gender()
 
     local identity = self:getIdentity():build()
@@ -462,52 +525,24 @@ function Sexbound.NPC:getActorData()
     }
 end
 
-function Sexbound.NPC:getIsHavingSex()
-    return self._isHavingSex
-end
-function Sexbound.NPC:getIsClimaxing()
-    return self._isClimaxing
-end
+--- Returns mind control data
+--- @return table # The mind control data
 function Sexbound.NPC:getMindControl()
     return self._mindControl
 end
-function Sexbound.NPC:getApparel()
-    return self._apparel
-end
-function Sexbound.NPC:getArousal()
-    return self._arousal
-end
-function Sexbound.NPC:getClimax()
-    return self._climax
-end
-function Sexbound.NPC:getIdentity()
-    return self._identity
-end
-function Sexbound.NPC:getPregnant()
-    return self._pregnant
-end
-function Sexbound.NPC:getSubGender()
-    return self._subGender
-end
-function Sexbound.NPC:getStatistics()
-    return self._statistics
-end
-function Sexbound.NPC:getTransform()
-    return self._transform
-end
-function Sexbound.NPC:getStatus()
-    return self._status
-end
 
--- Legacy functions
+-- [[ Legacy functions ]]
 
+--- Message handler for "respawning" this entity
+--- @param args table The provided storage data
 function Sexbound.NPC:handleRespawn(args)
     return self:handleRestore(args)
 end
 
---- State Definitions
+-- [[ State Definitions ]]
 
--- State Definition : defaultState
+--- Defines state machine states - default state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.NPC:defineStateDefaultState()
     return {
         enter = function()
@@ -547,7 +582,8 @@ function Sexbound.NPC:defineStateDefaultState()
     }
 end
 
--- State Definition : havingBirthdayState
+--- Defines state machine states - havingBirthday state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.NPC:defineStateHavingBirthdayState()
     return {
         enter = function()
@@ -582,11 +618,12 @@ function Sexbound.NPC:defineStateHavingBirthdayState()
     }
 end
 
--- State Definition : havingSexState
+--- Defines state machine states - havingSex state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.NPC:defineStateHavingSexState()
     return {
         enter = function()
-            if not self._idKid and self._isHavingSex then
+            if not self._isKid and self._isHavingSex then
                 return {
                     isLounging = npc.isLounging(),
                     loungeId = npc.loungingIn()
@@ -640,14 +677,23 @@ function Sexbound.NPC:defineStateHavingSexState()
     }
 end
 
+
+-- [[ Abstract implementations ]]
+
+--- Returns this entity's gender
+--- @return string # The npc's gender
 function Sexbound.NPC:getGender()
     return npc.gender()
 end
 
+--- Returns this entity's species
+--- @return string # The npc's species
 function Sexbound.NPC:getSpecies()
     return npc.species()
 end
 
+--- Returns necessary data for sexnode compatibility comparison
+--- @return table<string, any> # The comparison data
 function Sexbound.NPC:getCompatibilityData()
     return {
         species = npc.species(),

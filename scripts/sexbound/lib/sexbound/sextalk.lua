@@ -1,7 +1,16 @@
 --- Sexbound.Sextalk Class Module.
--- @classmod Sexbound.Sextalk
--- @author Erina Sugino
--- @license GNU General Public License v3.0
+--- @class Sexbound.Sextalk
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field private _logPrefix string
+--- @field _parent Sexbound
+--- @field _actors table<integer, Sexbound.Actor>
+--- @field _lastActor integer
+--- @field _talkTimer number
+--- @field _active boolean
+--- @field _log Sexbound.Log
+--- @field _isEnabled boolean
+--- @field _config table
 Sexbound.Sextalk = {}
 Sexbound.Sextalk_mt = {
     __index = Sexbound.Sextalk
@@ -9,6 +18,8 @@ Sexbound.Sextalk_mt = {
 
 require("/scripts/util.lua")
 
+--- Create new instance
+--- @param parent Sexbound The parent sexnode instance
 function Sexbound.Sextalk.new(parent)
     local self = setmetatable({
         _logPrefix = "SXTG",
@@ -20,14 +31,16 @@ function Sexbound.Sextalk.new(parent)
     }, Sexbound.Sextalk_mt)
 
     Sexbound.Messenger.get("main"):addBroadcastRecipient(self)
-    
+
     self._log = Sexbound.Log:new(self._logPrefix, self._parent:getConfig())
-    
+
     self._isEnabled, self._config = self:loadSextalkConfig()
-    
+
     return self
 end
 
+--- Function called each tick
+--- @param dt number The delta time since last tick
 function Sexbound.Sextalk:update(dt)
     if not self._isEnabled then return end
     if self._active then
@@ -41,41 +54,47 @@ function Sexbound.Sextalk:update(dt)
 end
 
 --- Handles interally received message.
--- @param message A Message
-function Sexbound.Sextalk:onMessage(message)
-    
-end
+--- @param message table A Message
+function Sexbound.Sextalk:onMessage(message) end
 
---- Handlers for state changes
+--- Function called when entering null state
 function Sexbound.Sextalk:onEnterNullState()
     self._active = false -- Null state is setup state - no talking
     self._talkTimer = 0 -- Immediately talk on next active tick
 end
 
+--- Function called when entering idle state
 function Sexbound.Sextalk:onEnterIdleState()
     self._active = false -- Idle state has no talking
     self._talkTimer = 0 -- Immediately talk on next active tick
 end
 
+--- Function called when entering sex state
 function Sexbound.Sextalk:onEnterSexState()
     self._active = true -- Sex state has talking
     self._talkTimer = 0 -- Immediately talk on next active tick
 end
 
+--- Function called when entering climax state
 function Sexbound.Sextalk:onEnterClimaxState()
     self._active = true -- Climax state has talking
     self._talkTimer = 0 -- Immediately talk on next active tick
 end
 
+--- Function called when entering post climax state
 function Sexbound.Sextalk:onEnterPostClimaxState()
     self._active = true -- Post Climax state can have talking
 end
 
+--- Function called when entering exit state
 function Sexbound.Sextalk:onEnterExitState()
     self._active = false -- Exit state has no talking - Don't even know what this is for
     self._talkTimer = 0 -- Immediately talk on next active tick
 end
 
+--- Load the sextalk specific config file
+--- @return boolean isEnabled Whethere or not sextalk is enabled
+--- @return table loadedConfig The fetched config JSON
 function Sexbound.Sextalk:loadSextalkConfig()
     local pluginConfig = self:getParent():getConfig().actor.plugins.sextalk or {}
     local isEnabled = not not pluginConfig.enable
@@ -93,11 +112,11 @@ function Sexbound.Sextalk:loadSextalkConfig()
     return isEnabled, loadedConfig
 end
 
---- Function to choose a random available 
+--- Function to choose a random available actor for talking
 function Sexbound.Sextalk:triggerTalk()
     local viableActors = {}
     for _,a in ipairs(self._parent:getActors()) do
-        local sxt = a:getPlugins("sextalk")
+        local sxt = a:getPlugins("sextalk") --[[@as Sexbound.Actor.SexTalk]]
         if sxt then
             sxt._isTalking = false -- Reset talking status of all actors.
             if sxt._isActive then table.insert(viableActors, a) end
@@ -124,6 +143,8 @@ function Sexbound.Sextalk:triggerTalk()
     end
 end
 
+--- Returns the parent sexnode instance
+--- @return Sexbound # The parent sexnode instance
 function Sexbound.Sextalk:getParent()
     return self._parent
 end

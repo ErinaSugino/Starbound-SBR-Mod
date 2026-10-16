@@ -1,22 +1,29 @@
---- Sexbound.Actor.Apparel.Chestwear Class Module.
--- @classmod Sexbound.Actor.Apparel.Chestwear
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/apparel/abstract.lua")
 end
 
+--- Sexbound.Actor.Apparel.Chestwear Class Module.
+--- @class Sexbound.Actor.Apparel.Chestwear: Sexbound.Actor.Apparel.Abstract
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _name string
 Sexbound.Actor.Apparel.Chestwear = Sexbound.Actor.Apparel.Abstract:new()
 Sexbound.Actor.Apparel.Chestwear_mt = {
     __index = Sexbound.Actor.Apparel.Chestwear
 }
 
 --- Returns a reference to a new instance of this class.
--- @param parent
+--- @param parent Sexbound.Actor.Apparel # The calling parent apparel manager instance
 function Sexbound.Actor.Apparel.Chestwear:new( parent )
   return setmetatable({ _parent = parent, _name = "chestwear" }, Sexbound.Actor.Apparel.Chestwear_mt)
 end
 
+--- Function to reset the apparel parts
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @param frameName string The current frame name
 function Sexbound.Actor.Apparel.Chestwear:resetParts(role, species, gender, frameName)
   if not self._isVisible then return end
 
@@ -36,6 +43,11 @@ function Sexbound.Actor.Apparel.Chestwear:resetParts(role, species, gender, fram
   self:resetChestwearSleeve2(role, species, gender, frameName)
 end
 
+--- Function to reset the first sleeve
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @param frameName string The current frame name
 function Sexbound.Actor.Apparel.Chestwear:resetChestwearSleeve1(role, species, gender, frameName)
   local _, part, directives, _ =
       self:loadChestwear("backSleeve", role, species, gender)
@@ -45,6 +57,11 @@ function Sexbound.Actor.Apparel.Chestwear:resetChestwearSleeve1(role, species, g
   animator.setGlobalTag(prefix .. "-bsleeve", directives)
 end
 
+--- Function to reset the second sleeve
+--- @param role string The actor's role name
+--- @param species string The actor's species
+--- @param gender string The actor's vanilla gender
+--- @param frameName string The current frame name
 function Sexbound.Actor.Apparel.Chestwear:resetChestwearSleeve2(role, species, gender, frameName)
   local _, part, directives, _ =
       self:loadChestwear("frontSleeve", role, species, gender)
@@ -55,10 +72,14 @@ function Sexbound.Actor.Apparel.Chestwear:resetChestwearSleeve2(role, species, g
 end
 
 --- Loads and returns a chestwear image part, directives, & mask.
--- @param name
--- @param role
--- @param species
--- @param gender
+--- @param name string Image part name
+--- @param role string Actor role
+--- @param species string Actor species
+--- @param gender string Actor vanilla gender
+--- @return number index The current variant index
+--- @return string image The fully qualified image path
+--- @return string directives The directives string
+--- @return string mask The fully qualified mask path
 function Sexbound.Actor.Apparel.Chestwear:loadChestwear(name, role, species, gender)
     local part, directives, mask = self._defaultImage, "", self._defaultMask
     local index  = self._variantIndex or 1
@@ -128,14 +149,20 @@ function Sexbound.Actor.Apparel.Chestwear:loadChestwear(name, role, species, gen
   return index, part, directives, mask
 end
 
+--- Function to reset the animator directive tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Chestwear:resetAnimatorDirectives(prefix)
     animator.setGlobalTag(prefix .. "-chestwear", "")
 end
 
+--- Function to reset the animator mask tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Chestwear:resetAnimatorMasks(prefix)
     animator.setGlobalTag(prefix .. "-chestwearMask", "?addmask=" .. self._defaultMask .. ":default")
 end
 
+--- Function to reset the animator part tags
+--- @param prefix string The animator part prefix
 function Sexbound.Actor.Apparel.Chestwear:resetAnimatorParts(prefix)
     animator.setGlobalTag("part-" .. prefix .. "-chestwear", self._defaultImage .. ":default")
     animator.setGlobalTag("part-" .. prefix .. "-bsleeve",   self._defaultImage .. ":default")

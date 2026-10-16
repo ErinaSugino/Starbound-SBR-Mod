@@ -1,35 +1,45 @@
 --- BabyFactory Class Module.
--- @classmod BabyFactory
--- @author Locuturus
--- @license GNU General Public License v3.0
+--- @class Sexbound.Actor.Pregnant.BabyFactory
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _parent Sexbound.Actor.Pregnant
+--- @field _config table
+--- @field _lengthOfWorldDay number
+--- @field _secondsInOneDay number
 BabyFactory = {}
 BabyFactory_mt = {
     __index = BabyFactory
 }
 
 --- Instantiates a new instance of BabyFactory.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor.Pregnant The calling parent actor pregnancy plugin instance
+--- @param config table The pregnancy config
+--- @return Sexbound.Actor.Pregnant.BabyFactory # The newly created baby factor instance
 function BabyFactory:new(parent, config)
     local _self = setmetatable({
         _parent = parent,
         _config = config
     }, BabyFactory_mt)
-    
+
     _self._lengthOfWorldDay = 840
     _self._secondsInOneDay = 86400
 
     return _self
 end
 
+--- Creates a new baby instance
+--- @param actor Sexbound.Actor The calling (mother) actor
+--- @param daddy Sexbound.Actor The father actor
+--- @return table? # The pregnancy data, or nil on error
 function BabyFactory:make(actor, daddy)
     local motherSpecies = actor:getSpecies()
     local fatherSpecies = daddy:getSpecies()
     local geneticTable = self._config.geneticTable or {}
     local pregnancyTypes = self._config.pregnancyType or {}
-    
+
     local pregnancyType = (pregnancyTypes[motherSpecies] or {})[fatherSpecies] or (pregnancyTypes[motherSpecies] or {})["all"] or "baby"
-    
+
     -- Try loading baby class
     local r,err = pcall(require, "/scripts/sexbound/plugins/pregnant/"..pregnancyType..".lua")
     if not r then
@@ -37,7 +47,7 @@ function BabyFactory:make(actor, daddy)
         sb.logError("Error: "..tostring(err))
         return nil
     end
-    
+
     local babyClass
     r,err = pcall(function()
         local ucPregnancyType = pregnancyType:gsub("^%l", string.upper)
@@ -49,14 +59,14 @@ function BabyFactory:make(actor, daddy)
         sb.logError("Error: "..tostring(err))
         return nil
     end
-    
+
     local pregnancy = {
         dataVersion = 3,
         pregnancyType = pregnancyType,
         babies = {},
         birthTime = self:createRandomBirthTime()
     }
-    
+
     -- Apply pregnancy timings
     if actor:getEntityType() == "player" then
         -- Player mothers get the actual fertilization delayed for realistic immersion purposes
@@ -75,7 +85,7 @@ function BabyFactory:make(actor, daddy)
     end
     pregnancy.birthOSTime = os.time() + (pregnancy.dayCount * self._secondsInOneDay) + (pregnancy.birthTime * self._secondsInOneDay)
     pregnancy.fullBirthOSTime = os.time()
-    
+
     local nextBaby, babyCount = true, 0
     while nextBaby and babyCount < (self._config.multiPregnancyLimit or 3) do
         r,err = pcall(function()
@@ -96,60 +106,67 @@ function BabyFactory:make(actor, daddy)
 end
 
 --- Returns a random birth gender.
--- @return birthGender
+--- @return string # The birth gender
 function BabyFactory:createRandomBirthGender()
     return util.randomChoice({"male", "female"})
 end
 
 --- Returns a random sub-gender.
--- @param mainGender
--- @return subGender
+--- @param gender string The vanilla gender of the target
+--- @return string? # A sub-gender or nil if none
 function BabyFactory:createRandomSubGender(gender)
     local possibleSubGenders = {}
-    local subgenderPlugin = self._parent._parent:getPlugins("subgender")
+    local subgenderPlugin = self._parent._parent:getPlugins("subgender") --[[@as Sexbound.Actor.Subgender]]
     if not subgenderPlugin then return nil end
     for _,g in ipairs(self._config.subGenderList) do
         if subgenderPlugin:passesGenderRestriction(g.name, gender) then table.insert(possibleSubGenders, g.name) end
     end
-    
+
     return util.randomChoice(possibleSubGenders)
 end
 
 --- Returns a random birth date and day count.
--- @return birthDate, dayCount
+--- @return number birthDate The world-bound timestamp of when the birth will be
+--- @return integer dayCount The amount of world-bound days until then
 function BabyFactory:createRandomBirthDate()
     local pregnancyLength = self._config.pregnancyLength or {6, 9}
-    
+
     local dayCount = util.randomIntInRange(pregnancyLength)
 
     return (world.day() + dayCount), dayCount
 end
 
 --- Returns a random birth time
--- @return birthTime
+--- @return number # The random world-bound birth timestamp
 function BabyFactory:createRandomBirthTime()
     return util.randomInRange({0.0, 1.0})
 end
 
 --- Returns a random birth time and day count for in-game time measurement
--- @return birthTime, dayCount
+--- @return number birthDate The universal timer of when the birth will be
+--- @return integer dayCount The amount of average days until then
 function BabyFactory:createRandomPlayerBirthTime()
     local pregnancyLength = self._config.pregnancyLength or {6, 9}
-    
+
     local dayCount = util.randomIntInRange(pregnancyLength)
-    
+
     return (self._lengthOfWorldDay * dayCount), dayCount
 end
 
 --- Returns a random time representing the delay between the climax and the actual impregnation happening
--- @return delay
+--- @return number # The delay until the pregnancy activates
 function BabyFactory:createImpregnationDelay()
     return util.randomInRange({ 60, 180 })
 end
 
----Same as findClosestColorGene, but takes precalculated color averages for each palette
+--- Same as findClosestColorGene, but takes precalculated color averages for each palette
+--- @param list table<integer, table<integer, integer>> List of color palettes as RGB(A)
+--- @param targetColor table<integer, integer> Target color as RGB(A)
+--- @param threshold number? How close the palette should be to the target to be "good enough" (Default: 5)
+--- @return integer index The index of the color palette
+--- @return number distance The color distance to the target color
 function BabyFactory:findClosestColorAverageGene(list, targetColor, threshold)
-    if not list or not targetColor then return -1 end
+    if not list or not targetColor then return -1, 0 end
 
     threshold       = (threshold or 5) ^ 2
     local totalDist = 0
@@ -164,14 +181,14 @@ function BabyFactory:findClosestColorAverageGene(list, targetColor, threshold)
             index = i
         end
     end
-    return index
+    return index, totalDist
 end
 
 --- Returns a list of numbers where every value has been mixed between input list a and b with Lambda coefficient l
--- @param colorA
--- @param colorB
--- @param lambda
--- @return colorC
+--- @param a table<integer, integer> RGB(A) color A
+--- @param b table<integer, integer> RGB(A) color B
+--- @param l number 0..1 lambda crossfade coefficient
+--- @return table<integer, integer> # The mixed result RGB(A) values
 function BabyFactory:crossfade(a,b,l)
     local r = {}
     for i=1,#a do
@@ -181,11 +198,13 @@ function BabyFactory:crossfade(a,b,l)
 end
 
 --- Returns a reference to the parent object
+--- @return Sexbound.Actor.Pregnant # Parent actor pregnancy plugin instance
 function BabyFactory:getParent()
     return self._parent
 end
 
 --- Return a reference to the factory's config
+--- @return table # The plugin config
 function BabyFactory:getConfig()
     return self._config
 end

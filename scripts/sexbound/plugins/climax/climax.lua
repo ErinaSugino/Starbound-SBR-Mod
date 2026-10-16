@@ -1,20 +1,28 @@
---- Sexbound.Actor.Climax Class Module.
--- @classmod Sexbound.Actor.Climax
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
     require("/scripts/sexbound/plugins/climax/scriptedclimax/scenario1.lua")
 end
 
+--- Sexbound.Actor.Climax Class Module.
+--- @class Sexbound.Actor.Climax: Sexbound.Actor.Plugin
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _emitterName table
+--- @field _scenarios table<integer, Sexbound.ScriptedClimax>
+--- @field _soundEffects table
+--- @field _timer table<string, number>
+--- @field _inflation number
+--- @field _dripTimer number
 Sexbound.Actor.Climax = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.Climax_mt = {
     __index = Sexbound.Actor.Climax
 }
 
 --- Instantiates a new instance of Climax.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The plugin's config
+--- @return Sexbound.Actor.Climax # The newly created climax manager instance
 function Sexbound.Actor.Climax:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "CLIM",
@@ -50,7 +58,7 @@ function Sexbound.Actor.Climax:new(parent, config)
 
     -- Load scripted climax scenarios
     table.insert(_self._scenarios, Sexbound.ScriptedClimax.Scenario1:new(_self))
-    
+
     _self:getLog():info("Inited Climax Plugin for actor ".._self._parent:getName())
 
     return _self
@@ -76,7 +84,7 @@ function Sexbound.Actor.Climax:loadSoundEffects()
 end
 
 --- Handles message
--- @param message
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Climax:onMessage(message)
     if message:getType() == "Sexbound:Climax:BeginClimax" then
         if not self._parent._isClimaxing and not self:getParent()._isScriptedClimaxing then
@@ -97,13 +105,14 @@ function Sexbound.Actor.Climax:onMessage(message)
     if message:isType("Sexbound:SwitchRoles") then
         self:refreshEmitterName()
     end
-    
+
     -- On Message Received: Inflate
     if message:isType("Sexbound:Climax:Inflate") then
         self:inflate(message:getData())
     end
 end
 
+--- Loads the position's climax config
 function Sexbound.Actor.Climax:loadClimaxConfig()
     local actor = self:getParent()
     local actorNumber = actor:getActorNumber()
@@ -112,14 +121,16 @@ function Sexbound.Actor.Climax:loadClimaxConfig()
     self._climaxConfig = actor:getPosition():getClimaxConfig(actorNumber, gender)
 end
 
+--- Function called each tick to progress timers
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Climax:onUpdateAnyState(dt)
     self._config.currentPoints = self._config.currentPoints or 0
-    
+
     if self:canDrip() then self:inflationDrip(dt) end
 end
 
---- Handles event: onUpdateSexState
--- @param dt delta time
+--- Function called each tick while in sex state
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Climax:onUpdateSexState(dt)
     local actor = self:getParent()
     local actorNumber = actor:getActorNumber()
@@ -131,47 +142,45 @@ function Sexbound.Actor.Climax:onUpdateSexState(dt)
     local multiplier = actor:getPosition():getAnimationState("sexState"):getClimaxMultiplier(actorNumber) or 1
     local increase = util.randomInRange(self:getDefaultIncrease()) * multiplier * dt
 
-    self._config.currentPoints = util.clamp(self._config.currentPoints + increase, self:getMinPoints(),
-                                     self:getMaxPoints())
-    
+    self._config.currentPoints = util.clamp(self._config.currentPoints + increase, self:getMinPoints(), self:getMaxPoints())
+
     self:tryAutoClimax()
 end
 
+--- State enter handler for idle state
 function Sexbound.Actor.Climax:onEnterIdleState()
     self._parent._isClimaxing = false
     self._parent._isScriptedClimaxing = false
     self._parent._isPreClimaxing = false
 end
 
---- Handles event: onEnterClimaxState
+--- State enter handler for climax state
 function Sexbound.Actor.Climax:onEnterClimaxState()
     self:refreshEmitterName()
 end
 
---- Handles event: onExitClimaxState
+--- State leave handler for climax state
 function Sexbound.Actor.Climax:onExitClimaxState()
     self:getParent():status():removeStatus("climaxing")
 end
 
---- Handles event: onUpdateIdleState
--- @param dt delta time
+--- Function called each tick while in idle state
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Climax:onUpdateIdleState(dt)
     local decrease = util.randomInRange(self:getDefaultDecrease()) * dt
 
-    self._config.currentPoints = util.clamp(self._config.currentPoints - decrease, self:getMinPoints(),
-                                     self:getMaxPoints())
+    self._config.currentPoints = util.clamp(self._config.currentPoints - decrease, self:getMinPoints(), self:getMaxPoints())
 end
 
---- Handles event: onUpdateClimaxState
--- @param dt delta time
+--- Function called each tick while in climax state
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Climax:onUpdateClimaxState(dt)
     local actor = self:getParent()
 
     if actor._isScriptedClimaxing then
         self._scriptedClimax:run(dt)
     elseif actor._isClimaxing then
-        self._config.currentPoints = util.clamp(self._config.currentPoints - self:getDrainMultiplier() * dt,
-                                         self:getMinPoints(), self:getMaxPoints())
+        self._config.currentPoints = util.clamp(self._config.currentPoints - self:getDrainMultiplier() * dt, self:getMinPoints(), self:getMaxPoints())
 
         self:addTimer("shoot", dt)
 
@@ -235,9 +244,10 @@ function Sexbound.Actor.Climax:beginClimax()
     if _actor then Sexbound.Messenger.get("main"):send(self, _actor, "Sexbound:Pregnant:BecomePregnant", actor) end
 end
 
+--- Begin a scripted climax
 function Sexbound.Actor.Climax:beginScriptedClimax()
     local actor = self:getParent()
-    if self:getParent()._isClimaxing or self:getParent().isScriptedClimaxing then return end
+    if self:getParent()._isClimaxing or self:getParent()._isScriptedClimaxing then return end
     self:getLog():info("Beginning Scripted Climax.")
 
     -- Choose random scripted climax scenario
@@ -264,6 +274,7 @@ function Sexbound.Actor.Climax:beginScriptedClimax()
     self._scriptedClimax:start()
 end
 
+--- Officially end the scripted climax
 function Sexbound.Actor.Climax:endScriptedClimax()
     self:getLog():info("Ending Scripted Climax.")
 
@@ -274,7 +285,7 @@ function Sexbound.Actor.Climax:endScriptedClimax()
     self:getParent()._isClimaxing = false
     self:getParent():getStatus():removeStatus("preclimaxing")
     self:getParent():getStatus():removeStatus("climaxing")
-    
+
     local mActor = self:getParent()
     local amount = nil
     local entityId = nil
@@ -294,15 +305,16 @@ function Sexbound.Actor.Climax:endScriptedClimax()
     self._config.currentPoints = self:getMinPoints()
 end
 
+--- Trigger impregnation from scripted climax
 function Sexbound.Actor.Climax:scriptedImpregnation()
     local actor = self:getParent()
     self:getLog():debug("Triggering Scripted Climax Impregnation, by actor "..actor:getActorNumber())
-    
+
     if actor:getStatus():hasOneOf(self:getConfig().preventStatuses) then
         self:getLog():debug("Scripted Climax Impregnation check skipped for actor "..actor:getActorNumber().." due to climax preventing status")
         return
     end
-    
+
     local impregnationTargetNumber = self:getParent():getPosition():getConfig().actorRelation[actor:getActorNumber()] or 0
     local impregnationTarget = self:getParent():getParent():getActors()[impregnationTargetNumber] or nil
     if impregnationTarget then Sexbound.Messenger.get("main"):send(self, impregnationTarget, "Sexbound:Pregnant:BecomePregnant", actor) end
@@ -327,14 +339,16 @@ function Sexbound.Actor.Climax:refreshClimaxThreshold()
     self._config.threshold = util.randomInRange({self:getThreshold(), self:getMaxPoints()})
 end
 
----Refreshes the cooldown time for this module.
+--- Refreshes the cooldown time for this module.
+--- @param first boolean # Whethere or not this is the first refresh
+--- @return number # The chosen shot cooldown
 function Sexbound.Actor.Climax:refreshCooldown(first)
     if first then self._cooldown = util.randomInRange({0.1,1})
     else self._cooldown = util.randomInRange(self._config.shotCooldown) end
     return self._cooldown
 end
 
----Refreshes the emitterName of the climax particles.
+--- Refreshes the emitterName of the climax particles.
 function Sexbound.Actor.Climax:refreshEmitterName()
     local actor = self:getParent()
     local position = actor:getPosition()
@@ -350,7 +364,7 @@ function Sexbound.Actor.Climax:refreshEmitterName()
     end
 end
 
----Refreshes the timer table for this module.
+--- Refreshes the timer table for this module.
 function Sexbound.Actor.Climax:resetTimer()
     self._timer = {
         scriptedclimax = 0,
@@ -360,6 +374,7 @@ function Sexbound.Actor.Climax:resetTimer()
 end
 
 --- Commands this actor to shoot their climax once.
+--- @param ... any Climax date
 function Sexbound.Actor.Climax:shoot(...)
     if self:getConfig().enableClimaxSounds then
         self:playSoundEffect()
@@ -370,7 +385,7 @@ function Sexbound.Actor.Climax:shoot(...)
 
     self:setTimer("shoot", 0)
 
-    self:refreshCooldown()
+    self:refreshCooldown(false)
 
     -- Prevent creation of particles effects
     if self:getParent():status():hasOneOf(self:getConfig().preventStatusesVisible) then
@@ -386,17 +401,17 @@ function Sexbound.Actor.Climax:shoot(...)
     if self._config.enableSpawnLiquids then
         self:spawnProjectile(...)
     end
-    
+
     -- Spawn items when enabled
     if self._config.enableSpawnItems then
         self:spawnItem(...)
     end
-    
+
     local actorNum = self:getParent():getActorNumber()
     local config = self:getParent():getPosition():getConfig()
     local interactionTypes = config.interactionType or {}
     local interaction = interactionTypes[actorNum]
-    
+
     local target = config.actorRelation[actorNum]
     if target then
         local _actor = self:getParent():getParent():getActors()[target] or nil
@@ -409,6 +424,7 @@ function Sexbound.Actor.Climax:shoot(...)
     end
 end
 
+--- Spawns climax particles
 function Sexbound.Actor.Climax:spawnParticles()
     for _,e in ipairs(self._emitterNames) do
         if e then animator.burstParticleEmitter(e) end
@@ -422,7 +438,7 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
     local climaxConfig = self._climaxConfig or {}
     local projectileName = args[1] or climaxConfig.projectileName
     if not projectileName then return end
-    
+
     local actor, facingDirection = self:getParent(), {object.direction(), 1}
     local spawnOffset = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
     local spawnPosition = vec2.add(args[2] or actor:getClimaxSpawnPosition(), spawnOffset)
@@ -446,19 +462,21 @@ function Sexbound.Actor.Climax:spawnProjectile(...)
                 quantity = 0.2
             }
         }
-        
+
         handler.actionOnReap = actionOnReap
     end
 
     world.spawnProjectile(projectileName, spawnPosition, sourceEntityId, spawnDirection, trackSourceEntity, handler)
 end
 
+--- Spawns an item
+--- @param ... any Item data
 function Sexbound.Actor.Climax:spawnItem(...)
     self:loadClimaxConfig()
     local args = {...}
     local actor = self:getParent()
     local species = actor:getSpecies()
-    
+
     local dospawnitem = false
     for _,_actor in pairs(self:getRoot():getActors()) do
         local _species = _actor:getSpecies()
@@ -467,13 +485,13 @@ function Sexbound.Actor.Climax:spawnItem(...)
         end
     end
     if species ~= "sexbound_dildo_ovipositor" and not dospawnitem then return end
-    
+
     local facingDirection = {object.direction(), 1}
     local climaxConfig   = self._climaxConfig or {}
     local spawnOffset    = vec2.mul(climaxConfig.projectileSpawnOffset or {0, 0}, facingDirection)
     local spawnPosition  = vec2.add(args[2] or actor:getClimaxSpawnPosition(), spawnOffset)
     local genitals = actor:getGenitalTypes()
-    
+
     if dospawnitem then
         -- Milkingmachine spawn
         local config = self._config.projectileItem or {}
@@ -488,6 +506,7 @@ function Sexbound.Actor.Climax:spawnItem(...)
 end
 
 --- Increases level of inflation
+--- @param amount number Amount of inflation to add
 function Sexbound.Actor.Climax:inflate(amount)
     amount = amount or 0.1
     local oldAmount = self._inflation
@@ -495,12 +514,13 @@ function Sexbound.Actor.Climax:inflate(amount)
     self._inflation = self._inflation + amount
     self:getLog():debug("Actor "..actor:getActorNumber().." gotten inflation request. New value: "..self._inflation)
     if oldAmount < self:getInflationThreshold() and self._inflation >= self:getInflationThreshold() then
-        actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+        actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives())
         self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to show inflated belly sprite.")
     end
 end
 
 --- Gradually drecreases level of inflation
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Climax:inflationDrip(dt)
     self._dripTimer = math.max(0, self._dripTimer - dt)
 
@@ -511,15 +531,15 @@ function Sexbound.Actor.Climax:inflationDrip(dt)
             self._inflation = math.max(0, self._inflation - util.randomInRange(self:getDripRate()) * dt)
             self:getLog():debug("Actor "..actor:getActorNumber().." dripping. New amount: "..self._inflation)
             if oldAmount >= self:getInflationThreshold() and self._inflation < self:getInflationThreshold() then
-                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives(actor:getActorNumber()))
+                actor:resetParts(actor:getAnimationState(), actor:getSpecies(), actor:getGender(), actor:resetDirectives())
                 self:getLog():debug("Actor "..actor:getActorNumber().." passing threshold - reseting actor to hide inflated belly sprite.")
             end
-            
+
             if self._config.enableClimaxParticles then
                 animator.burstParticleEmitter("insemination-drip" .. actor:getActorNumber())
             end
         end
-        
+
         self._dripTimer = math.min(2, 1 / self._inflation ^ self:getDripSpeed())
     end
 end
@@ -529,7 +549,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
     local entityType = self:getParent():getEntityType()
     local containsPlayer = false
     local playerControl = false
-    
+
     if entityType == "player" and not self._parent:getStatus():hasOneOf({"sexbound_defeated", "autoClimax"}) then return end
     for _, actor in ipairs(self:getParent():getParent():getActors()) do
         if actor:getActorNumber() ~= self:getParent():getActorNumber() then
@@ -537,7 +557,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
             if not actor:getStatus():hasOneOf({"sexbound_defeated", "autoClimax"}) then playerControl = true end
         end
     end
-    
+
     if self._config.prioritizePlayer and containsPlayer and playerControl then
         -- Prevent auto climax if we have a player and that player is in control (not raped as part of sexbound defeat)
         return
@@ -563,7 +583,7 @@ function Sexbound.Actor.Climax:tryAutoClimax()
 
             for _, actor in ipairs(self:getParent():getParent():getActors()) do
                 if actor:getActorNumber() ~= self:getParent():getActorNumber() and actor:getEntityType() ~= "player" then
-                    local plug = actor:getPlugins("climax")
+                    local plug = actor:getPlugins("climax") --[[@as Sexbound.Actor.Climax]]
                     if plug and plug:getCurrentPoints() >= (plug:getThreshold() * 0.8) then
                         plug:beginClimax()
                         plug:refreshClimaxThreshold()
@@ -575,69 +595,85 @@ function Sexbound.Actor.Climax:tryAutoClimax()
 end
 
 --- Returns the simultaneous climax chance
+--- @return number # The defined probability of a simultaneous climax
 function Sexbound.Actor.Climax:getClimaxChainChance()
     return self._config.nonPlayerClimaxChainChance or 0.33
 end
 
---- Returns a reference to the cooldown.
+--- Returns the current shot cooldown.
+--- @return number # The current show cooldown
 function Sexbound.Actor.Climax:getCooldown()
-    return self._cooldown or self:refreshCooldown()
+    return self._cooldown or self:refreshCooldown(false)
 end
 
---- Returns a reference to this actor's default climax decrease.
+--- Returns this actor's default climax decrease.
+--- @return table<integer, number> # The default range of climax point decrease
 function Sexbound.Actor.Climax:getDefaultDecrease()
     return self._config.defaultDecrease or {0.1, 0.25}
 end
 
+--- Returns this actor's climax drain multiplier
+--- @return integer # The climax drain multiplier
 function Sexbound.Actor.Climax:getDrainMultiplier()
     return self._config.drainMultiplier or 10
 end
 
---- Returns a reference to this actor's default climax increase.
+--- Returns this actor's default climax increase.
+--- @return number # The default climax increase
 function Sexbound.Actor.Climax:getDefaultIncrease()
     return self._config.defaultIncrease or 0.5
 end
 
 --- Returns the min possible climax points.
+--- @return number # The minimum amount of climax points
 function Sexbound.Actor.Climax:getMinPoints()
     return self._config.minPoints or 0
 end
 
+--- Returns the current climax points
+--- @return number # The current climax points
 function Sexbound.Actor.Climax:getCurrentPoints()
-    return self._config.currentPoints
+    return self._config.currentPoints or 0
 end
 
 --- Returns the max possible climax points.
+--- @return number # The maximum amount of climax points
 function Sexbound.Actor.Climax:getMaxPoints()
     return self._config.maxPoints or 100
 end
 
 --- Returns the belly inflation rate
+--- @return number # The cum inflation rate
 function Sexbound.Actor.Climax:getInflationRate()
     return self._config.inflationRate or 0.1
 end
 
 --- Returns the belly inflation threshold
+--- @return number # The cum inflation threshold before showing an inflated belly
 function Sexbound.Actor.Climax:getInflationThreshold()
     return self._config.inflationThreshold or 7.5
 end
 
 --- Returns the forced dripping threshold
+--- @return number # The threshold at which dripping is forced
 function Sexbound.Actor.Climax:getForcedDripThreshold()
     return self._config.forcedDripThreshold or 8.5
 end
 
----Returns the inflation drip rate
+--- Returns the inflation drip rate range
+--- @return table<integer, number> # The inflation drip rate range
 function Sexbound.Actor.Climax:getDripRate()
     return self._config.dripRate or {0.2, 0.3}
 end
 
---- Returns the inflation drip speed modifier
+--- Returns the inflation drip speed multiplier
+--- @return number # The inflation drip speed multiplier
 function Sexbound.Actor.Climax:getDripSpeed()
     return self._config.dripSpeed or 1.5
 end
 
 --- Returns the current inflation level offsetted by pregnancy
+--- @return number # The numeric inflation value including actual pregnancy
 function Sexbound.Actor.Climax:getAdjustedInflation()
     local val = self._inflation
     if self:getParent():isVisiblyPregnant() then
@@ -646,18 +682,21 @@ function Sexbound.Actor.Climax:getAdjustedInflation()
     return val
 end
 
---- Returns whether or not dripping can currently occur
+--- Returns whethere or not dripping can currently occur
+--- @return boolean # Whethere or not dripping can occur
 function Sexbound.Actor.Climax:canDrip()
     return not self._parent:hasInteractionType("direct") or self:getAdjustedInflation() > self:getForcedDripThreshold()
 end
 
---- Returns whether or not this actor is currently inflated
+--- Returns whethere or not this actor is currently inflated
+--- @return boolean # Whethere or not this actor is inflated
 function Sexbound.Actor.Climax:isInflated()
     return self._inflation >= self:getInflationThreshold()
 end
 
 --- Returns a sound effect by specifed name or the table of sound effects.
--- @param name
+--- @param name string? Sound effect name
+--- @return table? # The sound data for the requested name or the list of all sounds if none requested
 function Sexbound.Actor.Climax:getSoundEffects(name)
     if name ~= nil then
         return self._soundEffects[name]
@@ -666,39 +705,44 @@ function Sexbound.Actor.Climax:getSoundEffects(name)
 end
 
 --- Sets the current sound effects to a new table of sounds.
--- @param name
--- @param newSounds a table of sound names.
+--- @param name string Sound effect name
+--- @param newSounds table A table of sound names.
+--- @return table # The freshly set table for verification purposes
 function Sexbound.Actor.Climax:setSoundEffects(name, newSounds)
     self._soundEffects[name] = newSounds or {}
-    return self:getSoundEffects(name)
+    return self:getSoundEffects(name) --[[@as table]]
 end
 
----Returns a reference to the actor's climax threshold.
+--- Returns a reference to the actor's climax threshold.
+--- @return number # The defined auto-climax threshold
 function Sexbound.Actor.Climax:getThreshold()
     return self._config.threshold or 50
 end
 
 --- Returns a timer by specified name of the table timers.
--- @param name
+--- @param name string The timer's name
+--- @return table<string, number>|number # The requested timer value or list of all timer values
 function Sexbound.Actor.Climax:getTimer(name)
     if name ~= nil then
-        return self._timer[name]
+        return self._timer[name] or 0
     end
 
     return self._timer
 end
 
 --- Sets a specified value to a specified name in the timer table.
--- @param name
--- @param newValue
+--- @param name string The timer's name
+--- @param newValue number The new value
+--- @return number # The timer's new value for verification purposes
 function Sexbound.Actor.Climax:setTimer(name, newValue)
     self._timer[name] = newValue
-    return self:getTimer(name)
+    return self:getTimer(name) --[[@as number]]
 end
 
 --- Adds a specifed operand amount to the specified timer name.
--- @param name
--- @param operand
+--- @param name string The timer's name
+--- @param operand number The value to add
+--- @return number # The timer's new value
 function Sexbound.Actor.Climax:addTimer(name, operand)
     if self._timer[name] ~= nil then
         self._timer[name] = self._timer[name] + operand

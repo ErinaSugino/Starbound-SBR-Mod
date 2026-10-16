@@ -16,13 +16,14 @@ function clear()
   local entityId = self.containerEntityId or pane.containerEntityId()
 
   local contents = world.containerItems(entityId)
-  
+  if contents == nil then return end
+
   for i=1,2 do
     if contents[i] then
       player.giveItem(contents[i])
     end
   end
-  
+
   world.containerTakeAll(entityId)
 end
 
@@ -30,7 +31,7 @@ function craft()
   promises:add(world.sendEntityMessage(pane.containerEntityId(), "craft", {playerId = player.id()}), function(result)
     if result == "pass" then
       self.isCrafting = true
-    
+
       pane.dismiss()
     else
       if result == "busy" then

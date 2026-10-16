@@ -16,13 +16,14 @@ function clear()
   local entityId = self.containerEntityId or pane.containerEntityId()
 
   local contents = world.containerItems(entityId)
-  
+  if contents == nil then return end
+
   for i=1,2 do
     if contents[i] then
       player.giveItem(contents[i])
     end
   end
-  
+
   world.containerTakeAll(entityId)
 end
 

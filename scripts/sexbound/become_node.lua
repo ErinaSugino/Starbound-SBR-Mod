@@ -1,7 +1,9 @@
+--- @todo Remove nodes
+
 require "/scripts/sexbound/v2/api.lua"
 
 function init()
-    Sexbound.API.init()
+    Sexbound.API.init(1)
     Sexbound.API.Nodes.becomeNode(config.getParameter("sitPosition", {0, 20}))
 end
 

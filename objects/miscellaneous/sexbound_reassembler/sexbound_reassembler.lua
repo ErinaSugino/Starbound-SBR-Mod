@@ -10,14 +10,15 @@ end
 
 function checkIngredients()
   local contents = world.containerItems(entity.id())
-  
+  if contents == nil then contents = {} end
+
   if contents[1] and contents[1].name and self.ingredients[contents[1].name] ~= nil then
     self.ingredients[contents[1].name] = true
 	amounttoprint = contents[1].count or 0
   end
-  
-  return self.ingredients.sexbound_sexbox or 
-  self.ingredients.sexbound_dildo_v2 or 
+
+  return self.ingredients.sexbound_sexbox or
+  self.ingredients.sexbound_dildo_v2 or
   self.ingredients.sexbound_fleshlight_v2 or
   self.ingredients.sexbound_tentacleplant_v2 or
   self.ingredients.sexbound_keystoneE or

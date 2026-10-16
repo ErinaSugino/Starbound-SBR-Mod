@@ -4,6 +4,8 @@ end
 
 DefaultSmashObjectUseCaseFactory = {}
 
-function DefaultSmashObjectUseCaseFactory.make()
+--- Make SmashObject but abstract
+--- @return Sexbound.SmashObject
+function DefaultSmashObjectUseCaseFactory.make(smash)
     return Sexbound.SmashObject:new(smash)
 end

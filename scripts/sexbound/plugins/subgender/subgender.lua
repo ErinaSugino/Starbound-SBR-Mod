@@ -1,19 +1,22 @@
---- Sexbound.Actor.Subgender Class Module.
--- @classmod Sexbound.Actor.Subgender
--- @author Erina Sugino
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
 end
 
+--- Sexbound.Actor.Subgender Class Module.
+--- @class Sexbound.Actor.Subgender: Sexbound.Actor.Plugin
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _previousSxbGender string?
+--- @field _genderOrder table<integer, string>
 Sexbound.Actor.Subgender = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.Subgender_mt = {
     __index = Sexbound.Actor.Subgender
 }
 
 --- Instantiates a new instance of Subgender.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The subgender config
+--- @return Sexbound.Actor.Subgender
 function Sexbound.Actor.Subgender:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "SUBG",
@@ -37,7 +40,7 @@ function Sexbound.Actor.Subgender:new(parent, config)
 end
 
 --- Handles message events.
--- @param message
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Subgender:onMessage(message)
     if message:getType() == "Sexbound:Status:AddStatus" then
         self:handleAddStatus(message)
@@ -49,7 +52,7 @@ function Sexbound.Actor.Subgender:onMessage(message)
 end
 
 --- Handles 'AddStatus' message event
--- @params message
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Subgender:handleAddStatus(message)
     local statusName = message:getData()
     local gender = self:getParent():getGender()
@@ -71,7 +74,7 @@ function Sexbound.Actor.Subgender:handleAddStatus(message)
 end
 
 --- Handles 'RemoveStatus' message event
--- @params message
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Subgender:handleRemoveStatus(message)
     local statusName = message:getData()
     local gender = self:getParent():getGender()
@@ -93,6 +96,7 @@ function Sexbound.Actor.Subgender:handleRemoveStatus(message)
 end
 
 --- Overrides the sxbSubGender identity of this actor to be a given subgender
+--- @param subgender string The new subgender to apply
 function Sexbound.Actor.Subgender:replaceSxbSubGender(subgender)
     local identity = self:getParent():getIdentity()
     identity.sxbSubGender = subgender
@@ -108,8 +112,9 @@ function Sexbound.Actor.Subgender:replaceSxbSubGender(subgender)
 end
 
 --- Restores the sxbSubGender identity of this actor to be the previous value
+--- @param subgender string The subgender remove from the stack
 function Sexbound.Actor.Subgender:removeSxbSubGender(subgender)
-    local identity = self:getParent():getIdentity()
+    local identity = self:getParent():getIdentity() --[[@as table<string, any>]]
     local nextGender = nil
     -- Efficient remove all x & keep last entry loop
     local j,n = 1,#self._genderOrder
@@ -128,11 +133,16 @@ function Sexbound.Actor.Subgender:removeSxbSubGender(subgender)
 end
 
 --- Returns the subgender set for a status effect name - or nil if non set
+--- @param statusName string The status name to check
+--- @return table<integer,string>? The sub-genders assigned to this status effect, if at all
 function Sexbound.Actor.Subgender:getDefinedGender(statusName)
     return self:getConfig().statuseffects[statusName]
 end
 
 --- Returns if the given gender is the required gender for a given subgender
+--- @param subgender string The sub-gender to check against
+--- @param gender string The vanilla gender to compare
+--- @return boolean # Whethere or not the gender is required
 function Sexbound.Actor.Subgender:passesGenderRestriction(subgender, gender)
     if subgender == nil then return true end
     local targetGender = self:getConfig().genderLimitations[subgender]
@@ -144,7 +154,7 @@ end
 function Sexbound.Actor.Subgender:verifyBaseGender()
     local subgender = self:getParent():getSubGender()
     local gender = self:getParent():getGender()
-    
+
     if not self:passesGenderRestriction(subgender, gender) then
         self:getParent():getIdentity().sxbSubGender = nil
         self:getLog():warn(self:getParent():getName().."'s base sub-gender "..tostring(subgender).." doesn't meet gender requirements, discarding!")
@@ -166,6 +176,6 @@ function Sexbound.Actor.Subgender:initialCheck()
             end
         end
     end
-    
+
     self:getParent():getParent():resetAllActors()
 end

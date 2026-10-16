@@ -1,19 +1,24 @@
---- Sexbound.Actor.Moan Class Module.
--- @classmod Sexbound.Actor.Moan
--- @author Locuturus
--- @license GNU General Public License v3.0
 if not SXB_RUN_TESTS then
     require("/scripts/sexbound/lib/sexbound/actor/plugin.lua")
 end
 
+--- Sexbound.Actor.Moan Class Module.
+--- @class Sexbound.Actor.Moan: Sexbound.Actor.Plugin
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field _isActive boolean
+--- @field _soundConfig table
+--- @field _timers? table
+--- @field _intervals? table
 Sexbound.Actor.Moan = Sexbound.Actor.Plugin:new()
 Sexbound.Actor.Moan_mt = {
     __index = Sexbound.Actor.Moan
 }
 
 --- Instantiates a new instance of Moan.
--- @param parent
--- @param config
+--- @param parent Sexbound.Actor The calling parent actor instance
+--- @param config table The plugin's config
 function Sexbound.Actor.Moan:new(parent, config)
     local _self = setmetatable({
         _logPrefix = "MOAN",
@@ -33,6 +38,8 @@ function Sexbound.Actor.Moan:new(parent, config)
     return _self
 end
 
+--- Message handler
+--- @param message Sexbound.Message The received message
 function Sexbound.Actor.Moan:onMessage(message)
     if message:isType("Sexbound:Positions:SwitchPosition") or message:isType("Sexbound:SwitchRoles") then
         local stateName = self:getParent():getParent():getStateMachine():stateDesc()
@@ -40,16 +47,21 @@ function Sexbound.Actor.Moan:onMessage(message)
     end
 end
 
+--- Creates a new timer
+--- @param name string The timer's name
 function Sexbound.Actor.Moan:createNewTimer(name)
     self._timers = self._timers or {}
     self._timers[name] = 0
 end
 
+--- Creates a new interval
+--- @param name string The interval's name
 function Sexbound.Actor.Moan:createNewInterval(name)
     self._intervals = self._intervals or {}
     self._intervals[name] = 0
 end
 
+--- Loads sound pool configuration for sex moans
 function Sexbound.Actor.Moan:loadMoanSoundEffectsIntoSoundPool()
     if not self:isMoanSoundsEnabled() then
         return
@@ -57,6 +69,7 @@ function Sexbound.Actor.Moan:loadMoanSoundEffectsIntoSoundPool()
     self:tryLoadingSoundEffectsIntoSoundPool("moan", self._soundConfig.moan.soundEffects)
 end
 
+--- Loads sound pool configuration for orgasm moans
 function Sexbound.Actor.Moan:loadOrgasmSoundEffectsIntoSoundPool()
     if not self:isOrgasmSoundsEnabled() then
         return
@@ -64,6 +77,9 @@ function Sexbound.Actor.Moan:loadOrgasmSoundEffectsIntoSoundPool()
     self:tryLoadingSoundEffectsIntoSoundPool("orgasm", self._soundConfig.orgasm.soundEffects)
 end
 
+--- Converts single value into range table
+--- @param value any The value in question
+--- @return table? # The range table or nil
 function Sexbound.Actor.Moan:convertToTable(value)
     local valueType = type(value)
     if valueType == "table" or valueType == "nil" then
@@ -72,6 +88,7 @@ function Sexbound.Actor.Moan:convertToTable(value)
     return {value, value}
 end
 
+--- Initializes moan sound config file
 function Sexbound.Actor.Moan:initMoanSoundConfig()
     if not self:isMoanSoundsEnabled() then
         return
@@ -110,6 +127,7 @@ function Sexbound.Actor.Moan:initMoanSoundConfig()
     self:createNewInterval(name)
 end
 
+--- Initializes orgasm sound config file
 function Sexbound.Actor.Moan:initOrgasmSoundConfig()
     if not self:isOrgasmSoundsEnabled() then
         return
@@ -148,6 +166,9 @@ function Sexbound.Actor.Moan:initOrgasmSoundConfig()
     self:createNewInterval(name)
 end
 
+--- Safely tries to apply sound pool configuration
+--- @param name string Type of sound pool to load
+--- @param soundEffects table<integer, string> The list of sound file paths
 function Sexbound.Actor.Moan:tryLoadingSoundEffectsIntoSoundPool(name, soundEffects)
     local soundPoolName = self:getParent():getRole() .. name
     if not animator.hasSound(soundPoolName) then
@@ -156,11 +177,17 @@ function Sexbound.Actor.Moan:tryLoadingSoundEffectsIntoSoundPool(name, soundEffe
     animator.setSoundPool(soundPoolName, soundEffects)
 end
 
+--- Returns the defined default sound config
+--- @param name string The type of sound
+--- @return table<string, any>? # The default sound config
 function Sexbound.Actor.Moan:getDefaultSoundConfigFromConfigFile(name)
     local gender = self:getParent():getGender()
     return self:getConfig()[name].soundConfig.default[gender] or nil
 end
 
+--- Returns a given sound config
+--- @param name string The type of sound
+--- @return table<string, any>? # The sound config for this actor
 function Sexbound.Actor.Moan:getDefinedSoundConfigFromConfigFile(name)
     local species = self:getParent():getSpecies()
     local gender = self:getParent():getGender()
@@ -169,14 +196,19 @@ function Sexbound.Actor.Moan:getDefinedSoundConfigFromConfigFile(name)
     return soundConfig[gender] or nil
 end
 
+--- Returns whethere or not moaning is enebled
+--- @return boolean # Whethere or not moaning is enabled
 function Sexbound.Actor.Moan:isMoanSoundsEnabled()
     return self:getIsEnabled("moan")
 end
 
+--- Returns whethere or not orgasm moaning is enebled
+--- @return boolean # Whethere or not orgasm moaning is enabled
 function Sexbound.Actor.Moan:isOrgasmSoundsEnabled()
     return self:getIsEnabled("orgasm")
 end
 
+--- State enter handler for climax state
 function Sexbound.Actor.Moan:onEnterClimaxState()
     self:processIsActive("climaxState")
 
@@ -189,8 +221,8 @@ function Sexbound.Actor.Moan:onEnterClimaxState()
     self:playSound("orgasm")
 end
 
---- Called each time the actor updates the ClimaxState
--- @param dt
+--- Called each tick while in climax state
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Moan:onUpdateClimaxState(dt)
     if not self:getIsEnabled("orgasm") or not self._isActive then
         return
@@ -199,7 +231,7 @@ function Sexbound.Actor.Moan:onUpdateClimaxState(dt)
     self:tryPlaySound("orgasm", dt)
 end
 
---- Called when the actor enters the SexState
+--- State enter handler for sex state
 function Sexbound.Actor.Moan:onEnterSexState()
     self:processIsActive("sexState")
 
@@ -212,6 +244,8 @@ function Sexbound.Actor.Moan:onEnterSexState()
     self:refreshInterval("moan")
 end
 
+--- Called each tick while in sex state
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Moan:onUpdateSexState(dt)
     if not self:getIsEnabled("moan") or not self._isActive then
         return
@@ -221,8 +255,8 @@ function Sexbound.Actor.Moan:onUpdateSexState(dt)
 end
 
 --- Updates sfx timer and plays sfx when the time is right.
--- @param name
--- @param dt
+--- @param name string The category of sound
+--- @param dt number The delta time since last tick
 function Sexbound.Actor.Moan:tryPlaySound(name, dt)
     self:addToTimer(name, dt)
 
@@ -240,7 +274,7 @@ function Sexbound.Actor.Moan:tryPlaySound(name, dt)
 end
 
 --- Plays a sound effect from specified sound pool.
--- @param name
+--- @param name string Sound category
 function Sexbound.Actor.Moan:playSound(name)
     -- Send message to emote plugin to have the actor update its emote
     Sexbound.Messenger.get("main"):send(self, self:getPlugin("emote"), "Sexbound:Emote:ChangeEmote", "moan")
@@ -264,7 +298,7 @@ function Sexbound.Actor.Moan:playSound(name)
 end
 
 --- Stops sounds from playing from specified pool name
--- @param name
+--- @param name string Sound category
 function Sexbound.Actor.Moan:stopSound(name)
     if not self._soundConfig[name] then
         return
@@ -280,7 +314,7 @@ function Sexbound.Actor.Moan:stopSound(name)
 end
 
 --- Checks the current position settings to set this plugin as active or not
--- @param[opt] stateName
+--- @param stateName string? Name of animation state
 function Sexbound.Actor.Moan:processIsActive(stateName)
     local actor = self:getParent()
 
@@ -292,7 +326,7 @@ function Sexbound.Actor.Moan:processIsActive(stateName)
 end
 
 --- Refreshes the sfx interval for a specified sound config
--- @param name
+--- @param name string Sound category
 function Sexbound.Actor.Moan:refreshInterval(name)
     if not self._soundConfig[name] then
         return
@@ -302,39 +336,43 @@ function Sexbound.Actor.Moan:refreshInterval(name)
 end
 
 --- Returns the current value of a specified sfx interval
--- @param name
--- @return a number value
+--- @param name string Sound category
+--- @return number # Defined interval
 function Sexbound.Actor.Moan:getInterval(name)
     if name then
-        return self._intervals[name]
+        return self._intervals[name] or 0
     end
+
+    return 0
 end
 
 --- Returns the current value of a specified sfx enabled status
--- @param name
--- @return a boolean value
+--- @param name string Sound category
+--- @return boolean # Whethere or not sound category is enabled
 function Sexbound.Actor.Moan:getIsEnabled(name)
     return self._config[name].enabled
 end
 
 --- Adds a specified amount to a specified sfx timer
--- @param name
--- @param amount
+--- @param name string Sound category
+--- @param amount number # The time to add
 function Sexbound.Actor.Moan:addToTimer(name, amount)
-    self._timers[name] = self._timers[name] + amount
+    self._timers[name] = (self._timers[name] or 0) + amount
 end
 
 --- Returns the current value of a specified sfx timer
--- @param name
--- @return a number value
+--- @param name string Sound category
+--- @return number # The remaining time in the timer
 function Sexbound.Actor.Moan:getTimer(name)
     if name then
-        return self._timers[name]
+        return self._timers[name] or 0
     end
+
+    return 0
 end
 
 --- Resets a specified sfx timer
--- @param name
+--- @param name string Sound category
 function Sexbound.Actor.Moan:resetTimer(name)
     self._timers[name] = 0
 end

@@ -1,7 +1,14 @@
---- Sexbound.Player Module.
--- @module Sexbound.Player
 require "/scripts/sexbound/override/common.lua"
 
+--- Sexbound.Player Module.
+--- @class Sexbound.Player: Sexbound.Common
+--- @author Locuturus
+--- @author Erina Sugino
+--- @license GNU General Public License v3.0
+--- @field private _startItemsList table<integer, {name: string}>
+--- @field _isSterilized boolean
+--- @field _isInfertile boolean
+--- @field _legal Sexbound.Player.Legal
 Sexbound.Player = Sexbound.Common:new()
 Sexbound.Player_mt = {
     __index = Sexbound.Player
@@ -61,10 +68,12 @@ function recruitSpawner:respawnRecruit(uuid, recruit)
   recruit.storage = recruit.storage or {}
   recruit.storage.followingOwner = false
   recruit.storage.behaviorFollowing = false
-  
+
   recruit:spawn()
 end
 
+--- Creates new player entity manager instance
+--- @return Sexbound.Player # The newly created player entity manager instance
 function Sexbound.Player.new()
     local self = setmetatable({
         _controllerId = nil,
@@ -113,7 +122,7 @@ function Sexbound.Player.new()
     if not storage.sexboundConfig.hasGivenStartItems then
         storage.sexboundConfig.hasGivenStartItems = self:giveStartItems()
     end
-    
+
     -- Add event handler to first time pregnancy event
     self._statistics:addEventHandler("pregnancyCount", function() player.giveItem("sexbound_pregnancy-codex") end, true)
 
@@ -122,19 +131,19 @@ function Sexbound.Player.new()
 
     -- Load StateMachine
     self._stateMachine = self:helper_loadStateMachine()
-    
+
     self._isSterilized = self._status:hasStatus("sterilized")
     self._isInfertile = self._status:hasStatus("infertile")
-    
+
     self._hasInited = true
     self:updateTraitEffects()
-    
+
     if self:canLog("debug") then
         sb.logInfo("Player #"..entity.id().." has innate status list:")
-        sb.logInfo(self:dump(self._status:getStatusList()))
-        sb.logInfo(self:dump(storage.sexbound.identity.sxbNaturalStatus))
+        sb.logInfo(Sexbound.Util.dump(self._status:getStatusList()))
+        sb.logInfo(Sexbound.Util.dump(storage.sexbound.identity.sxbNaturalStatus))
     end
-    
+
     -- Setup event listeners to notify player about changes to the sterilization status
     self._status:addEventListener("add", function(data) self:notifySterilizationChange(data) end)
     self._status:addEventListener("remove", function(data) self:notifySterilizationChange(data) end)
@@ -144,8 +153,9 @@ function Sexbound.Player.new()
     return self
 end
 
--- [Helper] Loads the stateMachine
--- See state definitions at the bottom of the script
+--- [Helper] Loads the stateMachine
+--- @private
+--- @return table # The vanilla state meachine
 function Sexbound.Player:helper_loadStateMachine()
     self._stateDefinitions = {
         defaultState = self:defineStateDefaultState(),
@@ -155,34 +165,24 @@ function Sexbound.Player:helper_loadStateMachine()
     return stateMachine.create(self._states, self._stateDefinitions)
 end
 
---- Updates the Player
--- @param dt
+--- Function called each tick to update timers
+--- @param dt number The delta time since last tick
 function Sexbound.Player:update(dt)
     -- Update the legal verification system
     self._legal:update(dt)
 
     -- Update the Player's Statemachine
-    self._stateMachine.update(dt)
+    self._stateMachine.update(dt);
 
     -- Only the Player needs to update pregnancy via script. NPCs and Monsters update via AI.
-    self._pregnant:update(dt)
-    
+    (self._pregnant --[[@as Sexbound.Player.Pregnant]]):update(dt)
+
     -- Update the player's arousal module, as they, too, now can get horny
     self._arousal:update(dt)
 end
 
-function Sexbound.Player:handleEnterClimaxState(args)
-    return
-end
-
-function Sexbound.Player:handleEnterIdleState(args)
-    -- Nothing
-end
-
-function Sexbound.Player:handleEnterSexState(args)
-    -- Nothing
-end
-
+--- Message handler for lounge command
+--- @param args table Lounging data
 function Sexbound.Player:handleLounge(args)
     self._loungeId = args.loungeId
 
@@ -190,6 +190,8 @@ function Sexbound.Player:handleLounge(args)
     player.lounge(self._loungeId, 0)
 end
 
+--- Spawns Sexbound starting items
+--- @return boolean # Whethere or not player received the items
 function Sexbound.Player:giveStartItems()
     -- Attempt to cycle through and give the player one of each start item
     for _, _item in ipairs(self._startItemsList) do
@@ -208,11 +210,13 @@ function Sexbound.Player:giveStartItems()
     return true
 end
 
-function Sexbound.Player:handleShowCustomizerUI(args)
-    return self:showCustomizerUI(args)
+--- Message handler for item triggering customizer UI open
+function Sexbound.Player:handleShowCustomizerUI(_)
+    self:showCustomizerUI()
 end
 
-function Sexbound.Player:showCustomizerUI(args)
+--- Opens customizer UI script pane
+function Sexbound.Player:showCustomizerUI()
     -- Check if player.interact is a function because some previous version of starbound did not implement it
     if "function" ~= type(player.interact) then return end
     xpcall(function()
@@ -224,7 +228,9 @@ function Sexbound.Player:showCustomizerUI(args)
     end)
 end
 
-function Sexbound.Player:handleGetCutomizerData(args)
+--- Message handler for customizer UI getting entity data
+--- @return table # Customizer data
+function Sexbound.Player:handleGetCutomizerData(_)
     local _loadedConfig = {}
     _loadedConfig.statistics = self:getStatistics():getStatistics()
     _loadedConfig.currentGender = self._subGender._currentGender
@@ -235,14 +241,20 @@ function Sexbound.Player:handleGetCutomizerData(args)
     return _loadedConfig
 end
 
-function Sexbound.Player:handleDismissUI(args)
+--- Message handler for trying to close the Sex UI? Which only returns if the status is already gone?
+--- @return boolean # Whethere or not the sex status effect is gone
+function Sexbound.Player:handleDismissUI(_)
     return not status.statusProperty("sexbound_sex")
 end
 
+--- Message handler for sexnode actor opening Sex UI
+--- @param args table UI config data
 function Sexbound.Player:handleShowUI(args)
-    return self:showUI(args.config)
+    self:showUI(args.config)
 end
 
+--- Opens the Sex UI
+--- @param config table Sexnode-sided UI data
 function Sexbound.Player:showUI(config)
     -- Check if player.interact is a function because some previous version of starbound did not implement it
     if "function" ~= type(player.interact) then return end
@@ -253,6 +265,8 @@ function Sexbound.Player:showUI(config)
     player.interact("ScriptPane", config, config.config.controllerId or player.id())
 end
 
+--- Message handler for sexnode actor storage being restored
+--- @param args table # The provided data
 function Sexbound.Player:handleRestore(args)
     if args then
         self:mergeStorage(args)
@@ -261,6 +275,7 @@ function Sexbound.Player:handleRestore(args)
     self:restore()
 end
 
+--- Restore this monster entity
 function Sexbound.Player:restore()
     self._isHavingSex = false
 
@@ -275,10 +290,15 @@ function Sexbound.Player:restore()
     status.setStatusProperty("sexbound_stun", false)
 end
 
-function Sexbound.Player:handleRetrieveConfig(args)
+--- Message handler for sexnode actor requesting sexboundConfig data from this entity
+--- @return any # Nothing for players
+function Sexbound.Player:handleRetrieveConfig(_)
     return nil
 end
 
+--- Message handler for sexnode actor requesting entity's persistent storage data
+--- @param args table? Potentially provided arguments for retrieving a specific name from storage
+--- @return any # Whatever the requested storage parameter is, if it exists, or the entire storage
 function Sexbound.Player:handleRetrieveStorage(args)
     if args and args.name then
         return storage[args.name]
@@ -287,17 +307,19 @@ function Sexbound.Player:handleRetrieveStorage(args)
     return storage
 end
 
+--- Creates and send a notification message about sterilization state change
+--- @param data table The status effect change message
 function Sexbound.Player:notifySterilizationChange(data)
     if data.name ~= "sterilized" then return end
-    
+
     local notifications = self:getNotifications() or {}
     notifications = notifications.events or {}
     notifications = notifications.sterilize or {}
-    
+
     local sterilized = data.query == "add"
-    sterilized = tostring(sterilized)
-    
-    local text = notifications[sterilized]
+    local sterilizedText = tostring(sterilized)
+
+    local text = notifications[sterilizedText]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
             messageId = "sexbound_sterilization",
@@ -305,22 +327,24 @@ function Sexbound.Player:notifySterilizationChange(data)
             text = text
         })
     end
-    
+
     self._isSterilized = sterilized
     if sterilized then status.removeEphemeralEffect("sexbound_custom_ovulating") end -- Remove ovulation cycle effect when sterilized
 end
 
+--- Creates and send a notification message about infertility state change
+--- @param data table The status effect change message
 function Sexbound.Player:notifyInfertileChange(data)
     if data.name ~= "infertile" then return end
-    
+
     local notifications = self:getNotifications() or {}
     notifications = notifications.events or {}
     notifications = notifications.infertility or {}
-    
+
     local infertile = data.query == "add"
-    infertile = tostring(infertile)
-    
-    local text = notifications[infertile]
+    local infertileText = tostring(infertile)
+
+    local text = notifications[infertileText]
     if text then
         world.sendEntityMessage(entity.id(), "queueRadioMessage", {
             messageId = "sexbound_infertility",
@@ -328,21 +352,28 @@ function Sexbound.Player:notifyInfertileChange(data)
             text = text
         })
     end
-    
+
     self._isInfertile = infertile
     if infertile then status.removeEphemeralEffect("sexbound_custom_ovulating") end -- Remove ovulation cycle effect when infertile
 end
 
+--- Message handler for sexnode actor syncing persistent storage data
+--- @param newData table # The sync data
 function Sexbound.Player:handleSyncStorage(newData)
     newData = self:fixPregnancyData(newData)
     storage = util.mergeTable(storage, newData or {})
 end
 
+--- Message handler for sex UI syncing POV settings
+--- @param newSettings table New settings data
 function Sexbound.Player:handleSyncSettings(newSettings)
     storage.sexbound = storage.sexbound or {}
     storage.sexbound.uiLayers = newSettings
 end
 
+--- Fixes pregnancy data to be a numeric array to prevent Starbound schenanigans
+--- @param data table The storage data
+--- @return table # The fixed storage data
 function Sexbound.Player:fixPregnancyData(data)
     if type(data.sexbound.pregnant) ~= "table" then data.sexbound.pregnant = {} end
     if isEmpty(data.sexbound.pregnant) then return data end
@@ -353,11 +384,12 @@ function Sexbound.Player:fixPregnancyData(data)
         count = count + 1
         table.insert(filteredData, count, v)
     end
-    
+
     data.sexbound.pregnant = filteredData
     return data
 end
 
+--- Sets up entity message handlers
 function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Actor:Restore", function(_, _, args)
         return self:handleRestore(args)
@@ -369,7 +401,10 @@ function Sexbound.Player:initMessageHandlers()
         return self:handleRetrieveConfig(args)
     end)
     message.setHandler("Sexbound:ClimaxState:Enter", function(_, _, args)
-        return self:handleEnterClimaxState(args)
+        self._isClimaxing = true
+    end)
+    message.setHandler("Sexbound:ClimaxState:Exit", function(_, _, args)
+        self._isClimaxing = false
     end)
     message.setHandler("Sexbound:CustomizerUI:Show", function(_, _, args)
         return self:handleShowCustomizerUI(args)
@@ -380,14 +415,8 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Reward:Currency", function(_, _, args)
         return self:handleRewardCurrency(args)
     end)
-    message.setHandler("Sexbound:IdleState:Enter", function(_, _, args)
-        return self:handleEnterIdleState(args)
-    end)
     message.setHandler("Sexbound:Node:Lounge", function(_, _, args)
         return self:handleLounge(args)
-    end)
-    message.setHandler("Sexbound:SexState:Enter", function(_, _, args)
-        return self:handleEnterSexState(args)
     end)
     message.setHandler("Sexbound:Storage:Retrieve", function(_, _, args)
         return self:handleRetrieveStorage(args)
@@ -417,12 +446,12 @@ function Sexbound.Player:initMessageHandlers()
         mcontroller.setPosition({data.x, data.y})
         player.setLounging(data.id)
     end)
-    
+
     --- Simply try to forward fertility status updates to sexbound actor
     message.setHandler("Sexbound:Pregnant:AddStatus", function(_, _, args)
         local statusName = args
         if self._controllerId then world.sendEntityMessage(self._controllerId, "Sexbound:Pregnant:AddStatus", {id = entity.id(), effect = statusName}) end
-        
+
         if statusName == "sexbound_custom_hyper_fertility" then
             -- If hyper fertility pill, also set ovulation timer to 10 seconds. Yes, this pill is *that* powerful.
             if status.statusProperty("sexbound_custom_ovulating", false) then
@@ -444,7 +473,7 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Climax:Feed", function(_, _, args)
         if status.isResource("food") then status.giveResource("food", 0.1) end
     end)
-    
+
     --- Debug purposes
     message.setHandler("Sexbound:Debug:ResetStats", function(_, _, args)
         return self:debugResetStats()
@@ -458,19 +487,23 @@ function Sexbound.Player:initMessageHandlers()
     message.setHandler("Sexbound:Debug:ShowPregnancyDialog", function(_, _, args)
         local baby = storage.sexbound.pregnant[1]
         if baby == nil then sb.logWarn("Player is not pregnant") return end
-        self._pregnant:triggerActualPregnancy(baby)
+        (self._pregnant --[[@as Sexbound.Player.Pregnant]]):triggerActualPregnancy(baby)
     end)
     message.setHandler("Sexbound:Debug:Shrink", function(_, _, args)
         status.addEphemeralEffect("sexbound_kid")
     end)
 end
 
+--- Merges given table into persistent storage
+--- @param newData table? The data to merge
 function Sexbound.Player:mergeStorage(newData)
     storage = util.mergeTable(storage, newData or {})
 end
 
---- Setup the Player's actor data and send it to the lounge entity.
--- @param controllerId
+--- Starts actor setup, optionally with provided fixed parameters
+--- @param controllerId EntityId The entity id of the sexnode controller to talk to
+--- @param params table? Optional override parameters for the actor data
+--- @return boolean # Whethere or not setup was successful
 function Sexbound.Player:setup(controllerId, params)
     self._isHavingSex = true
 
@@ -492,8 +525,10 @@ function Sexbound.Player:setup(controllerId, params)
     return false
 end
 
--- Getters / Setters
+-- [[ Getters / Setters ]]
 
+--- Returns all data relevant to build a corresponding sexnode actor
+--- @return table? # The assembled actor data
 function Sexbound.Player:getActorData()
     local gender = player.gender()
     if self:canLog("debug") then sb.logInfo("Generating player actor "..player.id()) end
@@ -526,50 +561,23 @@ function Sexbound.Player:getActorData()
         aroused = status.statusProperty("sexbound_aroused", false),
         arousedStrong = status.statusProperty("sexbound_aroused_strong", false),
         inHeat = status.statusProperty("sexbound_aroused_heat", false),
+        --- @diagnostic disable-next-line: undefined-field
         isDefeated = self.sexboundDefeat and self.sexboundDefeat:isDefeated(),
         generationFertility = status.statusProperty("generationFertility", 1.0),
         fertilityPenalty = status.statusProperty("fertilityPenalty", 1.0)
     }
 end
 
--- Getters/Setters
-
-function Sexbound.Player:getApparel()
-    return self._apparel
-end
-function Sexbound.Player:getArousal()
-    return self._arousal
-end
-function Sexbound.Player:getClimax()
-    return self._climax
-end
-function Sexbound.Player:getControllerId()
-    return self._controllerId
-end
-function Sexbound.Player:getSubGender()
-    return self._subGender
-end
-function Sexbound.Player:getIdentity()
-    return self._identity
-end
+--- Returns the player legality manager instance
+--- @return Sexbound.Player.Legal # The player legality manager instance
 function Sexbound.Player:getLegal()
     return self._legal
 end
-function Sexbound.Player:getPregnant()
-    return self._pregnant
-end
-function Sexbound.Player:getStatistics()
-    return self._statistics
-end
-function Sexbound.Player:getTransform()
-    return self._transform
-end
-function Sexbound.Player:getStatus()
-    return self._status
-end
 
---- Legacy functions
+-- [[ Legacy functions ]]
 
+--- Message handler for "respawning" this entity
+--- @param args table The provided storage data
 function Sexbound.Player:handleRespawn(args)
     if args then
         self:mergeStorage(args)
@@ -578,17 +586,21 @@ function Sexbound.Player:handleRespawn(args)
     self:respawn()
 end
 
+--- Message handler for awarding passive income currency
+--- @param args table # Reward data
 function Sexbound.Player:handleRewardCurrency(args)
     player.addCurrency(args.currencyName, args.amount)
 end
 
+--- "Respawns" this entity
 function Sexbound.Player:respawn()
     self:restore()
 end
 
---- State Definitions
+-- [[ State Definitions]]
 
--- State Definition : defaultState
+--- Defines state machine states - default state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.Player:defineStateDefaultState()
     return {
         enter = function()
@@ -618,7 +630,8 @@ function Sexbound.Player:defineStateDefaultState()
     }
 end
 
--- State Definition : havingSexState
+--- Defines state machine states - havingSex state
+--- @return table<string, function> # The defined state handlers
 function Sexbound.Player:defineStateHavingSexState()
     return {
         enter = function()
@@ -679,10 +692,12 @@ function Sexbound.Player:defineStateHavingSexState()
     }
 end
 
+--- [DEBUG] Resets all sex statistics
 function Sexbound.Player:debugResetStats()
     storage.sexbound.statistics = {}
 end
 
+--- [DEBUG] Triggers the birthing animation flow
 function Sexbound.Player:debugBirthing()
     local oldCanTransform = self._transform._canTransform
     self._transform:setCanTransform(true)
@@ -701,12 +716,14 @@ function Sexbound.Player:debugBirthing()
     self._transform:setCanTransform(oldCanTransform)
 end
 
+--- [DEBUG] Ends the birthing animation flow
 function Sexbound.Player:debugEndBirthing()
     status.removeEphemeralEffect("sexbound_birthing")
     status.removeEphemeralEffect("sexbound_invisible")
     self._transform:smashSexNode()
 end
 
+--- Triggers the playing of configured sex music
 function Sexbound.Player:startSexMusic()
     local config = self:getConfig().sex
     if not config.useSexMusic then return end
@@ -717,7 +734,8 @@ function Sexbound.Player:startSexMusic()
     if controllerId then world.sendEntityMessage(controllerId, "Sexbound:Common:StartSexMusic", entity.id()) end
 end
 
-function Sexbound.Player:stopSexMusic(number)
+--- Triggers the stop of sex music
+function Sexbound.Player:stopSexMusic()
     local config = self:getConfig().sex
     if not config.useSexMusic then return end
     --world.sendEntityMessage(player.id(), "playAltMusic", {""}, 1) --Try to play a different, non existent song to reset progress of current song
@@ -726,10 +744,14 @@ function Sexbound.Player:stopSexMusic(number)
     if controllerId then world.sendEntityMessage(controllerId, "Sexbound:Common:StopSexMusic", entity.id()) end
 end
 
+--- Returns this entity's gender
+--- @return string # The player's gender
 function Sexbound.Player:getGender()
     return player.gender()
 end
 
+--- Returns this entity's species
+--- @return string # The player's species
 function Sexbound.Player:getSpecies()
     return player.species()
 end
