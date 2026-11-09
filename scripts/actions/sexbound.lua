@@ -374,7 +374,7 @@ function sortSexnodes(args, board)
         dt = coroutine.yield(nil, {list=list,entity=targetNode,data={controllers=controllers,nodeToController=nodeToController}})
     end
 
-    if (timeout <= 0 and self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
+    if timeout <= 0 and (self.sb_monster or self.sb_npc):canLog("behavior") then sb.logInfo("ASYNC TIMEOUT OF ENTITY #"..entity.id()) end
 
     local targetIndex = 0
     for j=1,#list do
@@ -649,7 +649,7 @@ end
 --- @param board table
 function loungeMultiSeat(args, board)
     local target = args.entity
-    local success = false
+    local success = true
     if target == nil then return false end
     if not npc.isLounging() or npc.loungingIn() ~= target then
         local seatCount = getObjectSeatCount(target)
@@ -667,11 +667,8 @@ end
 --- @return integer # The count of seat anchors
 function getObjectSeatCount(entityId)
     if not entityId or not world.entityExists(entityId) then return 1 end
-    local config = world.getObjectParameter(entityId, "orientations", {})
-    if not config or not config[1] then return 1 end
-    local orientation = config[1]
-    if not orientation.sitPositions then return 1 end
-    return #orientation.sitPositions
+    local positions = world.getObjectParameter(entityId, "sitPositions", {nil})
+    return #positions
 end
 
 --- [Helper] Dumps a table as log-able string

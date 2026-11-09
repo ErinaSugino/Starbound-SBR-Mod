@@ -1,0 +1,39 @@
+{
+  "objectName": "sexboundaddon00x01",
+  "category": "furniture",
+  "colonyTags": ["misc"],
+  "itemTags": ["sex", "sexbound"],
+  "description": "Sexnode addon to add sexnode functionality to any object, anchor 0|0, space 0|1",
+  "interactive": true,
+  "price": 1,
+  "printable": false,
+  "race": "generic",
+  "rarity": "Common",
+  "shortdescription" : "0|0x0|1 Sexnode addon",
+  "smashOnBreak": true,
+  "smashDropOptions": [],
+
+  "sitPositions": [[0,0]],
+  "sitStatusEffects": [ "sexbound_sex" ],
+  "sitAngle": 0,
+  "sitFlipDirection": false,
+  "sitOrientation": "lay",
+  "objectType": "loungeable",
+
+  "inventoryIcon": "sexboundloungeableaddon.png:tier2",
+  "orientations": [
+    {
+      "dualImage": "sexbound_node/sexbound_node.png:default.1",
+      "spaces": [[0,1]],
+      "fgAnchors": [[0,0]],
+      "interactiveSpaces": [],
+      "anchorAny": true,
+      "anchorMaterial": "metamaterial:sexboundaddonbase"
+    }
+  ],
+  
+  "scripts": ["/scripts/objectaddons.lua","/scripts/sexbound/sexboundaddon.lua"],
+  "scriptDelta": 1,
+
+  "animation": "/artwork/humanoid/twoactors-centered.animation"
+}

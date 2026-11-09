@@ -304,7 +304,7 @@ end
 --- @return table # Encoded table
 Sexbound.Util.messageEncode = function(t)
     if type(t) ~= "table" or not next(t) then return {} end
-    
+
     local r = {}
     for k,v in pairs(t) do
         r[k.."X"] = v
@@ -317,7 +317,7 @@ end
 --- @return table # Decoded table
 Sexbound.Util.messageDecode = function(t)
     if type(t) ~= "table" or not next(t) then return {} end
-    
+
     local r = {}
     for k,v in pairs(t) do
         k = tostring(k)
@@ -325,4 +325,31 @@ Sexbound.Util.messageDecode = function(t)
         if l > 1 then r[string.sub(k,1,l-1)] = v end
     end
     return r
+end
+
+--- Find the center point of a polygon shape
+--- @param poly Vec2I[] The list of polygon anchors
+--- @return Vec2I # The center point of the given polygon shape
+function Sexbound.Util.findCentroid(poly)
+    local n = #poly
+    if n < 2 then return poly[1] or {0,0}
+    elseif n == 2 then return vec2.floor(vec2.add(poly[1], vec2.div(poly[2], 0.5))) end
+
+    local cx, cy, area = 0, 0, 0
+    for i = 1,n do
+        local p1, p2 = poly[i], poly[(i % n)+1]
+        local factor = p1[1] * p2[2] - p2[1] * p1[2]
+
+        area = area + factor
+        cx = cx + (p1[1] + p2[1]) * factor
+        cy = cy + (p1[2] + p2[2]) * factor
+    end
+
+    area = area * 0.5
+    if math.abs(area) < 1e-9 then return vec2.floor(vec2.add(poly[1], vec2.div(poly[2], 0.5))) end
+
+    cx = math.floor(cx / (6 * area))
+    cy = math.floor(cy / (6 * area))
+
+    return {cx, cy}
 end
