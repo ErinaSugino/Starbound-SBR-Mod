@@ -36,16 +36,16 @@
     }
   ],
   
-  "scripts" : ["/scripts/sexbound/twoactors.lua"],
+  "scripts" : ["/scripts/sexbound/threeactors.lua"],
   
   "sexboundConfig" : {
-    "requiredVersion" : ">=3.x.x",
+    "animationPartsCentered" : true,
 	
 	"modName" : "Lustbound",
             
-    "nodePositions" : [[-1, 0], [0, 0]],
+    "nodePositions" : [ [-2, 0], [-1, 0], [0, 0], [1, 0]],
     
-    "sitPositions"  : [[8, 20], [0, 20]],
+    "sitPositions"  : [[ 16, 20 ], [  8, 20 ], [ 0, 20 ], [ -8, 20 ]],
     
     "position" : {
       "sex" : [
@@ -54,12 +54,15 @@
         "missionary_in_bed",
         "doggy_in_bed",
         "butterfly_in_bed",
-        "fellatio_in_bed"
+        "fellatio_in_bed",
+		"reverse_cowgirl_in_bed",
+		"facesitting_in_bed"
       ]
-    }
+    },
+    "idlePosition"  : "idle_laying"
   },
     
-  "animation" : "/artwork/humanoid/twoactors.animation",
+  "animation" : "/artwork/humanoid/twoactors-centered.animation",
   
   "animationCustom" : {
     "animatedParts" : {
